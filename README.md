@@ -4,7 +4,7 @@
 
 Fork出来修改的原因：Stackedit的作者可能因为什么原因，已经很久不维护了，Github授权登录很早之前就登录不了了，并且还没发支持国内常用的Gitee，比较蛋疼，所以想到Fork出来改，大概花了周末一整天终于改好了。
 
-新的Docker镜像在中央仓库为：mafgwo/stackedit，当前最新版本为：5.15.1（延续原有版本号）
+新的Docker镜像在中央仓库为：mafgwo/stackedit，当前最新版本为：5.15.2（延续原有版本号）
 
 并增加了以下三个环境变量：
 - `GITEE_CLIENT_ID` Gitee 的 Client ID
