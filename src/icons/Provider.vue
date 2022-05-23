@@ -26,6 +26,8 @@ export default {
           return 'blogger';
         case 'couchdbWorkspace':
           return 'couchdb';
+        case 'giteeWorkspace':
+          return 'gitee';
         default:
           return this.providerId;
       }
@@ -85,5 +87,9 @@ export default {
 
 .icon-provider--couchdb {
   background-image: url(../assets/iconCouchdb.svg);
+}
+
+.icon-provider--gitee {
+  background-image: url(../assets/iconGitee.svg);
 }
 </style>

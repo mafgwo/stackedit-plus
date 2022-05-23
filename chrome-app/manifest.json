@@ -15,10 +15,10 @@
   },
   "app": {
     "urls": [
-      "https://stackedit.io/"
+      "https://edit.qicoder.com/"
     ],
     "launch": {
-      "web_url": "https://stackedit.io/app"
+      "web_url": "https://edit.qicoder.com/app"
     }
   },
   "offline_enabled": true,

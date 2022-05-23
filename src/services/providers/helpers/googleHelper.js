@@ -625,7 +625,7 @@ export default {
   async openPicker(token, type = 'doc') {
     const scopes = type === 'img' ? photosScopes : getDriveScopes(token);
     if (!window.google) {
-      await networkSvc.loadScript('https://apis.google.com/js/api.js');
+      await networkSvc.loadScript('https://www.gstatic.cn/charts/loader.js');
       await new Promise((resolve, reject) => window.gapi.load('picker', {
         callback: resolve,
         onerror: reject,

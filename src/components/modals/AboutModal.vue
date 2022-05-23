@@ -2,9 +2,9 @@
   <modal-inner class="modal__inner-1--about-modal" aria-label="About">
     <div class="modal__content">
       <div class="logo-background"></div>
-      StackEdit on <a target="_blank" href="https://github.com/benweet/stackedit/">GitHub</a>
+      StackEdit on <a target="_blank" href="https://github.com/mafgwo/stackedit/">GitHub</a>
       <br>
-      <a target="_blank" href="https://github.com/benweet/stackedit/issues">Issue tracker</a> — <a target="_blank" href="https://github.com/benweet/stackedit/releases">Changelog</a>
+      <a target="_blank" href="https://github.com/mafgwo/stackedit/issues">Issue tracker</a> — <a target="_blank" href="https://github.com/mafgwo/stackedit/releases">Changelog</a>
       <br>
       <a target="_blank" href="https://chrome.google.com/webstore/detail/iiooodelglhkcpgbajoejffhijaclcdg">Chrome app</a> — <a target="_blank" href="https://chrome.google.com/webstore/detail/ajehldoplanpchfokmeempkekhnhmoha">Chrome extension</a>
       <br>
@@ -12,7 +12,7 @@
       <br>
       StackEdit on <a target="_blank" href="https://twitter.com/stackedit/">Twitter</a>
       <hr>
-      <small>© 2013-2019 Dock5 Software Ltd.<br>v{{version}}</small>
+      <small>© 2013-2022 Dock5 Software Ltd.<br>v{{version}}</small>
       <h3>FAQ</h3>
       <div class="faq" v-html="faq"></div>
       <div class="modal__info">

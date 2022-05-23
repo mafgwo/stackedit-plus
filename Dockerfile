@@ -1,4 +1,4 @@
-FROM benweet/stackedit-base
+FROM node:11.15.0
 
 RUN mkdir -p /opt/stackedit
 WORKDIR /opt/stackedit

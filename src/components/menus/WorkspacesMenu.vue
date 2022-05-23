@@ -21,6 +21,10 @@
       <icon-provider slot="icon" provider-id="githubWorkspace"></icon-provider>
       <span>Add a <b>GitHub</b> workspace</span>
     </menu-entry>
+    <menu-entry @click.native="addGiteeWorkspace">
+      <icon-provider slot="icon" provider-id="giteeWorkspace"></icon-provider>
+      <span>Add a <b>Gitee</b> workspace</span>
+    </menu-entry>
     <menu-entry @click.native="addGitlabWorkspace">
       <icon-provider slot="icon" provider-id="gitlabWorkspace"></icon-provider>
       <span>Add a <b>GitLab</b> workspace</span>
@@ -64,6 +68,13 @@ export default {
       try {
         store.dispatch('modal/open', {
           type: 'githubWorkspace',
+        });
+      } catch (e) { /* Cancel */ }
+    },
+    async addGiteeWorkspace() {
+      try {
+        store.dispatch('modal/open', {
+          type: 'giteeWorkspace',
         });
       } catch (e) { /* Cancel */ }
     },

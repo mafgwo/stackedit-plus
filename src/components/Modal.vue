@@ -1,7 +1,7 @@
 <template>
   <div class="modal" v-if="config" @keydown.esc.stop="onEscape" @keydown.tab="onTab" @focusin="onFocusInOut" @focusout="onFocusInOut">
     <div class="modal__sponsor-banner" v-if="!isSponsor">
-      StackEdit is <a class="not-tabbable" target="_blank" href="https://github.com/benweet/stackedit/">open source</a>, please consider
+      StackEdit is <a class="not-tabbable" target="_blank" href="https://github.com/mafgwo/stackedit/">open source</a>, please consider
       <a class="not-tabbable" href="javascript:void(0)" @click="sponsor">sponsoring</a> for just $5.
     </div>
     <component v-if="currentModalComponent" :is="currentModalComponent"></component>
@@ -56,6 +56,11 @@ import GithubWorkspaceModal from './modals/providers/GithubWorkspaceModal';
 import GithubPublishModal from './modals/providers/GithubPublishModal';
 import GistSyncModal from './modals/providers/GistSyncModal';
 import GistPublishModal from './modals/providers/GistPublishModal';
+import GiteeAccountModal from './modals/providers/GiteeAccountModal';
+import GiteeOpenModal from './modals/providers/GiteeOpenModal';
+import GiteeSaveModal from './modals/providers/GiteeSaveModal';
+import GiteeWorkspaceModal from './modals/providers/GiteeWorkspaceModal';
+import GiteePublishModal from './modals/providers/GiteePublishModal';
 import GitlabAccountModal from './modals/providers/GitlabAccountModal';
 import GitlabOpenModal from './modals/providers/GitlabOpenModal';
 import GitlabPublishModal from './modals/providers/GitlabPublishModal';
@@ -107,6 +112,11 @@ export default {
     GithubPublishModal,
     GistSyncModal,
     GistPublishModal,
+    GiteeAccountModal,
+    GiteeOpenModal,
+    GiteeSaveModal,
+    GiteeWorkspaceModal,
+    GiteePublishModal,
     GitlabAccountModal,
     GitlabOpenModal,
     GitlabPublishModal,

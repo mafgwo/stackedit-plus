@@ -83,6 +83,10 @@
         <icon-provider slot="icon" provider-id="github"></icon-provider>
         <span>Add GitHub account</span>
       </menu-entry>
+      <menu-entry @click.native="addGiteeAccount">
+        <icon-provider slot="icon" provider-id="gitee"></icon-provider>
+        <span>Add Gitee account</span>
+      </menu-entry>
       <menu-entry @click.native="addGitlabAccount">
         <icon-provider slot="icon" provider-id="gitlab"></icon-provider>
         <span>Add GitLab account</span>
@@ -101,6 +105,7 @@ import MenuEntry from './common/MenuEntry';
 import googleHelper from '../../services/providers/helpers/googleHelper';
 import dropboxHelper from '../../services/providers/helpers/dropboxHelper';
 import githubHelper from '../../services/providers/helpers/githubHelper';
+import giteeHelper from '../../services/providers/helpers/giteeHelper';
 import gitlabHelper from '../../services/providers/helpers/gitlabHelper';
 import googleDriveProvider from '../../services/providers/googleDriveProvider';
 import dropboxProvider from '../../services/providers/dropboxProvider';
@@ -148,6 +153,9 @@ export default {
     githubTokens() {
       return tokensToArray(store.getters['data/githubTokensBySub']);
     },
+    giteeTokens() {
+      return tokensToArray(store.getters['data/giteeTokensBySub']);
+    },
     gitlabTokens() {
       return tokensToArray(store.getters['data/gitlabTokensBySub']);
     },
@@ -157,7 +165,8 @@ export default {
     noToken() {
       return !this.googleDriveTokens.length
         && !this.dropboxTokens.length
-        && !this.githubTokens.length;
+        && !this.githubTokens.length
+        && !this.giteeTokens.length;
     },
   },
   methods: {
@@ -181,6 +190,12 @@ export default {
       try {
         await store.dispatch('modal/open', { type: 'githubAccount' });
         await githubHelper.addAccount(store.getters['data/localSettings'].githubRepoFullAccess);
+      } catch (e) { /* cancel */ }
+    },
+    async addGiteeAccount() {
+      try {
+        await store.dispatch('modal/open', { type: 'giteeAccount' });
+        await giteeHelper.addAccount();
       } catch (e) { /* cancel */ }
     },
     async addGitlabAccount() {

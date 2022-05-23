@@ -4,8 +4,6 @@ import store from '../../../store';
 import userSvc from '../../userSvc';
 import badgeSvc from '../../badgeSvc';
 
-const getScopes = token => [token.repoFullAccess ? 'repo' : 'public_repo', 'gist'];
-
 const request = (token, options) => networkSvc.request({
   ...options,
   headers: {
@@ -20,7 +18,7 @@ const request = (token, options) => networkSvc.request({
 
 const repoRequest = (token, owner, repo, options) => request(token, {
   ...options,
-  url: `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/${options.url}`,
+  url: `https://gitee.com/api/v5/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/${options.url}`,
 })
   .then(res => res.body);
 
@@ -33,18 +31,18 @@ const getCommitMessage = (name, path) => {
  * Getting a user from its userId is not feasible with API v3.
  * Using an undocumented endpoint...
  */
-const subPrefix = 'gh';
-userSvc.setInfoResolver('github', subPrefix, async (sub) => {
+const subPrefix = 'ge';
+userSvc.setInfoResolver('gitee', subPrefix, async (sub) => {
   try {
     const user = (await networkSvc.request({
-      url: `https://api.github.com/user/${sub}`,
+      url: `https://gitee.com/api/v5/users/${sub}`,
       params: {
         t: Date.now(), // Prevent from caching
       },
     })).body;
 
     return {
-      id: `${subPrefix}:${user.id}`,
+      id: `${subPrefix}:${user.login}`,
       name: user.login,
       imageUrl: user.avatar_url || '',
     };
@@ -60,17 +58,18 @@ export default {
   subPrefix,
 
   /**
-   * https://developer.github.com/apps/building-oauth-apps/authorization-options-for-oauth-apps/
+   * https://developer.gitee.com/apps/building-oauth-apps/authorization-options-for-oauth-apps/
    */
   async startOauth2(scopes, sub = null, silent = false) {
-    const clientId = store.getters['data/serverConf'].githubClientId;
+    const clientId = store.getters['data/serverConf'].giteeClientId;
 
     // Get an OAuth2 code
     const { code } = await networkSvc.startOauth2(
-      'https://github.com/login/oauth/authorize',
+      'https://gitee.com/oauth/authorize',
       {
         client_id: clientId,
-        scope: scopes.join(' '),
+        scope: 'projects pull_requests',
+        response_type: 'code',
       },
       silent,
     );
@@ -78,7 +77,7 @@ export default {
     // Exchange code with token
     const accessToken = (await networkSvc.request({
       method: 'GET',
-      url: 'oauth2/githubToken',
+      url: 'oauth2/giteeToken',
       params: {
         clientId,
         code,
@@ -88,20 +87,20 @@ export default {
     // Call the user info endpoint
     const user = (await networkSvc.request({
       method: 'GET',
-      url: 'https://api.github.com/user',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
+      url: 'https://gitee.com/api/v5/user',
+      params: {
+        access_token: accessToken,
       },
     })).body;
     userSvc.addUserInfo({
-      id: `${subPrefix}:${user.id}`,
+      id: `${subPrefix}:${user.login}`,
       name: user.login,
       imageUrl: user.avatar_url || '',
     });
 
     // Check the returned sub consistency
-    if (sub && `${user.id}` !== sub) {
-      throw new Error('GitHub account ID not expected.');
+    if (sub && `${user.login}` !== sub) {
+      throw new Error('Gitee account ID not expected.');
     }
 
     // Build token object including scopes and sub
@@ -109,23 +108,22 @@ export default {
       scopes,
       accessToken,
       name: user.login,
-      sub: `${user.id}`,
-      repoFullAccess: scopes.includes('repo'),
+      sub: `${user.login}`,
     };
 
-    // Add token to github tokens
-    store.dispatch('data/addGithubToken', token);
+    // Add token to gitee tokens
+    store.dispatch('data/addGiteeToken', token);
     return token;
   },
-  async addAccount(repoFullAccess = false) {
-    const token = await this.startOauth2(getScopes({ repoFullAccess }));
-    badgeSvc.addBadge('addGitHubAccount');
+  async addAccount() {
+    const token = await this.startOauth2();
+    badgeSvc.addBadge('addGiteeAccount');
     return token;
   },
 
   /**
-   * https://developer.github.com/v3/repos/commits/#get-a-single-commit
-   * https://developer.github.com/v3/git/trees/#get-a-tree
+   * https://developer.gitee.com/v3/repos/commits/#get-a-single-commit
+   * https://developer.gitee.com/v3/git/trees/#get-a-tree
    */
   async getTree({
     token,
@@ -146,7 +144,7 @@ export default {
   },
 
   /**
-   * https://developer.github.com/v3/repos/commits/#list-commits-on-a-repository
+   * https://developer.gitee.com/v3/repos/commits/#list-commits-on-a-repository
    */
   async getCommits({
     token,
@@ -162,8 +160,8 @@ export default {
   },
 
   /**
-   * https://developer.github.com/v3/repos/contents/#create-a-file
-   * https://developer.github.com/v3/repos/contents/#update-a-file
+   * https://developer.gitee.com/v3/repos/contents/#create-a-file
+   * https://developer.gitee.com/v3/repos/contents/#update-a-file
    */
   async uploadFile({
     token,
@@ -175,7 +173,7 @@ export default {
     sha,
   }) {
     return repoRequest(token, owner, repo, {
-      method: 'PUT',
+      method: sha ? 'PUT' : 'POST',
       url: `contents/${encodeURIComponent(path)}`,
       body: {
         message: getCommitMessage(sha ? 'updateFileMessage' : 'createFileMessage', path),
@@ -187,7 +185,7 @@ export default {
   },
 
   /**
-   * https://developer.github.com/v3/repos/contents/#delete-a-file
+   * https://developer.gitee.com/v3/repos/contents/#delete-a-file
    */
   async removeFile({
     token,
@@ -209,7 +207,7 @@ export default {
   },
 
   /**
-   * https://developer.github.com/v3/repos/contents/#get-contents
+   * https://developer.gitee.com/v3/repos/contents/#get-contents
    */
   async downloadFile({
     token,
@@ -229,8 +227,8 @@ export default {
   },
 
   /**
-   * https://developer.github.com/v3/gists/#create-a-gist
-   * https://developer.github.com/v3/gists/#edit-a-gist
+   * https://developer.gitee.com/v3/gists/#create-a-gist
+   * https://developer.gitee.com/v3/gists/#edit-a-gist
    */
   async uploadGist({
     token,
@@ -242,7 +240,7 @@ export default {
   }) {
     const { body } = await request(token, gistId ? {
       method: 'PATCH',
-      url: `https://api.github.com/gists/${gistId}`,
+      url: `https://gitee.com/api/v5/gists/${gistId}`,
       body: {
         description,
         files: {
@@ -253,7 +251,7 @@ export default {
       },
     } : {
       method: 'POST',
-      url: 'https://api.github.com/gists',
+      url: 'https://gitee.com/api/v5/gists',
       body: {
         description,
         files: {
@@ -268,7 +266,7 @@ export default {
   },
 
   /**
-   * https://developer.github.com/v3/gists/#get-a-single-gist
+   * https://developer.gitee.com/v3/gists/#get-a-single-gist
    */
   async downloadGist({
     token,
@@ -276,7 +274,7 @@ export default {
     filename,
   }) {
     const result = (await request(token, {
-      url: `https://api.github.com/gists/${gistId}`,
+      url: `https://gitee.com/api/v5/gists/${gistId}`,
     })).body.files[filename];
     if (!result) {
       throw new Error('Gist file not found.');
@@ -285,20 +283,20 @@ export default {
   },
 
   /**
-   * https://developer.github.com/v3/gists/#list-gist-commits
+   * https://developer.gitee.com/v3/gists/#list-gist-commits
    */
   async getGistCommits({
     token,
     gistId,
   }) {
     const { body } = await request(token, {
-      url: `https://api.github.com/gists/${gistId}/commits`,
+      url: `https://gitee.com/api/v5/gists/${gistId}/commits`,
     });
     return body;
   },
 
   /**
-   * https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
+   * https://developer.gitee.com/v3/gists/#get-a-specific-revision-of-a-gist
    */
   async downloadGistRevision({
     token,
@@ -307,7 +305,7 @@ export default {
     sha,
   }) {
     const result = (await request(token, {
-      url: `https://api.github.com/gists/${gistId}/${sha}`,
+      url: `https://gitee.com/api/v5/gists/${gistId}/${sha}`,
     })).body.files[filename];
     if (!result) {
       throw new Error('Gist file not found.');

@@ -173,6 +173,11 @@ export default [
         'Use the workspace menu to create a GitHub workspace.',
       ),
       new Feature(
+        'addGiteeWorkspace',
+        'GitHub workspace creator',
+        'Use the workspace menu to create a Gitee workspace.',
+      ),
+      new Feature(
         'addGitlabWorkspace',
         'GitLab workspace creator',
         'Use the workspace menu to create a GitLab workspace.',

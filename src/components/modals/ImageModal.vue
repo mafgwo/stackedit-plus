@@ -45,7 +45,7 @@ export default modalTemplate({
   },
   methods: {
     resolve(evt) {
-      evt.preventDefault(); // Fixes https://github.com/benweet/stackedit/issues/1503
+      evt.preventDefault(); // Fixes https://github.com/mafgwo/stackedit/issues/1503
       if (!this.url) {
         this.setError('url');
       } else {

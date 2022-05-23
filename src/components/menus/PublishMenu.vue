@@ -52,6 +52,13 @@
           <span>{{token.name}}</span>
         </menu-entry>
       </div>
+      <div v-for="token in giteeTokens" :key="token.sub">
+        <menu-entry @click.native="publishGitee(token)">
+          <icon-provider slot="icon" provider-id="gitee"></icon-provider>
+          <div>Publish to Gitee</div>
+          <span>{{token.name}}</span>
+        </menu-entry>
+      </div>
       <div v-for="token in gitlabTokens" :key="token.sub">
         <menu-entry @click.native="publishGitlab(token)">
           <icon-provider slot="icon" provider-id="gitlab"></icon-provider>
@@ -93,6 +100,10 @@
         <icon-provider slot="icon" provider-id="github"></icon-provider>
         <span>Add GitHub account</span>
       </menu-entry>
+      <menu-entry @click.native="addGiteeAccount">
+        <icon-provider slot="icon" provider-id="gitee"></icon-provider>
+        <span>Add Gitee account</span>
+      </menu-entry>
       <menu-entry @click.native="addGitlabAccount">
         <icon-provider slot="icon" provider-id="gitlab"></icon-provider>
         <span>Add GitLab account</span>
@@ -119,6 +130,7 @@ import MenuEntry from './common/MenuEntry';
 import googleHelper from '../../services/providers/helpers/googleHelper';
 import dropboxHelper from '../../services/providers/helpers/dropboxHelper';
 import githubHelper from '../../services/providers/helpers/githubHelper';
+import giteeHelper from '../../services/providers/helpers/giteeHelper';
 import gitlabHelper from '../../services/providers/helpers/gitlabHelper';
 import wordpressHelper from '../../services/providers/helpers/wordpressHelper';
 import zendeskHelper from '../../services/providers/helpers/zendeskHelper';
@@ -167,6 +179,9 @@ export default {
     },
     githubTokens() {
       return tokensToArray(store.getters['data/githubTokensBySub']);
+    },
+    giteeTokens() {
+      return tokensToArray(store.getters['data/giteeTokensBySub']);
     },
     gitlabTokens() {
       return tokensToArray(store.getters['data/gitlabTokensBySub']);
@@ -218,6 +233,12 @@ export default {
         await githubHelper.addAccount(store.getters['data/localSettings'].githubRepoFullAccess);
       } catch (e) { /* cancel */ }
     },
+    async addGiteeAccount() {
+      try {
+        await store.dispatch('modal/open', { type: 'giteeAccount' });
+        await giteeHelper.addAccount();
+      } catch (e) { /* cancel */ }
+    },
     async addGitlabAccount() {
       try {
         const { serverUrl, applicationId } = await store.dispatch('modal/open', { type: 'gitlabAccount' });
@@ -245,6 +266,7 @@ export default {
     publishBloggerPage: publishModalOpener('bloggerPagePublish', 'publishToBloggerPage'),
     publishDropbox: publishModalOpener('dropboxPublish', 'publishToDropbox'),
     publishGithub: publishModalOpener('githubPublish', 'publishToGithub'),
+    publishGitee: publishModalOpener('giteePublish', 'publishToGitee'),
     publishGist: publishModalOpener('gistPublish', 'publishToGist'),
     publishGitlab: publishModalOpener('gitlabPublish', 'publishToGitlab'),
     publishGoogleDrive: publishModalOpener('googleDrivePublish', 'publishToGoogleDrive'),

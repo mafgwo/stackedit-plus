@@ -72,7 +72,7 @@
   <span class="token key atrule">katex</span><span class="token punctuation">:</span>
     <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
 </code></pre>
-          <p>For the full list of options, see <a href="https://github.com/benweet/stackedit/blob/master/src/data/presets.js" target="_blank">here</a>.</p>
+          <p>For the full list of options, see <a href="https://github.com/mafgwo/stackedit/blob/master/src/data/presets.js" target="_blank">here</a>.</p>
         </div>
       </div>
     </div>

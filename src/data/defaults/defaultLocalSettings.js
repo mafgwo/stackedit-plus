@@ -19,6 +19,8 @@ export default () => ({
   githubPublishTemplate: 'jekyllSite',
   gistIsPublic: false,
   gistPublishTemplate: 'plainText',
+  giteeRepoUrl: '',
+  giteeWorkspaceRepoUrl: '',
   gitlabServerUrl: '',
   gitlabApplicationId: '',
   gitlabProjectUrl: '',

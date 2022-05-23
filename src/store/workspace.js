@@ -44,9 +44,11 @@ export default {
       workspacesById[currentWorkspaceId] || mainWorkspace,
     currentWorkspaceIsGit: (state, { currentWorkspace }) =>
       currentWorkspace.providerId === 'githubWorkspace'
+      || currentWorkspace.providerId === 'giteeWorkspace'
       || currentWorkspace.providerId === 'gitlabWorkspace',
     currentWorkspaceHasUniquePaths: (state, { currentWorkspace }) =>
       currentWorkspace.providerId === 'githubWorkspace'
+      || currentWorkspace.providerId === 'giteeWorkspace'
       || currentWorkspace.providerId === 'gitlabWorkspace',
     lastSyncActivityKey: (state, { currentWorkspace }) => `${currentWorkspace.id}/lastSyncActivity`,
     lastFocusKey: (state, { currentWorkspace }) => `${currentWorkspace.id}/lastWindowFocus`,
@@ -63,6 +65,8 @@ export default {
           return rootGetters['data/googleTokensBySub'][currentWorkspace.sub];
         case 'githubWorkspace':
           return rootGetters['data/githubTokensBySub'][currentWorkspace.sub];
+        case 'giteeWorkspace':
+          return rootGetters['data/giteeTokensBySub'][currentWorkspace.sub];
         case 'gitlabWorkspace':
           return rootGetters['data/gitlabTokensBySub'][currentWorkspace.sub];
         case 'couchdbWorkspace':
@@ -78,6 +82,8 @@ export default {
           return 'google';
         case 'githubWorkspace':
           return 'github';
+        case 'giteeWorkspace':
+          return 'gitee';
         case 'gitlabWorkspace':
           return 'gitlab';
       }

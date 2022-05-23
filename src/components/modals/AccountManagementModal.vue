@@ -49,6 +49,10 @@
         <icon-provider slot="icon" provider-id="github"></icon-provider>
         <span>Add GitHub account</span>
       </menu-entry>
+      <menu-entry @click.native="addGiteeAccount">
+        <icon-provider slot="icon" provider-id="gitee"></icon-provider>
+        <span>Add Gitee account</span>
+      </menu-entry>
       <menu-entry @click.native="addGitlabAccount">
         <icon-provider slot="icon" provider-id="gitlab"></icon-provider>
         <span>Add GitLab account</span>
@@ -85,6 +89,7 @@ import utils from '../../services/utils';
 import googleHelper from '../../services/providers/helpers/googleHelper';
 import dropboxHelper from '../../services/providers/helpers/dropboxHelper';
 import githubHelper from '../../services/providers/helpers/githubHelper';
+import giteeHelper from '../../services/providers/helpers/giteeHelper';
 import gitlabHelper from '../../services/providers/helpers/gitlabHelper';
 import wordpressHelper from '../../services/providers/helpers/wordpressHelper';
 import zendeskHelper from '../../services/providers/helpers/zendeskHelper';
@@ -127,6 +132,13 @@ export default {
           userId: token.sub,
           name: token.name,
           scopes: token.scopes,
+        })),
+        ...Object.values(store.getters['data/giteeTokensBySub']).map(token => ({
+          token,
+          providerId: 'gitee',
+          userId: token.sub,
+          name: token.name,
+          scopes: ['projects', 'pull_requests'],
         })),
         ...Object.values(store.getters['data/gitlabTokensBySub']).map(token => ({
           token,
@@ -178,6 +190,12 @@ export default {
       try {
         await store.dispatch('modal/open', { type: 'githubAccount' });
         await githubHelper.addAccount(store.getters['data/localSettings'].githubRepoFullAccess);
+      } catch (e) { /* cancel */ }
+    },
+    async addGiteeAccount() {
+      try {
+        await store.dispatch('modal/open', { type: 'giteeAccount' });
+        await giteeHelper.addAccount();
       } catch (e) { /* cancel */ }
     },
     async addGitlabAccount() {
