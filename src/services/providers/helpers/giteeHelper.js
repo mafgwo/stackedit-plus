@@ -8,11 +8,11 @@ const request = (token, options) => networkSvc.request({
   ...options,
   headers: {
     ...options.headers || {},
-    Authorization: `token ${token.accessToken}`,
   },
   params: {
     ...options.params || {},
     t: Date.now(), // Prevent from caching
+    access_token: token.accessToken,
   },
 });
 

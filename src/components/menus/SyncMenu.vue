@@ -50,6 +50,18 @@
           <span>{{token.name}}</span>
         </menu-entry>
       </div>
+      <div v-for="token in giteeTokens" :key="token.sub">
+        <menu-entry @click.native="openGitee(token)">
+          <icon-provider slot="icon" provider-id="gitee"></icon-provider>
+          <div>Open from Gitee</div>
+          <span>{{token.name}}</span>
+        </menu-entry>
+        <menu-entry @click.native="saveGitee(token)">
+          <icon-provider slot="icon" provider-id="gitee"></icon-provider>
+          <div>Save on Gitee</div>
+          <span>{{token.name}}</span>
+        </menu-entry>
+      </div>
       <div v-for="token in gitlabTokens" :key="token.sub">
         <menu-entry @click.native="openGitlab(token)">
           <icon-provider slot="icon" provider-id="gitlab"></icon-provider>
@@ -110,6 +122,7 @@ import gitlabHelper from '../../services/providers/helpers/gitlabHelper';
 import googleDriveProvider from '../../services/providers/googleDriveProvider';
 import dropboxProvider from '../../services/providers/dropboxProvider';
 import githubProvider from '../../services/providers/githubProvider';
+import giteeProvider from '../../services/providers/giteeProvider';
 import gitlabProvider from '../../services/providers/gitlabProvider';
 import syncSvc from '../../services/syncSvc';
 import store from '../../store';
@@ -261,6 +274,27 @@ export default {
       try {
         await openSyncModal(token, 'githubSave');
         badgeSvc.addBadge('saveOnGithub');
+      } catch (e) { /* cancel */ }
+    },
+    async openGitee(token) {
+      try {
+        const syncLocation = await store.dispatch('modal/open', {
+          type: 'giteeOpen',
+          token,
+        });
+        store.dispatch(
+          'queue/enqueue',
+          async () => {
+            await giteeProvider.openFile(token, syncLocation);
+            badgeSvc.addBadge('openFromGitee');
+          },
+        );
+      } catch (e) { /* cancel */ }
+    },
+    async saveGitee(token) {
+      try {
+        await openSyncModal(token, 'giteeSave');
+        badgeSvc.addBadge('saveOnGitee');
       } catch (e) { /* cancel */ }
     },
     async saveGist(token) {

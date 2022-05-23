@@ -174,7 +174,7 @@ export default [
       ),
       new Feature(
         'addGiteeWorkspace',
-        'GitHub workspace creator',
+        'Gitee workspace creator',
         'Use the workspace menu to create a Gitee workspace.',
       ),
       new Feature(
@@ -218,6 +218,11 @@ export default [
         'addGitHubAccount',
         'GitHub user',
         'Link your GitHub account to StackEdit.',
+      ),
+      new Feature(
+        'addGiteeAccount',
+        'Gitee user',
+        'Link your Gitee account to StackEdit.',
       ),
       new Feature(
         'addGitLabAccount',
@@ -275,6 +280,16 @@ export default [
         'saveOnGithub',
         'GitHub writer',
         'Use the "Synchronize" menu to save a file in a GitHub repository.',
+      ),
+      new Feature(
+        'openFromGitee',
+        'Gitee reader',
+        'Use the "Synchronize" menu to open a file from a Gitee repository.',
+      ),
+      new Feature(
+        'saveOnGitee',
+        'Gitee writer',
+        'Use the "Synchronize" menu to save a file in a Gitee repository.',
       ),
       new Feature(
         'saveOnGist',
@@ -347,6 +362,11 @@ export default [
         'publishToGist',
         'Gist publisher',
         'Use the "Publish" menu to publish a file to a Gist.',
+      ),
+      new Feature(
+        'publishToGitee',
+        'Gitee publisher',
+        'Use the "Publish" menu to publish a file to a Gitee repository.',
       ),
       new Feature(
         'publishToGitlab',
