@@ -3,11 +3,11 @@
 从 [StackEdit 官方](https://github.com/benweet/stackedit) fork出来，然后加上了 **Gitee** 的支持，并且已经重新打了镜像，以下官方的部署方式，除了Docker镜像地址不同，其他均一致。
 
 ### Fork出来修改的原因
-StackEdit的作者可能因为什么原因，已经很久不维护了，Github授权登录很早之前就登录不了了，并且还没法支持国内常用的Gitee，比较蛋疼，所以想到Fork出来改，大概花了周末一整天终于改好了。
+StackEdit的作者可能因为什么原因，已经很久不维护了，Github授权登录很早之前就登录不了了，并且还没法支持国内常用的Gitee，所以想到Fork出来改，大概花了周末一整天终于改好了。
 
 新的Docker镜像在中央仓库为：[mafgwo/stackedit](https://hub.docker.com/r/mafgwo/stackedit)，当前最新版本为：5.15.3（延续原有版本号）
 
-并增加了以下三个环境变量：
+并增加了以下2个环境变量：
 - `GITEE_CLIENT_ID` Gitee 的 Client ID
 - `GITEE_CLIENT_SECRET` Gitee 的 Client Secret
 
@@ -20,7 +20,7 @@ StackEdit的作者可能因为什么原因，已经很久不维护了，Github�
 #### TODO 进度
 
 **已支持Gitea (2022-05-25)，自建Gitea要支持跨域，不知道如何支持跨域提issue我会回答**
-对应Docker版本：5.15.3, tag: 5.15.3
+对应Docker版本：5.15.3, tag: v5.15.3
 
 
 ### 目前已部署地址
