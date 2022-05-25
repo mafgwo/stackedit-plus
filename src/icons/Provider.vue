@@ -22,6 +22,8 @@ export default {
           return 'github';
         case 'gitlabWorkspace':
           return 'gitlab';
+        case 'giteaWorkspace':
+          return 'gitea';
         case 'bloggerPage':
           return 'blogger';
         case 'couchdbWorkspace':
@@ -63,6 +65,10 @@ export default {
 
 .icon-provider--gitlab {
   background-image: url(../assets/iconGitlab.svg);
+}
+
+.icon-provider--gitea {
+  background-image: url(../assets/iconGitea.svg);
 }
 
 .icon-provider--google {

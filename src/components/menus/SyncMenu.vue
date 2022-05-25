@@ -74,6 +74,18 @@
           <span>{{token.name}}</span>
         </menu-entry>
       </div>
+      <div v-for="token in giteaTokens" :key="token.sub">
+        <menu-entry @click.native="openGitea(token)">
+          <icon-provider slot="icon" provider-id="gitea"></icon-provider>
+          <div>Open from Gitea</div>
+          <span>{{token.name}}</span>
+        </menu-entry>
+        <menu-entry @click.native="saveGitea(token)">
+          <icon-provider slot="icon" provider-id="gitea"></icon-provider>
+          <div>Save on Gitea</div>
+          <span>{{token.name}}</span>
+        </menu-entry>
+      </div>
       <div v-for="token in googleDriveTokens" :key="token.sub">
         <menu-entry @click.native="openGoogleDrive(token)">
           <icon-provider slot="icon" provider-id="googleDrive"></icon-provider>
@@ -103,6 +115,10 @@
         <icon-provider slot="icon" provider-id="gitlab"></icon-provider>
         <span>Add GitLab account</span>
       </menu-entry>
+      <menu-entry @click.native="addGiteaAccount">
+        <icon-provider slot="icon" provider-id="gitea"></icon-provider>
+        <span>Add Gitea account</span>
+      </menu-entry>
       <menu-entry @click.native="addGoogleDriveAccount">
         <icon-provider slot="icon" provider-id="googleDrive"></icon-provider>
         <span>Add Google Drive account</span>
@@ -119,11 +135,13 @@ import dropboxHelper from '../../services/providers/helpers/dropboxHelper';
 import githubHelper from '../../services/providers/helpers/githubHelper';
 import giteeHelper from '../../services/providers/helpers/giteeHelper';
 import gitlabHelper from '../../services/providers/helpers/gitlabHelper';
+import giteaHelper from '../../services/providers/helpers/giteaHelper';
 import googleDriveProvider from '../../services/providers/googleDriveProvider';
 import dropboxProvider from '../../services/providers/dropboxProvider';
 import githubProvider from '../../services/providers/githubProvider';
 import giteeProvider from '../../services/providers/giteeProvider';
 import gitlabProvider from '../../services/providers/gitlabProvider';
+import giteaProvider from '../../services/providers/giteaProvider';
 import syncSvc from '../../services/syncSvc';
 import store from '../../store';
 import badgeSvc from '../../services/badgeSvc';
@@ -172,6 +190,9 @@ export default {
     gitlabTokens() {
       return tokensToArray(store.getters['data/gitlabTokensBySub']);
     },
+    giteaTokens() {
+      return tokensToArray(store.getters['data/giteaTokensBySub']);
+    },
     googleDriveTokens() {
       return tokensToArray(store.getters['data/googleTokensBySub'], token => token.isDrive);
     },
@@ -215,6 +236,12 @@ export default {
       try {
         const { serverUrl, applicationId } = await store.dispatch('modal/open', { type: 'gitlabAccount' });
         await gitlabHelper.addAccount(serverUrl, applicationId);
+      } catch (e) { /* cancel */ }
+    },
+    async addGiteaAccount() {
+      try {
+        const { serverUrl, applicationId, applicationSecret } = await store.dispatch('modal/open', { type: 'giteaAccount' });
+        await giteaHelper.addAccount(serverUrl, applicationId, applicationSecret);
       } catch (e) { /* cancel */ }
     },
     async addGoogleDriveAccount() {
@@ -318,10 +345,31 @@ export default {
         );
       } catch (e) { /* cancel */ }
     },
+    async openGitea(token) {
+      try {
+        const syncLocation = await store.dispatch('modal/open', {
+          type: 'giteaOpen',
+          token,
+        });
+        store.dispatch(
+          'queue/enqueue',
+          async () => {
+            await giteaProvider.openFile(token, syncLocation);
+            badgeSvc.addBadge('openFromGitea');
+          },
+        );
+      } catch (e) { /* cancel */ }
+    },
     async saveGitlab(token) {
       try {
         await openSyncModal(token, 'gitlabSave');
         badgeSvc.addBadge('saveOnGitlab');
+      } catch (e) { /* cancel */ }
+    },
+    async saveGitea(token) {
+      try {
+        await openSyncModal(token, 'giteaSave');
+        badgeSvc.addBadge('saveOnGitea');
       } catch (e) { /* cancel */ }
     },
   },

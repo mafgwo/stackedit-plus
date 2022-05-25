@@ -66,6 +66,13 @@
           <span>{{token.name}}</span>
         </menu-entry>
       </div>
+      <div v-for="token in giteaTokens" :key="token.sub">
+        <menu-entry @click.native="publishGitea(token)">
+          <icon-provider slot="icon" provider-id="gitea"></icon-provider>
+          <div>Publish to Gitea</div>
+          <span>{{token.name}}</span>
+        </menu-entry>
+      </div>
       <div v-for="token in googleDriveTokens" :key="token.sub">
         <menu-entry @click.native="publishGoogleDrive(token)">
           <icon-provider slot="icon" provider-id="googleDrive"></icon-provider>
@@ -108,6 +115,10 @@
         <icon-provider slot="icon" provider-id="gitlab"></icon-provider>
         <span>Add GitLab account</span>
       </menu-entry>
+      <menu-entry @click.native="addGiteaAccount">
+        <icon-provider slot="icon" provider-id="gitea"></icon-provider>
+        <span>Add Gitea account</span>
+      </menu-entry>
       <menu-entry @click.native="addGoogleDriveAccount">
         <icon-provider slot="icon" provider-id="googleDrive"></icon-provider>
         <span>Add Google Drive account</span>
@@ -132,6 +143,7 @@ import dropboxHelper from '../../services/providers/helpers/dropboxHelper';
 import githubHelper from '../../services/providers/helpers/githubHelper';
 import giteeHelper from '../../services/providers/helpers/giteeHelper';
 import gitlabHelper from '../../services/providers/helpers/gitlabHelper';
+import giteaHelper from '../../services/providers/helpers/giteaHelper';
 import wordpressHelper from '../../services/providers/helpers/wordpressHelper';
 import zendeskHelper from '../../services/providers/helpers/zendeskHelper';
 import publishSvc from '../../services/publishSvc';
@@ -186,6 +198,9 @@ export default {
     gitlabTokens() {
       return tokensToArray(store.getters['data/gitlabTokensBySub']);
     },
+    giteaTokens() {
+      return tokensToArray(store.getters['data/giteaTokensBySub']);
+    },
     googleDriveTokens() {
       return tokensToArray(store.getters['data/googleTokensBySub'], token => token.isDrive);
     },
@@ -199,7 +214,9 @@ export default {
       return !this.bloggerTokens.length
         && !this.dropboxTokens.length
         && !this.githubTokens.length
+        && !this.giteeTokens.length
         && !this.gitlabTokens.length
+        && !this.giteaTokens.length
         && !this.googleDriveTokens.length
         && !this.wordpressTokens.length
         && !this.zendeskTokens.length;
@@ -245,6 +262,12 @@ export default {
         await gitlabHelper.addAccount(serverUrl, applicationId);
       } catch (e) { /* cancel */ }
     },
+    async addGiteaAccount() {
+      try {
+        const { serverUrl, applicationId, applicationSecret } = await store.dispatch('modal/open', { type: 'giteaAccount' });
+        await giteaHelper.addAccount(serverUrl, applicationId, applicationSecret);
+      } catch (e) { /* cancel */ }
+    },
     async addGoogleDriveAccount() {
       try {
         await store.dispatch('modal/open', { type: 'googleDriveAccount' });
@@ -269,6 +292,7 @@ export default {
     publishGitee: publishModalOpener('giteePublish', 'publishToGitee'),
     publishGist: publishModalOpener('gistPublish', 'publishToGist'),
     publishGitlab: publishModalOpener('gitlabPublish', 'publishToGitlab'),
+    publishGitea: publishModalOpener('giteaPublish', 'publishToGitea'),
     publishGoogleDrive: publishModalOpener('googleDrivePublish', 'publishToGoogleDrive'),
     publishWordpress: publishModalOpener('wordpressPublish', 'publishToWordPress'),
     publishZendesk: publishModalOpener('zendeskPublish', 'publishToZendesk'),

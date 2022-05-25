@@ -29,6 +29,10 @@
       <icon-provider slot="icon" provider-id="gitlabWorkspace"></icon-provider>
       <span>Add a <b>GitLab</b> workspace</span>
     </menu-entry>
+    <menu-entry @click.native="addGiteaWorkspace">
+      <icon-provider slot="icon" provider-id="giteaWorkspace"></icon-provider>
+      <span>Add a <b>Gitea</b> workspace</span>
+    </menu-entry>
     <menu-entry @click.native="addGoogleDriveWorkspace">
       <icon-provider slot="icon" provider-id="googleDriveWorkspace"></icon-provider>
       <span>Add a <b>Google Drive</b> workspace</span>
@@ -41,6 +45,7 @@ import { mapGetters } from 'vuex';
 import MenuEntry from './common/MenuEntry';
 import googleHelper from '../../services/providers/helpers/googleHelper';
 import gitlabHelper from '../../services/providers/helpers/gitlabHelper';
+import giteaHelper from '../../services/providers/helpers/giteaHelper';
 import store from '../../store';
 
 export default {
@@ -84,6 +89,16 @@ export default {
         const token = await gitlabHelper.addAccount(serverUrl, applicationId);
         store.dispatch('modal/open', {
           type: 'gitlabWorkspace',
+          token,
+        });
+      } catch (e) { /* Cancel */ }
+    },
+    async addGiteaWorkspace() {
+      try {
+        const { serverUrl, applicationId, applicationSecret } = await store.dispatch('modal/open', { type: 'giteaAccount' });
+        const token = await giteaHelper.addAccount(serverUrl, applicationId, applicationSecret);
+        store.dispatch('modal/open', {
+          type: 'giteaWorkspace',
           token,
         });
       } catch (e) { /* Cancel */ }

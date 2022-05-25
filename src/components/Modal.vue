@@ -66,6 +66,11 @@ import GitlabOpenModal from './modals/providers/GitlabOpenModal';
 import GitlabPublishModal from './modals/providers/GitlabPublishModal';
 import GitlabSaveModal from './modals/providers/GitlabSaveModal';
 import GitlabWorkspaceModal from './modals/providers/GitlabWorkspaceModal';
+import GiteaAccountModal from './modals/providers/GiteaAccountModal';
+import GiteaOpenModal from './modals/providers/GiteaOpenModal';
+import GiteaPublishModal from './modals/providers/GiteaPublishModal';
+import GiteaSaveModal from './modals/providers/GiteaSaveModal';
+import GiteaWorkspaceModal from './modals/providers/GiteaWorkspaceModal';
 import WordpressPublishModal from './modals/providers/WordpressPublishModal';
 import BloggerPublishModal from './modals/providers/BloggerPublishModal';
 import BloggerPagePublishModal from './modals/providers/BloggerPagePublishModal';
@@ -122,6 +127,11 @@ export default {
     GitlabPublishModal,
     GitlabSaveModal,
     GitlabWorkspaceModal,
+    GiteaAccountModal,
+    GiteaOpenModal,
+    GiteaPublishModal,
+    GiteaSaveModal,
+    GiteaWorkspaceModal,
     WordpressPublishModal,
     BloggerPublishModal,
     BloggerPagePublishModal,

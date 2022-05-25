@@ -2,11 +2,7 @@ const qs = require('qs'); // eslint-disable-line import/no-extraneous-dependenci
 const request = require('request');
 const conf = require('./conf');
 
-function giteeToken(clientId, code) {
-  console.log('clientId: ' + clientId);
-  console.log('code: ' + code);
-  console.log('client_secret: ' + conf.values.giteeClientSecret);
-  console.log('redirect_uri: ' + conf.values.giteeCallback);
+function giteeToken(clientId, code, oauth2RedirectUri) {
   return new Promise((resolve, reject) => {
     request({
       method: 'POST',
@@ -17,7 +13,7 @@ function giteeToken(clientId, code) {
         code,
         grant_type: 'authorization_code',
         scope: 'authorization_code',
-        redirect_uri: conf.values.giteeCallback,
+        redirect_uri: oauth2RedirectUri,
       },
       json: true
     }, (err, res, body) => {
@@ -35,7 +31,7 @@ function giteeToken(clientId, code) {
 }
 
 exports.giteeToken = (req, res) => {
-  giteeToken(req.query.clientId, req.query.code)
+  giteeToken(req.query.clientId, req.query.code, req.query.oauth2RedirectUri)
     .then(
       token => res.send(token),
       err => res

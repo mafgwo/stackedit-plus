@@ -3,6 +3,7 @@ import networkSvc from '../../networkSvc';
 import store from '../../../store';
 import userSvc from '../../userSvc';
 import badgeSvc from '../../badgeSvc';
+import constants from '../../../data/constants';
 
 const request = (token, options) => networkSvc.request({
   ...options,
@@ -81,6 +82,7 @@ export default {
       params: {
         clientId,
         code,
+        oauth2RedirectUri: constants.oauth2RedirectUri,
       },
     })).body;
 

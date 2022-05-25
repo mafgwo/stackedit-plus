@@ -57,6 +57,10 @@
         <icon-provider slot="icon" provider-id="gitlab"></icon-provider>
         <span>Add GitLab account</span>
       </menu-entry>
+      <menu-entry @click.native="addGiteaAccount">
+        <icon-provider slot="icon" provider-id="gitea"></icon-provider>
+        <span>Add Gitea account</span>
+      </menu-entry>
       <menu-entry @click.native="addGoogleDriveAccount">
         <icon-provider slot="icon" provider-id="googleDrive"></icon-provider>
         <span>Add Google Drive account</span>
@@ -91,6 +95,7 @@ import dropboxHelper from '../../services/providers/helpers/dropboxHelper';
 import githubHelper from '../../services/providers/helpers/githubHelper';
 import giteeHelper from '../../services/providers/helpers/giteeHelper';
 import gitlabHelper from '../../services/providers/helpers/gitlabHelper';
+import giteaHelper from '../../services/providers/helpers/giteaHelper';
 import wordpressHelper from '../../services/providers/helpers/wordpressHelper';
 import zendeskHelper from '../../services/providers/helpers/zendeskHelper';
 import badgeSvc from '../../services/badgeSvc';
@@ -143,6 +148,14 @@ export default {
         ...Object.values(store.getters['data/gitlabTokensBySub']).map(token => ({
           token,
           providerId: 'gitlab',
+          url: token.serverUrl,
+          userId: token.sub,
+          name: token.name,
+          scopes: ['api'],
+        })),
+        ...Object.values(store.getters['data/giteaTokensBySub']).map(token => ({
+          token,
+          providerId: 'gitea',
           url: token.serverUrl,
           userId: token.sub,
           name: token.name,
@@ -202,6 +215,12 @@ export default {
       try {
         const { serverUrl, applicationId } = await store.dispatch('modal/open', { type: 'gitlabAccount' });
         await gitlabHelper.addAccount(serverUrl, applicationId);
+      } catch (e) { /* cancel */ }
+    },
+    async addGiteaAccount() {
+      try {
+        const { serverUrl, applicationId, applicationSecret } = await store.dispatch('modal/open', { type: 'giteaAccount' });
+        await giteaHelper.addAccount(serverUrl, applicationId, applicationSecret);
       } catch (e) { /* cancel */ }
     },
     async addGoogleDriveAccount() {

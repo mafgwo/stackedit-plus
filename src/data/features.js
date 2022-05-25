@@ -183,6 +183,11 @@ export default [
         'Use the workspace menu to create a GitLab workspace.',
       ),
       new Feature(
+        'addGiteaWorkspace',
+        'Gitea workspace creator',
+        'Use the workspace menu to create a Gitea workspace.',
+      ),
+      new Feature(
         'addGoogleDriveWorkspace',
         'Google Drive workspace creator',
         'Use the workspace menu to create a Google Drive workspace.',
@@ -228,6 +233,11 @@ export default [
         'addGitLabAccount',
         'GitLab user',
         'Link your GitLab account to StackEdit.',
+      ),
+      new Feature(
+        'addGiteaAccount',
+        'Gitea user',
+        'Link your Gitea account to StackEdit.',
       ),
       new Feature(
         'addGoogleDriveAccount',
@@ -307,6 +317,16 @@ export default [
         'Use the "Synchronize" menu to save a file in a GitLab repository.',
       ),
       new Feature(
+        'openFromGitea',
+        'Gitea reader',
+        'Use the "Synchronize" menu to open a file from a Gitea repository.',
+      ),
+      new Feature(
+        'saveOnGitea',
+        'Gitea writer',
+        'Use the "Synchronize" menu to save a file in a Gitea repository.',
+      ),
+      new Feature(
         'openFromGoogleDrive',
         'Google Drive reader',
         'Use the "Synchronize" menu to open a file from your Google Drive account.',
@@ -372,6 +392,11 @@ export default [
         'publishToGitlab',
         'GitLab publisher',
         'Use the "Publish" menu to publish a file to a GitLab repository.',
+      ),
+      new Feature(
+        'publishToGitea',
+        'Gitea publisher',
+        'Use the "Publish" menu to publish a file to a Gitea repository.',
       ),
       new Feature(
         'publishToGoogleDrive',

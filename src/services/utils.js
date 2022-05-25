@@ -296,6 +296,10 @@ export default {
     const parsedProject = url && url.match(/^https:\/\/[^/]+\/(.+?)(?:\.git|\/)?$/);
     return parsedProject && parsedProject[1];
   },
+  parseGiteaProjectPath(url) {
+    const parsedProject = url && url.match(/^http[s]?:\/\/[^/]+\/(.+?)(?:\.git|\/)?$/);
+    return parsedProject && parsedProject[1];
+  },
   createHiddenIframe(url) {
     const iframeElt = document.createElement('iframe');
     iframeElt.style.position = 'absolute';

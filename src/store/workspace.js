@@ -45,11 +45,13 @@ export default {
     currentWorkspaceIsGit: (state, { currentWorkspace }) =>
       currentWorkspace.providerId === 'githubWorkspace'
       || currentWorkspace.providerId === 'giteeWorkspace'
-      || currentWorkspace.providerId === 'gitlabWorkspace',
+      || currentWorkspace.providerId === 'gitlabWorkspace'
+      || currentWorkspace.providerId === 'giteaWorkspace',
     currentWorkspaceHasUniquePaths: (state, { currentWorkspace }) =>
       currentWorkspace.providerId === 'githubWorkspace'
       || currentWorkspace.providerId === 'giteeWorkspace'
-      || currentWorkspace.providerId === 'gitlabWorkspace',
+      || currentWorkspace.providerId === 'gitlabWorkspace'
+      || currentWorkspace.providerId === 'giteaWorkspace',
     lastSyncActivityKey: (state, { currentWorkspace }) => `${currentWorkspace.id}/lastSyncActivity`,
     lastFocusKey: (state, { currentWorkspace }) => `${currentWorkspace.id}/lastWindowFocus`,
     mainWorkspaceToken: (state, getters, rootState, rootGetters) =>
@@ -69,6 +71,8 @@ export default {
           return rootGetters['data/giteeTokensBySub'][currentWorkspace.sub];
         case 'gitlabWorkspace':
           return rootGetters['data/gitlabTokensBySub'][currentWorkspace.sub];
+        case 'giteaWorkspace':
+          return rootGetters['data/giteaTokensBySub'][currentWorkspace.sub];
         case 'couchdbWorkspace':
           return rootGetters['data/couchdbTokensBySub'][currentWorkspace.id];
         default:
@@ -86,6 +90,8 @@ export default {
           return 'gitee';
         case 'gitlabWorkspace':
           return 'gitlab';
+        case 'giteaWorkspace':
+          return 'gitea';
       }
     },
     loginToken: (state, { loginType, currentWorkspace }, rootState, rootGetters) => {

@@ -77,7 +77,7 @@ turndown:
   linkStyle: inlined
   linkReferenceStyle: full
 
-# GitHub/GitLab commit messages
+# GitHub/GitLab/Gitee/Gitea commit messages
 git:
   createFileMessage: '{{path}} created from https://edit.qicoder.com/'
   updateFileMessage: '{{path}} updated from https://edit.qicoder.com/'
