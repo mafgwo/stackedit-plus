@@ -5,18 +5,24 @@
 ### Fork出来修改的原因
 StackEdit的作者可能因为什么原因，已经很久不维护了，Github授权登录很早之前就登录不了了，并且还没法支持国内常用的Gitee，比较蛋疼，所以想到Fork出来改，大概花了周末一整天终于改好了。
 
-新的Docker镜像在中央仓库为：mafgwo/stackedit，当前最新版本为：5.15.2（延续原有版本号）
+新的Docker镜像在中央仓库为：[mafgwo/stackedit](https://hub.docker.com/r/mafgwo/stackedit)，当前最新版本为：5.15.3（延续原有版本号）
 
 并增加了以下三个环境变量：
 - `GITEE_CLIENT_ID` Gitee 的 Client ID
 - `GITEE_CLIENT_SECRET` Gitee 的 Client Secret
-- `GITEE_CALLBACK` Gitee的回调地址，Gitee授权获取token时还需要传入回调地址，格式是 http[s]://[hostname]:[port]/oauth2/callback
 
-### 关于后续的一些想法
+### TODO: 关于后续的一些想法
 - 支持**Gitea**、**Gogs**两个轻量级且适于自建的Git仓库（毕竟Gitlab对机器配置要求较高）。想支持这两个主要也是考虑到其实很多公司已经禁用了Github或Gitee仓库，在公司都没法连上自己的Git仓库。
 - 汉化，毕竟大家最熟悉的还是母语，并且该编辑器功能页面也不多，汉化工作量并不会很大。
 - 引入mdnice，右边预览增加mdnice预览选项，主要含选主题(含mdnice常用20多个主题)、支持自定义主题、复制到公众号、复制到知乎、复制到稀土掘金等基本功能，便于喜欢写公众号、博客的你可以更好更快的排版。
 - ... 另外，朋友们有好的想法也可以在Issue或者加我微信 qicoding 提给我。
+
+#### TODO 进度
+
+**已支持Gitea (2022-05-25)**
+
+对应Docker版本：5.15.3, tag: 5.15.3
+
 
 ### 目前已部署地址
 https://edit.qicoder.com/ 
