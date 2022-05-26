@@ -11,7 +11,8 @@
           <b>Example:</b> https://instance.smileupps.com/stackedit-workspace
         </div>
         <div class="form-entry__actions">
-          <a href="https://community.stackedit.io/t/couchdb-workspace-setup/" target="_blank">How to setup?</a>
+          <!-- https://community.stackedit.io/t/couchdb-workspace-setup/ -->
+          <a href="#" target="_blank">How to setup?</a>
         </div>
       </form-entry>
     </div>

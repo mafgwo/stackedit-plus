@@ -6,12 +6,12 @@
         <icon-content-save></icon-content-save>
       </div>
       <div class="flex flex--column">
-        Import workspace backup
+        导入工作区备份
       </div>
     </label>
     <menu-entry @click.native="exportWorkspace">
       <icon-content-save slot="icon"></icon-content-save>
-      Export workspace backup
+      导出工作区备份
     </menu-entry>
   </div>
 </template>

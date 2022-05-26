@@ -1,4 +1,4 @@
-# StackEdit
+# StackEdit中文版
 
 从 [StackEdit 官方](https://github.com/benweet/stackedit) fork出来，然后加上了 **Gitee** 的支持，并且已经重新打了镜像，以下官方的部署方式，除了Docker镜像地址不同，其他均一致。
 
@@ -33,6 +33,8 @@ https://edit.qicoder.com/
 
 
 # 以下是官方原有README内容
+
+# StackEdit
 
 [![Build Status](https://img.shields.io/travis/benweet/stackedit.svg?style=flat)](https://travis-ci.org/benweet/stackedit) [![NPM version](https://img.shields.io/npm/v/stackedit.svg?style=flat)](https://www.npmjs.org/package/stackedit)
 

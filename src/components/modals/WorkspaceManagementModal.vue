@@ -4,7 +4,7 @@
       <div class="modal__image">
         <icon-database></icon-database>
       </div>
-      <p>The following workspaces are accessible:</p>
+      <p><br>可以访问以下工作区：</p>
       <div class="workspace-entry flex flex--column" v-for="(workspace, id) in workspacesById" :key="id">
         <div class="flex flex--column">
           <div class="workspace-entry__header flex flex--row flex--align-center">
@@ -14,10 +14,10 @@
             <input class="text-input" type="text" v-if="editedId === id" v-focus @blur="submitEdit()" @keydown.enter="submitEdit()" @keydown.esc.stop="submitEdit(true)" v-model="editingName">
             <div class="workspace-entry__name" v-else>{{workspace.name}}</div>
             <div class="workspace-entry__buttons flex flex--row">
-              <button class="workspace-entry__button button" @click="edit(id)" v-title="'Edit name'">
+              <button class="workspace-entry__button button" @click="edit(id)" v-title="'编辑名称'">
                 <icon-pen></icon-pen>
               </button>
-              <button class="workspace-entry__button button" @click="remove(id)" v-title="'Remove'">
+              <button class="workspace-entry__button button" @click="remove(id)" v-title="'删除'">
                 <icon-delete></icon-delete>
               </button>
             </div>
@@ -27,10 +27,10 @@
               {{workspace.url}}
             </div>
             <div class="workspace-entry__buttons flex flex--row">
-              <button class="workspace-entry__button button" v-clipboard="workspace.url" @click="info('Workspace URL copied to clipboard!')" v-title="'Copy URL'">
+              <button class="workspace-entry__button button" v-clipboard="workspace.url" @click="info('工作区URL已复制到剪贴板!')" v-title="'复制URL'">
                 <icon-content-copy></icon-content-copy>
               </button>
-              <a class="workspace-entry__button button" :href="workspace.url" target="_blank" v-title="'Open workspace'">
+              <a class="workspace-entry__button button" :href="workspace.url" target="_blank" v-title="'打开工作区'">
                 <icon-open-in-new></icon-open-in-new>
               </a>
             </div>
@@ -40,24 +40,24 @@
               {{workspace.locationUrl}}
             </div>
             <div class="workspace-entry__buttons flex flex--row">
-              <button class="workspace-entry__button button" v-clipboard="workspace.locationUrl" @click="info('Workspace URL copied to clipboard!')" v-title="'Copy URL'">
+              <button class="workspace-entry__button button" v-clipboard="workspace.locationUrl" @click="info('工作区URL已复制到剪贴板!')" v-title="'复制URL'">
                 <icon-content-copy></icon-content-copy>
               </button>
-              <a class="workspace-entry__button button" :href="workspace.locationUrl" target="_blank" v-title="'Open workspace location'">
+              <a class="workspace-entry__button button" :href="workspace.locationUrl" target="_blank" v-title="'打开工作区位置'">
                 <icon-open-in-new></icon-open-in-new>
               </a>
             </div>
           </div>
           <div>
             <span class="workspace-entry__offline" v-if="availableOffline[id]">
-              available offline
+              离线可用
             </span>
           </div>
         </div>
       </div>
     </div>
     <div class="modal__button-bar">
-      <button class="button button--resolve" @click="config.resolve()">Close</button>
+      <button class="button button--resolve" @click="config.resolve()">关闭</button>
     </div>
   </modal-inner>
 </template>
@@ -117,9 +117,9 @@ export default {
     },
     async remove(id) {
       if (id === this.mainWorkspace.id) {
-        this.info('Your main workspace can not be removed.');
+        this.info('您的主工作区无法删除。');
       } else if (id === this.currentWorkspace.id) {
-        this.info('Please close the workspace before removing it.');
+        this.info('请先关闭工作区，然后再将其删除。');
       } else {
         try {
           await store.dispatch('modal/open', 'removeWorkspace');

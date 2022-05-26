@@ -26,35 +26,35 @@ class Feature {
 export default [
   new Feature(
     'navigationBar',
-    'Nav bar expert',
-    'Master the navigation bar by formatting some Markdown and renaming the current file.',
+    '丰富的导航栏',
+    '通过格式化一些Markdown和重命名当前文件掌握导航栏',
     [
       new Feature(
         'formatButtons',
-        'Formatter',
-        'Use the format buttons to change formatting in your Markdown file.',
+        '格式化',
+        '使用格式化按钮更改 Markdown 文件中的格式。',
       ),
       new Feature(
         'editCurrentFileName',
-        'Renamer',
-        'Use the name field in the navigation bar to rename the current file.',
+        '重命名',
+        '使用导航栏中的名称字段重命名当前文件。',
       ),
       new Feature(
         'toggleExplorer',
-        'Explorer toggler',
-        'Use the navigation bar to toggle the explorer.',
+        '资源管理器切换',
+        '使用导航栏切换资源管理器。',
       ),
       new Feature(
         'toggleSideBar',
-        'Side bar toggler',
-        'Use the navigation bar to toggle the side bar.',
+        '切换侧边栏',
+        '使用导航栏来切换侧边栏。',
       ),
     ],
   ),
   new Feature(
     'explorer',
-    'Explorer',
-    'Use the file explorer to manage files and folders in your workspace.',
+    '资源管理器',
+    '使用文件资源管理器管理工作区中的文件和文件夹。',
     [
       new Feature(
         'createFile',
@@ -142,25 +142,25 @@ export default [
   ),
   new Feature(
     'signIn',
-    'Signed in',
-    'Sign in with Google, sync your main workspace and unlock functionalities.',
+    '登录',
+    '使用 Google 登录，同步您的主工作区并解锁功能。',
     [
       new Feature(
         'syncMainWorkspace',
-        'Main workspace synced',
-        'Sign in with Google to sync your main workspace with your Google Drive app data folder.',
+        '主工作区已同步',
+        '使用 Google 登录以将您的主工作区与您的 Google Drive 应用数据文件夹同步。',
       ),
       new Feature(
         'sponsor',
-        'Sponsor',
-        'Sign in with Google and sponsor StackEdit to unlock PDF and Pandoc exports.',
+        '赞助',
+        '使用 Google 登录并赞助 StackEdit 以解锁 PDF 和 Pandoc 导出。',
       ),
     ],
   ),
   new Feature(
     'workspaces',
     'Workspace expert',
-    'Use the workspace menu to create all kinds of workspaces and to manage them.',
+    '使用工作区菜单创建各种工作区并对其进行管理。',
     [
       new Feature(
         'addCouchdbWorkspace',

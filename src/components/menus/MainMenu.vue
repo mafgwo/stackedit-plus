@@ -12,116 +12,116 @@
           <icon-provider :provider-id="currentWorkspace.providerId"></icon-provider>
         </div>
         <span v-if="currentWorkspace.providerId === 'googleDriveAppData'">
-          <b>{{currentWorkspace.name}}</b> synced with your Google Drive app data folder.
+          <b>{{currentWorkspace.name}}</b> 与您的 Google Drive 应用数据文件夹同步。
         </span>
         <span v-else-if="currentWorkspace.providerId === 'googleDriveWorkspace'">
-          <b>{{currentWorkspace.name}}</b> synced with a <a :href="workspaceLocationUrl" target="_blank">Google Drive folder</a>.
+          <b>{{currentWorkspace.name}}</b> 与 <a :href="workspaceLocationUrl" target="_blank">Google Drive 文件夹</a>同步。
         </span>
         <span v-else-if="currentWorkspace.providerId === 'couchdbWorkspace'">
-          <b>{{currentWorkspace.name}}</b> synced with a <a :href="workspaceLocationUrl" target="_blank">CouchDB database</a>.
+          <b>{{currentWorkspace.name}}</b> 与 <a :href="workspaceLocationUrl" target="_blank">CouchDB 数据库</a>同步。
         </span>
         <span v-else-if="currentWorkspace.providerId === 'githubWorkspace'">
-          <b>{{currentWorkspace.name}}</b> synced with a <a :href="workspaceLocationUrl" target="_blank">GitHub repo</a>.
+          <b>{{currentWorkspace.name}}</b> 与 <a :href="workspaceLocationUrl" target="_blank">GitHub repo</a> 同步。
         </span>
         <span v-else-if="currentWorkspace.providerId === 'giteeWorkspace'">
-          <b>{{currentWorkspace.name}}</b> synced with a <a :href="workspaceLocationUrl" target="_blank">Gitee repo</a>.
+          <b>{{currentWorkspace.name}}</b> 与 <a :href="workspaceLocationUrl" target="_blank">Gitee repo</a> 同步。
         </span>
         <span v-else-if="currentWorkspace.providerId === 'gitlabWorkspace'">
-          <b>{{currentWorkspace.name}}</b> synced with a <a :href="workspaceLocationUrl" target="_blank">GitLab project</a>.
+          <b>{{currentWorkspace.name}}</b> 与 <a :href="workspaceLocationUrl" target="_blank">GitLab 项目</a>同步。
         </span>
         <span v-else-if="currentWorkspace.providerId === 'giteaWorkspace'">
-          <b>{{currentWorkspace.name}}</b> synced with a <a :href="workspaceLocationUrl" target="_blank">Gitea project</a>.
+          <b>{{currentWorkspace.name}}</b> 与 <a :href="workspaceLocationUrl" target="_blank">Gitea 项目</a>同步。
         </span>
       </div>
       <div class="menu-entry menu-entry--info flex flex--row flex--align-center" v-else>
         <div class="menu-entry__icon menu-entry__icon--disabled">
           <icon-sync-off></icon-sync-off>
         </div>
-        <span><b>{{currentWorkspace.name}}</b> not synced.</span>
+        <span><b>{{currentWorkspace.name}}</b> 未同步。</span>
       </div>
     </div>
     <menu-entry v-if="!loginToken" @click.native="signin">
       <icon-login slot="icon"></icon-login>
-      <div>Sign in with Google</div>
-      <span>Sync your main workspace and unlock functionalities.</span>
+      <div>使用 Google 登录</div>
+      <span>同步您的主工作区并解锁功能。</span>
     </menu-entry>
     <menu-entry @click.native="setPanel('workspaces')">
       <icon-database slot="icon"></icon-database>
-      <div><div class="menu-entry__label menu-entry__label--count" v-if="workspaceCount">{{workspaceCount}}</div> Workspaces</div>
-      <span>Switch to another workspace.</span>
+      <div><div class="menu-entry__label menu-entry__label--count" v-if="workspaceCount">{{workspaceCount}}</div> 工作区</div>
+      <span>切换到另一个工作区。</span>
     </menu-entry>
     <hr>
     <menu-entry @click.native="setPanel('sync')">
       <icon-sync slot="icon"></icon-sync>
-      <div><div class="menu-entry__label menu-entry__label--count" v-if="syncLocationCount">{{syncLocationCount}}</div> Synchronize</div>
-      <span>Sync your files in the Cloud.</span>
+      <div><div class="menu-entry__label menu-entry__label--count" v-if="syncLocationCount">{{syncLocationCount}}</div> 同步</div>
+      <span>在云端同步您的文件。</span>
     </menu-entry>
     <menu-entry @click.native="setPanel('publish')">
       <icon-upload slot="icon"></icon-upload>
-      <div><div class="menu-entry__label menu-entry__label--count" v-if="publishLocationCount">{{publishLocationCount}}</div>Publish</div>
-      <span>Export your files to the web.</span>
+      <div><div class="menu-entry__label menu-entry__label--count" v-if="publishLocationCount">{{publishLocationCount}}</div>发布</div>
+      <span>将您的文件导出到 Web。</span>
     </menu-entry>
     <menu-entry @click.native="setPanel('history')">
       <icon-history slot="icon"></icon-history>
-      <div>History</div>
-      <span>Track and restore file revisions.</span>
+      <div>历史</div>
+      <span>跟踪和恢复文件修订。</span>
     </menu-entry>
     <menu-entry @click.native="fileProperties">
       <icon-view-list slot="icon"></icon-view-list>
-      <div>File properties</div>
-      <span>Add metadata and configure extensions.</span>
+      <div>文件属性</div>
+      <span>添加元数据并配置扩展。</span>
     </menu-entry>
     <hr>
     <menu-entry @click.native="setPanel('toc')">
       <icon-toc slot="icon"></icon-toc>
-      Table of contents
+      目录
     </menu-entry>
     <menu-entry @click.native="setPanel('help')">
       <icon-help-circle slot="icon"></icon-help-circle>
-      Markdown cheat sheet
+      Markdown 帮助
     </menu-entry>
     <hr>
     <menu-entry @click.native="setPanel('importExport')">
       <icon-content-save slot="icon"></icon-content-save>
-      Import/export
+      导入/导出
     </menu-entry>
     <menu-entry @click.native="print">
       <icon-printer slot="icon"></icon-printer>
-      Print
+      打印
     </menu-entry>
     <hr>
     <menu-entry @click.native="badges">
       <icon-seal slot="icon"></icon-seal>
-      <div><div class="menu-entry__label menu-entry__label--count">{{badgeCount}}/{{featureCount}}</div> Badges</div>
-      <span>List application features and earned badges.</span>
+      <div><div class="menu-entry__label menu-entry__label--count">{{badgeCount}}/{{featureCount}}</div> 徽章</div>
+      <span>列出应用程序功能和获得的徽章。</span>
     </menu-entry>
     <menu-entry @click.native="accounts">
       <icon-key slot="icon"></icon-key>
-      <div><div class="menu-entry__label menu-entry__label--count">{{accountCount}}</div> Accounts</div>
-      <span>Manage access to your external accounts.</span>
+      <div><div class="menu-entry__label menu-entry__label--count">{{accountCount}}</div> 账户</div>
+      <span>管理对您的外部帐户的访问。</span>
     </menu-entry>
     <menu-entry @click.native="templates">
       <icon-code-braces slot="icon"></icon-code-braces>
-      <div><div class="menu-entry__label menu-entry__label--count">{{templateCount}}</div> Templates</div>
-      <span>Configure Handlebars templates for your exports.</span>
+      <div><div class="menu-entry__label menu-entry__label--count">{{templateCount}}</div> 模板</div>
+      <span>为您的导出配置 Handlebars 模板。</span>
     </menu-entry>
     <menu-entry @click.native="settings">
       <icon-settings slot="icon"></icon-settings>
-      <div>Settings</div>
-      <span>Tweak application and keyboard shortcuts.</span>
+      <div>配置</div>
+      <span>调整应用程序和键盘快捷键。</span>
     </menu-entry>
     <hr>
     <menu-entry @click.native="setPanel('workspaceBackups')">
       <icon-content-save slot="icon"></icon-content-save>
-      Workspace backups
+      工作区备份
     </menu-entry>
     <menu-entry @click.native="reset">
       <icon-logout slot="icon"></icon-logout>
-      Reset application
+      重置应用程序
     </menu-entry>
     <menu-entry @click.native="about">
       <icon-help-circle slot="icon"></icon-help-circle>
-      About StackEdit
+      关于 StackEdit
     </menu-entry>
   </div>
 </template>

@@ -8,7 +8,7 @@
           </option>
         </select>
       </p>
-      <p v-if="!historyContext">Synchronize <b>{{currentFileName}}</b> to enable revision history or <a href="javascript:void(0)" @click="signin">sign in with Google</a> to synchronize your main workspace.</p>
+      <p v-if="!historyContext">同步 <b>{{currentFileName}}</b> 以启用修订历史 或者 <a href="javascript:void(0)" @click="signin">登录 Google</a> 以同步您的主工作区。</p>
       <p v-else-if="loading">Loading history…</p>
       <p v-else-if="!revisionsWithSpacer.length"><b>{{currentFileName}}</b> has no history.</p>
       <div class="menu-entry menu-entry--info flex flex--row flex--align-center" v-else>
