@@ -22,6 +22,9 @@ StackEdit的作者可能因为什么原因，已经很久不维护了，Github�
 **已支持Gitea (2022-05-25)，自建Gitea要支持跨域，不知道如何支持跨域提issue我会回答**
 对应Docker版本：5.15.3, tag: v5.15.3
 
+**Gogs目前无法支持，因为API目前不支持直接把Markdown推上去，如果后续Gogs的API支持了在添加**
+
+
 
 ### 目前已部署地址
 https://edit.qicoder.com/ 
