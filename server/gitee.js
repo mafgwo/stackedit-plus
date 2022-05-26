@@ -12,7 +12,6 @@ function giteeToken(clientId, code, oauth2RedirectUri) {
         client_secret: conf.values.giteeClientSecret,
         code,
         grant_type: 'authorization_code',
-        scope: 'authorization_code',
         redirect_uri: oauth2RedirectUri,
       },
       json: true
@@ -22,7 +21,7 @@ function giteeToken(clientId, code, oauth2RedirectUri) {
       }
       const token = body.access_token;
       if (token) {
-        resolve(token);
+        resolve(body);
       } else {
         reject(res.statusCode + ',body:' + JSON.stringify(body));
       }
@@ -33,7 +32,7 @@ function giteeToken(clientId, code, oauth2RedirectUri) {
 exports.giteeToken = (req, res) => {
   giteeToken(req.query.clientId, req.query.code, req.query.oauth2RedirectUri)
     .then(
-      token => res.send(token),
+      tokenBody => res.send(tokenBody),
       err => res
         .status(400)
         .send(err ? err.message || err.toString() : 'bad_code'),

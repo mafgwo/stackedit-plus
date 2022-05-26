@@ -5,6 +5,8 @@ import userSvc from '../../userSvc';
 import badgeSvc from '../../badgeSvc';
 import constants from '../../../data/constants';
 
+const tokenExpirationMargin = 5 * 60 * 1000;
+
 const request = (token, options) => networkSvc.request({
   ...options,
   headers: {
@@ -61,31 +63,42 @@ export default {
   /**
    * https://developer.gitee.com/apps/building-oauth-apps/authorization-options-for-oauth-apps/
    */
-  async startOauth2(scopes, sub = null, silent = false) {
+  async startOauth2(lastRefreshToken, silent = false) {
     const clientId = store.getters['data/serverConf'].giteeClientId;
-
-    // Get an OAuth2 code
-    const { code } = await networkSvc.startOauth2(
-      'https://gitee.com/oauth/authorize',
-      {
-        client_id: clientId,
-        scope: 'projects pull_requests',
-        response_type: 'code',
-      },
-      silent,
-    );
-
-    // Exchange code with token
-    const accessToken = (await networkSvc.request({
-      method: 'GET',
-      url: 'oauth2/giteeToken',
-      params: {
-        clientId,
-        code,
-        oauth2RedirectUri: constants.oauth2RedirectUri,
-      },
-    })).body;
-
+    let tokenBody;
+    if (!silent) {
+      // Get an OAuth2 code
+      const { code } = await networkSvc.startOauth2(
+        'https://gitee.com/oauth/authorize',
+        {
+          client_id: clientId,
+          scope: 'projects pull_requests',
+          response_type: 'code',
+        },
+        silent,
+      );
+      // Exchange code with token
+      tokenBody = (await networkSvc.request({
+        method: 'GET',
+        url: 'oauth2/giteeToken',
+        params: {
+          clientId,
+          code,
+          oauth2RedirectUri: constants.oauth2RedirectUri,
+        },
+      })).body;
+    } else {
+      // grant_type=refresh_token&refresh_token={refresh_token}
+      tokenBody = (await networkSvc.request({
+        method: 'POST',
+        url: 'https://gitee.com/oauth/token',
+        params: {
+          grant_type: 'refresh_token',
+          refresh_token: lastRefreshToken,
+        },
+      })).body;
+    }
+    const accessToken = tokenBody.access_token;
     // Call the user info endpoint
     const user = (await networkSvc.request({
       method: 'GET',
@@ -100,15 +113,11 @@ export default {
       imageUrl: user.avatar_url || '',
     });
 
-    // Check the returned sub consistency
-    if (sub && `${user.login}` !== sub) {
-      throw new Error('Gitee account ID not expected.');
-    }
-
-    // Build token object including scopes and sub
+    // Build token object including sub 在token失效后刷新token 如果刷新失败则触发重新授权
     const token = {
-      scopes,
       accessToken,
+      refreshToken: tokenBody.refresh_token,
+      expiresOn: Date.now() + (tokenBody.expires_in * 1000),
       name: user.login,
       sub: `${user.login}`,
     };
@@ -116,6 +125,39 @@ export default {
     // Add token to gitee tokens
     store.dispatch('data/addGiteeToken', token);
     return token;
+  },
+  // 刷新token
+  async refreshToken(token) {
+    const { sub } = token;
+    const lastToken = store.getters['data/giteeTokensBySub'][sub];
+    // 兼容旧的没有过期时间
+    if (!lastToken.expiresOn) {
+      await store.dispatch('modal/open', {
+        type: 'providerRedirection',
+        name: 'Gitee',
+      });
+      return this.startOauth2();
+    }
+    // lastToken is not expired
+    if (lastToken.expiresOn > Date.now() - tokenExpirationMargin) {
+      return lastToken;
+    }
+
+    // existing token is about to expire.
+    // Try to get a new token in background
+    try {
+      return await this.startOauth2(lastToken.refreshToken, true);
+    } catch (err) {
+      // If it fails try to popup a window
+      if (store.state.offline) {
+        throw err;
+      }
+      await store.dispatch('modal/open', {
+        type: 'providerRedirection',
+        name: 'Gitee',
+      });
+      return this.startOauth2();
+    }
   },
   async addAccount() {
     const token = await this.startOauth2();
@@ -133,10 +175,11 @@ export default {
     repo,
     branch,
   }) {
-    const { commit } = await repoRequest(token, owner, repo, {
+    const refreshedToken = await this.refreshToken(token);
+    const { commit } = await repoRequest(refreshedToken, owner, repo, {
       url: `commits/${encodeURIComponent(branch)}`,
     });
-    const { tree, truncated } = await repoRequest(token, owner, repo, {
+    const { tree, truncated } = await repoRequest(refreshedToken, owner, repo, {
       url: `git/trees/${encodeURIComponent(commit.tree.sha)}?recursive=1`,
     });
     if (truncated) {
@@ -155,7 +198,8 @@ export default {
     sha,
     path,
   }) {
-    return repoRequest(token, owner, repo, {
+    const refreshedToken = await this.refreshToken(token);
+    return repoRequest(refreshedToken, owner, repo, {
       url: 'commits',
       params: { sha, path },
     });
@@ -174,7 +218,8 @@ export default {
     content,
     sha,
   }) {
-    return repoRequest(token, owner, repo, {
+    const refreshedToken = await this.refreshToken(token);
+    return repoRequest(refreshedToken, owner, repo, {
       method: sha ? 'PUT' : 'POST',
       url: `contents/${encodeURIComponent(path)}`,
       body: {
@@ -197,7 +242,8 @@ export default {
     path,
     sha,
   }) {
-    return repoRequest(token, owner, repo, {
+    const refreshedToken = await this.refreshToken(token);
+    return repoRequest(refreshedToken, owner, repo, {
       method: 'DELETE',
       url: `contents/${encodeURIComponent(path)}`,
       body: {
@@ -218,7 +264,8 @@ export default {
     branch,
     path,
   }) {
-    const { sha, content } = await repoRequest(token, owner, repo, {
+    const refreshedToken = await this.refreshToken(token);
+    const { sha, content } = await repoRequest(refreshedToken, owner, repo, {
       url: `contents/${encodeURIComponent(path)}`,
       params: { ref: branch },
     });
@@ -240,7 +287,8 @@ export default {
     isPublic,
     gistId,
   }) {
-    const { body } = await request(token, gistId ? {
+    const refreshedToken = await this.refreshToken(token);
+    const { body } = await request(refreshedToken, gistId ? {
       method: 'PATCH',
       url: `https://gitee.com/api/v5/gists/${gistId}`,
       body: {
@@ -275,7 +323,8 @@ export default {
     gistId,
     filename,
   }) {
-    const result = (await request(token, {
+    const refreshedToken = await this.refreshToken(token);
+    const result = (await request(refreshedToken, {
       url: `https://gitee.com/api/v5/gists/${gistId}`,
     })).body.files[filename];
     if (!result) {
@@ -291,7 +340,8 @@ export default {
     token,
     gistId,
   }) {
-    const { body } = await request(token, {
+    const refreshedToken = await this.refreshToken(token);
+    const { body } = await request(refreshedToken, {
       url: `https://gitee.com/api/v5/gists/${gistId}/commits`,
     });
     return body;
@@ -306,7 +356,8 @@ export default {
     filename,
     sha,
   }) {
-    const result = (await request(token, {
+    const refreshedToken = await this.refreshToken(token);
+    const result = (await request(refreshedToken, {
       url: `https://gitee.com/api/v5/gists/${gistId}/${sha}`,
     })).body.files[filename];
     if (!result) {
