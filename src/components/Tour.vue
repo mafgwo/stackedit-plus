@@ -3,7 +3,7 @@
     <div class="tour-step" :class="'tour-step--' + step" :style="stepStyle">
       <div class="tour-step__inner" v-if="step === 'welcome'">
         <h2>欢迎回来！</h2>
-        <p>新的<b>StackEdit中文版</b>这里！</p>
+        <p>新的<b>StackEdit中文版</b>在这里！</p>
         <p>请单击<b>下一步</b>快速浏览。</p>
         <div class="tour-step__button-bar">
           <button class="button" @click="finish">跳过</button>
