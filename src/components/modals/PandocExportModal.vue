@@ -1,7 +1,7 @@
 <template>
-  <modal-inner aria-label="Export with Pandoc">
+  <modal-inner aria-label="使用Pandoc导出">
     <div class="modal__content">
-      <p>Please choose a format for your <b>Pandoc export</b>.</p>
+      <p>请为您的<b> pandoc导出</b>选择格式。</p>
       <form-entry label="Template">
         <select class="textfield" slot="field" v-model="selectedFormat" @keydown.enter="resolve()">
           <option value="asciidoc">AsciiDoc</option>
@@ -19,8 +19,8 @@
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">Cancel</button>
-      <button class="button button--resolve" @click="resolve()">Ok</button>
+      <button class="button" @click="config.reject()">取消</button>
+      <button class="button button--resolve" @click="resolve()">确认</button>
     </div>
   </modal-inner>
 </template>

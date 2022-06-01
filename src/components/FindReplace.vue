@@ -1,6 +1,6 @@
 <template>
   <div class="find-replace" @keydown.esc.stop="onEscape">
-    <button class="find-replace__close-button button not-tabbable" @click="close()" v-title="'Close'">
+    <button class="find-replace__close-button button not-tabbable" @click="close()" v-title="'关闭'">
       <icon-close></icon-close>
     </button>
     <div class="find-replace__row">

@@ -36,9 +36,9 @@ export default {
     'Ok',
   ),
   providerRedirection: simpleModal(
-    config => `<p>You are about to navigate to the <b>${config.name}</b> authorization page.</p>`,
-    'Cancel',
-    'Ok, go on',
+    config => `<p>您将跳转到 <b>${config.name}</b> 授权页面。</p>`,
+    '取消',
+    '确认跳转',
   ),
   removeWorkspace: simpleModal(
     '<p>You are about to remove a workspace locally. Are you sure?</p>',

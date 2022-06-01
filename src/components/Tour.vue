@@ -13,7 +13,7 @@
       <div class="tour-step__inner" v-else-if="step === 'editor'">
         <h2>您的Markdown编辑器</h2>
         <p>StackEdit实时将Markdown转换为HTML。</p>
-        <p>点击 <icon-side-preview></icon-side-preview> 切换侧面预览</p>
+        <p>点击 <icon-side-preview></icon-side-preview> 切换侧边预览</p>
         <div class="tour-step__button-bar">
           <button class="button" @click="finish">跳过</button>
           <button class="button button--resolve" @click="next">下一步</button>

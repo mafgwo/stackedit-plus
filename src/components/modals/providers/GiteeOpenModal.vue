@@ -1,32 +1,32 @@
 <template>
-  <modal-inner aria-label="Synchronize with Gitee">
+  <modal-inner aria-label="与 Gitee 同步">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="gitee"></icon-provider>
       </div>
-      <p>Open a file from your <b>Gitee</b> repository and keep it synced.</p>
-      <form-entry label="Repository URL" error="repoUrl">
+      <p>从您的<b> Gitee </b>仓库中打开文件，并保持同步。</p>
+      <form-entry label="仓库URL" error="repoUrl">
         <input slot="field" class="textfield" type="text" v-model.trim="repoUrl" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          <b>Example:</b> https://gitee.com/owner/my-repo
+          <b>例如:</b> https://gitee.com/owner/my-repo
         </div>
       </form-entry>
       <form-entry label="File path" error="path">
         <input slot="field" class="textfield" type="text" v-model.trim="path" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          <b>Example:</b> path/to/README.md
+          <b>例如:</b> path/to/README.md
         </div>
       </form-entry>
-      <form-entry label="Branch" info="optional">
+      <form-entry label="分支" info="可选的">
         <input slot="field" class="textfield" type="text" v-model.trim="branch" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          If not supplied, the <code>master</code> branch will be used.
+          如果未提供，将使用<code> master </code>分支。
         </div>
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">Cancel</button>
-      <button class="button button--resolve" @click="resolve()">Ok</button>
+      <button class="button" @click="config.reject()">取消</button>
+      <button class="button button--resolve" @click="resolve()">确认</button>
     </div>
   </modal-inner>
 </template>

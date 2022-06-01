@@ -1,27 +1,27 @@
 <template>
-  <modal-inner aria-label="Publish to Gitea">
+  <modal-inner aria-label="发布到Gitea">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="gitea"></icon-provider>
       </div>
-      <p>Publish <b>{{currentFileName}}</b> to your <b>Gitea</b> project.</p>
+      <p>向您的<b> Gitea </b>项目发布<b> {{CurrentFileName}} </b>。</p>
       <form-entry label="Project URL" error="projectUrl">
         <input slot="field" class="textfield" type="text" v-model.trim="projectUrl" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          <b>Example:</b> {{config.token.serverUrl}}/path/to/project
+          <b>例如:</b> {{config.token.serverUrl}}/path/to/project
         </div>
       </form-entry>
       <form-entry label="File path" error="path">
         <input slot="field" class="textfield" type="text" v-model.trim="path" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          <b>Example:</b> path/to/README.md<br>
-          If the file exists, it will be overwritten.
+          <b>例如:</b> path/to/README.md<br>
+          如果文件存在，将被覆盖。
         </div>
       </form-entry>
-      <form-entry label="Branch" info="optional">
+      <form-entry label="分支" info="可选的">
         <input slot="field" class="textfield" type="text" v-model.trim="branch" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          If not supplied, the <code>master</code> branch will be used.
+          如果未提供，将使用<code> master </code>分支。
         </div>
       </form-entry>
       <form-entry label="Template">
@@ -31,13 +31,13 @@
           </option>
         </select>
         <div class="form-entry__actions">
-          <a href="javascript:void(0)" @click="configureTemplates">Configure templates</a>
+          <a href="javascript:void(0)" @click="configureTemplates">配置模板</a>
         </div>
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">Cancel</button>
-      <button class="button button--resolve" @click="resolve()">Ok</button>
+      <button class="button" @click="config.reject()">取消</button>
+      <button class="button button--resolve" @click="resolve()">确认</button>
     </div>
   </modal-inner>
 </template>

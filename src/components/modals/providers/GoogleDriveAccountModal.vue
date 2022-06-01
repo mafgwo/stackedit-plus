@@ -1,24 +1,24 @@
 <template>
-  <modal-inner aria-label="Link Google Drive account">
+  <modal-inner aria-label="链接Google Drive账号">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="googleDrive"></icon-provider>
       </div>
-      <p>Link your <b>Google Drive</b> account to <b>StackEdit</b>.</p>
+      <p>将您的<b>Google Drive</b>链接到<b>StackEdit</b>。</p>
       <div class="form-entry">
         <div class="form-entry__checkbox">
           <label>
-            <input type="checkbox" v-model="restrictedAccess"> Restrict access
+            <input type="checkbox" v-model="restrictedAccess"> 限制访问
           </label>
           <div class="form-entry__info">
-            If checked, access will be restricted to files that you have opened or created with <b>StackEdit</b>.
+            如果限制，则将访问仅限于您使用<b>StackEdit</b>创建的文件。
           </div>
         </div>
       </div>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">Cancel</button>
-      <button class="button button--resolve" @click="config.resolve()">Ok</button>
+      <button class="button" @click="config.reject()">取消</button>
+      <button class="button button--resolve" @click="config.resolve()">确认</button>
     </div>
   </modal-inner>
 </template>

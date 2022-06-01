@@ -1,30 +1,30 @@
 <template>
-  <modal-inner aria-label="Synchronize with Gist">
+  <modal-inner aria-label="与 Gist 同步">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="gist"></icon-provider>
       </div>
-      <p>Save <b>{{currentFileName}}</b> to a <b>Gist</b> and keep it synced.</p>
+      <p>将<b> {{currentFileName}} </b>保存到<b>Gist</b>并保持同步。</p>
       <form-entry label="Filename" error="filename">
         <input slot="field" class="textfield" type="text" v-model.trim="filename" @keydown.enter="resolve()">
       </form-entry>
       <div class="form-entry">
         <div class="form-entry__checkbox">
           <label>
-            <input type="checkbox" v-model="isPublic"> Public
+            <input type="checkbox" v-model="isPublic"> 公开的
           </label>
         </div>
       </div>
-      <form-entry label="Existing Gist ID" info="optional">
+      <form-entry label="Existing Gist ID" info="可选的">
         <input slot="field" class="textfield" type="text" v-model.trim="gistId" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          If the file exists in the Gist, it will be overwritten.
+          如果文件存在于Gist中，则将被覆盖。
         </div>
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">Cancel</button>
-      <button class="button button--resolve" @click="resolve()">Ok</button>
+      <button class="button" @click="config.reject()">取消</button>
+      <button class="button button--resolve" @click="resolve()">确认</button>
     </div>
   </modal-inner>
 </template>

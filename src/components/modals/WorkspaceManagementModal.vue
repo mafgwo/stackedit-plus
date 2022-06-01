@@ -1,5 +1,5 @@
 <template>
-  <modal-inner class="modal__inner-1--workspace-management" aria-label="Manage workspaces">
+  <modal-inner class="modal__inner-1--workspace-management" aria-label="管理工作区">
     <div class="modal__content">
       <div class="modal__image">
         <icon-database></icon-database>

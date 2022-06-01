@@ -1,33 +1,33 @@
 <template>
-  <modal-inner aria-label="Synchronize with GitHub">
+  <modal-inner aria-label="与 GitHub 同步">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="github"></icon-provider>
       </div>
       <p>Save <b>{{currentFileName}}</b> to your <b>GitHub</b> repository and keep it synced.</p>
-      <form-entry label="Repository URL" error="repoUrl">
+      <form-entry label="仓库URL" error="repoUrl">
         <input slot="field" class="textfield" type="text" v-model.trim="repoUrl" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          <b>Example:</b> https://github.com/owner/my-repo
+          <b>例如:</b> https://github.com/owner/my-repo
         </div>
       </form-entry>
       <form-entry label="File path" error="path">
         <input slot="field" class="textfield" type="text" v-model.trim="path" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          <b>Example:</b> path/to/README.md<br>
-          If the file exists, it will be overwritten.
+          <b>例如:</b> path/to/README.md<br>
+          如果文件存在，将被覆盖。
         </div>
       </form-entry>
-      <form-entry label="Branch" info="optional">
+      <form-entry label="分支" info="可选的">
         <input slot="field" class="textfield" type="text" v-model.trim="branch" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          If not supplied, the <code>master</code> branch will be used.
+          如果未提供，将使用<code> master </code>分支。
         </div>
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">Cancel</button>
-      <button class="button button--resolve" @click="resolve()">Ok</button>
+      <button class="button" @click="config.reject()">取消</button>
+      <button class="button button--resolve" @click="resolve()">确认</button>
     </div>
   </modal-inner>
 </template>

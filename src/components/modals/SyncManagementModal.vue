@@ -16,7 +16,7 @@
               {{location.description}}
             </div>
             <div class="sync-entry__buttons flex flex--row flex--center">
-              <button class="sync-entry__button button" @click="remove(location)" v-title="'Remove location'">
+              <button class="sync-entry__button button" @click="remove(location)" v-title="'删除位置'">
                 <icon-delete></icon-delete>
               </button>
             </div>
@@ -26,10 +26,10 @@
               {{location.url || 'Google Drive app data'}}
             </div>
             <div class="sync-entry__buttons flex flex--row flex--center" v-if="location.url">
-              <button class="sync-entry__button button" v-clipboard="location.url" @click="info('Location URL copied to clipboard!')" v-title="'Copy URL'">
+              <button class="sync-entry__button button" v-clipboard="location.url" @click="info('位置URL复制到剪贴板！')" v-title="'复制URL'">
                 <icon-content-copy></icon-content-copy>
               </button>
-              <a class="sync-entry__button button" v-if="location.url" :href="location.url" target="_blank" v-title="'Open location'">
+              <a class="sync-entry__button button" v-if="location.url" :href="location.url" target="_blank" v-title="'打开位置'">
                 <icon-open-in-new></icon-open-in-new>
               </a>
             </div>

@@ -10,7 +10,7 @@
       </a>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">Cancel</button>
+      <button class="button" @click="config.reject()">取消</button>
     </div>
   </modal-inner>
 </template>

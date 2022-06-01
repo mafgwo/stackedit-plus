@@ -1,21 +1,21 @@
 <template>
-  <modal-inner aria-label="Export to PDF">
+  <modal-inner aria-label="导出到PDF">
     <div class="modal__content">
-      <p>Please choose a template for your <b>PDF export</b>.</p>
-      <form-entry label="Template">
+      <p>请为您的<b> pdf导出</b>选择模板。</p>
+      <form-entry label="模板">
         <select class="textfield" slot="field" v-model="selectedTemplate" @keydown.enter="resolve()">
           <option v-for="(template, id) in allTemplatesById" :key="id" :value="id">
             {{ template.name }}
           </option>
         </select>
         <div class="form-entry__actions">
-          <a href="javascript:void(0)" @click="configureTemplates">Configure templates</a>
+          <a href="javascript:void(0)" @click="configureTemplates">配置模板</a>
         </div>
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">Cancel</button>
-      <button class="button button--resolve" @click="resolve()">Ok</button>
+      <button class="button" @click="config.reject()">取消</button>
+      <button class="button button--resolve" @click="resolve()">确认</button>
     </div>
   </modal-inner>
 </template>

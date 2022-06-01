@@ -1,11 +1,11 @@
 <template>
-  <modal-inner class="modal__inner-1--account-management" aria-label="Manage external accounts">
+  <modal-inner class="modal__inner-1--account-management" aria-label="管理外部账号">
     <div class="modal__content">
       <div class="modal__image">
         <icon-key></icon-key>
       </div>
-      <p v-if="entries.length">StackEdit has access to the following external accounts:</p>
-      <p v-else>StackEdit has no access to any external account yet.</p>
+      <p v-if="entries.length">Stackedit可以访问以下外部账号：</p>
+      <p v-else>Stackedit尚未访问任何外部账号。</p>
       <div>
         <div class="account-entry flex flex--column" v-for="entry in entries" :key="entry.token.sub">
           <div class="account-entry__header flex flex--row flex--align-center">
@@ -16,14 +16,14 @@
               {{entry.name}}
             </div>
             <div class="account-entry__buttons flex flex--row flex--center">
-              <button class="account-entry__button button" @click="remove(entry)" v-title="'Remove access'">
+              <button class="account-entry__button button" @click="remove(entry)" v-title="'删除访问'">
                 <icon-delete></icon-delete>
               </button>
             </div>
           </div>
           <div class="account-entry__row">
             <span class="account-entry__field" v-if="entry.userId">
-              <b>User ID:</b>
+              <b>用户ID:</b>
               {{entry.userId}}
             </span>
             <span class="account-entry__field" v-if="entry.url">
@@ -31,7 +31,7 @@
               {{entry.url}}
             </span>
             <span class="account-entry__field" v-if="entry.scopes">
-              <b>Scopes:</b>
+              <b>权限范围:</b>
               {{entry.scopes.join(', ')}}
             </span>
           </div>
@@ -39,47 +39,47 @@
       </div>
       <menu-entry @click.native="addBloggerAccount">
         <icon-provider slot="icon" provider-id="blogger"></icon-provider>
-        <span>Add Blogger account</span>
+        <span>添加Blogger账号</span>
       </menu-entry>
       <menu-entry @click.native="addDropboxAccount">
         <icon-provider slot="icon" provider-id="dropbox"></icon-provider>
-        <span>Add Dropbox account</span>
+        <span>添加Dropbox账号</span>
       </menu-entry>
       <menu-entry @click.native="addGithubAccount">
         <icon-provider slot="icon" provider-id="github"></icon-provider>
-        <span>Add GitHub account</span>
+        <span>添加GitHub账号</span>
       </menu-entry>
       <menu-entry @click.native="addGiteeAccount">
         <icon-provider slot="icon" provider-id="gitee"></icon-provider>
-        <span>Add Gitee account</span>
+        <span>添加Gitee账号</span>
       </menu-entry>
       <menu-entry @click.native="addGitlabAccount">
         <icon-provider slot="icon" provider-id="gitlab"></icon-provider>
-        <span>Add GitLab account</span>
+        <span>添加GitLab账号</span>
       </menu-entry>
       <menu-entry @click.native="addGiteaAccount">
         <icon-provider slot="icon" provider-id="gitea"></icon-provider>
-        <span>Add Gitea account</span>
+        <span>添加Gitea账号</span>
       </menu-entry>
       <menu-entry @click.native="addGoogleDriveAccount">
         <icon-provider slot="icon" provider-id="googleDrive"></icon-provider>
-        <span>Add Google Drive account</span>
+        <span>添加Google Drive账号</span>
       </menu-entry>
       <menu-entry @click.native="addGooglePhotosAccount">
         <icon-provider slot="icon" provider-id="googlePhotos"></icon-provider>
-        <span>Add Google Photos account</span>
+        <span>添加Google Photos账号</span>
       </menu-entry>
       <menu-entry @click.native="addWordpressAccount">
         <icon-provider slot="icon" provider-id="wordpress"></icon-provider>
-        <span>Add WordPress account</span>
+        <span>添加WordPress账号</span>
       </menu-entry>
       <menu-entry @click.native="addZendeskAccount">
         <icon-provider slot="icon" provider-id="zendesk"></icon-provider>
-        <span>Add Zendesk account</span>
+        <span>添加Zendesk账号</span>
       </menu-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button button--resolve" @click="config.resolve()">Close</button>
+      <button class="button button--resolve" @click="config.resolve()">关闭</button>
     </div>
   </modal-inner>
 </template>

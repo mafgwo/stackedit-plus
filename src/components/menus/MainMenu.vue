@@ -97,8 +97,8 @@
     </menu-entry>
     <menu-entry @click.native="accounts">
       <icon-key slot="icon"></icon-key>
-      <div><div class="menu-entry__label menu-entry__label--count">{{accountCount}}</div> 账户</div>
-      <span>管理对您的外部帐户的访问。</span>
+      <div><div class="menu-entry__label menu-entry__label--count">{{accountCount}}</div> 账号</div>
+      <span>管理对您的外部账号的访问。</span>
     </menu-entry>
     <menu-entry @click.native="templates">
       <icon-code-braces slot="icon"></icon-code-braces>

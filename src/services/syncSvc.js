@@ -938,7 +938,7 @@ export default {
 
       // Unload contents from memory periodically
       utils.setInterval(() => {
-        // Wait for sync and publish to finish
+        // Wait for sync and 发布到finish
         if (store.state.queue.isEmpty) {
           localDbSvc.unloadContents();
         }

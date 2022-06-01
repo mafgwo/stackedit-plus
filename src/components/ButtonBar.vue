@@ -4,10 +4,10 @@
       <button class="button-bar__button button-bar__button--navigation-bar-toggler button" :class="{ 'button-bar__button--on': layoutSettings.showNavigationBar }" v-if="!light" @click="toggleNavigationBar()" v-title="'切换导航栏'">
         <icon-navigation-bar></icon-navigation-bar>
       </button>
-      <button class="button-bar__button button-bar__button--side-preview-toggler button" :class="{ 'button-bar__button--on': layoutSettings.showSidePreview }" tour-step-anchor="editor" @click="toggleSidePreview()" v-title="'切换侧面预览'">
+      <button class="button-bar__button button-bar__button--side-preview-toggler button" :class="{ 'button-bar__button--on': layoutSettings.showSidePreview }" tour-step-anchor="editor" @click="toggleSidePreview()" v-title="'切换侧边预览'">
         <icon-side-preview></icon-side-preview>
       </button>
-      <button class="button-bar__button button-bar__button--editor-toggler button" @click="toggleEditor(false)" v-title="'Reader mode'">
+      <button class="button-bar__button button-bar__button--editor-toggler button" @click="toggleEditor(false)" v-title="'阅读模式'">
         <icon-eye></icon-eye>
       </button>
     </div>

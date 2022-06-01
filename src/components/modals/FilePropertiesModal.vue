@@ -1,17 +1,17 @@
 <template>
-  <modal-inner class="modal__inner-1--file-properties" aria-label="File properties">
+  <modal-inner class="modal__inner-1--file-properties" aria-label="文件属性">
     <div class="modal__content">
       <div class="tabs flex flex--row">
         <tab :active="tab === 'simple'" @click="setSimpleTab()">
-          Simple properties
+          简单属性
         </tab>
         <tab :active="tab === 'yaml'" @click="setYamlTab()">
-          YAML properties
+          YAML属性
         </tab>
       </div>
       <div v-if="tab === 'simple'">
-        <div class="modal__title">Extensions</div>
-        <div class="modal__sub-title">Configure the Markdown engine.</div>
+        <div class="modal__title">扩展</div>
+        <div class="modal__sub-title">配置Markdown引擎。</div>
         <form-entry label="Preset">
           <select slot="field" class="textfield" v-model="preset" @keydown.enter="resolve()">
             <option v-for="(preset, id) in presets" :key="id" :value="preset">
@@ -19,8 +19,8 @@
             </option>
           </select>
         </form-entry>
-        <div class="modal__title">Metadata</div>
-        <div class="modal__sub-title">Add info to your publications (Wordpress, Blogger...).</div>
+        <div class="modal__title">元数据</div>
+        <div class="modal__sub-title">将信息添加到您的发布（WordPress，Blogger ...）。</div>
         <form-entry label="Title">
           <input slot="field" class="textfield" type="text" v-model.trim="title" @keydown.enter="resolve()">
         </form-entry>
@@ -42,7 +42,7 @@
         <form-entry label="Status">
           <input slot="field" class="textfield" type="text" v-model.trim="status" @keydown.enter="resolve()">
           <div class="form-entry__info">
-            <b>Example:</b> draft
+            <b>示例：</b>草稿
           </div>
         </form-entry>
         <form-entry label="Date" info="YYYY-MM-DD">
@@ -58,13 +58,13 @@
         </div>
         <div class="modal__error modal__error--file-properties">{{error}}</div>
         <div class="modal__info modal__info--multiline">
-          <p><strong>ProTip:</strong> You can manually toggle extensions:</p>
+          <p><strong>提示:</strong> 您可以手动切换扩展名：</p>
           <pre class=" language-yaml"><code class="prism  language-yaml"><span class="token key atrule">extensions</span><span class="token punctuation">:</span>
   <span class="token key atrule">emoji</span><span class="token punctuation">:</span>
-    <span class="token comment"># Enable emoji shortcuts like :) :-(</span>
+    <span class="token comment"># 启用表情符号快捷方式如 :) :-(</span>
     <span class="token key atrule">shortcuts</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
 </code></pre>
-          <p>Use preset <code>zero</code> to make your own configuration:</p>
+          <p>使用预设<code>zero</code>制作自己的配置：</p>
           <pre class=" language-yaml"><code class="prism  language-yaml"><span class="token key atrule">extensions</span><span class="token punctuation">:</span>
   <span class="token key atrule">preset</span><span class="token punctuation">:</span> zero
   <span class="token key atrule">markdown</span><span class="token punctuation">:</span>
@@ -72,13 +72,13 @@
   <span class="token key atrule">katex</span><span class="token punctuation">:</span>
     <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
 </code></pre>
-          <p>For the full list of options, see <a href="https://github.com/mafgwo/stackedit/blob/master/src/data/presets.js" target="_blank">here</a>.</p>
+          <p>有关选项的完整列表，请参阅 <a href="https://gitee.com/mafgwo/stackedit/blob/master/src/data/presets.js" target="_blank">这里</a>.</p>
         </div>
       </div>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">Cancel</button>
-      <button class="button button--resolve" @click="resolve()">Ok</button>
+      <button class="button" @click="config.reject()">取消</button>
+      <button class="button button--resolve" @click="resolve()">确认</button>
     </div>
   </modal-inner>
 </template>
