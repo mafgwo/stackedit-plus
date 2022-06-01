@@ -138,21 +138,21 @@ class RelativeTime {
     const hr = Math.round(min / 60);
     const day = Math.round(hr / 24);
     if (ms < 0) {
-      return 'just now';
+      return '刚刚';
     } else if (sec < 45) {
-      return 'just now';
+      return '刚刚';
     } else if (sec < 90) {
-      return 'a minute ago';
+      return '1分钟前';
     } else if (min < 45) {
-      return `${min} minutes ago`;
+      return `${min}分钟前`;
     } else if (min < 90) {
-      return 'an hour ago';
+      return '1小时前';
     } else if (hr < 24) {
-      return `${hr} hours ago`;
+      return `${hr}小时前`;
     } else if (hr < 36) {
-      return 'a day ago';
+      return '1天前';
     } else if (day < 30) {
-      return `${day} days ago`;
+      return `${day}天前`;
     }
     return null;
   }

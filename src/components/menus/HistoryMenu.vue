@@ -9,17 +9,17 @@
         </select>
       </p>
       <p v-if="!historyContext">同步 <b>{{currentFileName}}</b> 以启用修订历史 或者 <a href="javascript:void(0)" @click="signin">登录 Google</a> 以同步您的主工作区。</p>
-      <p v-else-if="loading">Loading history…</p>
-      <p v-else-if="!revisionsWithSpacer.length"><b>{{currentFileName}}</b> has no history.</p>
+      <p v-else-if="loading">历史版本加载中…</p>
+      <p v-else-if="!revisionsWithSpacer.length"><b>{{currentFileName}}</b> 没有历史版本.</p>
       <div class="menu-entry menu-entry--info flex flex--row flex--align-center" v-else>
         <div class="menu-entry__icon menu-entry__icon--image">
           <icon-provider :provider-id="syncLocation.providerId"></icon-provider>
         </div>
         <span v-if="syncLocation.url">
-          The following revisions are stored in <a :href="syncLocation.url" target="_blank">{{ syncLocationProviderName }}</a>.
+          下面的历史版本存储在 <a :href="syncLocation.url" target="_blank">{{ syncLocationProviderName }}</a>.
         </span>
         <span v-else>
-          The following revisions are stored in {{ syncLocationProviderName }}.
+          下面的历史版本存储在 {{ syncLocationProviderName }}.
         </span>
       </div>
     </div>
@@ -39,7 +39,7 @@
     </div>
     <div class="history__spacer history__spacer--last" v-if="revisions.length"></div>
     <div class="flex flex--row flex--end" v-if="showMoreButton">
-      <button class="history__button button" @click="showMore">More</button>
+      <button class="history__button button" @click="showMore">更多</button>
     </div>
   </div>
 </template>
