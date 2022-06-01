@@ -251,19 +251,27 @@ export default new Provider({
       path: getAbsolutePath({ id: fileSyncDataId }),
     });
 
-    return entries.map((entry) => {
-      const email = entry.author_email || entry.committer_email;
-      const sub = `${giteaHelper.subPrefix}:${token.serverUrl}/${email}`;
-      userSvc.addUserInfo({
-        id: sub,
-        name: entry.author_name || entry.committer_name,
-        imageUrl: '', // No way to get user's avatar url...
-      });
-      const date = entry.authored_date || entry.committed_date || 1;
+    return entries.map(({
+      author,
+      committer,
+      commit,
+      sha,
+    }) => {
+      let user;
+      if (author && author.login) {
+        user = author;
+      } else if (committer && committer.login) {
+        user = committer;
+      }
+      const sub = `${giteaHelper.subPrefix}:${user.login}`;
+      userSvc.addUserInfo({ id: sub, name: user.login, imageUrl: user.avatar_url });
+      const date = (commit.author && commit.author.date)
+        || (commit.committer && commit.committer.date)
+        || 1;
       return {
-        id: entry.id,
+        id: sha,
         sub,
-        created: date ? new Date(date).getTime() : 1,
+        created: new Date(date).getTime(),
       };
     });
   },

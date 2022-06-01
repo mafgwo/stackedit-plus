@@ -46,21 +46,21 @@ export default {
     'Yes, remove',
   ),
   reset: simpleModal(
-    '<p>This will clean all your workspaces locally. Are you sure?</p>',
-    'No',
-    'Yes, clean',
+    '<p>这将在本地清理所有工作区，你确定吗？</p>',
+    '取消',
+    '确认清理',
   ),
   signInForComment: simpleModal(
-    `<p>You have to sign in with Google to start commenting.</p>
-    <div class="modal__info"><b>Note:</b> This will sync your main workspace.</div>`,
-    'Cancel',
-    'Ok, sign in',
+    `<p>您必须使用 Google 登录才能开始评论。</p>
+    <div class="modal__info"><b>注意:</b> 这将同步您的主工作区。</div>`,
+    '取消',
+    '确认登录',
   ),
   signInForSponsorship: simpleModal(
-    `<p>You have to sign in with Google to sponsor.</p>
-    <div class="modal__info"><b>Note:</b> This will sync your main workspace.</div>`,
-    'Cancel',
-    'Ok, sign in',
+    `<p>您必须使用 Google 登录才能赞助。</p>
+    <div class="modal__info"><b>注意:</b> 这将同步您的主工作区。</div>`,
+    '取消',
+    '确认登录',
   ),
   sponsorOnly: simpleModal(
     '<p>This feature is restricted to sponsors as it relies on server resources.</p>',

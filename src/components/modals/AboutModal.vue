@@ -2,28 +2,25 @@
   <modal-inner class="modal__inner-1--about-modal" aria-label="About">
     <div class="modal__content">
       <div class="logo-background"></div>
-      StackEdit on <a target="_blank" href="https://github.com/mafgwo/stackedit/">GitHub</a>
+      StackEdit 在 <a target="_blank" href="https://gitee.com/mafgwo/stackedit/">Gitee</a> 上
       <br>
-      <a target="_blank" href="https://github.com/mafgwo/stackedit/issues">Issue tracker</a> — <a target="_blank" href="https://github.com/mafgwo/stackedit/releases">Changelog</a>
+      <a target="_blank" href="https://gitee.com/mafgwo/stackedit/issues">问题跟踪</a> — <a target="_blank" href="https://gitee.com/mafgwo/stackedit/releases">更新日志</a>
       <br>
-      <a target="_blank" href="https://chrome.google.com/webstore/detail/iiooodelglhkcpgbajoejffhijaclcdg">Chrome app</a> — <a target="_blank" href="https://chrome.google.com/webstore/detail/ajehldoplanpchfokmeempkekhnhmoha">Chrome extension</a>
+      <a target="_blank" href="#">Chrome 应用</a> — <a target="_blank" href="#">Chrome 扩展</a>
       <br>
-      <a target="_blank" href="https://community.stackedit.io/">Community</a> — <a target="_blank" href="https://community.stackedit.io/c/how-to">Tutos and How To</a>
-      <br>
-      StackEdit on <a target="_blank" href="https://twitter.com/stackedit/">Twitter</a>
       <hr>
-      <small>© 2013-2022 Dock5 Software Ltd.<br>v{{version}}</small>
-      <h3>FAQ</h3>
+      <small>© 2013-2022 StackEdit中文版<br>v{{version}}</small>
+      <h3>常见问题解答</h3>
       <div class="faq" v-html="faq"></div>
       <div class="modal__info">
-        For commercial support or custom development, please <a href="mailto:stackedit.project@gmail.com">contact us</a>.
+        如需商业支持或定制开发，请 <a href="mailto:mafgwo@163.com">联系我们</a>.
       </div>
       Licensed under an
       <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0">Apache License</a><br>
-      <a target="_blank" href="privacy_policy.html">Privacy Policy</a>
+      <a target="_blank" href="privacy_policy.html">隐私策略</a>
     </div>
     <div class="modal__button-bar">
-      <button class="button button--resolve" @click="config.resolve()">Close</button>
+      <button class="button button--resolve" @click="config.resolve()">关闭</button>
     </div>
   </modal-inner>
 </template>

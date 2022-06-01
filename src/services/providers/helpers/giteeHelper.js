@@ -139,7 +139,7 @@ export default {
       return this.startOauth2();
     }
     // lastToken is not expired
-    if (lastToken.expiresOn > Date.now() - tokenExpirationMargin) {
+    if (lastToken.expiresOn > Date.now() + tokenExpirationMargin) {
       return lastToken;
     }
 

@@ -89,7 +89,7 @@ export default {
       // Create Trash node
       const trashFolderNode = new Node(emptyFolder(), [], true);
       trashFolderNode.item.id = 'trash';
-      trashFolderNode.item.name = 'Trash';
+      trashFolderNode.item.name = '回收站';
       trashFolderNode.noDrag = true;
       trashFolderNode.isTrash = true;
       trashFolderNode.parentNode = rootNode;
@@ -97,7 +97,7 @@ export default {
       // Create Temp node
       const tempFolderNode = new Node(emptyFolder(), [], true);
       tempFolderNode.item.id = 'temp';
-      tempFolderNode.item.name = 'Temp';
+      tempFolderNode.item.name = '临时目录';
       tempFolderNode.noDrag = true;
       tempFolderNode.noDrop = true;
       tempFolderNode.isTemp = true;

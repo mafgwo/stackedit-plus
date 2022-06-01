@@ -1,52 +1,52 @@
 export default [{
 }, {
   method: 'bold',
-  title: 'Bold',
+  title: '加粗',
   icon: 'format-bold',
 }, {
   method: 'italic',
-  title: 'Italic',
+  title: '斜体',
   icon: 'format-italic',
 }, {
   method: 'heading',
-  title: 'Heading',
+  title: '标题',
   icon: 'format-size',
 }, {
   method: 'strikethrough',
-  title: 'Strikethrough',
+  title: '删除线',
   icon: 'format-strikethrough',
 }, {
 }, {
   method: 'ulist',
-  title: 'Unordered list',
+  title: '无序列表',
   icon: 'format-list-bulleted',
 }, {
   method: 'olist',
-  title: 'Ordered list',
+  title: '有序列表',
   icon: 'format-list-numbers',
 }, {
   method: 'clist',
-  title: 'Check list',
+  title: '可选列表',
   icon: 'format-list-checks',
 }, {
 }, {
   method: 'quote',
-  title: 'Blockquote',
+  title: '块引用',
   icon: 'format-quote-close',
 }, {
   method: 'code',
-  title: 'Code',
+  title: '代码',
   icon: 'code-tags',
 }, {
   method: 'table',
-  title: 'Table',
+  title: '表格',
   icon: 'table',
 }, {
   method: 'link',
-  title: 'Link',
+  title: '链接',
   icon: 'link-variant',
 }, {
   method: 'image',
-  title: 'Image',
+  title: '图片',
   icon: 'file-image',
 }];

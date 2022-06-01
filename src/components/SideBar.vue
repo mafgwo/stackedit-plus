@@ -46,15 +46,15 @@ import markdownConversionSvc from '../services/markdownConversionSvc';
 import store from '../store';
 
 const panelNames = {
-  menu: 'Menu',
-  workspaces: 'Workspaces',
-  help: 'Markdown cheat sheet',
-  toc: 'Table of contents',
-  sync: 'Synchronize',
-  publish: 'Publish',
-  history: 'File history',
-  importExport: 'Import/export',
-  workspaceBackups: 'Workspace backups',
+  menu: '菜单',
+  workspaces: '工作区',
+  help: 'Markdown 帮助',
+  toc: '目录',
+  sync: '同步',
+  publish: '发布',
+  history: '文件历史',
+  importExport: '导入/导出',
+  workspaceBackups: '工作区备份',
 };
 
 export default {

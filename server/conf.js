@@ -10,7 +10,6 @@ const githubClientId = process.env.GITHUB_CLIENT_ID;
 const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
 const giteeClientId = process.env.GITEE_CLIENT_ID;
 const giteeClientSecret = process.env.GITEE_CLIENT_SECRET;
-const giteeCallback = process.env.GITEE_CALLBACK;
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleApiKey = process.env.GOOGLE_API_KEY;
 const wordpressClientId = process.env.WORDPRESS_CLIENT_ID;
@@ -27,7 +26,6 @@ exports.values = {
   githubClientSecret,
   giteeClientId,
   giteeClientSecret,
-  giteeCallback,
   googleClientId,
   googleApiKey,
   wordpressClientId,

@@ -2,20 +2,20 @@
   <div class="explorer flex flex--column">
     <div class="side-title flex flex--row flex--space-between">
       <div class="flex flex--row">
-        <button class="side-title__button side-title__button--new-file button" @click="newItem()" v-title="'New file'">
+        <button class="side-title__button side-title__button--new-file button" @click="newItem()" v-title="'创建文件'">
           <icon-file-plus></icon-file-plus>
         </button>
-        <button class="side-title__button side-title__button--new-folder button" @click="newItem(true)" v-title="'New folder'">
+        <button class="side-title__button side-title__button--new-folder button" @click="newItem(true)" v-title="'创建文件夹'">
           <icon-folder-plus></icon-folder-plus>
         </button>
-        <button class="side-title__button side-title__button--delete button" @click="deleteItem()" v-title="'Delete'">
+        <button class="side-title__button side-title__button--delete button" @click="deleteItem()" v-title="'删除'">
           <icon-delete></icon-delete>
         </button>
-        <button class="side-title__button side-title__button--rename button" @click="editItem()" v-title="'Rename'">
+        <button class="side-title__button side-title__button--rename button" @click="editItem()" v-title="'重命名'">
           <icon-pen></icon-pen>
         </button>
       </div>
-      <button class="side-title__button side-title__button--close button" @click="toggleExplorer(false)" v-title="'Close explorer'">
+      <button class="side-title__button side-title__button--close button" @click="toggleExplorer(false)" v-title="'关闭资源管理器'">
         <icon-close></icon-close>
       </button>
     </div>

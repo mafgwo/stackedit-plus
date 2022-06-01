@@ -249,6 +249,9 @@ export default new Provider({
         user = committer;
       }
       const sub = `${giteeHelper.subPrefix}:${user.login}`;
+      if (user.avatar_url && user.avatar_url.endsWith('.png')) {
+        user.avatar_url = `${user.avatar_url}!avatar60`;
+      }
       userSvc.addUserInfo({ id: sub, name: user.login, imageUrl: user.avatar_url });
       const date = (commit.author && commit.author.date)
         || (commit.committer && commit.committer.date)

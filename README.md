@@ -1,11 +1,11 @@
-# StackEdit
+# StackEdit中文版
 
 从 [StackEdit 官方](https://github.com/benweet/stackedit) fork出来，然后加上了 **Gitee** 的支持，并且已经重新打了镜像，以下官方的部署方式，除了Docker镜像地址不同，其他均一致。
 
 ### Fork出来修改的原因
 StackEdit的作者可能因为什么原因，已经很久不维护了，Github授权登录很早之前就登录不了了，并且还没法支持国内常用的Gitee，所以想到Fork出来改，大概花了周末一整天终于改好了。
 
-新的Docker镜像在中央仓库为：[mafgwo/stackedit](https://hub.docker.com/r/mafgwo/stackedit)，当前最新版本为：5.15.4（延续原有版本号）
+新的Docker镜像在中央仓库为：[mafgwo/stackedit](https://hub.docker.com/r/mafgwo/stackedit)
 
 并增加了以下2个环境变量：
 - `GITEE_CLIENT_ID` Gitee 的 Client ID
@@ -14,7 +14,8 @@ StackEdit的作者可能因为什么原因，已经很久不维护了，Github�
 ### TODO: 关于后续的一些想法
 - 支持**Gitea**、**Gogs**两个轻量级且适于自建的Git仓库（毕竟Gitlab对机器配置要求较高）。想支持这两个主要也是考虑到其实很多公司已经禁用了Github或Gitee仓库，在公司都没法连上自己的Git仓库。
 - 汉化，毕竟大家最熟悉的还是母语，并且该编辑器功能页面也不多，汉化工作量并不会很大。
-- 引入mdnice，右边预览增加mdnice预览选项，主要含选主题(含mdnice常用20多个主题)、支持自定义主题、复制到公众号、复制到知乎、复制到稀土掘金等基本功能，便于喜欢写公众号、博客的你可以更好更快的排版。
+- 替换主工作区为Gitee（原版本主工作区是Google Drive，国内只有fan墙才可以用）
+- 引入mdnice，右边预览增加mdnice预览选项，主要含选主题(含mdnice常用20多个主题)、支持自定义主题、复制到公众号、复制到知乎、复制到稀土掘金等基本功能，便于喜欢写公众号、博客的同学可以更好更快的排版。
 - ... 另外，朋友们有好的想法也可以在Issue或者加我微信 qicoding 提给我。
 
 #### TODO 进度
@@ -23,6 +24,10 @@ StackEdit的作者可能因为什么原因，已经很久不维护了，Github�
 对应Docker版本：5.15.3, tag: v5.15.3
 
 **Gogs目前无法支持，因为API目前不支持直接把Markdown推上去，如果后续Gogs的API支持了再添加**
+
+**已汉化主要功能部分（2022-06-01）**
+
+**接下来修改主工作区为Gitee**
 
 
 
@@ -33,6 +38,8 @@ https://edit.qicoder.com/
 
 
 # 以下是官方原有README内容
+
+# StackEdit
 
 [![Build Status](https://img.shields.io/travis/benweet/stackedit.svg?style=flat)](https://travis-ci.org/benweet/stackedit) [![NPM version](https://img.shields.io/npm/v/stackedit.svg?style=flat)](https://www.npmjs.org/package/stackedit)
 

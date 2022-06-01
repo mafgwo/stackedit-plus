@@ -5,6 +5,8 @@ import userSvc from '../../userSvc';
 import badgeSvc from '../../badgeSvc';
 import constants from '../../../data/constants';
 
+const tokenExpirationMargin = 5 * 60 * 1000;
+
 const request = ({ accessToken, serverUrl }, options) => networkSvc.request({
   ...options,
   url: `${serverUrl}/api/v1/${options.url}`,
@@ -51,30 +53,50 @@ export default {
   /**
    * https://docs.gitea.io/en-us/oauth2-provider/
    */
-  async startOauth2(serverUrl, applicationId, applicationSecret, sub = null, silent = false) {
-    // Get an OAuth2 code
-    const { code } = await networkSvc.startOauth2(
-      `${serverUrl}/login/oauth/authorize`,
-      {
-        client_id: applicationId,
-        response_type: 'code',
-        redirect_uri: constants.oauth2RedirectUri,
-      },
-      silent,
-    );
+  async startOauth2(
+    serverUrl, applicationId, applicationSecret,
+    sub = null, silent = false, refreshToken,
+  ) {
+    let tokenBody;
+    if (!silent) {
+      // Get an OAuth2 code
+      const { code } = await networkSvc.startOauth2(
+        `${serverUrl}/login/oauth/authorize`,
+        {
+          client_id: applicationId,
+          response_type: 'code',
+          redirect_uri: constants.oauth2RedirectUri,
+        },
+        silent,
+      );
+      // Exchange code with token
+      tokenBody = (await networkSvc.request({
+        method: 'POST',
+        url: `${serverUrl}/login/oauth/access_token`,
+        body: {
+          client_id: applicationId,
+          client_secret: applicationSecret,
+          code,
+          grant_type: 'authorization_code',
+          redirect_uri: constants.oauth2RedirectUri,
+        },
+      })).body;
+    } else {
+      // Exchange refreshToken with token
+      tokenBody = (await networkSvc.request({
+        method: 'POST',
+        url: `${serverUrl}/login/oauth/access_token`,
+        body: {
+          client_id: applicationId,
+          client_secret: applicationSecret,
+          refresh_token: refreshToken,
+          grant_type: 'refresh_token',
+          redirect_uri: constants.oauth2RedirectUri,
+        },
+      })).body;
+    }
 
-    // Exchange code with token
-    const accessToken = (await networkSvc.request({
-      method: 'POST',
-      url: `${serverUrl}/login/oauth/access_token`,
-      body: {
-        client_id: applicationId,
-        client_secret: applicationSecret,
-        code,
-        grant_type: 'authorization_code',
-        redirect_uri: constants.oauth2RedirectUri,
-      },
-    })).body.access_token;
+    const accessToken = tokenBody.access_token;
 
     // Call the user info endpoint
     const user = await request({ accessToken, serverUrl }, {
@@ -96,6 +118,8 @@ export default {
     const token = {
       accessToken,
       name: user.username,
+      refreshToken: tokenBody.refresh_token,
+      expiresOn: Date.now() + (tokenBody.expires_in * 1000),
       serverUrl,
       sub: uniqueSub,
     };
@@ -103,6 +127,47 @@ export default {
     // Add token to gitea tokens
     store.dispatch('data/addGiteaToken', token);
     return token;
+  },
+  // 刷新token
+  async refreshToken(token) {
+    const {
+      serverUrl,
+      applicationId,
+      applicationSecret,
+      sub,
+    } = token;
+    const lastToken = store.getters['data/giteaTokensBySub'][sub];
+    // 兼容旧的没有过期时间
+    if (!lastToken.expiresOn) {
+      await store.dispatch('modal/open', {
+        type: 'providerRedirection',
+        name: 'Gitea',
+      });
+      return this.startOauth2(serverUrl, applicationId, applicationSecret, sub);
+    }
+    // lastToken is not expired
+    if (lastToken.expiresOn > Date.now() + tokenExpirationMargin) {
+      return lastToken;
+    }
+
+    // existing token is about to expire.
+    // Try to get a new token in background
+    try {
+      return await this.startOauth2(
+        serverUrl, applicationId, applicationSecret,
+        sub, true, lastToken.refreshToken,
+      );
+    } catch (err) {
+      // If it fails try to popup a window
+      if (store.state.offline) {
+        throw err;
+      }
+      await store.dispatch('modal/open', {
+        type: 'providerRedirection',
+        name: 'Gitea',
+      });
+      return this.startOauth2(serverUrl, applicationId, applicationSecret, sub);
+    }
   },
   async addAccount(serverUrl, applicationId, applicationSecret, sub = null) {
     const token = await this.startOauth2(serverUrl, applicationId, applicationSecret, sub);
@@ -129,7 +194,8 @@ export default {
     projectId,
     branch,
   }) {
-    return request(token, {
+    const refreshedToken = await this.refreshToken(token);
+    return request(refreshedToken, {
       url: `repos/${projectId}/git/trees/${branch}`,
       params: {
         recursive: true,
@@ -147,7 +213,8 @@ export default {
     branch,
     path,
   }) {
-    return request(token, {
+    const refreshedToken = await this.refreshToken(token);
+    return request(refreshedToken, {
       url: `repos/${projectId}/commits`,
       params: {
         sha: branch,
@@ -168,7 +235,8 @@ export default {
     content,
     sha,
   }) {
-    return request(token, {
+    const refreshedToken = await this.refreshToken(token);
+    return request(refreshedToken, {
       method: sha ? 'PUT' : 'POST',
       url: `repos/${projectId}/contents/${encodeURIComponent(path)}`,
       body: {
@@ -190,7 +258,8 @@ export default {
     path,
     sha,
   }) {
-    return request(token, {
+    const refreshedToken = await this.refreshToken(token);
+    return request(refreshedToken, {
       method: 'DELETE',
       url: `repos/${projectId}/contents/${encodeURIComponent(path)}`,
       body: {
@@ -210,7 +279,8 @@ export default {
     branch,
     path,
   }) {
-    const { sha, content } = await request(token, {
+    const refreshedToken = await this.refreshToken(token);
+    const { sha, content } = await request(refreshedToken, {
       url: `repos/${projectId}/contents/${encodeURIComponent(path)}`,
       params: { ref: branch },
     });
