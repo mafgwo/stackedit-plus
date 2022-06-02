@@ -5,7 +5,7 @@
         <div class="menu-entry__icon menu-entry__icon--image">
           <user-image :user-id="userId"></user-image>
         </div>
-        <span>Signed in as <b>{{loginToken.name}}</b>.</span>
+        <span>登录名为<b>{{loginToken.name}}</b>。</span>
       </div>
       <div class="menu-entry menu-entry--info flex flex--row flex--align-center" v-if="syncToken">
         <div class="menu-entry__icon menu-entry__icon--image">

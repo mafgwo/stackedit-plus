@@ -44,6 +44,9 @@ userSvc.setInfoResolver('gitee', subPrefix, async (sub) => {
       },
     })).body;
 
+    if (user.avatar_url && user.avatar_url.endsWith('.png')) {
+      user.avatar_url = `${user.avatar_url}!avatar60`;
+    }
     return {
       id: `${subPrefix}:${user.login}`,
       name: user.login,
