@@ -1,10 +1,10 @@
 <template>
-  <modal-inner aria-label="添加Google Drive工作区">
+  <modal-inner aria-label="添加Google Drive文档空间">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="googleDrive"></icon-provider>
       </div>
-      <p>创建一个与<b> Google Drive </b>文件夹同步的工作区。</p>
+      <p>创建一个与<b> Google Drive </b>文件夹同步的文档空间。</p>
       <form-entry label="Folder ID" info="可选的">
         <input slot="field" class="textfield" type="text" v-model.trim="folderId" @keydown.enter="resolve()">
         <div class="form-entry__info">

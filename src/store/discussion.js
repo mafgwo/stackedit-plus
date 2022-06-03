@@ -1,5 +1,5 @@
 import utils from '../services/utils';
-import googleHelper from '../services/providers/helpers/googleHelper';
+import giteeHelper from '../services/providers/helpers/giteeHelper';
 import syncSvc from '../services/syncSvc';
 
 const idShifter = offset => (state, getters) => {
@@ -137,7 +137,7 @@ export default {
       if (!loginToken) {
         try {
           await dispatch('modal/open', 'signInForComment', { root: true });
-          await googleHelper.signin();
+          await giteeHelper.signin();
           syncSvc.requestSync();
           await dispatch('createNewDiscussion', selection);
         } catch (e) { /* cancel */ }

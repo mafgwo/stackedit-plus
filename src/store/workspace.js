@@ -22,7 +22,7 @@ export default {
       Object.entries(rootGetters['data/workspaces']).forEach(([id, workspace]) => {
         const sanitizedWorkspace = {
           id,
-          providerId: 'googleDriveAppData',
+          providerId: 'giteeAppData',
           sub: mainWorkspaceToken && mainWorkspaceToken.sub,
           ...workspace,
         };
@@ -46,21 +46,18 @@ export default {
       currentWorkspace.providerId === 'githubWorkspace'
       || currentWorkspace.providerId === 'giteeWorkspace'
       || currentWorkspace.providerId === 'gitlabWorkspace'
-      || currentWorkspace.providerId === 'giteaWorkspace',
+      || currentWorkspace.providerId === 'giteaWorkspace'
+      || currentWorkspace.providerId === 'giteeAppData',
     currentWorkspaceHasUniquePaths: (state, { currentWorkspace }) =>
       currentWorkspace.providerId === 'githubWorkspace'
       || currentWorkspace.providerId === 'giteeWorkspace'
       || currentWorkspace.providerId === 'gitlabWorkspace'
-      || currentWorkspace.providerId === 'giteaWorkspace',
+      || currentWorkspace.providerId === 'giteaWorkspace'
+      || currentWorkspace.providerId === 'giteeAppData',
     lastSyncActivityKey: (state, { currentWorkspace }) => `${currentWorkspace.id}/lastSyncActivity`,
     lastFocusKey: (state, { currentWorkspace }) => `${currentWorkspace.id}/lastWindowFocus`,
     mainWorkspaceToken: (state, getters, rootState, rootGetters) =>
-      utils.someResult(Object.values(rootGetters['data/googleTokensBySub']), (token) => {
-        if (token.isLogin) {
-          return token;
-        }
-        return null;
-      }),
+      utils.someResult(Object.values(rootGetters['data/giteeTokensBySub']), token => token),
     syncToken: (state, { currentWorkspace, mainWorkspaceToken }, rootState, rootGetters) => {
       switch (currentWorkspace.providerId) {
         case 'googleDriveWorkspace':
@@ -82,11 +79,11 @@ export default {
     loginType: (state, { currentWorkspace }) => {
       switch (currentWorkspace.providerId) {
         case 'googleDriveWorkspace':
-        default:
           return 'google';
         case 'githubWorkspace':
           return 'github';
         case 'giteeWorkspace':
+        default:
           return 'gitee';
         case 'gitlabWorkspace':
           return 'gitlab';

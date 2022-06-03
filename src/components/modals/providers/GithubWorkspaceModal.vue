@@ -4,7 +4,7 @@
       <div class="modal__image">
         <icon-provider provider-id="github"></icon-provider>
       </div>
-      <p>创建一个与<b>GitHub</b>仓库文件夹同步的工作区。</p>
+      <p>创建一个与<b>GitHub</b>仓库文件夹同步的文档空间。</p>
       <form-entry label="仓库URL" error="repoUrl">
         <input slot="field" class="textfield" type="text" v-model.trim="repoUrl" @keydown.enter="resolve()">
         <div class="form-entry__info">

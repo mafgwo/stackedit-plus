@@ -7,6 +7,8 @@ import constants from '../../../data/constants';
 
 const tokenExpirationMargin = 5 * 60 * 1000;
 
+const appDataRepo = 'stackedit-app-data';
+
 const request = (token, options) => networkSvc.request({
   ...options,
   headers: {
@@ -125,6 +127,8 @@ export default {
       sub: `${user.login}`,
     };
 
+    // 检查 stackedit-app-data 仓库是否已经存在 如果不存在则创建该仓库
+    await this.checkAndCreateRepo(token);
     // Add token to gitee tokens
     store.dispatch('data/addGiteeToken', token);
     return token;
@@ -162,6 +166,9 @@ export default {
       return this.startOauth2();
     }
   },
+  signin() {
+    return this.startOauth2();
+  },
   async addAccount() {
     const token = await this.startOauth2();
     badgeSvc.addBadge('addGiteeAccount');
@@ -189,6 +196,27 @@ export default {
       throw new Error('Git tree too big. Please remove some files in the repository.');
     }
     return tree;
+  },
+
+  async checkAndCreateRepo(token) {
+    const url = `https://gitee.com/api/v5/repos/${encodeURIComponent(token.name)}/${encodeURIComponent(appDataRepo)}`;
+    try {
+      await request(token, { url });
+    } catch (err) {
+      // 不存在则创建
+      if (err.status === 404) {
+        await request(token, {
+          method: 'POST',
+          url: 'https://gitee.com/api/v5/user/repos',
+          params: {
+            name: appDataRepo,
+            auto_init: true,
+          },
+        });
+      } else {
+        throw err;
+      }
+    }
   },
 
   /**

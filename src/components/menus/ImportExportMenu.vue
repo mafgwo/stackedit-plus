@@ -33,14 +33,14 @@
     </menu-entry>
     <menu-entry @click.native="exportPdf">
       <icon-download slot="icon"></icon-download>
-      <div><div class="menu-entry__label" :class="{'menu-entry__label--warning': !isSponsor}">赞助商</div> 导出为 HTML PDF</div>
+      <div>导出为 HTML PDF</div>
       <span>从HTML模板生成PDF。</span>
     </menu-entry>
-    <menu-entry @click.native="exportPandoc">
+    <!-- <menu-entry @click.native="exportPandoc">
       <icon-download slot="icon"></icon-download>
-      <div><div class="menu-entry__label" :class="{'menu-entry__label--warning': !isSponsor}">赞助商</div> 导出为 HTML Pandoc</div>
+      <div>导出为 HTML Pandoc</div>
       <span>转换为PDF、Word、EPUB...</span>
-    </menu-entry>
+    </menu-entry> -->
   </div>
 </template>
 

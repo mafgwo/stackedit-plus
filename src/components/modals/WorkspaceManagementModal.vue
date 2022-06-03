@@ -1,10 +1,10 @@
 <template>
-  <modal-inner class="modal__inner-1--workspace-management" aria-label="管理工作区">
+  <modal-inner class="modal__inner-1--workspace-management" aria-label="管理文档空间">
     <div class="modal__content">
       <div class="modal__image">
         <icon-database></icon-database>
       </div>
-      <p><br>可以访问以下工作区：</p>
+      <p><br>可以访问以下文档空间：</p>
       <div class="workspace-entry flex flex--column" v-for="(workspace, id) in workspacesById" :key="id">
         <div class="flex flex--column">
           <div class="workspace-entry__header flex flex--row flex--align-center">
@@ -27,10 +27,10 @@
               {{workspace.url}}
             </div>
             <div class="workspace-entry__buttons flex flex--row">
-              <button class="workspace-entry__button button" v-clipboard="workspace.url" @click="info('工作区URL已复制到剪贴板!')" v-title="'复制URL'">
+              <button class="workspace-entry__button button" v-clipboard="workspace.url" @click="info('文档空间URL已复制到剪贴板!')" v-title="'复制URL'">
                 <icon-content-copy></icon-content-copy>
               </button>
-              <a class="workspace-entry__button button" :href="workspace.url" target="_blank" v-title="'打开工作区'">
+              <a class="workspace-entry__button button" :href="workspace.url" target="_blank" v-title="'打开文档空间'">
                 <icon-open-in-new></icon-open-in-new>
               </a>
             </div>
@@ -40,10 +40,10 @@
               {{workspace.locationUrl}}
             </div>
             <div class="workspace-entry__buttons flex flex--row">
-              <button class="workspace-entry__button button" v-clipboard="workspace.locationUrl" @click="info('工作区URL已复制到剪贴板!')" v-title="'复制URL'">
+              <button class="workspace-entry__button button" v-clipboard="workspace.locationUrl" @click="info('文档空间URL已复制到剪贴板!')" v-title="'复制URL'">
                 <icon-content-copy></icon-content-copy>
               </button>
-              <a class="workspace-entry__button button" :href="workspace.locationUrl" target="_blank" v-title="'打开工作区位置'">
+              <a class="workspace-entry__button button" :href="workspace.locationUrl" target="_blank" v-title="'打开文档空间位置'">
                 <icon-open-in-new></icon-open-in-new>
               </a>
             </div>
@@ -117,9 +117,9 @@ export default {
     },
     async remove(id) {
       if (id === this.mainWorkspace.id) {
-        this.info('您的主工作区无法删除。');
+        this.info('您的主文档空间无法删除。');
       } else if (id === this.currentWorkspace.id) {
-        this.info('请先关闭工作区，然后再将其删除。');
+        this.info('请先关闭文档空间，然后再将其删除。');
       } else {
         try {
           await store.dispatch('modal/open', 'removeWorkspace');

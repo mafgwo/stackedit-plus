@@ -1,10 +1,10 @@
 <template>
-  <modal-inner aria-label="增加CouchDB工作区">
+  <modal-inner aria-label="增加CouchDB文档空间">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="couchdb"></icon-provider>
       </div>
-      <p>创建一个与<b>CouchDB</b>数据库同步的工作区。</p>
+      <p>创建一个与<b>CouchDB</b>数据库同步的文档空间。</p>
       <form-entry label="Database URL" error="dbUrl">
         <input slot="field" class="textfield" type="text" v-model.trim="dbUrl" @keydown.enter="resolve()">
         <div class="form-entry__info">
