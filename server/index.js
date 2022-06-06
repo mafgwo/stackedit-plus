@@ -37,6 +37,8 @@ module.exports = (app) => {
 
   // Serve landing.html
   app.get('/', (req, res) => res.sendFile(resolvePath('static/landing/index.html')));
+  // Serve privacy_policy.html
+  app.get('/privacy_policy.html', (req, res) => res.sendFile(resolvePath('static/landing/privacy_policy.html')));
   // Serve sitemap.xml
   app.get('/sitemap.xml', (req, res) => res.sendFile(resolvePath('static/sitemap.xml')));
   // Serve callback.html
