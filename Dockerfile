@@ -1,4 +1,4 @@
-FROM node:11.15.0
+FROM mafgwo/wkhtmltopdf-nodejs:11.15.0
 
 RUN mkdir -p /opt/stackedit
 WORKDIR /opt/stackedit

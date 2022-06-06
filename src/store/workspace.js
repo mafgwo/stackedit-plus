@@ -57,7 +57,12 @@ export default {
     lastSyncActivityKey: (state, { currentWorkspace }) => `${currentWorkspace.id}/lastSyncActivity`,
     lastFocusKey: (state, { currentWorkspace }) => `${currentWorkspace.id}/lastWindowFocus`,
     mainWorkspaceToken: (state, getters, rootState, rootGetters) =>
-      utils.someResult(Object.values(rootGetters['data/giteeTokensBySub']), token => token),
+      utils.someResult(Object.values(rootGetters['data/giteeTokensBySub']), (token) => {
+        if (token.isLogin) {
+          return token;
+        }
+        return null;
+      }),
     syncToken: (state, { currentWorkspace, mainWorkspaceToken }, rootState, rootGetters) => {
       switch (currentWorkspace.providerId) {
         case 'googleDriveWorkspace':
