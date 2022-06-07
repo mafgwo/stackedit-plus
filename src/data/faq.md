@@ -1,9 +1,9 @@
-**Where is my data stored?**
+**我的数据存储在哪里？**
 
-If your workspace is not synced, your files are stored inside your browser and nowhere else.
+如果您的文档空间没有同步，则文件存储在浏览器中，无处可寻。
 
-We recommend syncing your workspace to make sure files won't be lost in case your browser data is cleared. Self-hosted CouchDB or GitLab backends are well suited for privacy.
+我们建议同步您的文档空间，以确保在清除浏览器数据的情况下不会丢失文件。自托管Gitea后端非常适合保证隐私。
 
-**Can StackEdit access my data without telling me?**
+**StackEdit可以访问我的数据而不告诉我吗？**
 
-StackEdit is a browser-based application. The access tokens issued by Google, Dropbox, GitHub, Gitee... are stored in your browser and are not sent to any kind of backend or 3^rd^ party so your data won't be accessed by anyone.
+StackEdit是一个基于浏览器的应用程序。Gitee，Github，Dropbox ...发出的访问令牌存储在您的浏览器中，不会发送到任何形式的后端或第三方，因此任何人都不会访问您的数据。

@@ -1,99 +1,45 @@
 import store from '../../store';
 import giteeHelper from './helpers/giteeHelper';
 import Provider from './common/Provider';
-import utils from '../utils';
-import userSvc from '../userSvc';
 import gitWorkspaceSvc from '../gitWorkspaceSvc';
-import badgeSvc from '../badgeSvc';
+import userSvc from '../userSvc';
 
-const getAbsolutePath = ({ id }) =>
-  `${store.getters['workspace/currentWorkspace'].path || ''}${id}`;
+const appDataRepo = 'stackedit-app-data';
+const appDataBranch = 'master';
 
 export default new Provider({
-  id: 'giteeWorkspace',
-  name: 'Gitee',
+  id: 'giteeAppData',
+  name: 'Gitee应用数据',
   getToken() {
     return store.getters['workspace/syncToken'];
   },
-  getWorkspaceParams({
-    owner,
-    repo,
-    branch,
-    path,
-  }) {
-    return {
-      providerId: this.id,
-      owner,
-      repo,
-      branch,
-      path,
-    };
+  getWorkspaceParams() {
+    // No param as it's the main workspace
+    return {};
   },
-  getWorkspaceLocationUrl({
-    owner,
-    repo,
-    branch,
-    path,
-  }) {
-    return `https://gitee.com/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/tree/${encodeURIComponent(branch)}/${utils.encodeUrlPath(path)}`;
+  getWorkspaceLocationUrl() {
+    // No direct link to app data
+    return null;
   },
-  getSyncDataUrl({ id }) {
-    const { owner, repo, branch } = store.getters['workspace/currentWorkspace'];
-    return `https://gitee.com/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/tree/${encodeURIComponent(branch)}/${utils.encodeUrlPath(getAbsolutePath({ id }))}`;
+  getSyncDataUrl() {
+    // No direct link to app data
+    return null;
   },
   getSyncDataDescription({ id }) {
-    return getAbsolutePath({ id });
+    return id;
   },
   async initWorkspace() {
-    const { owner, repo, branch } = utils.queryParams;
-    const workspaceParams = this.getWorkspaceParams({ owner, repo, branch });
-    if (!branch) {
-      workspaceParams.branch = 'master';
-    }
-
-    // Extract path param
-    const path = (utils.queryParams.path || '')
-      .trim()
-      .replace(/^\/*/, '') // Remove leading `/`
-      .replace(/\/*$/, '/'); // Add trailing `/`
-    if (path !== '/') {
-      workspaceParams.path = path;
-    }
-
-    const workspaceId = utils.makeWorkspaceId(workspaceParams);
-    const workspace = store.getters['workspace/workspacesById'][workspaceId];
-
-    // See if we already have a token
-    let token;
-    if (workspace) {
-      // Token sub is in the workspace
-      token = store.getters['data/giteeTokensBySub'][workspace.sub];
-    }
-    if (!token) {
-      await store.dispatch('modal/open', { type: 'giteeAccount' });
-      token = await giteeHelper.addAccount();
-    }
-
-    if (!workspace) {
-      const pathEntries = (path || '').split('/');
-      const name = pathEntries[pathEntries.length - 2] || repo; // path ends with `/`
-      store.dispatch('workspace/patchWorkspacesById', {
-        [workspaceId]: {
-          ...workspaceParams,
-          id: workspaceId,
-          sub: token.sub,
-          name,
-        },
-      });
-    }
-
-    badgeSvc.addBadge('addGiteeWorkspace');
-    return store.getters['workspace/workspacesById'][workspaceId];
+    // Nothing much to do since the main workspace isn't necessarily synchronized
+    // Return the main workspace
+    return store.getters['workspace/workspacesById'].main;
   },
   getChanges() {
+    const token = this.getToken();
     return giteeHelper.getTree({
-      ...store.getters['workspace/currentWorkspace'],
-      token: this.getToken(),
+      owner: token.name,
+      repo: appDataRepo,
+      branch: appDataBranch,
+      token,
     });
   },
   prepareChanges(tree) {
@@ -114,9 +60,11 @@ export default new Provider({
     // locations are stored as paths, so we upload an empty file
     const syncToken = store.getters['workspace/syncToken'];
     await giteeHelper.uploadFile({
-      ...store.getters['workspace/currentWorkspace'],
+      owner: syncToken.name,
+      repo: appDataRepo,
+      branch: appDataBranch,
       token: syncToken,
-      path: getAbsolutePath(syncData),
+      path: syncData.id,
       content: '',
       sha: gitWorkspaceSvc.shaByPath[syncData.id],
     });
@@ -128,9 +76,11 @@ export default new Provider({
     if (gitWorkspaceSvc.shaByPath[syncData.id]) {
       const syncToken = store.getters['workspace/syncToken'];
       await giteeHelper.removeFile({
-        ...store.getters['workspace/currentWorkspace'],
+        owner: syncToken.name,
+        repo: appDataRepo,
+        branch: appDataBranch,
         token: syncToken,
-        path: getAbsolutePath(syncData),
+        path: syncData.id,
         sha: gitWorkspaceSvc.shaByPath[syncData.id],
       });
     }
@@ -142,9 +92,11 @@ export default new Provider({
     fileSyncData,
   }) {
     const { sha, data } = await giteeHelper.downloadFile({
-      ...store.getters['workspace/currentWorkspace'],
+      owner: token.name,
+      repo: appDataRepo,
+      branch: appDataBranch,
       token,
-      path: getAbsolutePath(fileSyncData),
+      path: fileSyncData.id,
     });
     gitWorkspaceSvc.shaByPath[fileSyncData.id] = sha;
     const content = Provider.parseContent(data, contentId);
@@ -163,9 +115,11 @@ export default new Provider({
     }
 
     const { sha, data } = await giteeHelper.downloadFile({
-      ...store.getters['workspace/currentWorkspace'],
+      owner: token.name,
+      repo: appDataRepo,
+      branch: appDataBranch,
       token,
-      path: getAbsolutePath(syncData),
+      path: syncData.id,
     });
     gitWorkspaceSvc.shaByPath[syncData.id] = sha;
     const item = JSON.parse(data);
@@ -180,11 +134,12 @@ export default new Provider({
   },
   async uploadWorkspaceContent({ token, content, file }) {
     const path = store.getters.gitPathsByItemId[file.id];
-    const absolutePath = `${store.getters['workspace/currentWorkspace'].path || ''}${path}`;
     const res = await giteeHelper.uploadFile({
-      ...store.getters['workspace/currentWorkspace'],
+      owner: token.name,
+      repo: appDataRepo,
+      branch: appDataBranch,
       token,
-      path: absolutePath,
+      path,
       content: Provider.serializeContent(content),
       sha: gitWorkspaceSvc.shaByPath[path],
     });
@@ -204,17 +159,30 @@ export default new Provider({
       },
     };
   },
-  async uploadWorkspaceData({ token, item }) {
+  async uploadWorkspaceData({
+    token,
+    item,
+  }) {
     const path = store.getters.gitPathsByItemId[item.id];
+    if (!path) {
+      return {
+        syncData: {
+          type: item.type,
+          hash: item.hash,
+        },
+      };
+    }
     const syncData = {
       id: path,
       type: item.type,
       hash: item.hash,
     };
     const res = await giteeHelper.uploadFile({
-      ...store.getters['workspace/currentWorkspace'],
       token,
-      path: getAbsolutePath(syncData),
+      owner: token.name,
+      repo: appDataRepo,
+      branch: appDataBranch,
+      path,
       content: JSON.stringify(item),
       sha: gitWorkspaceSvc.shaByPath[path],
     });
@@ -227,13 +195,17 @@ export default new Provider({
     };
   },
   async listFileRevisions({ token, fileSyncDataId }) {
-    const { owner, repo, branch } = store.getters['workspace/currentWorkspace'];
+    const { owner, repo, branch } = {
+      owner: token.name,
+      repo: appDataRepo,
+      branch: appDataBranch,
+    };
     const entries = await giteeHelper.getCommits({
       token,
       owner,
       repo,
       sha: branch,
-      path: getAbsolutePath({ id: fileSyncDataId }),
+      path: fileSyncDataId,
     });
 
     return entries.map(({
@@ -271,13 +243,13 @@ export default new Provider({
     token,
     contentId,
     fileSyncDataId,
-    revisionId,
   }) {
     const { data } = await giteeHelper.downloadFile({
-      ...store.getters['workspace/currentWorkspace'],
+      owner: token.name,
+      repo: appDataRepo,
+      branch: appDataBranch,
       token,
-      branch: revisionId,
-      path: getAbsolutePath({ id: fileSyncDataId }),
+      path: fileSyncDataId,
     });
     return Provider.parseContent(data, contentId);
   },

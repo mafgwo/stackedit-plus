@@ -1,9 +1,9 @@
 <template>
   <div class="modal" v-if="config" @keydown.esc.stop="onEscape" @keydown.tab="onTab" @focusin="onFocusInOut" @focusout="onFocusInOut">
-    <div class="modal__sponsor-banner" v-if="!isSponsor">
+    <!-- <div class="modal__sponsor-banner" v-if="!isSponsor">
       StackEdit is <a class="not-tabbable" target="_blank" href="https://github.com/mafgwo/stackedit/">open source</a>, please consider
       <a class="not-tabbable" href="javascript:void(0)" @click="sponsor">sponsoring</a> for just $5.
-    </div>
+    </div> -->
     <component v-if="currentModalComponent" :is="currentModalComponent"></component>
     <modal-inner v-else aria-label="Dialog">
       <div class="modal__content" v-html="simpleModal.contentHtml(config)"></div>
@@ -20,7 +20,7 @@ import { mapGetters } from 'vuex';
 import simpleModals from '../data/simpleModals';
 import editorSvc from '../services/editorSvc';
 import syncSvc from '../services/syncSvc';
-import googleHelper from '../services/providers/helpers/googleHelper';
+import giteeHelper from '../services/providers/helpers/giteeHelper';
 import store from '../store';
 
 import ModalInner from './modals/common/ModalInner';
@@ -168,7 +168,7 @@ export default {
         if (!store.getters['workspace/sponsorToken']) {
           // User has to sign in
           await store.dispatch('modal/open', 'signInForSponsorship');
-          await googleHelper.signin();
+          await giteeHelper.signin();
           syncSvc.requestSync();
         }
         if (!store.getters.isSponsor) {

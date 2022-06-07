@@ -5,14 +5,14 @@
         <div class="menu-entry__icon menu-entry__icon--image">
           <user-image :user-id="userId"></user-image>
         </div>
-        <span>Signed in as <b>{{loginToken.name}}</b>.</span>
+        <span>登录名为<b>{{loginToken.name}}</b>。</span>
       </div>
       <div class="menu-entry menu-entry--info flex flex--row flex--align-center" v-if="syncToken">
         <div class="menu-entry__icon menu-entry__icon--image">
           <icon-provider :provider-id="currentWorkspace.providerId"></icon-provider>
         </div>
-        <span v-if="currentWorkspace.providerId === 'googleDriveAppData'">
-          <b>{{currentWorkspace.name}}</b> 与您的 Google Drive 应用数据文件夹同步。
+        <span v-if="currentWorkspace.providerId === 'giteeAppData'">
+          <b>{{currentWorkspace.name}}</b> 与您的 Gitee 默认文档空间仓库同步。
         </span>
         <span v-else-if="currentWorkspace.providerId === 'googleDriveWorkspace'">
           <b>{{currentWorkspace.name}}</b> 与 <a :href="workspaceLocationUrl" target="_blank">Google Drive 文件夹</a>同步。
@@ -42,13 +42,13 @@
     </div>
     <menu-entry v-if="!loginToken" @click.native="signin">
       <icon-login slot="icon"></icon-login>
-      <div>使用 Google 登录</div>
-      <span>同步您的主工作区并解锁功能。</span>
+      <div>使用 Gitee 登录</div>
+      <span>同步您的主文档空间并解锁功能。</span>
     </menu-entry>
     <menu-entry @click.native="setPanel('workspaces')">
       <icon-database slot="icon"></icon-database>
-      <div><div class="menu-entry__label menu-entry__label--count" v-if="workspaceCount">{{workspaceCount}}</div> 工作区</div>
-      <span>切换到另一个工作区。</span>
+      <div><div class="menu-entry__label menu-entry__label--count" v-if="workspaceCount">{{workspaceCount}}</div> 文档空间</div>
+      <span>切换到另一个文档空间。</span>
     </menu-entry>
     <hr>
     <menu-entry @click.native="setPanel('sync')">
@@ -97,8 +97,8 @@
     </menu-entry>
     <menu-entry @click.native="accounts">
       <icon-key slot="icon"></icon-key>
-      <div><div class="menu-entry__label menu-entry__label--count">{{accountCount}}</div> 账户</div>
-      <span>管理对您的外部帐户的访问。</span>
+      <div><div class="menu-entry__label menu-entry__label--count">{{accountCount}}</div> 账号</div>
+      <span>管理对您的外部账号的访问。</span>
     </menu-entry>
     <menu-entry @click.native="templates">
       <icon-code-braces slot="icon"></icon-code-braces>
@@ -113,7 +113,7 @@
     <hr>
     <menu-entry @click.native="setPanel('workspaceBackups')">
       <icon-content-save slot="icon"></icon-content-save>
-      工作区备份
+      文档空间备份
     </menu-entry>
     <menu-entry @click.native="reset">
       <icon-logout slot="icon"></icon-logout>
@@ -131,7 +131,7 @@ import { mapGetters, mapActions } from 'vuex';
 import MenuEntry from './common/MenuEntry';
 import providerRegistry from '../../services/providers/common/providerRegistry';
 import UserImage from '../UserImage';
-import googleHelper from '../../services/providers/helpers/googleHelper';
+import giteeHelper from '../../services/providers/helpers/giteeHelper';
 import syncSvc from '../../services/syncSvc';
 import userSvc from '../../services/userSvc';
 import store from '../../store';
@@ -183,7 +183,7 @@ export default {
     }),
     async signin() {
       try {
-        await googleHelper.signin();
+        await giteeHelper.signin();
         syncSvc.requestSync();
       } catch (e) {
         // Cancel

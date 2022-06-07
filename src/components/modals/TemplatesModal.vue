@@ -1,8 +1,8 @@
 <template>
-  <modal-inner class="modal__inner-1--templates" aria-label="Manage templates">
+  <modal-inner class="modal__inner-1--templates" aria-label="管理模板">
     <div class="modal__content">
       <div class="form-entry">
-        <label class="form-entry__label" for="template">Template</label>
+        <label class="form-entry__label" for="template">模板</label>
         <div class="form-entry__field">
           <input v-if="isEditing" id="template" type="text" class="textfield" v-focus @blur="submitEdit()" @keydown.enter="submitEdit()" @keydown.esc.stop="submitEdit(true)" v-model="editingName">
           <select v-else id="template" v-model="selectedId" class="textfield">
@@ -12,31 +12,31 @@
           </select>
         </div>
         <div class="form-entry__actions flex flex--row flex--end">
-          <button class="form-entry__button button" @click="create" v-title="'New template'">
+          <button class="form-entry__button button" @click="create" v-title="'新建模板'">
             <icon-file-plus></icon-file-plus>
           </button>
-          <button class="form-entry__button button" @click="copy" v-title="'Copy template'">
+          <button class="form-entry__button button" @click="copy" v-title="'复制模板'">
             <icon-file-multiple></icon-file-multiple>
           </button>
-          <button v-if="!isReadOnly" class="form-entry__button button" @click="isEditing = true" v-title="'Rename template'">
+          <button v-if="!isReadOnly" class="form-entry__button button" @click="isEditing = true" v-title="'重命名模板'">
             <icon-pen></icon-pen>
           </button>
-          <button v-if="!isReadOnly" class="form-entry__button button" @click="remove" v-title="'Remove template'">
+          <button v-if="!isReadOnly" class="form-entry__button button" @click="remove" v-title="'删除模板'">
             <icon-delete></icon-delete>
           </button>
         </div>
       </div>
       <div class="form-entry">
-        <label class="form-entry__label">Value</label>
+        <label class="form-entry__label">值</label>
         <div class="form-entry__field" v-for="(template, id) in templates" :key="id" v-if="id === selectedId">
           <code-editor lang="handlebars" :value="template.value" :disabled="isReadOnly" @changed="template.value = $event"></code-editor>
         </div>
       </div>
       <div v-if="!isReadOnly">
-        <a href="javascript:void(0)" v-if="!showHelpers" @click="showHelpers = true">Add helpers</a>
+        <a href="javascript:void(0)" v-if="!showHelpers" @click="showHelpers = true">添加帮助</a>
         <div class="form-entry" v-else>
           <br>
-          <label class="form-entry__label">Helpers</label>
+          <label class="form-entry__label">帮助</label>
           <div class="form-entry__field" v-for="(template, id) in templates" :key="id" v-if="id === selectedId">
             <code-editor lang="javascript" :value="template.helpers" @changed="template.helpers = $event"></code-editor>
           </div>
@@ -44,8 +44,8 @@
       </div>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">Cancel</button>
-      <button class="button button--resolve" @click="resolve()">Ok</button>
+      <button class="button" @click="config.reject()">取消</button>
+      <button class="button button--resolve" @click="resolve()">确认</button>
     </div>
   </modal-inner>
 </template>

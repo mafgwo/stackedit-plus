@@ -118,6 +118,8 @@ export default {
     const token = {
       accessToken,
       name: user.username,
+      applicationId,
+      applicationSecret,
       refreshToken: tokenBody.refresh_token,
       expiresOn: Date.now() + (tokenBody.expires_in * 1000),
       serverUrl,

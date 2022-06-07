@@ -1,21 +1,21 @@
 <template>
-  <modal-inner aria-label="Synchronize with Dropbox">
+  <modal-inner aria-label="与 Dropbox 同步">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="dropbox"></icon-provider>
       </div>
-      <p>Save <b>{{currentFileName}}</b> to your <b>Dropbox</b> and keep it synced.</p>
+      <p>将<b> {{CurrentFileName}} </b>保存到您的<b>Dropbox</b>并保持同步。</p>
       <form-entry label="File path" error="path">
         <input slot="field" class="textfield" type="text" v-model.trim="path" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          <b>Example:</b> {{config.token.fullAccess ? '' : '/Applications/StackEdit (restricted)'}}/path/to/My Document.md<br>
-          If the file exists, it will be overwritten.
+          <b>例如:</b> {{config.token.fullAccess ? '' : '/Applications/StackEdit (restricted)'}}/path/to/My Document.md<br>
+          如果文件存在，将被覆盖。
         </div>
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">Cancel</button>
-      <button class="button button--resolve" @click="resolve()">Ok</button>
+      <button class="button" @click="config.reject()">取消</button>
+      <button class="button button--resolve" @click="resolve()">确认</button>
     </div>
   </modal-inner>
 </template>

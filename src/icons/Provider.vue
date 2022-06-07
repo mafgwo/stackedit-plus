@@ -11,7 +11,6 @@ export default {
     classState() {
       switch (this.providerId) {
         case 'googleDrive':
-        case 'googleDriveAppData':
         case 'googleDriveWorkspace':
           return 'google-drive';
         case 'googlePhotos':
@@ -28,6 +27,7 @@ export default {
           return 'blogger';
         case 'couchdbWorkspace':
           return 'couchdb';
+        case 'giteeAppData':
         case 'giteeWorkspace':
           return 'gitee';
         default:

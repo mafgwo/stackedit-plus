@@ -5,7 +5,7 @@
         <div class="comment__user-image">
           <user-image :user-id="comment.sub"></user-image>
         </div>
-        <button class="comment__remove-button button" v-title="'Remove comment'" @click="removeComment">
+        <button class="comment__remove-button button" v-title="'删除评论'" @click="removeComment">
           <icon-delete></icon-delete>
         </button>
         <user-name :user-id="comment.sub"></user-name>

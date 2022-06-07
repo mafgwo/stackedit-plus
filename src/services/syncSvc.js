@@ -4,7 +4,7 @@ import utils from './utils';
 import diffUtils from './diffUtils';
 import networkSvc from './networkSvc';
 import providerRegistry from './providers/common/providerRegistry';
-import googleDriveAppDataProvider from './providers/googleDriveAppDataProvider';
+import giteeAppDataProvider from './providers/giteeAppDataProvider';
 import './providers/couchdbWorkspaceProvider';
 import './providers/githubWorkspaceProvider';
 import './providers/giteeWorkspaceProvider';
@@ -821,7 +821,7 @@ const requestSync = (addTriggerSyncBadge = false) => {
         clearInterval(intervalId);
         if (!isSyncPossible()) {
           // Cancel sync
-          throw new Error('Sync not possible.');
+          throw new Error('无法同步。');
         }
 
         // Determine if we have to clean files
@@ -888,7 +888,7 @@ export default {
     // Try to find a suitable workspace sync provider
     workspaceProvider = providerRegistry.providersById[utils.queryParams.providerId];
     if (!workspaceProvider || !workspaceProvider.initWorkspace) {
-      workspaceProvider = googleDriveAppDataProvider;
+      workspaceProvider = giteeAppDataProvider;
     }
     const workspace = await workspaceProvider.initWorkspace();
     // Fix the URL hash
@@ -938,7 +938,7 @@ export default {
 
       // Unload contents from memory periodically
       utils.setInterval(() => {
-        // Wait for sync and publish to finish
+        // Wait for sync and 发布到finish
         if (store.state.queue.isEmpty) {
           localDbSvc.unloadContents();
         }

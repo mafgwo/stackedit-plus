@@ -1,23 +1,23 @@
 <template>
-  <modal-inner aria-label="Insert image">
+  <modal-inner aria-label="插入图像">
     <div class="modal__content">
-      <p>Please provide a <b>URL</b> for your image.</p>
+      <p>请为您的图像提供<b> url </b>。</p>
       <form-entry label="URL" error="url">
         <input slot="field" class="textfield" type="text" v-model.trim="url" @keydown.enter="resolve">
       </form-entry>
       <menu-entry @click.native="openGooglePhotos(token)" v-for="token in googlePhotosTokens" :key="token.sub">
         <icon-provider slot="icon" provider-id="googlePhotos"></icon-provider>
-        <div>Open from Google Photos</div>
+        <div>从Google照片打开</div>
         <span>{{token.name}}</span>
       </menu-entry>
       <menu-entry @click.native="addGooglePhotosAccount">
         <icon-provider slot="icon" provider-id="googlePhotos"></icon-provider>
-        <span>Add Google Photos account</span>
+        <span>添加Google Photos账号</span>
       </menu-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="reject()">Cancel</button>
-      <button class="button button--resolve" @click="resolve">Ok</button>
+      <button class="button" @click="reject()">取消</button>
+      <button class="button button--resolve" @click="resolve">确认</button>
     </div>
   </modal-inner>
 </template>

@@ -7,6 +7,8 @@ import constants from '../../../data/constants';
 
 const tokenExpirationMargin = 5 * 60 * 1000;
 
+const appDataRepo = 'stackedit-app-data';
+
 const request = (token, options) => networkSvc.request({
   ...options,
   headers: {
@@ -44,6 +46,9 @@ userSvc.setInfoResolver('gitee', subPrefix, async (sub) => {
       },
     })).body;
 
+    if (user.avatar_url && user.avatar_url.endsWith('.png')) {
+      user.avatar_url = `${user.avatar_url}!avatar60`;
+    }
     return {
       id: `${subPrefix}:${user.login}`,
       name: user.login,
@@ -63,7 +68,7 @@ export default {
   /**
    * https://developer.gitee.com/apps/building-oauth-apps/authorization-options-for-oauth-apps/
    */
-  async startOauth2(lastRefreshToken, silent = false) {
+  async startOauth2(lastToken, silent = false, isMain) {
     const clientId = store.getters['data/serverConf'].giteeClientId;
     let tokenBody;
     if (!silent) {
@@ -94,7 +99,7 @@ export default {
         url: 'https://gitee.com/oauth/token',
         params: {
           grant_type: 'refresh_token',
-          refresh_token: lastRefreshToken,
+          refresh_token: lastToken.refreshToken,
         },
       })).body;
     }
@@ -107,21 +112,32 @@ export default {
         access_token: accessToken,
       },
     })).body;
+    if (user.avatar_url && user.avatar_url.endsWith('.png')) {
+      user.avatar_url = `${user.avatar_url}!avatar60`;
+    }
     userSvc.addUserInfo({
       id: `${subPrefix}:${user.login}`,
       name: user.login,
       imageUrl: user.avatar_url || '',
     });
 
+    // 获取同一个用户的登录token
+    const existingToken = store.getters['data/giteeTokensBySub'][user.login];
+
     // Build token object including sub 在token失效后刷新token 如果刷新失败则触发重新授权
     const token = {
       accessToken,
+      // 主文档空间的登录 标识登录
+      isLogin: !!isMain || (existingToken && !!existingToken.isLogin),
       refreshToken: tokenBody.refresh_token,
       expiresOn: Date.now() + (tokenBody.expires_in * 1000),
       name: user.login,
       sub: `${user.login}`,
     };
-
+    if (isMain) {
+      // 检查 stackedit-app-data 仓库是否已经存在 如果不存在则创建该仓库
+      await this.checkAndCreateRepo(token);
+    }
     // Add token to gitee tokens
     store.dispatch('data/addGiteeToken', token);
     return token;
@@ -146,7 +162,7 @@ export default {
     // existing token is about to expire.
     // Try to get a new token in background
     try {
-      return await this.startOauth2(lastToken.refreshToken, true);
+      return await this.startOauth2(lastToken, true);
     } catch (err) {
       // If it fails try to popup a window
       if (store.state.offline) {
@@ -158,6 +174,9 @@ export default {
       });
       return this.startOauth2();
     }
+  },
+  signin() {
+    return this.startOauth2(null, false, true);
   },
   async addAccount() {
     const token = await this.startOauth2();
@@ -186,6 +205,27 @@ export default {
       throw new Error('Git tree too big. Please remove some files in the repository.');
     }
     return tree;
+  },
+
+  async checkAndCreateRepo(token) {
+    const url = `https://gitee.com/api/v5/repos/${encodeURIComponent(token.name)}/${encodeURIComponent(appDataRepo)}`;
+    try {
+      await request(token, { url });
+    } catch (err) {
+      // 不存在则创建
+      if (err.status === 404) {
+        await request(token, {
+          method: 'POST',
+          url: 'https://gitee.com/api/v5/user/repos',
+          params: {
+            name: appDataRepo,
+            auto_init: true,
+          },
+        });
+      } else {
+        throw err;
+      }
+    }
   },
 
   /**

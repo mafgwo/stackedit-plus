@@ -9,7 +9,7 @@
       <a target="_blank" href="#">Chrome 应用</a> — <a target="_blank" href="#">Chrome 扩展</a>
       <br>
       <hr>
-      <small>© 2013-2022 StackEdit中文版<br>v{{version}}</small>
+      <small>© 2022 StackEdit中文版<br>v{{version}}</small>
       <h3>常见问题解答</h3>
       <div class="faq" v-html="faq"></div>
       <div class="modal__info">

@@ -13,7 +13,7 @@
       <div class="tour-step__inner" v-else-if="step === 'editor'">
         <h2>您的Markdown编辑器</h2>
         <p>StackEdit实时将Markdown转换为HTML。</p>
-        <p>点击 <icon-side-preview></icon-side-preview> 切换侧面预览</p>
+        <p>点击 <icon-side-preview></icon-side-preview> 切换侧边预览</p>
         <div class="tour-step__button-bar">
           <button class="button" @click="finish">跳过</button>
           <button class="button button--resolve" @click="next">下一步</button>
@@ -21,7 +21,7 @@
       </div>
       <div class="tour-step__inner" v-else-if="step === 'explorer'">
         <h2>文件资源管理器</h2>
-        <p>StackEdit可以管理工作区中的多个文件和文件夹。</p>
+        <p>StackEdit可以管理文档空间中的多个文件和文件夹。</p>
         <p>点击 <icon-folder></icon-folder> 打开文件资源管理器。</p>
         <div class="tour-step__button-bar">
           <button class="button" @click="finish">跳过</button>
@@ -30,7 +30,7 @@
       </div>
       <div class="tour-step__inner" v-else-if="step === 'menu'">
         <h2>更多！</h2>
-        <p>StackEdit还可以同步和发布文件，管理协作工作区...</p>
+        <p>StackEdit还可以同步和发布文件，管理协作文档空间...</p>
         <p>点击 <icon-provider provider-id="stackedit"></icon-provider> 浏览菜单。</p>
         <div class="tour-step__button-bar">
           <button class="button" @click="finish">跳过</button>

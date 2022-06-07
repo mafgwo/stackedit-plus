@@ -18,7 +18,7 @@
         </menu-entry>
       </div>
       <div class="side-bar__info" v-else-if="noToken">
-        <p>您必须链接一个帐户才能开始同步文件。</p>
+        <p>您必须链接一个账号才能开始同步文件。</p>
       </div>
       <hr>
       <div v-for="token in dropboxTokens" :key="token.sub">

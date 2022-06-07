@@ -4,8 +4,8 @@
       <div class="modal__image">
         <icon-sync></icon-sync>
       </div>
-      <p v-if="syncLocations.length"><b>{{currentFileName}}</b> is synchronized with the following location(s):</p>
-      <p v-else><b>{{currentFileName}}</b> is not synchronized yet.</p>
+      <p v-if="syncLocations.length"><b>{{currentFileName}}</b> 与以下位置同步：</p>
+      <p v-else><b>{{currentFileName}}</b>尚未同步。</p>
       <div>
         <div class="sync-entry flex flex--column" v-for="location in syncLocations" :key="location.id">
           <div class="sync-entry__header flex flex--row flex--align-center">
@@ -16,20 +16,20 @@
               {{location.description}}
             </div>
             <div class="sync-entry__buttons flex flex--row flex--center">
-              <button class="sync-entry__button button" @click="remove(location)" v-title="'Remove location'">
+              <button class="sync-entry__button button" @click="remove(location)" v-title="'删除位置'">
                 <icon-delete></icon-delete>
               </button>
             </div>
           </div>
           <div class="sync-entry__row flex flex--row flex--align-center">
             <div class="sync-entry__url">
-              {{location.url || 'Google Drive app data'}}
+              {{location.url || 'Gitee app data'}}
             </div>
             <div class="sync-entry__buttons flex flex--row flex--center" v-if="location.url">
-              <button class="sync-entry__button button" v-clipboard="location.url" @click="info('Location URL copied to clipboard!')" v-title="'Copy URL'">
+              <button class="sync-entry__button button" v-clipboard="location.url" @click="info('位置URL复制到剪贴板！')" v-title="'复制URL'">
                 <icon-content-copy></icon-content-copy>
               </button>
-              <a class="sync-entry__button button" v-if="location.url" :href="location.url" target="_blank" v-title="'Open location'">
+              <a class="sync-entry__button button" v-if="location.url" :href="location.url" target="_blank" v-title="'打开位置'">
                 <icon-open-in-new></icon-open-in-new>
               </a>
             </div>
@@ -37,11 +37,11 @@
         </div>
       </div>
       <div class="modal__info" v-if="syncLocations.length">
-        <b>Tip:</b> Removing a location won't delete any file.
+        <b>提示:</b> 删除位置不会删除任何文件。
       </div>
     </div>
     <div class="modal__button-bar">
-      <button class="button button--resolve" @click="config.resolve()">Close</button>
+      <button class="button button--resolve" @click="config.resolve()">关闭</button>
     </div>
   </modal-inner>
 </template>

@@ -1,24 +1,24 @@
 <template>
-  <modal-inner aria-label="Link Dropbox account">
+  <modal-inner aria-label="链接Dropbox账号">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="dropbox"></icon-provider>
       </div>
-      <p>Link your <b>Dropbox</b> account to <b>StackEdit</b>.</p>
+      <p>将您的<b>Dropbox</b>链接到<b>StackEdit</b>。</p>
       <div class="form-entry">
         <div class="form-entry__checkbox">
           <label>
-            <input type="checkbox" v-model="restrictedAccess"> Restrict access
+            <input type="checkbox" v-model="restrictedAccess"> 限制访问
           </label>
           <div class="form-entry__info">
-            If checked, access will be restricted to the <b>/Applications/StackEdit (restricted)</b> folder.
+            如果限制，访问将仅限于<b>/Applications/StackEdit (restricted)</b>文件夹。
           </div>
         </div>
       </div>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">Cancel</button>
-      <button class="button button--resolve" @click="config.resolve()">Ok</button>
+      <button class="button" @click="config.reject()">取消</button>
+      <button class="button button--resolve" @click="config.resolve()">确认</button>
     </div>
   </modal-inner>
 </template>

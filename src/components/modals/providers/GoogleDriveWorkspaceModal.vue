@@ -1,23 +1,23 @@
 <template>
-  <modal-inner aria-label="Add Google Drive workspace">
+  <modal-inner aria-label="添加Google Drive文档空间">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="googleDrive"></icon-provider>
       </div>
-      <p>Create a workspace synced with a <b>Google Drive</b> folder.</p>
-      <form-entry label="Folder ID" info="optional">
+      <p>创建一个与<b> Google Drive </b>文件夹同步的文档空间。</p>
+      <form-entry label="Folder ID" info="可选的">
         <input slot="field" class="textfield" type="text" v-model.trim="folderId" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          If not supplied, a new workspace folder will be created in your Drive root folder.
+          如果不提供，将在驱动器根文件夹中创建一个新的Workspace文件夹。
         </div>
         <div class="form-entry__actions">
-          <a href="javascript:void(0)" @click="openFolder">Choose folder</a>
+          <a href="javascript:void(0)" @click="openFolder">选择文件夹</a>
         </div>
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">Cancel</button>
-      <button class="button button--resolve" @click="resolve()">Ok</button>
+      <button class="button" @click="config.reject()">取消</button>
+      <button class="button button--resolve" @click="resolve()">确认</button>
     </div>
   </modal-inner>
 </template>
