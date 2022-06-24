@@ -152,17 +152,18 @@ export default {
     });
 
     // Data creations/updates
-    const syncDataByItemId = store.getters['data/syncDataByItemId'];
+    const syncDataById = store.getters['data/syncDataById'];
     Object.keys(treeDataMap).forEach((path) => {
-      // Only template data are stored
-      const [, id] = path.match(/^\.stackedit-data\/(templates)\.json$/) || [];
+      // Only settings、workspaces、template data are stored
+      const [, id] = path.match(/^\.stackedit-data\/(settings|workspaces|badgeCreations|templates)\.json$/) || [];
       if (id) {
         idsByPath[path] = id;
-        const syncData = syncDataByItemId[id];
+        idsByPath[id] = id;
+        const syncData = syncDataById[id];
         if (!syncData || syncData.sha !== this.shaByPath[path]) {
           const type = 'data';
           changes.push({
-            syncDataId: path,
+            syncDataId: id,
             item: {
               id,
               type,
@@ -170,7 +171,7 @@ export default {
               hash: 1,
             },
             syncData: {
-              id: path,
+              id,
               type,
               // Need a truthy value to force downloading the content
               hash: 1,

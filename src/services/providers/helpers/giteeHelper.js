@@ -46,7 +46,7 @@ userSvc.setInfoResolver('gitee', subPrefix, async (sub) => {
       },
     })).body;
 
-    if (user.avatar_url && user.avatar_url.endsWith('.png')) {
+    if (user.avatar_url && user.avatar_url.endsWith('.png') && !user.avatar_url.endsWith('no_portrait.png')) {
       user.avatar_url = `${user.avatar_url}!avatar60`;
     }
     return {
@@ -112,7 +112,7 @@ export default {
         access_token: accessToken,
       },
     })).body;
-    if (user.avatar_url && user.avatar_url.endsWith('.png')) {
+    if (user.avatar_url && user.avatar_url.endsWith('.png') && !user.avatar_url.endsWith('no_portrait.png')) {
       user.avatar_url = `${user.avatar_url}!avatar60`;
     }
     userSvc.addUserInfo({
@@ -309,10 +309,13 @@ export default {
       url: `contents/${encodeURIComponent(path)}`,
       params: { ref: branch },
     });
-    return {
-      sha,
-      data: utils.decodeBase64(content),
-    };
+    if (sha) {
+      return {
+        sha,
+        data: utils.decodeBase64(content),
+      };
+    }
+    return {};
   },
 
   /**

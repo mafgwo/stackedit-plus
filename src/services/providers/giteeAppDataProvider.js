@@ -113,15 +113,20 @@ export default new Provider({
     if (!syncData) {
       return {};
     }
-
+    const path = `.stackedit-data/${syncData.id}.json`;
+    // const path = store.getters.gitPathsByItemId[syncData.id];
+    // const path = syncData.id;
     const { sha, data } = await giteeHelper.downloadFile({
       owner: token.name,
       repo: appDataRepo,
       branch: appDataBranch,
       token,
-      path: syncData.id,
+      path,
     });
-    gitWorkspaceSvc.shaByPath[syncData.id] = sha;
+    if (!sha) {
+      return {};
+    }
+    gitWorkspaceSvc.shaByPath[path] = sha;
     const item = JSON.parse(data);
     return {
       item,
@@ -129,6 +134,7 @@ export default new Provider({
         ...syncData,
         hash: item.hash,
         sha,
+        type: 'data',
       },
     };
   },
@@ -162,21 +168,11 @@ export default new Provider({
   async uploadWorkspaceData({
     token,
     item,
+    syncData,
   }) {
-    const path = store.getters.gitPathsByItemId[item.id];
-    if (!path) {
-      return {
-        syncData: {
-          type: item.type,
-          hash: item.hash,
-        },
-      };
-    }
-    const syncData = {
-      id: path,
-      type: item.type,
-      hash: item.hash,
-    };
+    const path = `.stackedit-data/${item.id}.json`;
+    // const path = store.getters.gitPathsByItemId[item.id];
+    // const path = syncData.id;
     const res = await giteeHelper.uploadFile({
       token,
       owner: token.name,
@@ -190,6 +186,9 @@ export default new Provider({
     return {
       syncData: {
         ...syncData,
+        type: item.type,
+        hash: item.hash,
+        data: item.data,
         sha: res.content.sha,
       },
     };
@@ -221,7 +220,7 @@ export default new Provider({
         user = committer;
       }
       const sub = `${giteeHelper.subPrefix}:${user.login}`;
-      if (user.avatar_url && user.avatar_url.endsWith('.png')) {
+      if (user.avatar_url && user.avatar_url.endsWith('.png') && !user.avatar_url.endsWith('no_portrait.png')) {
         user.avatar_url = `${user.avatar_url}!avatar60`;
       }
       userSvc.addUserInfo({ id: sub, name: user.login, imageUrl: user.avatar_url });

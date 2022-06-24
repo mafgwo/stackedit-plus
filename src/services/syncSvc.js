@@ -539,7 +539,7 @@ const syncDataItem = async (dataId) => {
     || store.state.data.lsItemsById[dataId];
 
   const oldItem = getItem();
-  const oldSyncData = store.getters['data/syncDataByItemId'][dataId];
+  const oldSyncData = store.getters['data/syncDataById'][dataId];
   // Sync if item hash and syncData hash are out of sync
   if (oldSyncData && oldItem && oldItem.hash === oldSyncData.hash) {
     return;
@@ -548,7 +548,7 @@ const syncDataItem = async (dataId) => {
   const token = workspaceProvider.getToken();
   const { item } = updateSyncData(await workspaceProvider.downloadWorkspaceData({
     token,
-    syncData: oldSyncData,
+    syncData: oldSyncData || { id: dataId },
   }));
 
   const serverItem = item;
@@ -603,14 +603,14 @@ const syncDataItem = async (dataId) => {
     updateSyncData(await workspaceProvider.uploadWorkspaceData({
       token,
       item: mergedItem,
-      syncData: store.getters['data/syncDataByItemId'][dataId],
+      syncData: store.getters['data/syncDataById'][dataId],
       ifNotTooLate: tooLateChecker(restartContentSyncAfter),
     }));
   }
 
   // Copy sync data into data sync data
   store.dispatch('data/patchDataSyncDataById', {
-    [dataId]: utils.deepCopy(store.getters['data/syncDataByItemId'][dataId]),
+    [dataId]: utils.deepCopy(store.getters['data/syncDataById'][dataId]),
   });
 };
 
@@ -728,11 +728,11 @@ const syncWorkspace = async (skipContents = false) => {
 
     // Sync settings, workspaces and badges only in the main workspace
     if (workspace.id === 'main') {
-      await syncDataItem('settings');
+      // await syncDataItem('settings');
       await syncDataItem('workspaces');
       await syncDataItem('badgeCreations');
+      // await syncDataItem('templates');
     }
-    await syncDataItem('templates');
 
     if (!skipContents) {
       const currentFileId = store.getters['file/current'].id;
