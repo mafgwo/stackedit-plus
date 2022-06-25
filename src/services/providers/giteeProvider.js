@@ -135,7 +135,7 @@ export default new Provider({
         user = committer;
       }
       const sub = `${giteeHelper.subPrefix}:${user.login}`;
-      if (user.avatar_url && user.avatar_url.endsWith('.png')) {
+      if (user.avatar_url && user.avatar_url.endsWith('.png') && !user.avatar_url.endsWith('no_portrait.png')) {
         user.avatar_url = `${user.avatar_url}!avatar60`;
       }
       userSvc.addUserInfo({ id: sub, name: user.login, imageUrl: user.avatar_url });
