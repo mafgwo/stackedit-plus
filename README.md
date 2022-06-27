@@ -1,5 +1,7 @@
 # StackEdit中文版
 
+**目前正准备支持粘贴自动上传图片到指定图床的功能，大家有什么好的图床推荐，可以再[issue](https://gitee.com/mafgwo/stackedit/issues/I5E6FJ)给我留言**
+
 从 [StackEdit 官方](https://github.com/benweet/stackedit) fork出来，然后加上了 **Gitee** 的支持，并且已经重新打了镜像，以下官方的部署方式，除了Docker镜像地址不同，其他均一致。
 
 ### Fork出来修改的原因
@@ -12,9 +14,10 @@ StackEdit的作者可能因为什么原因，已经很久不维护了，Github�
 - `GITEE_CLIENT_SECRET` Gitee 的 Client Secret
 
 ### TODO: 关于后续的一些想法
-- 支持**Gitea**、**Gogs**两个轻量级且适于自建的Git仓库（毕竟Gitlab对机器配置要求较高）。想支持这两个主要也是考虑到其实很多公司已经禁用了Github或Gitee仓库，在公司都没法连上自己的Git仓库。
-- 汉化，毕竟大家最熟悉的还是母语，并且该编辑器功能页面也不多，汉化工作量并不会很大。
-- 替换主文档空间为Gitee（原版本主文档空间是Google Drive，国内只有fan墙才可以用）
+- 支持**Gitea**、**Gogs**两个轻量级且适于自建的Git仓库（毕竟Gitlab对机器配置要求较高）。想支持这两个主要也是考虑到其实很多公司已经禁用了Github或Gitee仓库，在公司都没法连上自己的Git仓库。 -- 已完成（Gogs无法支持）
+- 汉化，毕竟大家最熟悉的还是母语，并且该编辑器功能页面也不多，汉化工作量并不会很大。-- 已完成
+- 替换主文档空间为Gitee（原版本主文档空间是Google Drive，国内只有fan墙才可以用）-- 已完成
+- 支持图片粘贴自动上传到指定图床。-- 进行中
 - 引入mdnice，右边预览增加mdnice预览选项，主要含选主题(含mdnice常用20多个主题)、支持自定义主题、复制到公众号、复制到知乎、复制到稀土掘金等基本功能，便于喜欢写公众号、博客的同学可以更好更快的排版。
 - ... 另外，朋友们有好的想法也可以在Issue或者加我微信 qicoding 提给我。
 
