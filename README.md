@@ -1,6 +1,6 @@
 # StackEdit中文版
 
-**目前正准备支持粘贴自动上传图片到指定图床的功能，大家有什么好的图床推荐，可以再[issue](https://gitee.com/mafgwo/stackedit/issues/I5E6FJ)给我留言**
+**目前正准备支持粘贴自动上传图片到指定图床的功能，大家有什么好的图床推荐，可以在 [Issue](https://gitee.com/mafgwo/stackedit/issues/I5E6FJ) 给我留言**
 
 从 [StackEdit 官方](https://github.com/benweet/stackedit) fork出来，然后加上了 **Gitee** 的支持，并且已经重新打了镜像，以下官方的部署方式，除了Docker镜像地址不同，其他均一致。
 
