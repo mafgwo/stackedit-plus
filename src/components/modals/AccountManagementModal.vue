@@ -77,6 +77,10 @@
         <icon-provider slot="icon" provider-id="zendesk"></icon-provider>
         <span>添加Zendesk账号</span>
       </menu-entry>
+      <menu-entry @click.native="addSmmsAccount">
+        <icon-provider slot="icon" provider-id="smms"></icon-provider>
+        <span>添加SM.MS账号</span>
+      </menu-entry>
     </div>
     <div class="modal__button-bar">
       <button class="button button--resolve" @click="config.resolve()">关闭</button>
@@ -98,6 +102,7 @@ import gitlabHelper from '../../services/providers/helpers/gitlabHelper';
 import giteaHelper from '../../services/providers/helpers/giteaHelper';
 import wordpressHelper from '../../services/providers/helpers/wordpressHelper';
 import zendeskHelper from '../../services/providers/helpers/zendeskHelper';
+import smmsHelper from '../../services/providers/helpers/smmsHelper';
 import badgeSvc from '../../services/badgeSvc';
 
 export default {
@@ -176,6 +181,13 @@ export default {
           name: token.name,
           scopes: ['read', 'hc:write'],
         })),
+        ...Object.values(store.getters['data/smmsTokensBySub']).map(token => ({
+          token,
+          providerId: 'smms',
+          userId: token.sub,
+          name: token.name,
+          scopes: ['api'],
+        })),
       ];
     },
   },
@@ -243,6 +255,12 @@ export default {
       try {
         const { subdomain, clientId } = await store.dispatch('modal/open', { type: 'zendeskAccount' });
         await zendeskHelper.addAccount(subdomain, clientId);
+      } catch (e) { /* cancel */ }
+    },
+    async addSmmsAccount() {
+      try {
+        const { proxyUrl, apiSecretToken } = await store.dispatch('modal/open', { type: 'smmsAccount' });
+        await smmsHelper.addAccount(proxyUrl, apiSecretToken);
       } catch (e) { /* cancel */ }
     },
   },

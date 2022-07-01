@@ -1,5 +1,5 @@
 <template>
-  <div class="editor">
+  <div class="editor" ondrop="return false;">
     <pre class="editor__inner markdown-highlighting" :style="{padding: styles.editorPadding}" :class="{monospaced: computedSettings.editor.monospacedFontOnly}"></pre>
     <div class="gutter" :style="{left: styles.editorGutterLeft + 'px'}">
       <comment-list v-if="styles.editorGutterWidth"></comment-list>
@@ -13,6 +13,7 @@ import { mapGetters } from 'vuex';
 import CommentList from './gutters/CommentList';
 import EditorNewDiscussionButton from './gutters/EditorNewDiscussionButton';
 import store from '../store';
+import editorSvc from '../services/editorSvc';
 
 export default {
   components: {
@@ -30,7 +31,31 @@ export default {
       'computedSettings',
     ]),
   },
+  methods: {
+    setImgAndDoClick(items) {
+      let file = null;
+      if (!items || items.length === 0) {
+        return;
+      }
+      for (let i = 0; i < items.length; i += 1) {
+        if (items[i].type.indexOf('image') !== -1) {
+          file = items[i].getAsFile();
+          break;
+        }
+      }
+      if (!file) {
+        return;
+      }
+      store.dispatch('img/setImg', file);
+      editorSvc.pagedownEditor.uiManager.doClick('image');
+    },
+  },
   mounted() {
+    // 当前选择的图片存储图床
+    const currImgStorageStr = localStorage.getItem('img/checkedStorage');
+    if (currImgStorageStr) {
+      store.commit('img/changeCheckedStorage', JSON.parse(currImgStorageStr));
+    }
     const editorElt = this.$el.querySelector('.editor__inner');
     const onDiscussionEvt = cb => (evt) => {
       let elt = evt.target;
@@ -55,6 +80,15 @@ export default {
     editorElt.addEventListener('click', onDiscussionEvt((discussionId) => {
       store.commit('discussion/setCurrentDiscussionId', discussionId);
     }));
+
+    editorElt.addEventListener('drop', (event) => {
+      const transItems = event.dataTransfer.items;
+      this.setImgAndDoClick(transItems);
+    });
+    editorElt.addEventListener('paste', (event) => {
+      const pasteItems = (event.clipboardData || window.clipboardData).items;
+      this.setImgAndDoClick(pasteItems);
+    });
 
     this.$watch(
       () => store.state.discussion.currentDiscussionId,

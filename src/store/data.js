@@ -216,6 +216,7 @@ export default {
     giteaTokensBySub: (state, { tokensByType }) => tokensByType.gitea || {},
     wordpressTokensBySub: (state, { tokensByType }) => tokensByType.wordpress || {},
     zendeskTokensBySub: (state, { tokensByType }) => tokensByType.zendesk || {},
+    smmsTokensBySub: (state, { tokensByType }) => tokensByType.smms || {},
     badgeCreations: getter('badgeCreations'),
     badgeTree: (state, { badgeCreations }) => features
       .map(feature => feature.toBadge(badgeCreations)),
@@ -311,5 +312,6 @@ export default {
     addWordpressToken: tokenAdder('wordpress'),
     addZendeskToken: tokenAdder('zendesk'),
     patchBadgeCreations: patcher('badgeCreations'),
+    addSmmsToken: tokenAdder('smms'),
   },
 };

@@ -260,6 +260,11 @@ export default [
         '将您的Zendesk账号链接到Stackedit。',
       ),
       new Feature(
+        'addSmmsAccount',
+        'SM.MS账号',
+        '将您的SM.MS账号链接到Stackedit。',
+      ),
+      new Feature(
         'removeAccount',
         '移除账号',
         '使用“账号”对话框删除对外部账号的访问。',

@@ -1,6 +1,6 @@
 {
   "name": "StackEdit中文版",
-  "description": "支持Gitee仓库的浏览器内 Markdown 编辑器",
+  "description": "支持Gitee仓库/粘贴图片自动上传的浏览器内 Markdown 编辑器",
   "version": "1.0.13",
   "manifest_version": 2,
   "container" : "GOOGLE_DRIVE",

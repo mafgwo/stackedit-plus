@@ -25,7 +25,7 @@ var defaultsStrings = {
   codeexample: "enter code here",
 
   image: "Image <img> Ctrl/Cmd+G",
-  imagedescription: "enter image description here",
+  imagedescription: "",
   imagedialog: "<p><b>Insert Image</b></p><p>http://example.com/images/diagram.jpg \"optional title\"<br><br>Need <a href='http://www.google.com/search?q=free+image+hosting' target='_blank'>free image hosting?</a></p>",
 
   olist: "Numbered List <ol> Ctrl/Cmd+O",

@@ -39,7 +39,7 @@
       </div>
       <div class="tour-step__inner" v-else-if="step === 'end'">
         <h2>Enjoy!</h2>
-        <p>如果您喜欢StackEdit，请在<a href="#">Chrome网络商店</a>上给5颗星打分。</p>
+        <p>如果您喜欢StackEdit中文版，请在<a href="https://gitee.com/mafgwo/stackedit">Gitee仓库</a>上点一下starred，谢谢！</p>
         <div class="tour-step__button-bar">
           <button class="button button--resolve" @click="finish">确认</button>
         </div>

@@ -98,4 +98,8 @@ export default {
 .icon-provider--gitee {
   background-image: url(../assets/iconGitee.svg);
 }
+
+.icon-provider--smms {
+  background-image: url(../assets/iconSmms.svg);
+}
 </style>

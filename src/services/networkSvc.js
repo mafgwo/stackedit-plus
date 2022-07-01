@@ -247,8 +247,14 @@ export default {
     if (sanitizedConfig.body && typeof sanitizedConfig.body === 'object') {
       sanitizedConfig.body = JSON.stringify(sanitizedConfig.body);
       sanitizedConfig.headers['Content-Type'] = 'application/json';
+    } else if (sanitizedConfig.formData) {
+      const data = new FormData();
+      Object.keys(sanitizedConfig.formData).forEach((key) => {
+        const formVal = sanitizedConfig.formData[key];
+        data.append(key, formVal);
+      });
+      sanitizedConfig.formData = data;
     }
-
     const attempt = async () => {
       try {
         return await new Promise((resolve, reject) => {
@@ -315,7 +321,7 @@ export default {
           if (sanitizedConfig.blob) {
             xhr.responseType = 'blob';
           }
-          xhr.send(sanitizedConfig.body || null);
+          xhr.send(sanitizedConfig.body || sanitizedConfig.formData || null);
         });
       } catch (err) {
         // Try again later in case of retriable error
