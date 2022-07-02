@@ -8,7 +8,6 @@ import './icons';
 import App from './components/App';
 import store from './store';
 import localDbSvc from './services/localDbSvc';
-import versionsDescription from './data/versions';
 
 if (!indexedDB) {
   throw new Error('不支持您的浏览器，请升级到最新版本。');
@@ -30,8 +29,7 @@ OfflinePluginRuntime.install({
 });
 
 if (localStorage.updated) {
-  const versionDesc = versionsDescription[VERSION];
-  store.dispatch('notification/info', `StackEdit中文版刚刚更新了！${versionDesc}`);
+  store.dispatch('notification/info', 'StackEdit中文版刚刚更新了！');
   setTimeout(() => localStorage.removeItem('updated'), 3000);
 }
 

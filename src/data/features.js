@@ -212,57 +212,57 @@ export default [
       new Feature(
         'addBloggerAccount',
         'Blogger账号',
-        '将您的Blogger账号链接到Stackedit。',
+        '将您的Blogger账号链接到StackEdit中文版。',
       ),
       new Feature(
         'addDropboxAccount',
         'Dropbox账号',
-        '将您的Dropbox账号链接到Stackedit。',
+        '将您的Dropbox账号链接到StackEdit中文版。',
       ),
       new Feature(
         'addGitHubAccount',
         'GitHub账号',
-        '将您的Github账号链接到Stackedit。',
+        '将您的Github账号链接到StackEdit中文版。',
       ),
       new Feature(
         'addGiteeAccount',
         'Gitee账号',
-        '将您的Gitee账号链接到Stackedit。',
+        '将您的Gitee账号链接到StackEdit中文版。',
       ),
       new Feature(
         'addGitLabAccount',
         'GitLab账号',
-        '将您的Gitlab账号链接到Stackedit。',
+        '将您的Gitlab账号链接到StackEdit中文版。',
       ),
       new Feature(
         'addGiteaAccount',
         'Gitea账号',
-        '将您的Gitea账号链接到Stackedit。',
+        '将您的Gitea账号链接到StackEdit中文版。',
       ),
       new Feature(
         'addGoogleDriveAccount',
         'Google Drive账号',
-        '将您的Google Drive账号链接到Stackedit。',
+        '将您的Google Drive账号链接到StackEdit中文版。',
       ),
       new Feature(
         'addGooglePhotosAccount',
         'Google Photos账号',
-        '将您的Google Photos账号链接到Stackedit。',
+        '将您的Google Photos账号链接到StackEdit中文版。',
       ),
       new Feature(
         'addWordpressAccount',
         'WordPress账号',
-        '将您的WordPress账号链接到Stackedit。',
+        '将您的WordPress账号链接到StackEdit中文版。',
       ),
       new Feature(
         'addZendeskAccount',
         'Zendesk账号',
-        '将您的Zendesk账号链接到Stackedit。',
+        '将您的Zendesk账号链接到StackEdit中文版。',
       ),
       new Feature(
         'addSmmsAccount',
         'SM.MS账号',
-        '将您的SM.MS账号链接到Stackedit。',
+        '将您的SM.MS账号链接到StackEdit中文版。',
       ),
       new Feature(
         'removeAccount',
