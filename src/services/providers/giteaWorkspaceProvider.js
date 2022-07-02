@@ -83,7 +83,7 @@ export default new Provider({
     }
 
     if (!workspace) {
-      const projectId = await giteaHelper.getProjectId(workspaceParams);
+      const projectId = await giteaHelper.getProjectId(token, workspaceParams);
       const pathEntries = (path || '').split('/');
       const projectPathEntries = (projectPath || '').split('/');
       const name = pathEntries[pathEntries.length - 2] // path ends with `/`

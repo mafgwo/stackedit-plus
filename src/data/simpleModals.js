@@ -26,6 +26,11 @@ export default {
     '取消',
     '确认删除',
   ),
+  imgStorageDeletion: simpleModal(
+    '<p>您将要删除图床，你确定吗？</p>',
+    '取消',
+    '确认删除',
+  ),
   pathConflict: simpleModal(
     config => `<p><b>${config.item.name}</b>已经存在。您要添加后缀吗？</p>`,
     '取消',

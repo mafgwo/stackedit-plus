@@ -8,9 +8,10 @@ import './icons';
 import App from './components/App';
 import store from './store';
 import localDbSvc from './services/localDbSvc';
+import versionsDescription from './data/versions';
 
 if (!indexedDB) {
-  throw new Error('Your browser is not supported. Please upgrade to the latest version.');
+  throw new Error('不支持您的浏览器，请升级到最新版本。');
 }
 
 OfflinePluginRuntime.install({
@@ -29,8 +30,9 @@ OfflinePluginRuntime.install({
 });
 
 if (localStorage.updated) {
-  store.dispatch('notification/info', 'StackEdit has just updated itself!');
-  setTimeout(() => localStorage.removeItem('updated'), 2000);
+  const versionDesc = versionsDescription[VERSION];
+  store.dispatch('notification/info', `StackEdit中文版刚刚更新了！${versionDesc}`);
+  setTimeout(() => localStorage.removeItem('updated'), 3000);
 }
 
 if (!localStorage.installPrompted) {
@@ -39,7 +41,7 @@ if (!localStorage.installPrompted) {
     promptEvent.preventDefault();
 
     try {
-      await store.dispatch('notification/confirm', 'Add StackEdit to your home screen?');
+      await store.dispatch('notification/confirm', '将StackEdit中文版添加到您的主屏幕上？');
       promptEvent.prompt();
       await promptEvent.userChoice;
     } catch (err) {

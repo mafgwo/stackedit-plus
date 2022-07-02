@@ -6,30 +6,52 @@
         <span v-if="!this.uploading && url">
           <img :src="url">
         </span>
-        <span v-if="!this.uploading && !url">图片上传失败，如未添加SM.MS账号请先添加并选择，之后关闭窗口再重试！</span>
+        <span v-if="!this.uploading && !url">图片上传失败，如未添加图床请先添加并选择，之后关闭窗口再重试！</span>
       </p>
       <p v-if="!hasFile">请为您的图像提供<b> url </b>。</p>
       <form-entry v-if="!hasFile" label="URL" error="url">
         <input slot="field" class="textfield" type="text" v-model.trim="url" @keydown.enter="resolve">
       </form-entry>
       <p>添加并选择图床后可实现粘贴/拖拽自动上传图片</p>
-      <menu-entry @click.native="checkedImgDest(token, 'smms')" v-for="token in smmsTokens" :key="token.sub">
+      <menu-entry @click.native="checkedImgDest(token.sub, 'smms')" v-for="token in smmsTokens" :key="token.sub">
         <icon-check-circle v-if="checkedStorage.sub === token.sub" slot="icon"></icon-check-circle>
         <icon-check-circle-un v-if="checkedStorage.sub !== token.sub" slot="icon"></icon-check-circle-un>
-        <menu-entry>
+        <menu-item>
           <icon-provider slot="icon" provider-id="smms"></icon-provider>
-          <div>SM.MS图床</div>
+          <div>
+            SM.MS图床
+            <button class="menu-item__button button" @click.stop="remove('smms', token)" v-title="'删除'">
+              <icon-delete></icon-delete>
+            </button>
+          </div>
           <span>{{token.name}}</span>
-        </menu-entry>
+        </menu-item>
+      </menu-entry>
+      <menu-entry @click.native="checkedImgDest(tokenStorage.sid, 'gitea')" v-for="tokenStorage in giteaTokensImgStorages" :key="tokenStorage.sid">
+        <icon-check-circle v-if="checkedStorage.sub === tokenStorage.sid" slot="icon"></icon-check-circle>
+        <icon-check-circle-un v-if="checkedStorage.sub !== tokenStorage.sid" slot="icon"></icon-check-circle-un>
+        <menu-item>
+          <icon-provider slot="icon" provider-id="gitea"></icon-provider>
+          <div>Gitea图床
+            <button class="menu-item__button button" @click.stop="remove('gitea', tokenStorage)" v-title="'删除'">
+              <icon-delete></icon-delete>
+            </button>
+          </div>
+          <span> {{tokenStorage.uname}}, 仓库URL: {{tokenStorage.repoUrl}}, 路径: {{tokenStorage.path}}, 分支: {{tokenStorage.branch}}</span>
+        </menu-item>
       </menu-entry>
       <menu-entry @click.native="addSmmsAccount">
         <icon-provider slot="icon" provider-id="smms"></icon-provider>
-        <span>添加SM.MS账号</span>
+        <span>添加SM.MS图床账号</span>
+      </menu-entry>
+      <menu-entry @click.native="addGiteaImgStorage">
+        <icon-provider slot="icon" provider-id="gitea"></icon-provider>
+        <span>添加Gitea图床仓库</span>
       </menu-entry>
     </div>
     <div class="modal__button-bar">
       <button class="button" @click="reject()">取消</button>
-      <button class="button button--resolve" @click="resolve">确认</button>
+      <button class="button button--resolve" @click="resolve" :disabled="uploading">确认</button>
     </div>
   </modal-inner>
 </template>
@@ -37,12 +59,16 @@
 <script>
 import modalTemplate from './common/modalTemplate';
 import MenuEntry from '../menus/common/MenuEntry';
+import MenuItem from '../menus/common/MenuItem';
 import smmsHelper from '../../services/providers/helpers/smmsHelper';
 import store from '../../store';
+import giteaHelper from '../../services/providers/helpers/giteaHelper';
+import utils from '../../services/utils';
 
 export default modalTemplate({
   components: {
     MenuEntry,
+    MenuItem,
   },
   data: () => ({
     hasFile: false,
@@ -58,6 +84,25 @@ export default modalTemplate({
       return Object.values(smmsTokensBySub)
         .sort((token1, token2) => token1.name.localeCompare(token2.name));
     },
+    giteaTokensImgStorages() {
+      const giteaTokensBySub = store.getters['data/giteaTokensBySub'];
+      const imgStorages = [];
+      Object.values(giteaTokensBySub)
+        .sort((token1, token2) => token1.name.localeCompare(token2.name))
+        .forEach((it) => {
+          if (!it.imgStorages || it.imgStorages.length === 0) {
+            return;
+          }
+          // 拼接上当前用户名
+          it.imgStorages.forEach(storage => imgStorages.push({
+            ...storage,
+            token: it,
+            uname: it.name,
+            repoUrl: `${it.serverUrl}/${storage.repoUri}`,
+          }));
+        });
+      return imgStorages;
+    },
   },
   async mounted() {
     this.hasFile = false;
@@ -69,20 +114,52 @@ export default modalTemplate({
         // 操作图片上传
         // 找到对应的provider 目前仅smms
         const currStorage = this.checkedStorage;
-        if (!currStorage || !currStorage.sub) {
+        if (!currStorage) {
           store.dispatch('notification/info', '暂无已选择的图床，未自动上传图片！请选择图床后重新粘贴/拖拽图片！');
           return;
         }
-        const filterTokens = this.smmsTokens.filter(it => it.sub === currStorage.sub);
-        if (!filterTokens.length) {
+        if (currStorage.provider === 'smms') {
+          const filterTokens = this.smmsTokens.filter(it => it.sub === currStorage.sub);
+          if (!filterTokens.length) {
+            store.dispatch('notification/info', 'SMS图床已失效，未自动上传图片！请选择图床后重新粘贴/拖拽图片！');
+            return;
+          }
+          const token = filterTokens[0];
+          this.url = await smmsHelper.uploadFile({
+            token,
+            file: imgFile,
+          });
+        } else if (currStorage.provider === 'gitea') {
+          const filterTokenStorages = this.giteaTokensImgStorages
+            .filter(it => it.sid === currStorage.sub);
+          if (!filterTokenStorages.length) {
+            store.dispatch('notification/info', 'Gitea图床已失效，未自动上传图片！请选择图床后重新粘贴/拖拽图片！');
+            return;
+          }
+          const tokenStorage = filterTokenStorages[0];
+          const time = new Date();
+          const date = time.getDate();
+          const month = time.getMonth();
+          const year = time.getFullYear();
+          let path = tokenStorage.path.replace('{YYYY}', year)
+            .replace('{MM}', `0${month}`.slice(-2)).replace('{DD}', `0${date}`.slice(-2));
+          path = `${path}${path.endsWith('/') ? '' : '/'}${utils.uid()}.${imgFile.type.split('/')[1]}`;
+          try {
+            const result = await giteaHelper.uploadFile({
+              token: tokenStorage.token,
+              projectId: tokenStorage.repoUri,
+              branch: tokenStorage.branch,
+              path,
+              content: imgFile,
+              isFile: true,
+            });
+            this.url = result.content.download_url;
+          } catch (err) {
+            store.dispatch('notification/error', err);
+          }
+        } else {
           store.dispatch('notification/info', '暂无已选择的图床，未自动上传图片！请选择图床后重新粘贴/拖拽图片！');
-          return;
         }
-        const token = filterTokens[0];
-        this.url = await smmsHelper.uploadFile({
-          token,
-          file: imgFile,
-        });
       } finally {
         store.dispatch('img/clearImg');
         this.uploading = false;
@@ -105,15 +182,47 @@ export default modalTemplate({
       this.config.reject();
       callback(null);
     },
+    async remove(proivderId, item) {
+      try {
+        await store.dispatch('modal/open', 'imgStorageDeletion');
+        if (proivderId === 'smms') {
+          const tokensBySub = utils.deepCopy(store.getters[`data/${proivderId}TokensBySub`]);
+          delete tokensBySub[item.sub];
+          // 删除账号
+          await store.dispatch('data/patchTokensByType', {
+            [proivderId]: tokensBySub,
+          });
+        } else if (proivderId === 'gitea') {
+          giteaHelper.removeTokenImgStorage(item.token, item.sid);
+        }
+      } catch (e) {
+        // Cancel
+      }
+    },
     async addSmmsAccount() {
       const { proxyUrl, apiSecretToken } = await store.dispatch('modal/open', { type: 'smmsAccount' });
       await smmsHelper.addAccount(proxyUrl, apiSecretToken);
     },
-    async checkedImgDest(token, provider) {
+    async addGiteaImgStorage() {
+      try {
+        const { serverUrl, applicationId, applicationSecret } = await store.dispatch('modal/open', { type: 'giteaAccount' });
+        const token = await giteaHelper.addAccount(serverUrl, applicationId, applicationSecret);
+        const imgStorageInfo = await store.dispatch('modal/open', {
+          type: 'giteaImgStorage',
+          token,
+        });
+        giteaHelper.updateToken(token, imgStorageInfo);
+      } catch (e) { /* Cancel */ }
+    },
+    async checkedImgDest(sub, provider) {
+      let type = 'token';
+      if (provider === 'gitea') {
+        type = 'tokenRepo';
+      }
       store.dispatch('img/changeCheckedStorage', {
-        type: 'token',
+        type,
         provider,
-        sub: token.sub,
+        sub,
       });
       // const { callback } = this.config;
       // this.config.reject();
@@ -129,3 +238,12 @@ export default modalTemplate({
   },
 });
 </script>
+<style lang="scss">
+.menu-item__button {
+  width: 30px;
+  height: 30px;
+  padding: 4px;
+  background-color: transparent;
+  opacity: 0.75;
+}
+</style>

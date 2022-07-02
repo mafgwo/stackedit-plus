@@ -58,6 +58,7 @@ export default {
     sub = null, silent = false, refreshToken,
   ) {
     let tokenBody;
+    const imgStorages = refreshToken && refreshToken.imgStorages;
     if (!silent) {
       // Get an OAuth2 code
       const { code } = await networkSvc.startOauth2(
@@ -120,6 +121,7 @@ export default {
       name: user.username,
       applicationId,
       applicationSecret,
+      imgStorages,
       refreshToken: tokenBody.refresh_token,
       expiresOn: Date.now() + (tokenBody.expires_in * 1000),
       serverUrl,
@@ -176,16 +178,48 @@ export default {
     badgeSvc.addBadge('addGiteaAccount');
     return token;
   },
-
-  /**
-   * https://try.gitea.io/api/swagger#/repository/repoGet
-   */
-  async getProjectId({ projectPath, projectId }) {
+  async updateToken(token, imgStorageInfo) {
+    const imgStorages = token.imgStorages || [];
+    // 存储仓库唯一标识
+    const sid = utils.hash(`${imgStorageInfo.repoUri}${imgStorageInfo.path}${imgStorageInfo.branch}`);
+    // 查询是否存在 存在则更新
+    const filterStorages = imgStorages.filter(it => it.sid === sid);
+    if (filterStorages && filterStorages.length > 0) {
+      filterStorages.repoUri = imgStorageInfo.repoUri;
+      filterStorages.path = imgStorageInfo.path;
+      filterStorages.branch = imgStorageInfo.branch;
+    } else {
+      imgStorages.push({
+        sid,
+        repoUri: imgStorageInfo.repoUri,
+        path: imgStorageInfo.path,
+        branch: imgStorageInfo.branch,
+      });
+      token.imgStorages = imgStorages;
+    }
+    store.dispatch('data/addGiteaToken', token);
+  },
+  async removeTokenImgStorage(token, sid) {
+    if (!token.imgStorages || token.imgStorages.length === 0) {
+      return;
+    }
+    token.imgStorages = token.imgStorages.filter(it => it.sid !== sid);
+    store.dispatch('data/addGiteaToken', token);
+  },
+  async getProjectId(token, { projectPath, projectId }) {
     if (projectId) {
       return projectId;
     }
+    const repoInfo = await this.getRepoInfo(token, projectPath);
+    return repoInfo.full_name;
+  },
+  /**
+   * https://try.gitea.io/api/swagger#/repository/repoGet
+   */
+  async getRepoInfo(token, projectPath) {
     const [, repoFullName] = projectPath.match(/([^/]+\/[^/]+)$/);
-    return repoFullName;
+    const refreshedToken = await this.refreshToken(token);
+    return request(refreshedToken, { url: `repos/${repoFullName}` });
   },
 
   /**
@@ -236,6 +270,7 @@ export default {
     path,
     content,
     sha,
+    isFile,
   }) {
     const refreshedToken = await this.refreshToken(token);
     return request(refreshedToken, {
@@ -243,7 +278,7 @@ export default {
       url: `repos/${projectId}/contents/${encodeURIComponent(path)}`,
       body: {
         message: getCommitMessage(sha ? 'updateFileMessage' : 'createFileMessage', path),
-        content: utils.encodeBase64(content),
+        content: isFile ? await utils.encodeFiletoBase64(content) : utils.encodeBase64(content),
         sha,
         branch,
       },

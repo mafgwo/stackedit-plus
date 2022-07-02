@@ -71,6 +71,7 @@ import GiteaOpenModal from './modals/providers/GiteaOpenModal';
 import GiteaPublishModal from './modals/providers/GiteaPublishModal';
 import GiteaSaveModal from './modals/providers/GiteaSaveModal';
 import GiteaWorkspaceModal from './modals/providers/GiteaWorkspaceModal';
+import GiteaImgStorageModal from './modals/providers/GiteaImgStorageModal';
 import WordpressPublishModal from './modals/providers/WordpressPublishModal';
 import BloggerPublishModal from './modals/providers/BloggerPublishModal';
 import BloggerPagePublishModal from './modals/providers/BloggerPagePublishModal';
@@ -133,6 +134,7 @@ export default {
     GiteaPublishModal,
     GiteaSaveModal,
     GiteaWorkspaceModal,
+    GiteaImgStorageModal,
     WordpressPublishModal,
     BloggerPublishModal,
     BloggerPagePublishModal,
