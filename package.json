@@ -1,8 +1,8 @@
 {
   "name": "stackedit",
   "version": "5.15.7",
-  "description": "Free, open-source, full-featured Markdown editor",
-  "author": "Benoit Schweblin",
+  "description": "免费, 开源, 功能齐全的 Markdown 编辑器",
+  "author": "Benoit Schweblin, 豆萁",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/mafgwo/stackedit/issues"

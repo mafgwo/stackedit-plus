@@ -264,7 +264,7 @@ export default {
       url: `contents/${encodeURIComponent(path)}`,
       body: {
         message: getCommitMessage(sha ? 'updateFileMessage' : 'createFileMessage', path),
-        content: utils.encodeBase64(content),
+        content: utils.encodeBase64(content || ' '),
         sha,
         branch,
       },
