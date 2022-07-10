@@ -265,6 +265,11 @@ export default [
         '将您的SM.MS账号链接到StackEdit中文版。',
       ),
       new Feature(
+        'addCustomAccount',
+        '自定义图床账号',
+        '将您的自定义图床账号链接到StackEdit中文版。',
+      ),
+      new Feature(
         'removeAccount',
         '移除账号',
         '使用“账号”对话框删除对外部账号的访问。',

@@ -100,6 +100,7 @@
     "jest": "^23.0.0",
     "jest-raw-loader": "^1.0.1",
     "jest-serializer-vue": "^0.3.0",
+    "js-md5": "^0.7.3",
     "node-sass": "^4.0.0",
     "npm-bump": "^0.0.23",
     "offline-plugin": "^5.0.3",

@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="modal__info" v-if="publishLocations.length">
-        <b>Tip:</b> Removing a location won't delete any file.
+        <b>提示:</b> 删除位置不会删除任何文件。
       </div>
     </div>
     <div class="modal__button-bar">

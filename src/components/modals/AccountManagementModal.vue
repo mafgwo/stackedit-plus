@@ -4,8 +4,8 @@
       <div class="modal__image">
         <icon-key></icon-key>
       </div>
-      <p v-if="entries.length">Stackedit可以访问以下外部账号：</p>
-      <p v-else>Stackedit尚未访问任何外部账号。</p>
+      <p v-if="entries.length">StackEdit中文版可以访问以下外部账号：</p>
+      <p v-else>StackEdit中文版尚未访问任何外部账号。</p>
       <div>
         <div class="account-entry flex flex--column" v-for="entry in entries" :key="entry.token.sub">
           <div class="account-entry__header flex flex--row flex--align-center">
@@ -29,6 +29,14 @@
             <span class="account-entry__field" v-if="entry.url">
               <b>URL:</b>
               {{entry.url}}
+            </span>
+            <span class="account-entry__field line-entry" v-if="entry.customHeaders">
+              <b>自定义请求头:</b>
+              {{entry.customHeaders}}
+            </span>
+            <span class="account-entry__field line-entry" v-if="entry.customParams">
+              <b>自定义Form参数:</b>
+              {{entry.customParams}}
             </span>
             <span class="account-entry__field" v-if="entry.scopes">
               <b>权限范围:</b>
@@ -81,6 +89,10 @@
         <icon-provider slot="icon" provider-id="smms"></icon-provider>
         <span>添加SM.MS账号</span>
       </menu-entry>
+      <menu-entry @click.native="addCustomAccount">
+        <icon-provider slot="icon" provider-id="custom"></icon-provider>
+        <span>添加自定义图床账号</span>
+      </menu-entry>
     </div>
     <div class="modal__button-bar">
       <button class="button button--resolve" @click="config.resolve()">关闭</button>
@@ -103,6 +115,7 @@ import giteaHelper from '../../services/providers/helpers/giteaHelper';
 import wordpressHelper from '../../services/providers/helpers/wordpressHelper';
 import zendeskHelper from '../../services/providers/helpers/zendeskHelper';
 import smmsHelper from '../../services/providers/helpers/smmsHelper';
+import customHelper from '../../services/providers/helpers/customHelper';
 import badgeSvc from '../../services/badgeSvc';
 
 export default {
@@ -188,6 +201,16 @@ export default {
           name: token.name,
           scopes: ['api'],
         })),
+        ...Object.values(store.getters['data/customTokensBySub']).map(token => ({
+          token,
+          providerId: 'custom',
+          url: token.uploadUrl,
+          userId: token.name,
+          name: token.name,
+          customHeaders: token.customHeaders && JSON.stringify(token.customHeaders),
+          customParams: token.customParams && JSON.stringify(token.customParams),
+          scopes: ['upload'],
+        })),
       ];
     },
   },
@@ -263,12 +286,30 @@ export default {
         await smmsHelper.addAccount(proxyUrl, apiSecretToken);
       } catch (e) { /* cancel */ }
     },
+    async addCustomAccount() {
+      try {
+        const accountInfo = await store.dispatch('modal/open', { type: 'customAccount' });
+        await customHelper.addAccount(accountInfo);
+      } catch (e) { /* cancel */ }
+    },
   },
 };
 </script>
 
 <style lang="scss">
 @import '../../styles/variables.scss';
+
+.line-entry {
+  word-break: break-word; /* 文本行的任意字内断开，就算是一个单词也会分开 */
+  word-wrap: break-word; /* IE */
+  white-space: -moz-pre-wrap; /* Mozilla */
+  white-space: -hp-pre-wrap; /* HP printers */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: pre; /* CSS2 */
+  white-space: pre-wrap; /* CSS 2.1 */
+  white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
+}
 
 .account-entry {
   margin: 1.5em 0;

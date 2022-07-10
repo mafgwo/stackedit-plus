@@ -13,18 +13,21 @@
         <input slot="field" class="textfield" type="text" v-model.trim="url" @keydown.enter="resolve">
       </form-entry>
       <p>添加并选择图床后可实现粘贴/拖拽自动上传图片</p>
-      <menu-entry @click.native="checkedImgDest(token.sub, 'smms')" v-for="token in smmsTokens" :key="token.sub">
+      <menu-entry @click.native="checkedImgDest(token.sub, token.providerId)" v-for="token in imageTokens" :key="token.sub">
         <icon-check-circle v-if="checkedStorage.sub === token.sub" slot="icon"></icon-check-circle>
         <icon-check-circle-un v-if="checkedStorage.sub !== token.sub" slot="icon"></icon-check-circle-un>
         <menu-item>
-          <icon-provider slot="icon" provider-id="smms"></icon-provider>
+          <icon-provider slot="icon" :provider-id="token.providerId"></icon-provider>
           <div>
-            SM.MS图床
-            <button class="menu-item__button button" @click.stop="remove('smms', token)" v-title="'删除'">
+            {{ token.remark }}
+            <button class="menu-item__button button" @click.stop="remove(token.providerId, token)" v-title="'删除'">
               <icon-delete></icon-delete>
             </button>
           </div>
           <span>{{token.name}}</span>
+          <span class="line-entry" v-if="token.uploadUrl">上传地址：{{token.uploadUrl}}</span>
+          <span class="line-entry" v-if="token.headers">自定义请求头：{{token.headers}}</span>
+          <span class="line-entry" v-if="token.params">自定义Form参数：{{token.params}}</span>
         </menu-item>
       </menu-entry>
       <menu-entry @click.native="checkedImgDest(tokenStorage.sid, 'gitea')" v-for="tokenStorage in giteaTokensImgStorages" :key="tokenStorage.sid">
@@ -43,6 +46,10 @@
       <menu-entry @click.native="addSmmsAccount">
         <icon-provider slot="icon" provider-id="smms"></icon-provider>
         <span>添加SM.MS图床账号</span>
+      </menu-entry>
+      <menu-entry @click.native="addCustomAccount">
+        <icon-provider slot="icon" provider-id="custom"></icon-provider>
+        <span>添加自定义图床账号</span>
       </menu-entry>
       <menu-entry @click.native="addGiteaImgStorage">
         <icon-provider slot="icon" provider-id="gitea"></icon-provider>
@@ -63,6 +70,7 @@ import MenuItem from '../menus/common/MenuItem';
 import smmsHelper from '../../services/providers/helpers/smmsHelper';
 import store from '../../store';
 import giteaHelper from '../../services/providers/helpers/giteaHelper';
+import customHelper from '../../services/providers/helpers/customHelper';
 import utils from '../../services/utils';
 
 export default modalTemplate({
@@ -79,10 +87,21 @@ export default modalTemplate({
     checkedStorage() {
       return store.getters['img/getCheckedStorage'];
     },
-    smmsTokens() {
-      const smmsTokensBySub = store.getters['data/smmsTokensBySub'];
-      return Object.values(smmsTokensBySub)
-        .sort((token1, token2) => token1.name.localeCompare(token2.name));
+    imageTokens() {
+      return [
+        ...Object.values(store.getters['data/smmsTokensBySub']).map(token => ({
+          ...token,
+          providerId: 'smms',
+          remark: 'SM.MS图床',
+        })),
+        ...Object.values(store.getters['data/customTokensBySub']).map(token => ({
+          ...token,
+          providerId: 'custom',
+          headers: token.customHeaders && JSON.stringify(token.customHeaders),
+          params: token.customParams && JSON.stringify(token.customParams),
+          remark: '自定义图床',
+        })),
+      ];
     },
     giteaTokensImgStorages() {
       const giteaTokensBySub = store.getters['data/giteaTokensBySub'];
@@ -118,17 +137,22 @@ export default modalTemplate({
           store.dispatch('notification/info', '暂无已选择的图床，未自动上传图片！请选择图床后重新粘贴/拖拽图片！');
           return;
         }
-        if (currStorage.provider === 'smms') {
-          const filterTokens = this.smmsTokens.filter(it => it.sub === currStorage.sub);
+        if (currStorage.provider === 'smms' || currStorage.provider === 'custom') {
+          const filterTokens = this.imageTokens.filter(it => it.sub === currStorage.sub);
           if (!filterTokens.length) {
-            store.dispatch('notification/info', 'SMS图床已失效，未自动上传图片！请选择图床后重新粘贴/拖拽图片！');
+            store.dispatch('notification/info', '图床已失效，未自动上传图片！请选择图床后重新粘贴/拖拽图片！');
             return;
           }
           const token = filterTokens[0];
-          this.url = await smmsHelper.uploadFile({
-            token,
-            file: imgFile,
-          });
+          const helper = currStorage.provider === 'smms' ? smmsHelper : customHelper;
+          try {
+            this.url = await helper.uploadFile({
+              token,
+              file: imgFile,
+            });
+          } catch (err) {
+            store.dispatch('notification/error', err);
+          }
         } else if (currStorage.provider === 'gitea') {
           const filterTokenStorages = this.giteaTokensImgStorages
             .filter(it => it.sid === currStorage.sub);
@@ -185,7 +209,7 @@ export default modalTemplate({
     async remove(proivderId, item) {
       try {
         await store.dispatch('modal/open', 'imgStorageDeletion');
-        if (proivderId === 'smms') {
+        if (proivderId === 'smms' || proivderId === 'custom') {
           const tokensBySub = utils.deepCopy(store.getters[`data/${proivderId}TokensBySub`]);
           delete tokensBySub[item.sub];
           // 删除账号
@@ -202,6 +226,10 @@ export default modalTemplate({
     async addSmmsAccount() {
       const { proxyUrl, apiSecretToken } = await store.dispatch('modal/open', { type: 'smmsAccount' });
       await smmsHelper.addAccount(proxyUrl, apiSecretToken);
+    },
+    async addCustomAccount() {
+      const accountInfo = await store.dispatch('modal/open', { type: 'customAccount' });
+      await customHelper.addAccount(accountInfo);
     },
     async addGiteaImgStorage() {
       try {
@@ -239,6 +267,18 @@ export default modalTemplate({
 });
 </script>
 <style lang="scss">
+.line-entry {
+  word-break: break-word; /* 文本行的任意字内断开，就算是一个单词也会分开 */
+  word-wrap: break-word; /* IE */
+  white-space: -moz-pre-wrap; /* Mozilla */
+  white-space: -hp-pre-wrap; /* HP printers */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: pre; /* CSS2 */
+  white-space: pre-wrap; /* CSS 2.1 */
+  white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
+}
+
 .menu-item__button {
   width: 30px;
   height: 30px;

@@ -102,4 +102,8 @@ export default {
 .icon-provider--smms {
   background-image: url(../assets/iconSmms.svg);
 }
+
+.icon-provider--custom {
+  background-image: url(../assets/iconCustom.svg);
+}
 </style>
