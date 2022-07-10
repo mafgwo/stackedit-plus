@@ -6,8 +6,7 @@ WORKDIR /opt/stackedit
 COPY package*json /opt/stackedit/
 COPY gulpfile.js /opt/stackedit/
 
-ENV NODE_TLS_REJECT_UNAUTHORIZED=0
-RUN git config --global http.sslVerify false && npm set strict-ssl false && npm install --unsafe-perm \
+RUN npm install --unsafe-perm \
   && npm cache clean --force
 COPY . /opt/stackedit
 ENV NODE_ENV production

@@ -46,7 +46,7 @@ export default {
     const newFileName = `${md5(await utils.encodeFiletoBase64(file))}.${file.type.split('/')[1]}`;
     const newfile = new File([file], newFileName, { type: file.type });
     const headers = token.customHeaders || {};
-    const formData = token.formData || {};
+    const formData = token.customParams || {};
     formData[token.fileParamName] = newfile;
     const { body } = await networkSvc.request({
       method: 'POST',
