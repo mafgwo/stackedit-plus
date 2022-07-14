@@ -69,7 +69,8 @@ export default {
    * https://developer.gitee.com/apps/building-oauth-apps/authorization-options-for-oauth-apps/
    */
   async startOauth2(lastToken, silent = false, isMain) {
-    const clientId = store.getters['data/serverConf'].giteeClientId;
+    const giteeClientIds = store.getters['data/serverConf'].giteeClientId.split(',');
+    const clientId = giteeClientIds[Math.floor((giteeClientIds.length * Math.random()))];
     let tokenBody;
     if (!silent) {
       // Get an OAuth2 code
@@ -105,13 +106,21 @@ export default {
     }
     const accessToken = tokenBody.access_token;
     // Call the user info endpoint
-    const user = (await networkSvc.request({
-      method: 'GET',
-      url: 'https://gitee.com/api/v5/user',
-      params: {
-        access_token: accessToken,
-      },
-    })).body;
+    let user = null;
+    try {
+      user = (await networkSvc.request({
+        method: 'GET',
+        url: 'https://gitee.com/api/v5/user',
+        params: {
+          access_token: accessToken,
+        },
+      })).body;
+    } catch (err) {
+      if (err.status === 401) {
+        this.startOauth2();
+      }
+      throw err;
+    }
     if (user.avatar_url && user.avatar_url.endsWith('.png') && !user.avatar_url.endsWith('no_portrait.png')) {
       user.avatar_url = `${user.avatar_url}!avatar60`;
     }
@@ -194,17 +203,24 @@ export default {
     repo,
     branch,
   }) {
-    const refreshedToken = await this.refreshToken(token);
-    const { commit } = await repoRequest(refreshedToken, owner, repo, {
-      url: `commits/${encodeURIComponent(branch)}`,
-    });
-    const { tree, truncated } = await repoRequest(refreshedToken, owner, repo, {
-      url: `git/trees/${encodeURIComponent(commit.tree.sha)}?recursive=1`,
-    });
-    if (truncated) {
-      throw new Error('Git tree too big. Please remove some files in the repository.');
+    try {
+      const refreshedToken = await this.refreshToken(token);
+      const { commit } = await repoRequest(refreshedToken, owner, repo, {
+        url: `commits/${encodeURIComponent(branch)}`,
+      });
+      const { tree, truncated } = await repoRequest(refreshedToken, owner, repo, {
+        url: `git/trees/${encodeURIComponent(commit.tree.sha)}?recursive=1`,
+      });
+      if (truncated) {
+        throw new Error('Git tree too big. Please remove some files in the repository.');
+      }
+      return tree;
+    } catch (err) {
+      if (err.status === 401) {
+        this.startOauth2();
+      }
+      throw err;
     }
-    return tree;
   },
 
   async checkAndCreateRepo(token) {

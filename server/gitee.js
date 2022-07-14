@@ -3,13 +3,15 @@ const request = require('request');
 const conf = require('./conf');
 
 function giteeToken(clientId, code, oauth2RedirectUri) {
+  const clientIndex = conf.values.giteeClientId.split(',').indexOf(clientId);
+  const clientSecret = conf.values.giteeClientSecret.split(',')[clientIndex];
   return new Promise((resolve, reject) => {
     request({
       method: 'POST',
       url: 'https://gitee.com/oauth/token',
       form: {
         client_id: clientId,
-        client_secret: conf.values.giteeClientSecret,
+        client_secret: clientSecret,
         code,
         grant_type: 'authorization_code',
         redirect_uri: oauth2RedirectUri,
