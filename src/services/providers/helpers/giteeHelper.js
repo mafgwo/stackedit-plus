@@ -69,10 +69,12 @@ export default {
    * https://developer.gitee.com/apps/building-oauth-apps/authorization-options-for-oauth-apps/
    */
   async startOauth2(lastToken, silent = false, isMain) {
-    const giteeClientIds = store.getters['data/serverConf'].giteeClientId.split(',');
-    const clientId = giteeClientIds[Math.floor((giteeClientIds.length * Math.random()))];
     let tokenBody;
     if (!silent) {
+      const clientId = (await networkSvc.request({
+        method: 'GET',
+        url: 'giteeClientId',
+      })).body;
       // Get an OAuth2 code
       const { code } = await networkSvc.startOauth2(
         'https://gitee.com/oauth/authorize',

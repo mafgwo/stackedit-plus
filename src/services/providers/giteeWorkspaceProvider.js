@@ -70,7 +70,6 @@ export default new Provider({
       token = store.getters['data/giteeTokensBySub'][workspace.sub];
     }
     if (!token) {
-      await store.dispatch('modal/open', { type: 'giteeAccount' });
       token = await giteeHelper.addAccount();
     }
 

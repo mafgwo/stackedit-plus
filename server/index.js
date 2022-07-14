@@ -34,7 +34,11 @@ module.exports = (app) => {
   app.post('/paypalIpn', bodyParser.urlencoded({
     extended: false,
   }), user.paypalIpn);
-
+  app.get('/giteeClientId', (req, res) => {
+    const giteeClientIds = conf.values.giteeClientId.split(',');
+    const clientId = giteeClientIds[Math.floor((giteeClientIds.length * Math.random()))];
+    res.send(clientId);
+  });
   // Serve landing.html
   app.get('/', (req, res) => res.sendFile(resolvePath('static/landing/index.html')));
   // Serve privacy_policy.html
