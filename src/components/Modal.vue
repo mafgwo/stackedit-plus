@@ -56,6 +56,7 @@ import GithubWorkspaceModal from './modals/providers/GithubWorkspaceModal';
 import GithubPublishModal from './modals/providers/GithubPublishModal';
 import GistSyncModal from './modals/providers/GistSyncModal';
 import GistPublishModal from './modals/providers/GistPublishModal';
+import GiteeAccountModal from './modals/providers/GiteeAccountModal';
 import GiteeOpenModal from './modals/providers/GiteeOpenModal';
 import GiteeSaveModal from './modals/providers/GiteeSaveModal';
 import GiteeWorkspaceModal from './modals/providers/GiteeWorkspaceModal';
@@ -119,6 +120,7 @@ export default {
     GithubPublishModal,
     GistSyncModal,
     GistPublishModal,
+    GiteeAccountModal,
     GiteeOpenModal,
     GiteeSaveModal,
     GiteeWorkspaceModal,

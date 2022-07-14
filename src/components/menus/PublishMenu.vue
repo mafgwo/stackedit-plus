@@ -252,6 +252,7 @@ export default {
     },
     async addGiteeAccount() {
       try {
+        await store.dispatch('modal/open', { type: 'giteeAccount' });
         await giteeHelper.addAccount();
       } catch (e) { /* cancel */ }
     },
