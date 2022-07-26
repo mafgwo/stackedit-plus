@@ -233,8 +233,8 @@ export default modalTemplate({
     },
     async addGiteaImgStorage() {
       try {
-        const { serverUrl, applicationId, applicationSecret } = await store.dispatch('modal/open', { type: 'giteaAccount' });
-        const token = await giteaHelper.addAccount(serverUrl, applicationId, applicationSecret);
+        const applicationInfo = await store.dispatch('modal/open', { type: 'giteaAccount' });
+        const token = await giteaHelper.addAccount(applicationInfo);
         const imgStorageInfo = await store.dispatch('modal/open', {
           type: 'giteaImgStorage',
           token,

@@ -38,12 +38,20 @@ import constants from '../../../data/constants';
 
 export default modalTemplate({
   data: () => ({
-    redirectUrl: constants.oauth2RedirectUri,
   }),
   computedLocalSettings: {
     serverUrl: 'giteaServerUrl',
     applicationId: 'giteaApplicationId',
     applicationSecret: 'giteaApplicationSecret',
+  },
+  computed: {
+    redirectUrl() {
+      let url = constants.oauth2RedirectUri;
+      if (this.serverUrl && this.serverUrl.indexOf('http://') === 0) {
+        url = url.replace('https://', 'http://');
+      }
+      return url;
+    },
   },
   methods: {
     resolve() {
@@ -58,7 +66,7 @@ export default modalTemplate({
         this.setError('applicationSecret');
       }
       if (serverUrl && this.applicationId) {
-        const parsedUrl = serverUrl.match(/^(https:\/\/[^/]+)/);
+        const parsedUrl = serverUrl.match(/^(http[s]?:\/\/[^/]+)/);
         if (!parsedUrl) {
           this.setError('serverUrl');
         } else {

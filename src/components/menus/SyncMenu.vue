@@ -240,8 +240,8 @@ export default {
     },
     async addGiteaAccount() {
       try {
-        const { serverUrl, applicationId, applicationSecret } = await store.dispatch('modal/open', { type: 'giteaAccount' });
-        await giteaHelper.addAccount(serverUrl, applicationId, applicationSecret);
+        const applicationInfo = await store.dispatch('modal/open', { type: 'giteaAccount' });
+        await giteaHelper.addAccount(applicationInfo);
       } catch (e) { /* cancel */ }
     },
     async addGoogleDriveAccount() {

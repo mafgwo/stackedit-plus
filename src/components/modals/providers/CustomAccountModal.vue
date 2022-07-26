@@ -4,7 +4,7 @@
       <div class="modal__image">
         <icon-provider provider-id="custom"></icon-provider>
       </div>
-      <p>将您的<b>自定义图床</b>账号链接到<b>StackEdit</b>。</p>
+      <p>将您的<b>自定义图床</b>账号链接到<b>StackEdit中文版</b>。</p>
       <form-entry label="自定义标识" error="name">
         <input slot="field" class="textfield" type="text" v-model.trim="name" @keydown.enter="resolve()">
         <div class="form-entry__info">

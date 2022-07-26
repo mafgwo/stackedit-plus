@@ -173,8 +173,17 @@ export default {
       return this.startOauth2(serverUrl, applicationId, applicationSecret, sub);
     }
   },
-  async addAccount(serverUrl, applicationId, applicationSecret, sub = null) {
-    const token = await this.startOauth2(serverUrl, applicationId, applicationSecret, sub);
+  async addAccount({
+    serverUrl,
+    applicationId,
+    applicationSecret,
+  }, sub = null) {
+    const token = await this.startOauth2(
+      serverUrl,
+      applicationId,
+      applicationSecret,
+      sub,
+    );
     badgeSvc.addBadge('addGiteaAccount');
     return token;
   },

@@ -75,11 +75,11 @@ export default new Provider({
     const sub = workspace ? workspace.sub : utils.queryParams.sub;
     let token = store.getters['data/giteaTokensBySub'][sub];
     if (!token) {
-      const { applicationId, applicationSecret } = await store.dispatch('modal/open', {
+      const applicationInfo = await store.dispatch('modal/open', {
         type: 'giteaAccount',
         forceServerUrl: serverUrl,
       });
-      token = await giteaHelper.addAccount(serverUrl, applicationId, applicationSecret, sub);
+      token = await giteaHelper.addAccount(applicationInfo, sub);
     }
 
     if (!workspace) {
