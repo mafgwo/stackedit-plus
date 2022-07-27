@@ -10,6 +10,9 @@
         <input v-else slot="field" class="textfield" type="text" v-model.trim="serverUrl" @keydown.enter="resolve()">
         <div class="form-entry__info">
           <b>例如:</b> https://gitea.example.com/
+          <span v-if="httpAppUrl">
+            ，非https的URL，请跳转到 <a :href="httpAppUrl" target="_blank">HTTP链接</a> 添加Gitea。
+          </span>
         </div>
       </form-entry>
       <form-entry label="Application ID" error="applicationId">
@@ -38,6 +41,7 @@ import constants from '../../../data/constants';
 
 export default modalTemplate({
   data: () => ({
+    redirectUrl: constants.oauth2RedirectUri,
   }),
   computedLocalSettings: {
     serverUrl: 'giteaServerUrl',
@@ -45,12 +49,11 @@ export default modalTemplate({
     applicationSecret: 'giteaApplicationSecret',
   },
   computed: {
-    redirectUrl() {
-      let url = constants.oauth2RedirectUri;
-      if (this.serverUrl && this.serverUrl.indexOf('http://') === 0) {
-        url = url.replace('https://', 'http://');
+    httpAppUrl() {
+      if (constants.origin.indexOf('https://') === 0 && this.serverUrl.indexOf('http://') === 0) {
+        return `${constants.origin.replace('https://', 'http://')}/app`;
       }
-      return url;
+      return null;
     },
   },
   methods: {
