@@ -104,12 +104,14 @@ export default {
       throw new Error('GitHub account ID not expected.');
     }
 
+    const oldToken = store.getters['data/githubTokensBySub'][user.id];
     // Build token object including scopes and sub
     const token = {
       scopes,
       accessToken,
       name: user.login,
       sub: `${user.id}`,
+      imgStorages: oldToken && oldToken.imgStorages,
       repoFullAccess: scopes.includes('repo'),
     };
 
@@ -173,13 +175,14 @@ export default {
     path,
     content,
     sha,
+    isFile,
   }) {
     return repoRequest(token, owner, repo, {
       method: 'PUT',
       url: `contents/${encodeURIComponent(path)}`,
       body: {
         message: getCommitMessage(sha ? 'updateFileMessage' : 'createFileMessage', path),
-        content: utils.encodeBase64(content),
+        content: isFile ? await utils.encodeFiletoBase64(content) : utils.encodeBase64(content),
         sha,
         branch,
       },
@@ -226,6 +229,44 @@ export default {
       sha,
       data: utils.decodeBase64(content),
     };
+  },
+  /**
+   * 获取仓库信息
+   */
+  async getRepoInfo(token, owner, repo) {
+    return request(token, {
+      url: `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`,
+    }).then(res => res.body);
+  },
+  async updateToken(token, imgStorageInfo) {
+    const imgStorages = token.imgStorages || [];
+    // 存储仓库唯一标识
+    const sid = utils.hash(`${imgStorageInfo.owner}${imgStorageInfo.repo}${imgStorageInfo.path}${imgStorageInfo.branch}`);
+    // 查询是否存在 存在则更新
+    const filterStorages = imgStorages.filter(it => it.sid === sid);
+    if (filterStorages && filterStorages.length > 0) {
+      filterStorages.owner = imgStorageInfo.owner;
+      filterStorages.repo = imgStorageInfo.repo;
+      filterStorages.path = imgStorageInfo.path;
+      filterStorages.branch = imgStorageInfo.branch;
+    } else {
+      imgStorages.push({
+        sid,
+        owner: imgStorageInfo.owner,
+        repo: imgStorageInfo.repo,
+        path: imgStorageInfo.path,
+        branch: imgStorageInfo.branch,
+      });
+      token.imgStorages = imgStorages;
+    }
+    store.dispatch('data/addGithubToken', token);
+  },
+  async removeTokenImgStorage(token, sid) {
+    if (!token.imgStorages || token.imgStorages.length === 0) {
+      return;
+    }
+    token.imgStorages = token.imgStorages.filter(it => it.sid !== sid);
+    store.dispatch('data/addGithubToken', token);
   },
 
   /**

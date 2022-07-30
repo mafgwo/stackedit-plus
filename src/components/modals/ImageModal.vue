@@ -30,19 +30,25 @@
           <span class="line-entry" v-if="token.params">自定义Form参数：{{token.params}}</span>
         </menu-item>
       </menu-entry>
-      <menu-entry @click.native="checkedImgDest(tokenStorage.sid, 'gitea')" v-for="tokenStorage in giteaTokensImgStorages" :key="tokenStorage.sid">
+      <menu-entry @click.native="checkedImgDest(tokenStorage.sid, tokenStorage.providerId)" v-for="tokenStorage in tokensImgStorages" :key="tokenStorage.sid">
         <icon-check-circle v-if="checkedStorage.sub === tokenStorage.sid" slot="icon"></icon-check-circle>
         <icon-check-circle-un v-if="checkedStorage.sub !== tokenStorage.sid" slot="icon"></icon-check-circle-un>
         <menu-item>
-          <icon-provider slot="icon" provider-id="gitea"></icon-provider>
-          <div>Gitea图床
-            <button class="menu-item__button button" @click.stop="remove('gitea', tokenStorage)" v-title="'删除'">
+          <icon-provider slot="icon" :provider-id="tokenStorage.providerId"></icon-provider>
+          <div>{{tokenStorage.providerName}}
+            <button class="menu-item__button button" @click.stop="remove(tokenStorage.providerId, tokenStorage)" v-title="'删除'">
               <icon-delete></icon-delete>
             </button>
           </div>
           <span> {{tokenStorage.uname}}, 仓库URL: {{tokenStorage.repoUrl}}, 路径: {{tokenStorage.path}}, 分支: {{tokenStorage.branch}}</span>
         </menu-item>
       </menu-entry>
+    </div>
+    <div class="modal__button-bar">
+      <button class="button" @click="reject()">取消</button>
+      <button class="button button--resolve" @click="resolve" :disabled="uploading">确认</button>
+    </div>
+    <div>
       <menu-entry @click.native="addSmmsAccount">
         <icon-provider slot="icon" provider-id="smms"></icon-provider>
         <span>添加SM.MS图床账号</span>
@@ -55,10 +61,10 @@
         <icon-provider slot="icon" provider-id="gitea"></icon-provider>
         <span>添加Gitea图床仓库</span>
       </menu-entry>
-    </div>
-    <div class="modal__button-bar">
-      <button class="button" @click="reject()">取消</button>
-      <button class="button button--resolve" @click="resolve" :disabled="uploading">确认</button>
+      <menu-entry @click.native="addGithubImgStorage">
+        <icon-provider slot="icon" provider-id="github"></icon-provider>
+        <span>添加GitHub图床仓库</span>
+      </menu-entry>
     </div>
   </modal-inner>
 </template>
@@ -70,6 +76,7 @@ import MenuItem from '../menus/common/MenuItem';
 import smmsHelper from '../../services/providers/helpers/smmsHelper';
 import store from '../../store';
 import giteaHelper from '../../services/providers/helpers/giteaHelper';
+import githubHelper from '../../services/providers/helpers/githubHelper';
 import customHelper from '../../services/providers/helpers/customHelper';
 import utils from '../../services/utils';
 
@@ -103,21 +110,34 @@ export default modalTemplate({
         })),
       ];
     },
-    giteaTokensImgStorages() {
-      const giteaTokensBySub = store.getters['data/giteaTokensBySub'];
+    tokensImgStorages() {
+      const providerTokens = [
+        ...Object.values(store.getters['data/giteaTokensBySub']).map(token => ({
+          token,
+          providerId: 'gitea',
+          providerName: 'Gitea图床',
+        })),
+        ...Object.values(store.getters['data/githubTokensBySub']).map(token => ({
+          token,
+          providerId: 'github',
+          providerName: 'GitHub图床',
+        })),
+      ];
       const imgStorages = [];
-      Object.values(giteaTokensBySub)
-        .sort((token1, token2) => token1.name.localeCompare(token2.name))
+      Object.values(providerTokens)
+        .sort((item1, item2) => item1.token.name.localeCompare(item2.token.name))
         .forEach((it) => {
-          if (!it.imgStorages || it.imgStorages.length === 0) {
+          if (!it.token.imgStorages || it.token.imgStorages.length === 0) {
             return;
           }
           // 拼接上当前用户名
-          it.imgStorages.forEach(storage => imgStorages.push({
+          it.token.imgStorages.forEach(storage => imgStorages.push({
             ...storage,
-            token: it,
-            uname: it.name,
-            repoUrl: `${it.serverUrl}/${storage.repoUri}`,
+            token: it.token,
+            uname: it.token.name,
+            providerId: it.providerId,
+            providerName: it.providerName,
+            repoUrl: it.providerId === 'gitea' ? `${it.serverUrl}/${storage.repoUri}` : `${storage.owner}/${storage.repo}`,
           }));
         });
       return imgStorages;
@@ -153,8 +173,8 @@ export default modalTemplate({
           } catch (err) {
             store.dispatch('notification/error', err);
           }
-        } else if (currStorage.provider === 'gitea') {
-          const filterTokenStorages = this.giteaTokensImgStorages
+        } else if (currStorage.provider === 'gitea' || currStorage.provider === 'github') {
+          const filterTokenStorages = this.tokensImgStorages
             .filter(it => it.sid === currStorage.sub);
           if (!filterTokenStorages.length) {
             store.dispatch('notification/info', 'Gitea图床已失效，未自动上传图片！请选择图床后重新粘贴/拖拽图片！');
@@ -169,15 +189,28 @@ export default modalTemplate({
             .replace('{MM}', `0${month}`.slice(-2)).replace('{DD}', `0${date}`.slice(-2));
           path = `${path}${path.endsWith('/') ? '' : '/'}${utils.uid()}.${imgFile.type.split('/')[1]}`;
           try {
-            const result = await giteaHelper.uploadFile({
-              token: tokenStorage.token,
-              projectId: tokenStorage.repoUri,
-              branch: tokenStorage.branch,
-              path,
-              content: imgFile,
-              isFile: true,
-            });
-            this.url = result.content.download_url;
+            if (currStorage.provider === 'gitea') {
+              const result = await giteaHelper.uploadFile({
+                token: tokenStorage.token,
+                projectId: tokenStorage.repoUri,
+                branch: tokenStorage.branch,
+                path,
+                content: imgFile,
+                isFile: true,
+              });
+              this.url = result.content.download_url;
+            } else if (currStorage.provider === 'github') {
+              const result = await githubHelper.uploadFile({
+                token: tokenStorage.token,
+                owner: tokenStorage.owner,
+                repo: tokenStorage.repo,
+                branch: tokenStorage.branch,
+                path,
+                content: imgFile,
+                isFile: true,
+              });
+              this.url = result.content.download_url;
+            }
           } catch (err) {
             store.dispatch('notification/error', err);
           }
@@ -218,6 +251,8 @@ export default modalTemplate({
           });
         } else if (proivderId === 'gitea') {
           giteaHelper.removeTokenImgStorage(item.token, item.sid);
+        } else if (proivderId === 'github') {
+          githubHelper.removeTokenImgStorage(item.token, item.sid);
         }
       } catch (e) {
         // Cancel
@@ -242,9 +277,20 @@ export default modalTemplate({
         giteaHelper.updateToken(token, imgStorageInfo);
       } catch (e) { /* Cancel */ }
     },
+    async addGithubImgStorage() {
+      try {
+        await store.dispatch('modal/open', { type: 'githubAccount' });
+        const token = await githubHelper.addAccount(store.getters['data/localSettings'].githubRepoFullAccess);
+        const imgStorageInfo = await store.dispatch('modal/open', {
+          type: 'githubImgStorage',
+          token,
+        });
+        githubHelper.updateToken(token, imgStorageInfo);
+      } catch (e) { /* Cancel */ }
+    },
     async checkedImgDest(sub, provider) {
       let type = 'token';
-      if (provider === 'gitea') {
+      if (provider === 'gitea' || provider === 'github') {
         type = 'tokenRepo';
       }
       store.dispatch('img/changeCheckedStorage', {

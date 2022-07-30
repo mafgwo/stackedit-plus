@@ -58,7 +58,6 @@ export default {
     sub = null, silent = false, refreshToken,
   ) {
     let tokenBody;
-    const imgStorages = refreshToken && refreshToken.imgStorages;
     if (!silent) {
       // Get an OAuth2 code
       const { code } = await networkSvc.startOauth2(
@@ -115,13 +114,14 @@ export default {
       throw new Error('Gitea account ID not expected.');
     }
 
+    const oldToken = store.getters['data/giteaTokensBySub'][uniqueSub];
     // Build token object including scopes and sub
     const token = {
       accessToken,
       name: user.username,
       applicationId,
       applicationSecret,
-      imgStorages,
+      imgStorages: oldToken && oldToken.imgStorages,
       refreshToken: tokenBody.refresh_token,
       expiresOn: Date.now() + (tokenBody.expires_in * 1000),
       serverUrl,
