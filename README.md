@@ -1,76 +1,69 @@
 # StackEdit中文版
 
-**目前正准备支持粘贴自动上传图片到指定图床的功能，大家有什么好的图床推荐，可以在 [Issue](https://gitee.com/mafgwo/stackedit/issues/I5E6FJ) 给我留言**
+**StackEdit中文版官方地址：https://stackedit.cn**
 
-从 [StackEdit 官方](https://github.com/benweet/stackedit) fork出来，然后加上了 **Gitee** 的支持，并且已经重新打了镜像，以下官方的部署方式，除了Docker镜像地址不同，其他均一致。
+StackEdit中文版的docker镜像地址：[mafgwo/stackedit](https://hub.docker.com/r/mafgwo/stackedit)
 
-### Fork出来修改的原因
-StackEdit的作者可能因为什么原因，已经很久不维护了，Github授权登录很早之前就登录不了了，并且还没法支持国内常用的Gitee，所以想到Fork出来改，大概花了周末一整天终于改好了。
+## 相比国外开源版本的区别：
+- 修复了Github授权登录问题
+- 支持了Gitee仓库（2022-05-25）
+- 支持了Gitea仓库（2022-05-25）
+- 汉化（2022-06-01）
+- 主文档空间从GoogleDrive切换为Gitee（2022-06-04）
+- 支持SM.MS图床粘贴/拖拽图片自动上传（2022-07-01）
+- 支持Gitea图床粘贴/拖拽图片自动上传（2022-07-02）
+- 支持自定义图床粘贴/拖拽图片自动上传（2022-07-04）
+- 支持GitHub图床粘贴/拖拽图片自动上传（2022-07-31）
 
-新的Docker镜像在中央仓库为：[mafgwo/stackedit](https://hub.docker.com/r/mafgwo/stackedit)
+## 国外开源版本弊端：
+- 作者已经不维护了
+- Github授权登录存在问题
+- 不支持国内常用Gitee
+- 强依赖GoogleDrive，而Google Drive在国内仅科学上网后才能访问 
 
-并增加了以下2个环境变量：
-- `GITEE_CLIENT_ID` Gitee 的 Client ID
-- `GITEE_CLIENT_SECRET` Gitee 的 Client Secret
+## 部署说明
+> 建议docker-compose方式部署，其他部署方式如遇到问题欢迎提issue。
 
-### TODO: 关于后续的一些想法
-- 支持**Gitea**、**Gogs**两个轻量级且适于自建的Git仓库（毕竟Gitlab对机器配置要求较高）。想支持这两个主要也是考虑到其实很多公司已经禁用了Github或Gitee仓库，在公司都没法连上自己的Git仓库。 -- 已完成（Gogs无法支持）
-- 汉化，毕竟大家最熟悉的还是母语，并且该编辑器功能页面也不多，汉化工作量并不会很大。-- 已完成
-- 替换主文档空间为Gitee（原版本主文档空间是Google Drive，国内只有fan墙才可以用）-- 已完成
-- 支持图片粘贴自动上传到指定图床。-- 进行中（已完成SM.MS图床接入)
-- 引入mdnice，右边预览增加mdnice预览选项，主要含选主题(含mdnice常用20多个主题)、支持自定义主题、复制到公众号、复制到知乎、复制到稀土掘金等基本功能，便于喜欢写公众号、博客的同学可以更好更快的排版。
-- ... 另外，朋友们有好的想法也可以在Issue或者加我微信 qicoding 提给我。
+`docker-compose.yml`如下：
 
-#### TODO 进度
+```yaml
+version: "3.7"
+services:
+  stackedit:
+    image: mafgwo/stackedit:【docker中央仓库找到最新版本】
+    container_name: stackedit
+    environment:
+      - LISTENING_PORT=8080
+      - ROOT_URL=/
+      - USER_BUCKET_NAME=root
+      - DROPBOX_APP_KEY=【不需要支持则删掉】
+      - DROPBOX_APP_KEY_FULL=【不需要支持则删掉】
+      - GITHUB_CLIENT_ID=【不需要支持则删掉】
+      - GITHUB_CLIENT_SECRET=【不需要支持则删掉】
+      - GITEE_CLIENT_ID=【不需要支持则删掉】
+      - GITEE_CLIENT_SECRET=【不需要支持则删掉】
+      - GOOGLE_CLIENT_ID=【不需要支持则删掉】
+      - GOOGLE_API_KEY=【不需要支持则删掉】
+    ports:
+      - 8080:8080/tcp
+    network_mode: bridge
+    restart: always
+```
 
-**已支持Gitea (2022-05-25)，自建Gitea要支持跨域，不知道如何支持跨域提issue我会回答**
-对应Docker版本：5.15.3, tag: v5.15.3
+启动或停止命令
+```bash
+# 在 docker-compose.yml 文件目录下 启动命令 
+docker-compose up -d
+# 在 docker-compose.yml 文件目录下 停止命令 
+docker-compose down
+# 更新镜像只需要修改docker-compose.yml中镜像版本执行再停止、启动命令即可
+```
 
-**Gogs目前无法支持，因为API目前不支持直接把Markdown推上去，如果后续Gogs的API支持了再添加**
-
-**已汉化主要功能部分（2022-06-01）**
-对应Docker版本：5.15.5, tag: v5.15.5
-
-**已完成修改主文档空间为Gitee（2022-06-04）**
-对应Docker版本：5.15.6, tag: v5.15.6
-
-**已完成粘贴/拖拽图片自动上传SM.MS图床功能（2022-07-01）**
-对应Docker版本：5.15.7, tag: v5.15.7
-
-**已完成粘贴/拖拽图片自动上传Gitea图床功能（2022-07-02）**
-对应Docker版本：5.15.7-1
-
-**已完成粘贴/拖拽图片自动上传自定义图床功能（2022-07-10）**
-对应Docker版本：5.15.8
-
-
-### 目前已部署地址
-https://stackedit.cn/ 
-
-该地址可以作为试用或长期使用，本人承诺绝对没采集任何人的Token等敏感信息，不需要担心私有仓库泄漏。
-
-
-# 以下是官方原有README内容
-
-# StackEdit
-
-[![Build Status](https://img.shields.io/travis/benweet/stackedit.svg?style=flat)](https://travis-ci.org/benweet/stackedit) [![NPM version](https://img.shields.io/npm/v/stackedit.svg?style=flat)](https://www.npmjs.org/package/stackedit)
-
-> Full-featured, open-source Markdown editor based on PageDown, the Markdown library used by Stack Overflow and the other Stack Exchange sites.
-
-https://stackedit.io/
-
-### Ecosystem
-
-- [Chrome app](https://chrome.google.com/webstore/detail/iiooodelglhkcpgbajoejffhijaclcdg)
-- NEW! Embed StackEdit in any website with [stackedit.js](https://github.com/benweet/stackedit.js)
-- NEW! [Chrome extension](https://chrome.google.com/webstore/detail/ajehldoplanpchfokmeempkekhnhmoha) that uses stackedit.js
-- [Community](https://community.stackedit.io/)
-
-### Build
+## 编译与运行
+> 编译运行的nodejs版本选择11.15.0版本
 
 ```bash
-# install dependencies
+# 安装依赖
 npm install
 
 # serve with hot reload at localhost:8080
@@ -81,63 +74,4 @@ npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
-```
-
-### Deploy with Helm
-
-StackEdit Helm chart allows easy StackEdit deployment to any Kubernetes cluster.
-You can use it to configure deployment with your existing ingress controller and cert-manager.
-
-```bash
-# Add the StackEdit Helm repository
-helm repo add stackedit https://benweet.github.io/stackedit-charts/
-
-# Update your local Helm chart repository cache
-helm repo update
-
-# Deploy StackEdit chart to your cluster
-helm install --name stackedit stackedit/stackedit \
-  --set dropboxAppKey=$DROPBOX_API_KEY \
-  --set dropboxAppKeyFull=$DROPBOX_FULL_ACCESS_API_KEY \
-  --set googleClientId=$GOOGLE_CLIENT_ID \
-  --set googleApiKey=$GOOGLE_API_KEY \
-  --set githubClientId=$GITHUB_CLIENT_ID \
-  --set githubClientSecret=$GITHUB_CLIENT_SECRET \
-  --set wordpressClientId=\"$WORDPRESS_CLIENT_ID\" \
-  --set wordpressSecret=$WORDPRESS_CLIENT_SECRET
-```
-
-Later, to upgrade StackEdit to the latest version:
-
-```bash
-helm repo update
-helm upgrade stackedit stackedit/stackedit
-```
-
-If you want to uninstall StackEdit:
-
-```bash
-helm delete --purge stackedit
-```
-
-If you want to use your existing ingress controller and cert-manager issuer:
-
-```bash
-# See https://docs.cert-manager.io/en/latest/tutorials/acme/quick-start/index.html
-helm install --name stackedit stackedit/stackedit \
-  --set dropboxAppKey=$DROPBOX_API_KEY \
-  --set dropboxAppKeyFull=$DROPBOX_FULL_ACCESS_API_KEY \
-  --set googleClientId=$GOOGLE_CLIENT_ID \
-  --set googleApiKey=$GOOGLE_API_KEY \
-  --set githubClientId=$GITHUB_CLIENT_ID \
-  --set githubClientSecret=$GITHUB_CLIENT_SECRET \
-  --set wordpressClientId=\"$WORDPRESS_CLIENT_ID\" \
-  --set wordpressSecret=$WORDPRESS_CLIENT_SECRET \
-  --set ingress.enabled=true \
-  --set ingress.annotations."kubernetes\.io/ingress\.class"=nginx \
-  --set ingress.annotations."cert-manager\.io/cluster-issuer"=letsencrypt-prod \
-  --set ingress.hosts[0].host=stackedit.example.com \
-  --set ingress.hosts[0].paths[0]=/ \
-  --set ingress.tls[0].secretName=stackedit-tls \
-  --set ingress.tls[0].hosts[0]=stackedit.example.com
 ```
