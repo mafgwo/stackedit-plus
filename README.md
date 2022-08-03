@@ -19,7 +19,7 @@ StackEdit中文版的docker镜像地址：[mafgwo/stackedit](https://hub.docker.
 - 作者已经不维护了
 - Github授权登录存在问题
 - 不支持国内常用Gitee
-- 强依赖GoogleDrive，而Google Drive在国内仅科学上网后才能访问 
+- 强依赖GoogleDrive，而Google Drive在国内不能正常访问
 
 ## 部署说明
 > 建议docker-compose方式部署，其他部署方式如遇到问题欢迎提issue。
