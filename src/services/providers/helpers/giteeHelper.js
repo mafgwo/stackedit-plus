@@ -68,12 +68,13 @@ export default {
   /**
    * https://developer.gitee.com/apps/building-oauth-apps/authorization-options-for-oauth-apps/
    */
-  async startOauth2(lastToken, silent = false, isMain) {
+  async startOauth2(lastToken, silent = false, isMain, randomClientId) {
     let tokenBody;
     if (!silent) {
       const clientId = (await networkSvc.request({
         method: 'GET',
         url: 'giteeClientId',
+        params: { random: randomClientId },
       })).body;
       // Get an OAuth2 code
       const { code } = await networkSvc.startOauth2(
@@ -119,7 +120,7 @@ export default {
       })).body;
     } catch (err) {
       if (err.status === 401) {
-        this.startOauth2();
+        this.startOauth2(null, false, isMain, 1);
       }
       throw err;
     }
@@ -219,7 +220,7 @@ export default {
       return tree;
     } catch (err) {
       if (err.status === 401) {
-        this.startOauth2();
+        this.startOauth2(null, false, null, 1);
       }
       throw err;
     }

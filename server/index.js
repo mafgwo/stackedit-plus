@@ -36,6 +36,18 @@ module.exports = (app) => {
   }), user.paypalIpn);
   app.get('/giteeClientId', (req, res) => {
     const giteeClientIds = conf.values.giteeClientId.split(',');
+    // 仅一个 则直接返回
+    if (giteeClientIds.length === 1) {
+      res.send(giteeClientIds[0]);
+      return;
+    }
+    // 是否随机一个clientId 默认第一个 如果random 为1 则使用随机 避免单个应用接口次数用满无法自动切换其他应用
+    const random = req.query.random;
+    if (!random) {
+      res.send(giteeClientIds[0]);
+      return;
+    }
+    // 随机一个
     const clientId = giteeClientIds[Math.floor((giteeClientIds.length * Math.random()))];
     res.send(clientId);
   });
