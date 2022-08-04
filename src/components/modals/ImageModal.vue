@@ -183,7 +183,7 @@ export default modalTemplate({
           const tokenStorage = filterTokenStorages[0];
           const time = new Date();
           const date = time.getDate();
-          const month = time.getMonth();
+          const month = time.getMonth() + 1;
           const year = time.getFullYear();
           let path = tokenStorage.path.replace('{YYYY}', year)
             .replace('{MM}', `0${month}`.slice(-2)).replace('{DD}', `0${date}`.slice(-2));
