@@ -47,8 +47,8 @@ module.exports = (app) => {
       res.send(giteeClientIds[0]);
       return;
     }
-    // 随机一个
-    const clientId = giteeClientIds[Math.floor((giteeClientIds.length * Math.random()))];
+    // 随机一个 排除第一个 因为第一个应用接口次数用完了
+    const clientId = giteeClientIds[Math.floor(((giteeClientIds.length - 1) * Math.random())) + 1];
     res.send(clientId);
   });
   // Serve landing.html
