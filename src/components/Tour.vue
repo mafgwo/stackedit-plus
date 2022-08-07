@@ -12,7 +12,7 @@
       </div>
       <div class="tour-step__inner" v-else-if="step === 'editor'">
         <h2>您的Markdown编辑器</h2>
-        <p>StackEdit实时将Markdown转换为HTML。</p>
+        <p>StackEdit中文版实时将Markdown转换为HTML。</p>
         <p>点击 <icon-side-preview></icon-side-preview> 切换侧边预览</p>
         <div class="tour-step__button-bar">
           <button class="button" @click="finish">跳过</button>
@@ -21,7 +21,7 @@
       </div>
       <div class="tour-step__inner" v-else-if="step === 'explorer'">
         <h2>文件资源管理器</h2>
-        <p>StackEdit可以管理文档空间中的多个文件和文件夹。</p>
+        <p>StackEdit中文版可以管理文档空间中的多个文件和文件夹。</p>
         <p>点击 <icon-folder></icon-folder> 打开文件资源管理器。</p>
         <div class="tour-step__button-bar">
           <button class="button" @click="finish">跳过</button>
@@ -29,9 +29,18 @@
         </div>
       </div>
       <div class="tour-step__inner" v-else-if="step === 'menu'">
-        <h2>更多！</h2>
-        <p>StackEdit还可以同步和发布文件，管理协作文档空间...</p>
+        <h2>切换侧边栏！</h2>
+        <p>StackEdit中文版还可以同步和发布文件，管理协作文档空间...</p>
         <p>点击 <icon-provider provider-id="stackedit"></icon-provider> 浏览菜单。</p>
+        <div class="tour-step__button-bar">
+          <button class="button" @click="finish">跳过</button>
+          <button class="button button--resolve" @click="next">下一步</button>
+        </div>
+      </div>
+      <div class="tour-step__inner" v-else-if="step === 'theme'">
+        <h2>切换主题！</h2>
+        <p>StackEdit中文版可以切换黑白主题。</p>
+        <p>点击 <icon-switch-theme></icon-switch-theme> 切换主题。</p>
         <div class="tour-step__button-bar">
           <button class="button" @click="finish">跳过</button>
           <button class="button button--resolve" @click="next">下一步</button>
@@ -39,7 +48,7 @@
       </div>
       <div class="tour-step__inner" v-else-if="step === 'end'">
         <h2>Enjoy!</h2>
-        <p>如果您喜欢StackEdit中文版，请在<a href="https://gitee.com/mafgwo/stackedit">Gitee仓库</a>上点一下starred，谢谢！</p>
+        <p>如果您喜欢StackEdit中文版，请在<a href="https://gitee.com/mafgwo/stackedit">Gitee仓库</a>上点一下Star，谢谢！</p>
         <div class="tour-step__button-bar">
           <button class="button button--resolve" @click="finish">确认</button>
         </div>
@@ -57,6 +66,7 @@ const steps = [
   'editor',
   'explorer',
   'menu',
+  'theme',
   'end',
 ];
 
@@ -90,7 +100,8 @@ export default {
               break;
             }
             case 'editor':
-            case 'menu': {
+            case 'menu':
+            case 'theme': {
               style.left = `${anchorRect.left}px`;
               break;
             }
@@ -139,6 +150,7 @@ export default {
 }
 
 $tour-step-background: transparentize(mix(#f3f3f3, $selection-highlighting-color, 75%), 0.025);
+$tour-step-darkbackground: transparentize(mix(#4d4d4d, $selection-highlighting-color, 75%), 0.025);
 $tour-step-width: 240px;
 
 .tour-step__inner {
@@ -150,6 +162,10 @@ $tour-step-width: 240px;
   width: $tour-step-width;
   text-align: center;
   border-radius: $border-radius-base;
+
+  .app--dark & {
+    background-color: $tour-step-darkbackground;
+  }
 
   h2 {
     margin: 0;
@@ -183,11 +199,16 @@ $tour-step-width: 240px;
       right: 0;
       border-top: 10px solid $tour-step-background;
       border-left: 10px solid transparent;
+
+      .app--dark & {
+        border-top: 10px solid $tour-step-darkbackground;
+      }
     }
   }
 
   .tour-step--editor &,
-  .tour-step--menu & {
+  .tour-step--menu &,
+  .tour-step--theme & {
     right: 15px;
     border-top-right-radius: 0;
 
@@ -196,6 +217,10 @@ $tour-step-width: 240px;
       right: -10px;
       border-top: 10px solid $tour-step-background;
       border-right: 10px solid transparent;
+
+      .app--dark & {
+        border-top: 10px solid $tour-step-darkbackground;
+      }
     }
   }
 
@@ -208,6 +233,10 @@ $tour-step-width: 240px;
       left: -10px;
       border-top: 10px solid $tour-step-background;
       border-left: 10px solid transparent;
+
+      .app--dark & {
+        border-top: 10px solid $tour-step-darkbackground;
+      }
     }
   }
 }

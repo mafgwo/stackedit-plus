@@ -4,7 +4,7 @@
       <div class="modal__image">
         <icon-provider provider-id="gitea"></icon-provider>
       </div>
-      <p>将您的<b>Gitea</b>链接到<b>StackEdit</b>。</p>
+      <p>将您的<b>Gitea</b>链接到<b>StackEdit中文版</b>。</p>
       <form-entry label="Gitea URL" error="serverUrl">
         <input v-if="config.forceServerUrl" slot="field" class="textfield" type="text" disabled="disabled" v-model="config.forceServerUrl">
         <input v-else slot="field" class="textfield" type="text" v-model.trim="serverUrl" @keydown.enter="resolve()">

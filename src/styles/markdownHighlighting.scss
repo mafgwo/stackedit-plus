@@ -134,6 +134,10 @@
     background-color: $code-bg;
     border-radius: $code-border-radius;
     padding: 0.15em 0;
+
+    .app--dark & {
+      background-color: $code-dark-bg;
+    }
   }
 
   .img-wrapper {

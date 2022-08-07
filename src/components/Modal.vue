@@ -273,6 +273,10 @@ export default {
   position: relative;
   overflow: hidden;
 
+  .app--dark & {
+    background-color: #383c4a;
+  }
+
   &::before {
     content: '';
     position: absolute;

@@ -7,6 +7,7 @@
     </div>
     <!-- Side bar -->
     <div class="navigation-bar__inner navigation-bar__inner--right navigation-bar__inner--button">
+      <button class="navigation-bar__button navigation-bar__button--theme button" v-title="'切换主题'" tour-step-anchor="theme" @click="switchTheme"><icon-switch-theme></icon-switch-theme></button>
       <a class="navigation-bar__button navigation-bar__button--stackedit button" v-if="light" href="app" target="_blank" v-title="'打开StackEdit'"><icon-provider provider-id="stackedit"></icon-provider></a>
       <button class="navigation-bar__button navigation-bar__button--stackedit button" v-else tour-step-anchor="menu" @click="toggleSideBar()" v-title="'切换侧边栏'"><icon-provider provider-id="stackedit"></icon-provider></button>
     </div>
@@ -187,6 +188,9 @@ export default {
         publishSvc.requestPublish();
       }
     },
+    switchTheme() {
+      store.dispatch('data/switchThemeSetting');
+    },
     pagedownClick(name) {
       if (store.getters['content/isCurrentEditable']) {
         const text = editorSvc.clEditor.getContent();
@@ -308,6 +312,18 @@ export default {
   .navigation-bar__inner--button & {
     padding: 0 4px;
     width: 38px;
+
+    &.navigation-bar__button--theme {
+      width: 34px;
+      padding: 0 7px;
+      opacity: 0.85;
+
+      &:active,
+      &:focus,
+      &:hover {
+        opacity: 1;
+      }
+    }
 
     &.navigation-bar__button--stackedit {
       opacity: 0.85;

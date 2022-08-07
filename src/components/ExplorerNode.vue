@@ -236,6 +236,10 @@ $item-font-size: 14px;
 .explorer-node--trash,
 .explorer-node--temp {
   color: rgba(0, 0, 0, 0.5);
+
+  .app--dark & {
+    color: rgba(255, 255, 255, 0.5);
+  }
 }
 
 .explorer-node--folder > .explorer-node__item,

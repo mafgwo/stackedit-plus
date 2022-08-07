@@ -12,6 +12,10 @@ body {
   line-height: $line-height-base;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  .app--dark {
+    color: $body-color-dark;
+  }
 }
 
 .app--dark .layout__panel--editor,
@@ -98,6 +102,10 @@ code {
   background-color: $code-bg;
   border-radius: $border-radius-base;
   padding: 2px 4px;
+
+  .app--dark & {
+    background-color: $code-dark-bg;
+  }
 }
 
 hr {
@@ -113,6 +121,10 @@ pre > code {
   -webkit-text-size-adjust: none;
   overflow-x: auto;
   white-space: pre;
+
+  .app--dark & {
+    background-color: $code-dark-bg;
+  }
 }
 
 .toc ul {

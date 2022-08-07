@@ -4,14 +4,14 @@
       <div class="modal__image">
         <icon-provider provider-id="googleDrive"></icon-provider>
       </div>
-      <p>将您的<b>Google Drive</b>链接到<b>StackEdit</b>。</p>
+      <p>将您的<b>Google Drive</b>链接到<b>StackEdit中文版</b>。</p>
       <div class="form-entry">
         <div class="form-entry__checkbox">
           <label>
             <input type="checkbox" v-model="restrictedAccess"> 限制访问
           </label>
           <div class="form-entry__info">
-            如果限制，则将访问仅限于您使用<b>StackEdit</b>创建的文件。
+            如果限制，则将访问仅限于您使用<b>StackEdit中文版</b>创建的文件。
           </div>
         </div>
       </div>

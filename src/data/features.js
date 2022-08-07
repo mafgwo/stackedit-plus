@@ -554,6 +554,11 @@ export default [
         '使用“设置”对话框调整应用程序行为。',
       ),
       new Feature(
+        'switchTheme',
+        '切换主题',
+        '使用“主题切换”按钮切换主题。',
+      ),
+      new Feature(
         'changeShortcuts',
         '编辑快捷键',
         '使用“设置”对话框更改键盘快捷键。',

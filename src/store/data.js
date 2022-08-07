@@ -236,6 +236,21 @@ export default {
   actions: {
     setServerConf: setter('serverConf'),
     setSettings: setter('settings'),
+    switchThemeSetting: ({ commit, getters }) => {
+      const customSettingStr = getters.settings;
+      let { colorTheme } = getters.computedSettings;
+      if (!colorTheme || colorTheme === 'light') {
+        colorTheme = 'dark';
+      } else {
+        colorTheme = 'light';
+      }
+      const themeStr = `colorTheme: ${colorTheme}`;
+      let settingsStr = (customSettingStr && customSettingStr.trim()) || '# 增加您的自定义配置覆盖默认配置';
+      settingsStr = settingsStr.indexOf('colorTheme:') > -1 ?
+        settingsStr.replace(/colorTheme:.*/, themeStr) : `${settingsStr}\n${themeStr}`;
+      commit('setItem', itemTemplate('settings', settingsStr));
+      badgeSvc.addBadge('switchTheme');
+    },
     patchLocalSettings: patcher('localSettings'),
     patchLayoutSettings: patcher('layoutSettings'),
     toggleNavigationBar: layoutSettingsToggler('showNavigationBar', 'toggleNavigationBar'),

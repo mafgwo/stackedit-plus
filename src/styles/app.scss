@@ -91,6 +91,10 @@ textarea {
   background-image: none;
   border: 0;
   border-radius: $border-radius-base;
+
+  .app--dark & {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 }
 
 .button {
@@ -127,6 +131,20 @@ textarea {
     background-color: rgba(0, 0, 0, 0.05);
     outline: 0;
     text-decoration: none;
+  }
+
+  .app--dark & {
+    color: rgba(255, 255, 255, 0.75);
+
+    &:active,
+    &:focus,
+    &:hover,
+    .hidden-file:focus + & {
+      color: rgba(255, 255, 255, 0.75);
+      background-color: rgba(255, 255, 255, 0.05);
+      outline: 0;
+      text-decoration: none;
+    }
   }
 
   .app--dark .layout__panel--editor &,
@@ -166,6 +184,18 @@ textarea {
     color: #fff;
     background-color: darken(#349be8, 8%);
   }
+
+  .app--dark & {
+    background-color: #567c98;
+    color: rgb(222, 222, 222);
+
+    &:active,
+    &:focus,
+    &:hover {
+      color: #fff;
+      background-color: darken(#567c98, 8%);
+    }
+  }
 }
 
 .textfield {
@@ -189,6 +219,16 @@ textarea {
     cursor: not-allowed;
     background-color: #f0f0f0;
     color: #999;
+  }
+
+  .app--dark & {
+    background-color: rgba(0, 0, 0, 0.2);
+
+    &[disabled] {
+      cursor: not-allowed;
+      background-color: #373737;
+      color: #999;
+    }
   }
 }
 

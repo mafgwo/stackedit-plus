@@ -208,6 +208,10 @@ $preview-background-dark: #252525;
 .layout__panel--explorer,
 .layout__panel--side-bar {
   background-color: #ddd;
+
+  .app--dark & {
+    background-color: #383c4a;
+  }
 }
 
 .layout__panel--find-replace {

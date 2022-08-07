@@ -73,6 +73,10 @@
   background-color: #fff;
   border-radius: 3px;
   opacity: 0.6;
+
+  .app--dark & {
+    background-color: #000;
+  }
 }
 
 .menu-entry__label--warning {

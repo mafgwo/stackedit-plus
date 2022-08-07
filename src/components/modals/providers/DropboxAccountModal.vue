@@ -4,7 +4,7 @@
       <div class="modal__image">
         <icon-provider provider-id="dropbox"></icon-provider>
       </div>
-      <p>将您的<b>Dropbox</b>链接到<b>StackEdit</b>。</p>
+      <p>将您的<b>Dropbox</b>链接到<b>StackEdit中文版</b>。</p>
       <div class="form-entry">
         <div class="form-entry__checkbox">
           <label>
