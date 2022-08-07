@@ -247,7 +247,7 @@ export default {
       const themeStr = `colorTheme: ${colorTheme}`;
       let settingsStr = (customSettingStr && customSettingStr.trim()) || '# 增加您的自定义配置覆盖默认配置';
       settingsStr = settingsStr.indexOf('colorTheme:') > -1 ?
-        settingsStr.replace(/colorTheme:.*/, themeStr) : `${settingsStr}\n${themeStr}`;
+        settingsStr.replace(/.*colorTheme:.*/, themeStr) : `${settingsStr}\n${themeStr}`;
       commit('setItem', itemTemplate('settings', settingsStr));
       badgeSvc.addBadge('switchTheme');
     },
