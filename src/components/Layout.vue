@@ -222,5 +222,9 @@ $preview-background-dark: #252525;
   width: 300px;
   height: auto;
   border-top-right-radius: $border-radius-base;
+
+  .app--dark & {
+    background-color: #4d5160;
+  }
 }
 </style>
