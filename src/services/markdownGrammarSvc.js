@@ -83,31 +83,31 @@ export default {
     const insideFences = options.insideFences || {};
     insideFences['cl cl-pre'] = /```|~~~/;
     if (options.fence) {
-      grammars.main['pre gfm'] = {
+      grammars.main['pre gfm cn-code'] = {
         pattern: /^(```|~~~)[\s\S]*?\n\1 *$/gm,
         inside: insideFences,
       };
-      grammars.list['pre gfm'] = {
+      grammars.list['pre gfm cn-code'] = {
         pattern: /^(?: {4}|\t)(```|~~~)[\s\S]*?\n(?: {4}|\t)\1\s*$/gm,
         inside: insideFences,
       };
-      grammars.deflist.deflist.inside['pre gfm'] = grammars.list['pre gfm'];
+      grammars.deflist.deflist.inside['pre gfm cn-code'] = grammars.list['pre gfm cn-code'];
     }
 
-    grammars.main['h1 alt'] = {
-      pattern: /^.+\n=+[ \t]*$/gm,
+    grammars.main['h1 alt cn-head'] = {
+      pattern: /^.+\n[=]{2,}[ \t]*$/gm,
       inside: {
         'cl cl-hash': /=+[ \t]*$/,
       },
     };
-    grammars.main['h2 alt'] = {
-      pattern: /^.+\n-+[ \t]*$/gm,
+    grammars.main['h2 alt cn-head'] = {
+      pattern: /^.+\n[-]{2,}[ \t]*$/gm,
       inside: {
         'cl cl-hash': /-+[ \t]*$/,
       },
     };
     for (let i = 6; i >= 1; i -= 1) {
-      grammars.main[`h${i}`] = {
+      grammars.main[`h${i} cn-head`] = {
         pattern: new RegExp(`^#{${i}}[ \t].+$`, 'gm'),
         inside: {
           'cl cl-hash': new RegExp(`^#{${i}}`),
@@ -213,7 +213,7 @@ export default {
     };
 
     const rest = {};
-    rest.code = {
+    rest['code cn-code'] = {
       pattern: /(`+)[\s\S]*?\1/g,
       inside: {
         'cl cl-code': /`/,
@@ -306,7 +306,7 @@ export default {
     rest.tag = markup.tag;
     rest.url = urlPattern;
     rest.email = emailPattern;
-    rest.strong = {
+    rest['strong cn-strong'] = {
       pattern: /(^|[^\w*])(__|\*\*)(?![_*])[\s\S]*?\2(?=([^\w*]|$))/gm,
       lookbehind: true,
       inside: {
@@ -377,10 +377,10 @@ export default {
     rest.entity = markup.entity;
 
     for (let c = 6; c >= 1; c -= 1) {
-      grammars.main[`h${c}`].inside.rest = rest;
+      grammars.main[`h${c} cn-head`].inside.rest = rest;
     }
-    grammars.main['h1 alt'].inside.rest = rest;
-    grammars.main['h2 alt'].inside.rest = rest;
+    grammars.main['h1 alt cn-head'].inside.rest = rest;
+    grammars.main['h2 alt cn-head'].inside.rest = rest;
     grammars.table.table.inside.rest = rest;
     grammars.main.rest = rest;
     grammars.list.rest = rest;
@@ -391,13 +391,13 @@ export default {
     }
 
     const restLight = {
-      code: rest.code,
+      code: rest['code cn-code'],
       inlinefn: rest.inlinefn,
       fn: rest.fn,
       link: rest.link,
       linkref: rest.linkref,
     };
-    rest.strong.inside.rest = restLight;
+    rest['strong cn-strong'].inside.rest = restLight;
     rest.em.inside.rest = restLight;
     if (options.del) {
       rest.del.inside.rest = restLight;
@@ -407,10 +407,11 @@ export default {
     }
 
     const inside = {
-      code: rest.code,
+      code: rest['code cn-code'],
       comment: rest.comment,
       tag: rest.tag,
-      strong: rest.strong,
+      // strong: rest.strong,
+      strong: rest['strong cn-strong'],
       em: rest.em,
       del: rest.del,
       sub: rest.sub,

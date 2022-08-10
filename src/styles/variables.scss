@@ -3,7 +3,7 @@ $font-family-monospace: 'Roboto Mono', 'Lucida Sans Typewriter', 'Lucida Console
 $body-color-light: rgba(0, 0, 0, 0.75);
 $body-color-dark: rgba(255, 255, 255, 0.75);
 $code-bg: rgba(0, 0, 0, 0.05);
-$code-dark-bg: rgba(0, 0, 0, 0.2);
+$code-dark-bg: rgba(255, 255, 255, 0.1);
 $line-height-base: 1.67;
 $line-height-title: 1.33;
 $font-size-monospace: 0.85em;
@@ -21,15 +21,15 @@ $navbar-hover-color: #fff;
 $navbar-hover-background: rgba(255, 255, 255, 0.1);
 
 $editor-background-light: #fff;
-$editor-background-dark: #1e1e1e;
+$editor-background-dark: #36312c;
 
 $editor-color-light: rgba(0, 0, 0, 0.8);
-$editor-color-light-low: #000;
+$editor-color-light-low: rgba(0, 0, 0, 0.75);
 $editor-color-light-high: rgba(0, 0, 0, 0.28);
 $editor-color-light-blockquote: rgba(0, 0, 0, 0.48);
 
 $editor-color-dark: rgba(255, 255, 255, 0.8);
-$editor-color-dark-low: #fff;
+$editor-color-dark-low: rgba(255, 255, 255, 0.75);
 $editor-color-dark-high: rgba(255, 255, 255, 0.28);
 $editor-color-dark-blockquote: rgba(255, 255, 255, 0.48);
 

@@ -255,6 +255,7 @@
   .email,
   .cl-underlined-text {
     text-decoration: underline;
+    color: #d7a55b;
   }
 
   .linkdef .url {
@@ -290,11 +291,7 @@
     }
 
     .cl-underlined-text {
-      color: $editor-color-light-low;
-
-      .app--dark & {
-        color: $editor-color-dark-low;
-      }
+      color: #d7a55b;
     }
   }
 
@@ -303,6 +300,30 @@
 
     .app--dark & {
       color: $editor-color-dark;
+    }
+  }
+
+  .cn-head {
+    color: #dea731;
+
+    .app--dark & {
+      color: #f8bb39;
+    }
+  }
+
+  .cn-strong {
+    color: #db784d;
+
+    .app--dark & {
+      color: #db784d;
+    }
+  }
+
+  .cn-code {
+    color: #59b003;
+
+    .app--dark & {
+      color: #95cc5e;
     }
   }
 }

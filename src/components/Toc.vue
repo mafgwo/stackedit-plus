@@ -99,6 +99,10 @@ export default {
   -ms-user-select: none;
   user-select: none;
 
+  .app--dark & {
+    color: rgba(255, 255, 255, 0.67);
+  }
+
   * {
     font-weight: inherit;
     pointer-events: none;
@@ -150,5 +154,9 @@ export default {
   height: 35px;
   background-color: rgba(255, 255, 255, 0.2);
   pointer-events: none;
+
+  .app--dark & {
+    color: rgba(0, 0, 0, 0.2);
+  }
 }
 </style>
