@@ -4,10 +4,10 @@
 
 StackEdit中文版的docker镜像地址：[mafgwo/stackedit](https://hub.docker.com/r/mafgwo/stackedit)
 
-**示例截图-黑色主题**
+**示例截图-暗色主题**
 ![](./images/dark.png)
 
-**示例截图-白色主题**
+**示例截图-亮色主题**
 ![](./images/light.png)
 
 ## 相比国外开源版本的区别：

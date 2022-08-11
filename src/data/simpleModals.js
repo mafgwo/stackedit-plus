@@ -12,7 +12,7 @@ export default {
     '确认删除',
   ),
   discussionDeletion: simpleModal(
-    '<p>您将要删除讨论。你确定吗？</p>',
+    '<p>您将要删除批注。你确定吗？</p>',
     '取消',
     '确认删除',
   ),

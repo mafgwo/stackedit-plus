@@ -185,7 +185,7 @@ export default {
 }
 
 $preview-background-light: #f3f3f3;
-$preview-background-dark: #252525;
+$preview-background-dark: #444;
 
 .layout__panel--preview,
 .layout__panel--button-bar {

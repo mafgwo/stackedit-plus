@@ -39,7 +39,7 @@
       </div>
       <div class="tour-step__inner" v-else-if="step === 'theme'">
         <h2>切换主题！</h2>
-        <p>StackEdit中文版可以切换黑白主题。</p>
+        <p>StackEdit中文版可以切换亮/暗主题。</p>
         <p>点击 <icon-switch-theme></icon-switch-theme> 切换主题。</p>
         <div class="tour-step__button-bar">
           <button class="button" @click="finish">跳过</button>

@@ -32,6 +32,11 @@ dl {
   margin: 0 0 1.1em;
 }
 
+ul,
+ol {
+  padding-left: 30px;
+}
+
 h1,
 h2,
 h3,
@@ -66,12 +71,12 @@ dt {
 
 a {
   color: $link-color;
-  text-decoration: underline;
+  text-decoration: none;
   text-decoration-skip: ink;
 
   &:hover,
   &:focus {
-    text-decoration: none;
+    text-decoration: underline;
   }
 }
 
@@ -100,8 +105,8 @@ blockquote {
   .app--dark .layout__panel--editor &,
   .app--dark .layout__panel--preview & {
     color: rgba(255, 255, 255, 0.4);
-    border-left-color: rgba(255, 255, 255, 0.1);
-    background: #3a3a3c;
+    border-left-color: #333;
+    background: rgba(51, 51, 51, 0.5);
   }
 }
 

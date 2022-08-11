@@ -16,7 +16,7 @@
       <div class="comment__text-inner" v-html="text"></div>
     </div>
     <div class="comment__buttons flex flex--row flex--end" v-if="showReply">
-      <button class="comment__button button" @click="setIsCommenting(true)">Reply</button>
+      <button class="comment__button button" @click="setIsCommenting(true)">评论</button>
     </div>
   </div>
 </template>
