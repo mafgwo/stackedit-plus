@@ -93,7 +93,7 @@ blockquote {
   background: #e2e4e9;
   word-break: break-word !important;
 
-  p:last-child {
+  :last-child {
     margin-bottom: 0;
   }
 
