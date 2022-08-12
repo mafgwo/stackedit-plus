@@ -2,6 +2,8 @@
 
 **StackEdit中文版官方地址：https://stackedit.cn**
 
+如果你喜欢该项目，请点一下Star，您的肯定是作者最大的动力！
+
 StackEdit中文版的docker镜像地址：[mafgwo/stackedit](https://hub.docker.com/r/mafgwo/stackedit)
 
 **示例截图-暗色主题**
