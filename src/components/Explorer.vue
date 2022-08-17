@@ -140,9 +140,15 @@ export default {
       });
     },
     clickSearch(item) {
+      const node = store.getters['explorer/nodeMap'][item.id];
+      if (!node) {
+        return;
+      }
       store.commit('explorer/setSelectedId', item.id);
-      store.commit('file/setCurrentId', item.id);
-      this.showSearch = false;
+      // Prevent from freezing the UI while loading the file
+      setTimeout(() => {
+        store.commit('file/setCurrentId', item.id);
+      }, 10);
     },
   },
   created() {
@@ -208,6 +214,11 @@ export default {
 
     .app--dark & {
       background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    &:focus {
+      background-color: #39f;
+      color: #fff;
     }
   }
 }
