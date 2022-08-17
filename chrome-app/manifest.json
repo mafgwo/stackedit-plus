@@ -1,7 +1,7 @@
 {
   "name": "StackEdit中文版",
   "description": "支持Gitee仓库/粘贴图片自动上传的浏览器内 Markdown 编辑器",
-  "version": "1.0.0",
+  "version": "5.15.11",
   "manifest_version": 2,
   "container" : "GITEE",
   "api_console_project_id" : "241271498917",
