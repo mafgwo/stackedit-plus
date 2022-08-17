@@ -54,6 +54,7 @@ import explorerSvc from '../services/explorerSvc';
 import store from '../store';
 import MenuEntry from './menus/common/MenuEntry';
 import localDbSvc from '../services/localDbSvc';
+import badgeSvc from '../services/badgeSvc';
 
 export default {
   components: {
@@ -135,6 +136,7 @@ export default {
           }
         });
         this.searching = false;
+        badgeSvc.addBadge('searchFile');
       });
     },
     clickSearch(item) {

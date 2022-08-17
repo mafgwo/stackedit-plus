@@ -101,6 +101,11 @@ export default [
         '文件夹删除',
         '使用文件资源管理器删除文档空间中的文件夹。',
       ),
+      new Feature(
+        'searchFile',
+        '文件搜索',
+        '使用文件资源管理器搜索文档空间中的文件。',
+      ),
     ],
   ),
   new Feature(
