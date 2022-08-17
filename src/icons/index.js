@@ -56,6 +56,7 @@ import Key from './Key';
 import DotsHorizontal from './DotsHorizontal';
 import Seal from './Seal';
 import SwitchTheme from './SwitchTheme';
+import Search from './Search';
 
 Vue.component('iconProvider', Provider);
 Vue.component('iconFormatBold', FormatBold);
@@ -114,3 +115,4 @@ Vue.component('iconKey', Key);
 Vue.component('iconDotsHorizontal', DotsHorizontal);
 Vue.component('iconSeal', Seal);
 Vue.component('iconSwitchTheme', SwitchTheme);
+Vue.component('iconSearch', Search);

@@ -215,6 +215,10 @@ $item-font-size: 14px;
   .explorer-node--selected > & {
     background-color: rgba(0, 0, 0, 0.2);
 
+    .app--dark & {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
     .explorer__tree:focus & {
       background-color: #39f;
       color: #fff;
