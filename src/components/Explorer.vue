@@ -34,7 +34,7 @@
       <explorer-node :node="rootNode" :depth="0"></explorer-node>
     </div>
     <div class="explorer__search" tabindex="0" v-if="!light && showSearch">
-      <input type="text" v-model="searchText" class="text-input" placeholder="请输入关键字回车" @keyup.enter="search"></input>
+      <input type="text" v-model="searchText" class="text-input" placeholder="请输入关键字回车" @keyup.enter="search" />
       <div class="explorer__search-list">
         <div class="search-tips" v-if="searching">正在查询中...</div>
         <a class="menu-entry button flex flex--row flex--align-center" :class="{'search-node--selected': currentFileId === fileItem.id}"
