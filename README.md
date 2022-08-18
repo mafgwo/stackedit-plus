@@ -86,3 +86,7 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
+
+## 欢迎加群交流
+QQ群如下：
+![](./images/qq.jpeg)
