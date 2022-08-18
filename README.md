@@ -12,6 +12,15 @@ StackEdit中文版的docker镜像地址：[mafgwo/stackedit](https://hub.docker.
 **示例截图-亮色主题**
 ![](./images/light.png)
 
+**示例截图-支持的文档空间**
+![](./images/workspace.png)
+
+**示例截图-支持的图床**
+![](./images/imageBed.png)
+
+**示例截图-支持文件搜索**
+![](./images/fileSearch.png)
+
 ## 相比国外开源版本的区别：
 - 修复了Github授权登录问题
 - 支持了Gitee仓库（2022-05-25）
