@@ -88,5 +88,5 @@ npm run build --report
 ```
 
 ## 欢迎加群交流
-QQ群如下：
+关于StackEdit，如果你有想法，或者使用中遇到了问题，可以提Issue，如果需要快速得到反馈，可以加QQ群如下（加群后可直接@群主）：
 ![](./images/qq.jpeg)

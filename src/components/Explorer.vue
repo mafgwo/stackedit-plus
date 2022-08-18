@@ -15,7 +15,7 @@
           <icon-pen></icon-pen>
         </button>
         <button class="side-title__button side-title__button--search button" @click="toSearch()" v-title="'搜索文件'">
-          <icon-search></icon-search>
+          <icon-file-search></icon-file-search>
         </button>
       </div>
       <div class="flex flex--row" v-else>
