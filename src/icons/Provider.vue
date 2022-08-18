@@ -61,6 +61,10 @@ export default {
 
 .icon-provider--github {
   background-image: url(../assets/iconGithub.svg);
+
+  .app--dark & {
+    background-image: url(../assets/iconGithubDark.svg);
+  }
 }
 
 .icon-provider--gitlab {
