@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="modal__button-bar">
-      <button class="button button--resolve" @click="config.resolve()">Close</button>
+      <button class="button button--resolve" @click="config.resolve()">关闭</button>
     </div>
   </modal-inner>
 </template>

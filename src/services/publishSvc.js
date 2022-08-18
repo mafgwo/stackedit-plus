@@ -94,7 +94,7 @@ const publishFile = async (fileId) => {
       });
     });
     const file = store.state.file.itemsById[fileId];
-    store.dispatch('notification/info', `"${file.name}" was published to ${counter} location(s).`);
+    store.dispatch('notification/info', `"${file.name}"已发布到${counter}个位置。`);
   } finally {
     await localDbSvc.unloadContents();
   }
@@ -133,7 +133,7 @@ const createPublishLocation = (publishLocation, featureId) => {
     async () => {
       const publishLocationToStore = await publish(publishLocation);
       workspaceSvc.addPublishLocation(publishLocationToStore);
-      store.dispatch('notification/info', `A new publication location was added to "${currentFile.name}".`);
+      store.dispatch('notification/info', `添加了一个新的发布位置 "${currentFile.name}".`);
       if (featureId) {
         badgeSvc.addBadge(featureId);
       }

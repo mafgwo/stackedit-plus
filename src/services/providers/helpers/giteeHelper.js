@@ -329,9 +329,10 @@ export default {
       params: { ref: branch },
     });
     if (sha) {
+      const data = utils.decodeBase64(content);
       return {
         sha,
-        data: utils.decodeBase64(content),
+        data: data === ' ' ? '' : data,
       };
     }
     return {};

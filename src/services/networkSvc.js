@@ -89,9 +89,9 @@ export default {
       if (store.state.offline !== offline) {
         store.commit('setOffline', offline);
         if (offline) {
-          store.dispatch('notification/error', 'You are offline.');
+          store.dispatch('notification/error', '已离线！');
         } else {
-          store.dispatch('notification/info', 'You are back online!');
+          store.dispatch('notification/info', '恢复上线了！');
           this.getServerConf();
         }
       }

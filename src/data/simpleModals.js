@@ -72,9 +72,9 @@ export default {
     '好的，我明白了',
   ),
   stripName: simpleModal(
-    config => `<p><b>${config.item.name}</b>包含非法字符。你想剥离它们吗？</p>`,
+    config => `<p><b>${config.item.name}</b>包含非法字符。你想去掉它们吗？</p>`,
     '取消',
-    '确认剥离',
+    '确认去掉',
   ),
   tempFileDeletion: simpleModal(
     config => `<p>您将永久删除临时文件<b>${config.item.name}</b>。你确定吗？</p>`,

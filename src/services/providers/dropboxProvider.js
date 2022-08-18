@@ -112,7 +112,7 @@ export default new Provider({
           ...syncLocation,
           fileId: item.id,
         });
-        store.dispatch('notification/info', `${store.getters['file/current'].name} was imported from Dropbox.`);
+        store.dispatch('notification/info', `${store.getters['file/current'].name}已从Dropbox导入。`);
       }
     });
   },

@@ -103,7 +103,7 @@ export default new Provider({
         ...syncLocation,
         fileId: item.id,
       });
-      store.dispatch('notification/info', `${store.getters['file/current'].name} was imported from Gitee.`);
+      store.dispatch('notification/info', `${store.getters['file/current'].name}已从Gitee导入。`);
     }
   },
   makeLocation(token, owner, repo, branch, path) {

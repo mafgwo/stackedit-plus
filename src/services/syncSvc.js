@@ -222,7 +222,7 @@ const createSyncLocation = (syncLocation) => {
 
       store.commit('syncedContent/patchItem', newSyncedContent);
       workspaceSvc.addSyncLocation(updatedSyncLocation);
-      store.dispatch('notification/info', `A new synchronized location was added to "${currentFile.name}".`);
+      store.dispatch('notification/info', `将新的同步位置添加到"${currentFile.name}"中。`);
     },
   );
 };
@@ -665,6 +665,8 @@ const syncWorkspace = async (skipContents = false) => {
             || (isGit && item.type === 'folder')
             // Add file only if content has been added
             || (item.type === 'file' && !syncDataByItemId[`${id}/content`])
+            // 如果是发布位置 文件不存在了 则不需要更新 等待后续删除
+            || (item.type === 'publishLocation' && (!item.fileId || !syncDataByItemId[`${item.fileId}/content`]))
           ) {
             return null;
           }
@@ -688,13 +690,16 @@ const syncWorkspace = async (skipContents = false) => {
     await utils.awaitSome(() => ifNotTooLate(async () => {
       let getItem;
       let getFileItem;
+      let getOriginFileItem;
       if (store.getters['workspace/currentWorkspaceIsGit']) {
         const { itemsByGitPath } = store.getters;
         getItem = syncData => itemsByGitPath[syncData.id];
+        getOriginFileItem = syncData => itemsByGitPath[syncData.fileId];
         getFileItem = syncData => itemsByGitPath[syncData.id.slice(1)]; // Remove leading /
       } else {
         const { allItemsById } = store.getters;
         getItem = syncData => allItemsById[syncData.itemId];
+        getOriginFileItem = syncData => allItemsById[syncData.fileId];
         getFileItem = syncData => allItemsById[syncData.itemId.split('/')[0]];
       }
 
@@ -707,6 +712,8 @@ const syncWorkspace = async (skipContents = false) => {
             || syncData.type === 'data'
             // Remove content only if file has been removed
             || (syncData.type === 'content' && getFileItem(syncData))
+            // 发布位置 如果对应的文件不存在了 也需要删除
+            || (syncData.type === 'publishLocation' && syncData.fileId && getOriginFileItem(syncData))
           ) {
             return null;
           }
