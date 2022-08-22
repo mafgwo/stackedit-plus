@@ -70,7 +70,16 @@ services:
     restart: always
 ```
 
-直接启动的Docker命令
+docker-compose方式的启动或停止命令
+```bash
+# 在 docker-compose.yml 文件目录下 启动命令 
+docker-compose up -d
+# 在 docker-compose.yml 文件目录下 停止命令 
+docker-compose down
+# 更新镜像只需要修改docker-compose.yml中镜像版本执行再停止、启动命令即可
+```
+
+或者可以直接通过Docker命名直接启动，命令如下：
 
 ```bash
 docker run -itd --name stackedit \
@@ -90,19 +99,15 @@ docker run -itd --name stackedit \
 
 ```
 
-**[如何配置Gitee应用](./docs/部署之Gitee应用创建.md)**
-**[如何配置GitHub应用](./docs/部署之GitHub应用创建.md)**
-**[如何配置Gitea应用](./docs/部署之Gitea应用创建.md)**
+## 如何创建三方平台应用
+> 部署时，如果需要支持Gitee或GitHub，则需要自行到对应三方平台创建应用，获取到应用ID和秘钥，替换到以上的环境变量中，再启动应用。
 
+- Gitee的环境变量：GITEE_CLIENT_ID、GITEE_CLIENT_SECRET，**[如何创建Gitee应用](./docs/部署之Gitee应用创建.md)**
 
-启动或停止命令
-```bash
-# 在 docker-compose.yml 文件目录下 启动命令 
-docker-compose up -d
-# 在 docker-compose.yml 文件目录下 停止命令 
-docker-compose down
-# 更新镜像只需要修改docker-compose.yml中镜像版本执行再停止、启动命令即可
-```
+- GitHub的环境变量：GITHUB_CLIENT_ID、GITEE_CLIENT_SECRET，**[如何创建GitHub应用](./docs/部署之GitHub应用创建.md)**
+
+- Gitea不需要配置环境变量，而是在关联Gitea账号时，需要填入应用ID和秘钥，**[如何创建Gitea应用](./docs/部署之Gitea应用创建.md)**
+
 
 ## 编译与运行
 > 编译运行的nodejs版本选择11.15.0版本
