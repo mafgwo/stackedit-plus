@@ -70,6 +70,31 @@ services:
     restart: always
 ```
 
+直接启动的Docker命令
+
+```bash
+docker run -itd --name stackedit \
+  -p 8080:8080 \
+  -e LISTENING_PORT=8080 \
+  -e ROOT_URL=/ \
+  -e USER_BUCKET_NAME=root \
+  -e DROPBOX_APP_KEY=【不需要支持则删掉】 \
+  -e DROPBOX_APP_KEY_FULL=【不需要支持则删掉】 \
+  -e GITHUB_CLIENT_ID=【不需要支持则删掉】 \
+  -e GITHUB_CLIENT_SECRET=【不需要支持则删掉】 \
+  -e GITEE_CLIENT_ID=【不需要支持则删掉】 \
+  -e GITEE_CLIENT_SECRET=【不需要支持则删掉】 \
+  -e GOOGLE_CLIENT_ID=【不需要支持则删掉】 \
+  -e GOOGLE_API_KEY=【不需要支持则删掉】 \
+  mafgwo/stackedit:【docker中央仓库找到最新版本】
+
+```
+
+**[如何配置Gitee应用](./docs/部署之Gitee应用创建.md)**
+**[如何配置GitHub应用](./docs/部署之GitHub应用创建.md)**
+**[如何配置Gitea应用](./docs/部署之Gitea应用创建.md)**
+
+
 启动或停止命令
 ```bash
 # 在 docker-compose.yml 文件目录下 启动命令 
