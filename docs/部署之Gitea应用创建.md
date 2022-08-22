@@ -8,13 +8,13 @@
 按下面图的指示创建
 
 
-![](../images/gitea/gitea01.pngg)
+![](../images/gitea/gitea01.png)
 
-![](../images/gitea/gitea02.pngg)
+![](../images/gitea/gitea02.png)
 
-![](../images/gitea/gitea03.pngg)
+![](../images/gitea/gitea03.png)
 
-![](../images/gitea/gitea04.pngg)
+![](../images/gitea/gitea04.png)
 
 创建成功后即可看到应用ID 和 应用秘钥。
 
