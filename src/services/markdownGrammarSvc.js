@@ -307,7 +307,7 @@ export default {
     rest.url = urlPattern;
     rest.email = emailPattern;
     rest['strong cn-strong'] = {
-      pattern: /(^|[^\w*])(__|\*\*)(?![_*])[\s\S]*?\2(?=([^\w*]|$))/gm,
+      pattern: /(^|[^.*])(__|\*\*)(?![_*])[\s\S]*?\2(?=([^.*]|$))/gm,
       lookbehind: true,
       inside: {
         'cl cl-strong cl-start': /^(__|\*\*)/,
@@ -315,7 +315,7 @@ export default {
       },
     };
     rest.em = {
-      pattern: /(^|[^\w*])(_|\*)(?![_*])[\s\S]*?\2(?=([^\w*]|$))/gm,
+      pattern: /(^|[^.*])(_|\*)(?![_*])[\s\S]*?\2(?=([^.*]|$))/gm,
       lookbehind: true,
       inside: {
         'cl cl-em cl-start': /^(_|\*)/,
@@ -323,7 +323,7 @@ export default {
       },
     };
     rest['strong em'] = {
-      pattern: /(^|[^\w*])(__|\*\*)(_|\*)(?![_*])[\s\S]*?\3\2(?=([^\w*]|$))/gm,
+      pattern: /(^|[^.*])(__|\*\*)(_|\*)(?![_*])[\s\S]*?\3\2(?=([^.*]|$))/gm,
       lookbehind: true,
       inside: {
         'cl cl-strong cl-start': /^(__|\*\*)(_|\*)/,
@@ -331,7 +331,7 @@ export default {
       },
     };
     rest['strong em inv'] = {
-      pattern: /(^|[^\w*])(_|\*)(__|\*\*)(?![_*])[\s\S]*?\3\2(?=([^\w*]|$))/gm,
+      pattern: /(^|[^.*])(_|\*)(__|\*\*)(?![_*])[\s\S]*?\3\2(?=([^.*]|$))/gm,
       lookbehind: true,
       inside: {
         'cl cl-strong cl-start': /^(_|\*)(__|\*\*)/,
@@ -340,7 +340,7 @@ export default {
     };
     if (options.del) {
       rest.del = {
-        pattern: /(^|[^\w*])(~~)[\s\S]*?\2(?=([^\w*]|$))/gm,
+        pattern: /(^|[^.*])(~~)[\s\S]*?\2(?=([^.*]|$))/gm,
         lookbehind: true,
         inside: {
           cl: /~~/,
@@ -350,7 +350,7 @@ export default {
     }
     if (options.mark) {
       rest.mark = {
-        pattern: /(^|[^\w*])(==)[\s\S]*?\2(?=([^\w*]|$))/gm,
+        pattern: /(^|[^.*])(==)[\s\S]*?\2(?=([^.*]|$))/gm,
         lookbehind: true,
         inside: {
           cl: /==/,
