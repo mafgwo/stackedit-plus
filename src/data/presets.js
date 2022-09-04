@@ -15,6 +15,7 @@ const zero = {
     table: false,
     tasklist: false,
     typographer: false,
+    toc: false,
   },
   // Emoji extension
   emoji: {
@@ -49,6 +50,13 @@ const zero = {
   mermaid: {
     enabled: false,
   },
+  /*
+  Toc extension
+  把 [TOC] 转换为目录
+  */
+  toc: {
+    enabled: false,
+  },
 };
 
 export default {
@@ -66,6 +74,7 @@ export default {
       linkify: true,
       table: true,
       tasklist: true,
+      toc: true,
     },
     emoji: {
       enabled: true,
@@ -86,6 +95,7 @@ export default {
       sup: true,
       table: true,
       tasklist: true,
+      toc: true,
       typographer: true,
     },
     emoji: {

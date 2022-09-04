@@ -106,6 +106,9 @@ export default {
         'cl cl-hash': /-+[ \t]*$/,
       },
     };
+    grammars.main['cn-toc'] = {
+      pattern: /^\[TOC\]$/gm,
+    };
     for (let i = 6; i >= 1; i -= 1) {
       grammars.main[`h${i} cn-head`] = {
         pattern: new RegExp(`^#{${i}}[ \t].+$`, 'gm'),

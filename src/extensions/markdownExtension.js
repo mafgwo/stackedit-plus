@@ -134,7 +134,7 @@ extensionSvc.onInitConverter(0, (markdown, options) => {
     if (tokens[idx].meta.subId > 0) {
       id += `:${tokens[idx].meta.subId}`;
     }
-    return `<sup class="footnote-ref"><a href="#fn${n}" id="${id}">${n}</a></sup>`;
+    return `<sup class="footnote-ref"><a href="#fn${n}" id="${id}">[${n}]</a></sup>`;
   };
 });
 

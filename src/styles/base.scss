@@ -23,6 +23,11 @@ body {
   color: $body-color-dark;
 }
 
+.preview-toc ul {
+  list-style-type: none;
+  margin-bottom: 15px;
+}
+
 p,
 blockquote,
 pre,
@@ -43,7 +48,7 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 1.8em 0 0.9em;
+  margin: 1.2em 0 0.9em;
   line-height: $line-height-title;
 }
 

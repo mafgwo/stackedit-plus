@@ -43,6 +43,10 @@ export default {
   overflow: auto;
   padding: 0.2em 0.4em;
 
+  .app--dark & {
+    caret-color: $editor-color-dark-low;
+  }
+
   * {
     line-height: $line-height-base;
     font-size: inherit !important;

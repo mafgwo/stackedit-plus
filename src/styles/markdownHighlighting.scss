@@ -327,6 +327,17 @@
       color: #95cc5e;
     }
   }
+
+  .cn-toc {
+    color: #d7a55b;
+    font-size: 2.5em;
+    padding: 0.2em;
+    background-color: rgba(0, 0, 0, 0.1);
+
+    .app--dark & {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
 }
 
 .markdown-highlighting--inline {
