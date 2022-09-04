@@ -107,7 +107,7 @@ export default {
       },
     };
     grammars.main['cn-toc'] = {
-      pattern: /^\[TOC\]$/gm,
+      pattern: /^\[(TOC|toc)\]$/gm,
     };
     for (let i = 6; i >= 1; i -= 1) {
       grammars.main[`h${i} cn-head`] = {

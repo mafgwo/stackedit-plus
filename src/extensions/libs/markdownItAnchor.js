@@ -98,7 +98,7 @@ export default (md) => {
           return result;
         }, '');
       }
-      if (token.type === 'inline' && token.content === '[TOC]') {
+      if (token.type === 'inline' && (token.content === '[TOC]' || token.content === '[toc]')) {
         tocTokens.push(token);
       }
     });
