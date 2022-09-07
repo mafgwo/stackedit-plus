@@ -383,6 +383,10 @@ export default {
 .find-replace-highlighting {
   background-color: $highlighting-color;
   color: $editor-color-light !important;
+
+  .app--dark & {
+    background-color: $dark-highlighting-color;
+  }
 }
 
 .find-replace-selection {
