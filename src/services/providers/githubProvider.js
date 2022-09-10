@@ -51,7 +51,7 @@ export default new Provider({
     });
     return syncLocation;
   },
-  async publish(token, html, metadata, publishLocation) {
+  async publish(token, html, metadata, publishLocation, commitMessage) {
     try {
       // Get the last sha
       await this.downloadContent(token, publishLocation);
@@ -65,6 +65,7 @@ export default new Provider({
       token,
       content: html,
       sha,
+      commitMessage,
     });
     return publishLocation;
   },

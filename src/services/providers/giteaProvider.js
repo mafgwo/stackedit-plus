@@ -56,7 +56,7 @@ export default new Provider({
     });
     return updatedSyncLocation;
   },
-  async publish(token, html, metadata, publishLocation) {
+  async publish(token, html, metadata, publishLocation, commitMessage) {
     const updatedPublishLocation = {
       ...publishLocation,
       projectId: await giteaHelper.getProjectId(publishLocation),
@@ -74,6 +74,7 @@ export default new Provider({
       token,
       content: html,
       sha,
+      commitMessage,
     });
     return updatedPublishLocation;
   },

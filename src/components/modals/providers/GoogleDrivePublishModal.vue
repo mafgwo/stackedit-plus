@@ -4,7 +4,7 @@
       <div class="modal__image">
         <icon-provider provider-id="googleDrive"></icon-provider>
       </div>
-      <p>Publish <b>{{currentFileName}}</b> to your <b>Google Drive</b> account.</p>
+      <p>发布 <b>{{currentFileName}}</b> 到您的 <b>Google Drive</b> 账号.</p>
       <form-entry label="Folder ID" info="可选的">
         <input slot="field" class="textfield" type="text" v-model.trim="folderId" @keydown.enter="resolve()">
         <div class="form-entry__info">

@@ -157,12 +157,13 @@ export default {
     path,
     content,
     sha,
+    commitMessage,
   }) {
     return request(token, {
       method: sha ? 'PUT' : 'POST',
       url: `projects/${encodeURIComponent(projectId)}/repository/files/${encodeURIComponent(path)}`,
       body: {
-        commit_message: getCommitMessage(sha ? 'updateFileMessage' : 'createFileMessage', path),
+        commit_message: commitMessage || getCommitMessage(sha ? 'updateFileMessage' : 'createFileMessage', path),
         content,
         last_commit_id: sha,
         branch,

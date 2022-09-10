@@ -176,12 +176,13 @@ export default {
     content,
     sha,
     isFile,
+    commitMessage,
   }) {
     return repoRequest(token, owner, repo, {
       method: 'PUT',
       url: `contents/${encodeURIComponent(path)}`,
       body: {
-        message: getCommitMessage(sha ? 'updateFileMessage' : 'createFileMessage', path),
+        message: commitMessage || getCommitMessage(sha ? 'updateFileMessage' : 'createFileMessage', path),
         content: isFile ? await utils.encodeFiletoBase64(content) : utils.encodeBase64(content),
         sha,
         branch,

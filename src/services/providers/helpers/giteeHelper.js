@@ -276,13 +276,14 @@ export default {
     path,
     content,
     sha,
+    commitMessage,
   }) {
     const refreshedToken = await this.refreshToken(token);
     return repoRequest(refreshedToken, owner, repo, {
       method: sha ? 'PUT' : 'POST',
       url: `contents/${encodeURIComponent(path)}`,
       body: {
-        message: getCommitMessage(sha ? 'updateFileMessage' : 'createFileMessage', path),
+        message: commitMessage || getCommitMessage(sha ? 'updateFileMessage' : 'createFileMessage', path),
         content: utils.encodeBase64(content || ' '),
         sha,
         branch,

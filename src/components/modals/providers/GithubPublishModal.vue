@@ -4,7 +4,7 @@
       <div class="modal__image">
         <icon-provider provider-id="github"></icon-provider>
       </div>
-      <p>Publish <b>{{currentFileName}}</b> to your <b>GitHub</b> repository.</p>
+      <p>发布 <b>{{currentFileName}}</b> 到您的 <b>GitHub</b> 仓库.</p>
       <form-entry label="仓库URL" error="repoUrl">
         <input slot="field" class="textfield" type="text" v-model.trim="repoUrl" @keydown.enter="resolve()">
         <div class="form-entry__info">

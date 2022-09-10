@@ -280,13 +280,14 @@ export default {
     content,
     sha,
     isFile,
+    commitMessage,
   }) {
     const refreshedToken = await this.refreshToken(token);
     return request(refreshedToken, {
       method: sha ? 'PUT' : 'POST',
       url: `repos/${projectId}/contents/${encodeURIComponent(path)}`,
       body: {
-        message: getCommitMessage(sha ? 'updateFileMessage' : 'createFileMessage', path),
+        message: commitMessage || getCommitMessage(sha ? 'updateFileMessage' : 'createFileMessage', path),
         content: isFile ? await utils.encodeFiletoBase64(content) : utils.encodeBase64(content),
         sha,
         branch,

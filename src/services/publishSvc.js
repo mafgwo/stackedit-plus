@@ -40,7 +40,10 @@ const ensureDate = (value, defaultValue) => {
   return new Date(`${value}`);
 };
 
-const publish = async (publishLocation) => {
+// git 相关的 providerId
+const gitProviderIds = ['gitea', 'gitee', 'github', 'gitlab'];
+
+const publish = async (publishLocation, commitMessage) => {
   const { fileId } = publishLocation;
   const template = store.getters['data/allTemplatesById'][publishLocation.templateId];
   const html = await exportSvc.applyTemplate(fileId, template);
@@ -59,7 +62,7 @@ const publish = async (publishLocation) => {
     status: ensureString(properties.status),
     date: ensureDate(properties.date, new Date()),
   };
-  return provider.publish(token, html, metadata, publishLocation);
+  return provider.publish(token, html, metadata, publishLocation, commitMessage);
 };
 
 const publishFile = async (fileId) => {
@@ -69,11 +72,22 @@ const publishFile = async (fileId) => {
     ...store.getters['publishLocation/filteredGroupedByFileId'][fileId] || [],
   ];
   try {
+    // 查询是否包含git provider 包含则需要填入提交信息
+    const gitLocations = publishLocations.filter(it => gitProviderIds.indexOf(it.providerId) > -1);
+    let commitMsg = '';
+    if (gitLocations.length) {
+      try {
+        const { commitMessage } = await store.dispatch('modal/open', { type: 'commitMessage' });
+        commitMsg = commitMessage;
+      } catch (e) {
+        return;
+      }
+    }
     await utils.awaitSequence(publishLocations, async (publishLocation) => {
       await store.dispatch('queue/doWithLocation', {
         location: publishLocation,
         action: async () => {
-          const publishLocationToStore = await publish(publishLocation);
+          const publishLocationToStore = await publish(publishLocation, commitMsg);
           try {
             // Replace publish location if modified
             if (utils.serializeObject(publishLocation) !==
@@ -131,7 +145,16 @@ const createPublishLocation = (publishLocation, featureId) => {
   store.dispatch(
     'queue/enqueue',
     async () => {
-      const publishLocationToStore = await publish(publishLocation);
+      let commitMsg = '';
+      if (gitProviderIds.indexOf(publishLocation.providerId) > -1) {
+        try {
+          const { commitMessage } = await store.dispatch('modal/open', { type: 'commitMessage' });
+          commitMsg = commitMessage;
+        } catch (e) {
+          return;
+        }
+      }
+      const publishLocationToStore = await publish(publishLocation, commitMsg);
       workspaceSvc.addPublishLocation(publishLocationToStore);
       store.dispatch('notification/info', `添加了一个新的发布位置 "${currentFile.name}".`);
       if (featureId) {
