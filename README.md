@@ -36,6 +36,7 @@ StackEdit中文版的docker镜像地址：[mafgwo/stackedit](https://hub.docker.
 - 左边栏文件资源管理支持搜索文件（2022-08-17）
 - 支持[TOC]目录（2022-09-04）
 - 发布支持填写提交信息[针对Gitee、GitHub、Gitea、Gitlab]（2022-09-10）
+- 支持文档空间关闭自动同步[针对Gitee、GitHub、Gitea、Gitlab]，关闭后可自定义提交信息（2022-09-23）
 
 ## 国外开源版本弊端：
 - 作者已经不维护了
