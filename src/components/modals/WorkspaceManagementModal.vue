@@ -17,6 +17,15 @@
               <button class="workspace-entry__button button" @click="edit(id)" v-title="'编辑名称'">
                 <icon-pen></icon-pen>
               </button>
+              <template v-if="workspace.providerId === 'giteeAppData' || workspace.providerId === 'githubWorkspace'
+                || workspace.providerId === 'giteeWorkspace' || workspace.providerId === 'gitlabWorkspace' || workspace.providerId === 'giteaWorkspace'">
+                <button class="workspace-entry__button button" @click="stopAutoSync(id)" v-if="workspace.autoSync == undefined || workspace.autoSync" v-title="'关闭自动同步'">
+                  <icon-sync-auto></icon-sync-auto>
+                </button>
+                <button class="workspace-entry__button button" @click="startAutoSync(id)" v-if="workspace.autoSync != undefined && !workspace.autoSync" v-title="'启动自动同步'">
+                  <icon-sync-stop></icon-sync-stop>
+                </button>
+              </template>
               <button class="workspace-entry__button button" @click="remove(id)" v-title="'删除'">
                 <icon-delete></icon-delete>
               </button>
@@ -122,11 +131,52 @@ export default {
         this.info('请先关闭文档空间，然后再将其删除。');
       } else {
         try {
-          await store.dispatch('modal/open', 'removeWorkspace');
+          const workspace = this.workspacesById[id];
+          if (!workspace) {
+            return;
+          }
+          await store.dispatch('modal/open', {
+            type: 'removeWorkspace',
+            name: workspace.name,
+          });
           workspaceSvc.removeWorkspace(id);
           badgeSvc.addBadge('removeWorkspace');
         } catch (e) { /* Cancel */ }
       }
+    },
+    async stopAutoSync(id) {
+      const workspace = this.workspacesById[id];
+      if (!workspace) {
+        return;
+      }
+      await store.dispatch('modal/open', {
+        type: 'stopAutoSyncWorkspace',
+        name: workspace.name,
+      });
+      store.dispatch('workspace/patchWorkspacesById', {
+        [id]: {
+          ...workspace,
+          autoSync: false,
+        },
+      });
+      badgeSvc.addBadge('stopAutoSyncWorkspace');
+    },
+    async startAutoSync(id) {
+      const workspace = this.workspacesById[id];
+      if (!workspace) {
+        return;
+      }
+      await store.dispatch('modal/open', {
+        type: 'autoSyncWorkspace',
+        name: workspace.name,
+      });
+      store.dispatch('workspace/patchWorkspacesById', {
+        [id]: {
+          ...workspace,
+          autoSync: true,
+        },
+      });
+      badgeSvc.addBadge('autoSyncWorkspace');
     },
   },
   created() {

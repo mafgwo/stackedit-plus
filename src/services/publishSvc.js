@@ -148,7 +148,10 @@ const createPublishLocation = (publishLocation, featureId) => {
       let commitMsg = '';
       if (gitProviderIds.indexOf(publishLocation.providerId) > -1) {
         try {
-          const { commitMessage } = await store.dispatch('modal/open', { type: 'commitMessage' });
+          const { commitMessage } = await store.dispatch('modal/open', {
+            type: 'commitMessage',
+            name: currentFile.name,
+          });
           commitMsg = commitMessage;
         } catch (e) {
           return;

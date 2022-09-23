@@ -74,6 +74,14 @@ const isAutoSyncReady = () => {
 };
 
 /**
+ * 是否已启用工作空间的自动同步 没有配置 默认是启用了的
+ */
+const isEnableAutoSyncWorkspace = () => {
+  const workspace = store.getters['workspace/currentWorkspace'];
+  return workspace.autoSync === undefined || workspace.autoSync;
+};
+
+/**
  * Update the lastSyncActivity, assuming we have the lock.
  */
 const setLastSyncActivity = () => {
@@ -361,7 +369,7 @@ const syncFile = async (fileId, syncContext = new SyncContext()) => {
         return content;
       };
 
-      const uploadContent = async (content, ifNotTooLate) => {
+      const uploadContent = async (content, ifNotTooLate, commitMessage) => {
         // On simple provider, call simply uploadContent
         if (syncLocation.id !== 'main') {
           return provider.uploadContent(token, content, syncLocation, ifNotTooLate);
@@ -377,6 +385,7 @@ const syncFile = async (fileId, syncContext = new SyncContext()) => {
         updateSyncData(await provider.uploadWorkspaceContent({
           token,
           content,
+          commitMessage,
           // Use deepCopy to freeze item
           file: utils.deepCopy(store.state.file.itemsById[fileId]),
           contentSyncData: oldContentSyncData,
@@ -485,6 +494,22 @@ const syncFile = async (fileId, syncContext = new SyncContext()) => {
           syncContext.restartSkipContents = true;
         }
 
+        const currentWorkspace = store.getters['workspace/currentWorkspace'];
+        const isGit = !!store.getters['workspace/currentWorkspaceIsGit'];
+        let commitMsg = '';
+        // 是git 并且未配置自动同步或启用了自动同步 并且文档类型是content
+        if (isGit && (currentWorkspace.autoSync !== undefined && !currentWorkspace.autoSync)) {
+          const file = store.state.file.itemsById[fileId];
+          try {
+            const { commitMessage } = await store.dispatch('modal/open', {
+              type: 'commitMessage',
+              name: file.name,
+            });
+            commitMsg = commitMessage;
+          } catch (e) {
+            return;
+          }
+        }
         // Upload merged content
         const item = {
           ...mergedContent,
@@ -493,6 +518,7 @@ const syncFile = async (fileId, syncContext = new SyncContext()) => {
         const syncLocationToStore = await uploadContent(
           item,
           tooLateChecker(restartContentSyncAfter),
+          commitMsg,
         );
 
         // Replace sync location if modified
@@ -938,6 +964,7 @@ export default {
           && networkSvc.isUserActive()
           && isSyncWindow()
           && isAutoSyncReady()
+          && isEnableAutoSyncWorkspace()
         ) {
           requestSync();
         }

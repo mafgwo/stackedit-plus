@@ -207,6 +207,16 @@ export default [
         '文档空间删除',
         '使用“管理文档空间”对话框在本地删除文档空间。',
       ),
+      new Feature(
+        'autoSyncWorkspace',
+        '文档空间启用自动同步',
+        '使用“管理文档空间”对话框启用自动同步。',
+      ),
+      new Feature(
+        'stopAutoSyncWorkspace',
+        '文档空间关闭自动同步',
+        '使用“管理文档空间”对话框关闭自动同步。',
+      ),
     ],
   ),
   new Feature(

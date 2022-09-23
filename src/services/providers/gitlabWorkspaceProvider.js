@@ -134,6 +134,7 @@ export default new Provider({
       path: getAbsolutePath(syncData),
       content: '',
       sha: gitWorkspaceSvc.shaByPath[syncData.id],
+      commitMessage: item.commitMessage,
     });
 
     // Return sync data to save
@@ -193,7 +194,12 @@ export default new Provider({
       },
     };
   },
-  async uploadWorkspaceContent({ token, content, file }) {
+  async uploadWorkspaceContent({
+    token,
+    content,
+    file,
+    commitMessage,
+  }) {
     const path = store.getters.gitPathsByItemId[file.id];
     const absolutePath = `${store.getters['workspace/currentWorkspace'].path || ''}${path}`;
     const sha = gitWorkspaceSvc.shaByPath[path];
@@ -203,6 +209,7 @@ export default new Provider({
       path: absolutePath,
       content: Provider.serializeContent(content),
       sha,
+      commitMessage,
     });
 
     // Return new sync data

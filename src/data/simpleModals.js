@@ -6,6 +6,11 @@ const simpleModal = (contentHtml, rejectText, resolveText) => ({
 
 /* eslint sort-keys: "error" */
 export default {
+  autoSyncWorkspace: simpleModal(
+    config => `<p>您将启动文档空间 <b>${config.name}</b >的自动同步。<br>启动后无法自定义提交信息。<br>你确定吗？</p>`,
+    '取消',
+    '确认启动',
+  ),
   commentDeletion: simpleModal(
     '<p>您将要删除评论。你确定吗？</p>',
     '取消',
@@ -46,7 +51,7 @@ export default {
     '确认跳转',
   ),
   removeWorkspace: simpleModal(
-    '<p>您将要在本地删除文档空间ß。你确定吗？</p>',
+    config => `<p>您将要在本地删除文档空间<b>${config.name}</b>。你确定吗？</p>`,
     '取消',
     '确认删除',
   ),
@@ -70,6 +75,11 @@ export default {
   sponsorOnly: simpleModal(
     '<p>此功能仅限于赞助商，因为它依赖于服务器资源。</p>',
     '好的，我明白了',
+  ),
+  stopAutoSyncWorkspace: simpleModal(
+    config => `<p>您将关闭文档空间 <b>${config.name}</b> 的自动同步。<br>关闭后您需要手动触发同步，但可以自定义提交信息。<br>你确定吗？</p>`,
+    '取消',
+    '确认关闭',
   ),
   stripName: simpleModal(
     config => `<p><b>${config.item.name}</b>包含非法字符。你想去掉它们吗？</p>`,

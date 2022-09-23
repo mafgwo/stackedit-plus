@@ -67,6 +67,7 @@ export default new Provider({
       path: syncData.id,
       content: '',
       sha: gitWorkspaceSvc.shaByPath[syncData.id],
+      commitMessage: item.commitMessage,
     });
 
     // Return sync data to save
@@ -138,7 +139,12 @@ export default new Provider({
       },
     };
   },
-  async uploadWorkspaceContent({ token, content, file }) {
+  async uploadWorkspaceContent({
+    token,
+    content,
+    file,
+    commitMessage,
+  }) {
     const path = store.getters.gitPathsByItemId[file.id];
     const res = await giteeHelper.uploadFile({
       owner: token.name,
@@ -148,6 +154,7 @@ export default new Provider({
       path,
       content: Provider.serializeContent(content),
       sha: gitWorkspaceSvc.shaByPath[path],
+      commitMessage,
     });
 
     // Return new sync data
