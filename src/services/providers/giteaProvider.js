@@ -155,6 +155,7 @@ export default new Provider({
       return {
         id: sha,
         sub,
+        message: commit.message,
         created: date ? new Date(date).getTime() : 1,
       };
     });

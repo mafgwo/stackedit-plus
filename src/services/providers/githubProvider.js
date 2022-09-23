@@ -134,14 +134,17 @@ export default new Provider({
         user = author;
       } else if (committer && committer.login) {
         user = committer;
+      } else if (commit && commit.author) {
+        user = commit.author;
       }
-      const sub = `${githubHelper.subPrefix}:${user.id}`;
-      userSvc.addUserInfo({ id: sub, name: user.login, imageUrl: user.avatar_url });
+      const sub = `${githubHelper.subPrefix}:${user.id || user.name}`;
+      userSvc.addUserInfo({ id: sub, name: user.login || user.name, imageUrl: user.avatar_url });
       const date = (commit.author && commit.author.date)
         || (commit.committer && commit.committer.date);
       return {
         id: sha,
         sub,
+        message: commit.message,
         created: date ? new Date(date).getTime() : 1,
       };
     });

@@ -33,6 +33,7 @@
           <div class="revision__header flex flex--column">
             <user-name :user-id="revision.sub"></user-name>
             <div class="revision__created">{{revision.created | formatTime}}</div>
+            <div class="revision__msg">{{revision.message}}</div>
           </div>
         </a>
       </div>
@@ -410,6 +411,14 @@ export default {
 .revision__created {
   font-size: 0.75em;
   opacity: 0.6;
+}
+
+.revision__msg {
+  font-size: 0.75em;
+  opacity: 0.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  word-wrap: break-word;
 }
 
 .layout--revision {

@@ -270,6 +270,7 @@ export default new Provider({
       return {
         id: entry.id,
         sub,
+        message: entry.commit && entry.commit.message,
         created: date ? new Date(date).getTime() : 1,
       };
     });

@@ -70,6 +70,7 @@ export default new Provider({
       return {
         sub,
         id: entry.version,
+        message: entry.commit && entry.commit.message,
         created: new Date(entry.committed_at).getTime(),
       };
     });
