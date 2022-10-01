@@ -67,6 +67,9 @@ services:
       - GITEE_CLIENT_SECRET=【不需要支持则删掉】
       - GOOGLE_CLIENT_ID=【不需要支持则删掉】
       - GOOGLE_API_KEY=【不需要支持则删掉】
+      - GITEA_CLIENT_ID=【不需要支持则删掉】
+      - GITEA_CLIENT_SECRET=【不需要支持则删掉】
+      - GITEA_URL=【不需要支持则删掉】
     ports:
       - 8080:8080/tcp
     network_mode: bridge
@@ -98,6 +101,9 @@ docker run -itd --name stackedit \
   -e GITEE_CLIENT_SECRET=【不需要支持则删掉】 \
   -e GOOGLE_CLIENT_ID=【不需要支持则删掉】 \
   -e GOOGLE_API_KEY=【不需要支持则删掉】 \
+  -e GITEA_CLIENT_ID=【不需要支持则删掉】 \
+  -e GITEA_CLIENT_SECRET=【不需要支持则删掉】 \
+  -e GITEA_URL=【不需要支持则删掉】 \
   mafgwo/stackedit:【docker中央仓库找到最新版本】
 
 ```
@@ -109,7 +115,7 @@ docker run -itd --name stackedit \
 
 - GitHub的环境变量：GITHUB_CLIENT_ID、GITEE_CLIENT_SECRET，**[如何创建GitHub应用](./docs/部署之GitHub应用创建.md)**
 
-- Gitea不需要配置环境变量，而是在关联Gitea账号时，需要填入应用ID和秘钥，**[如何创建Gitea应用](./docs/部署之Gitea应用创建.md)**
+- Gitea可选择性配置环境变量（未配置则在关联时前端指定，有配置则仅允许配置的应用信息）：GITEA_CLIENT_ID、GITEA_CLIENT_SECRET、GITEA_URL，**[如何创建Gitea应用](./docs/部署之Gitea应用创建.md)**
 
 
 ## 编译与运行
