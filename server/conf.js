@@ -13,6 +13,9 @@ const giteeClientSecret = process.env.GITEE_CLIENT_SECRET;
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleApiKey = process.env.GOOGLE_API_KEY;
 const wordpressClientId = process.env.WORDPRESS_CLIENT_ID;
+const giteaClientId = process.env.GITEA_CLIENT_ID;
+const giteaClientSecret = process.env.GITEA_CLIENT_SECRET;
+const giteaUrl = process.env.GITEA_URL;
 
 exports.values = {
   pandocPath,
@@ -29,6 +32,9 @@ exports.values = {
   googleClientId,
   googleApiKey,
   wordpressClientId,
+  giteaClientId,
+  giteaClientSecret,
+  giteaUrl,
 };
 
 exports.publicValues = {
@@ -39,4 +45,6 @@ exports.publicValues = {
   googleApiKey,
   wordpressClientId,
   allowSponsorship: !!paypalReceiverEmail,
+  giteaClientId,
+  giteaUrl,
 };

@@ -5,6 +5,7 @@ const path = require('path');
 const user = require('./user');
 const github = require('./github');
 const gitee = require('./gitee');
+const gitea = require('./gitea');
 const pdf = require('./pdf');
 const pandoc = require('./pandoc');
 const conf = require('./conf');
@@ -27,6 +28,7 @@ module.exports = (app) => {
 
   app.get('/oauth2/githubToken', github.githubToken);
   app.get('/oauth2/giteeToken', gitee.giteeToken);
+  app.get('/oauth2/giteaToken', gitea.giteaToken);
   app.get('/conf', (req, res) => res.send(conf.publicValues));
   app.get('/userInfo', user.userInfo);
   app.post('/pdfExport', pdf.generate);

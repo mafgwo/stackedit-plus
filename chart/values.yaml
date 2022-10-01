@@ -15,6 +15,9 @@ wordpressSecret: ""
 paypalReceiverEmail: ""
 awsAccessKeyId: ""
 awsSecretAccessKey: ""
+giteaClientId: ""
+giteaClientSecret: ""
+giteaUrl: ""
 
 replicaCount: 1
 

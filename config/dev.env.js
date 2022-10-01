@@ -9,4 +9,7 @@ module.exports = merge(prodEnv, {
   GITEE_CLIENT_ID: '"925ba7c78b85dec984f7877e4aca5cab10ae333c6d68e761bdb0b9dfb8f55672"',
   GITEE_CLIENT_SECRET: '"f05731066e42d307339dc8ebbb037a103881dafc7207a359a393b87749f1c562"',
   CLIENT_ID: '"thF3qCGLN39OtafjGnqHyj6n02WwE6xD"',
+  // GITEA_CLIENT_ID: '"fe30f8f9-b1e8-4531-8f72-c1a5d3912805"',
+  // GITEA_CLIENT_SECRET: '"lus7oMnb3H6M1hsChndphArE20Txr7erwJLf7SDBQWTw"',
+  // GITEA_URL: '"https://gitea.test.com"',
 })

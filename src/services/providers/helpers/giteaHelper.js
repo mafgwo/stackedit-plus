@@ -57,27 +57,61 @@ export default {
     serverUrl, applicationId, applicationSecret,
     sub = null, silent = false, refreshToken,
   ) {
+    let apiUrl = serverUrl;
+    let clientId = applicationId;
+    let useServerConf = false;
+    // 获取gitea配置的参数
+    const confClientId = store.getters['data/serverConf'].giteaClientId;
+    const confServerUrl = store.getters['data/serverConf'].giteaUrl;
+    // 存在gitea配置则使用后端配置
+    if (confClientId && confServerUrl) {
+      apiUrl = confServerUrl;
+      clientId = confClientId;
+      useServerConf = true;
+    }
     let tokenBody;
     if (!silent) {
       // Get an OAuth2 code
       const { code } = await networkSvc.startOauth2(
-        `${serverUrl}/login/oauth/authorize`,
+        `${apiUrl}/login/oauth/authorize`,
         {
-          client_id: applicationId,
+          client_id: clientId,
           response_type: 'code',
           redirect_uri: constants.oauth2RedirectUri,
         },
         silent,
       );
-      // Exchange code with token
+      if (useServerConf) {
+        tokenBody = (await networkSvc.request({
+          method: 'GET',
+          url: 'oauth2/giteaToken',
+          params: {
+            code,
+            grant_type: 'authorization_code',
+            redirect_uri: constants.oauth2RedirectUri,
+          },
+        })).body;
+      } else {
+        // Exchange code with token
+        tokenBody = (await networkSvc.request({
+          method: 'POST',
+          url: `${apiUrl}/login/oauth/access_token`,
+          body: {
+            client_id: clientId,
+            client_secret: applicationSecret,
+            code,
+            grant_type: 'authorization_code',
+            redirect_uri: constants.oauth2RedirectUri,
+          },
+        })).body;
+      }
+    } else if (useServerConf) {
       tokenBody = (await networkSvc.request({
-        method: 'POST',
-        url: `${serverUrl}/login/oauth/access_token`,
-        body: {
-          client_id: applicationId,
-          client_secret: applicationSecret,
-          code,
-          grant_type: 'authorization_code',
+        method: 'GET',
+        url: 'oauth2/giteaToken',
+        params: {
+          refresh_token: refreshToken,
+          grant_type: 'refresh_token',
           redirect_uri: constants.oauth2RedirectUri,
         },
       })).body;
@@ -85,9 +119,9 @@ export default {
       // Exchange refreshToken with token
       tokenBody = (await networkSvc.request({
         method: 'POST',
-        url: `${serverUrl}/login/oauth/access_token`,
+        url: `${apiUrl}/login/oauth/access_token`,
         body: {
-          client_id: applicationId,
+          client_id: clientId,
           client_secret: applicationSecret,
           refresh_token: refreshToken,
           grant_type: 'refresh_token',
@@ -99,10 +133,10 @@ export default {
     const accessToken = tokenBody.access_token;
 
     // Call the user info endpoint
-    const user = await request({ accessToken, serverUrl }, {
+    const user = await request({ accessToken, serverUrl: apiUrl }, {
       url: 'user',
     });
-    const uniqueSub = `${serverUrl}/${user.username}`;
+    const uniqueSub = `${apiUrl}/${user.username}`;
     userSvc.addUserInfo({
       id: `${subPrefix}:${uniqueSub}`,
       name: user.username,
@@ -119,12 +153,12 @@ export default {
     const token = {
       accessToken,
       name: user.username,
-      applicationId,
+      applicationId: clientId,
       applicationSecret,
       imgStorages: oldToken && oldToken.imgStorages,
       refreshToken: tokenBody.refresh_token,
       expiresOn: Date.now() + (tokenBody.expires_in * 1000),
-      serverUrl,
+      serverUrl: apiUrl,
       sub: uniqueSub,
     };
 
