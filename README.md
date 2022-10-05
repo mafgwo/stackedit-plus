@@ -37,6 +37,8 @@ StackEdit中文版的docker镜像地址：[mafgwo/stackedit](https://hub.docker.
 - 支持[TOC]目录（2022-09-04）
 - 发布支持填写提交信息[针对Gitee、GitHub、Gitea、Gitlab]（2022-09-10）
 - 支持文档空间关闭自动同步[针对Gitee、GitHub、Gitea、Gitlab]，关闭后可自定义提交信息（2022-09-23）
+- Gitea支持后端配置指定应用ID和Secret（2022-10-03）
+- 支持编辑区域选择主题样式（2022-10-06）
 
 ## 国外开源版本弊端：
 - 作者已经不维护了
