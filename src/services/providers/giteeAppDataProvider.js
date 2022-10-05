@@ -250,11 +250,12 @@ export default new Provider({
     token,
     contentId,
     fileSyncDataId,
+    revisionId,
   }) {
     const { data } = await giteeHelper.downloadFile({
       owner: token.name,
       repo: appDataRepo,
-      branch: appDataBranch,
+      branch: revisionId,
       token,
       path: fileSyncDataId,
     });
