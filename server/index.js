@@ -64,9 +64,9 @@ module.exports = (app) => {
   // Google Drive action receiver
   app.get('/googleDriveAction', (req, res) =>
     res.redirect(`./app#providerId=googleDrive&state=${encodeURIComponent(req.query.state)}`));
-  // Serve the static folder with 1 year max-age
+  // Serve the static folder with 1 day max-age
   app.use('/themes', serveStatic(resolvePath('static/themes'), {
-    maxAge: '1m',
+    maxAge: '1d',
   }));
 
   // Serve static resources
