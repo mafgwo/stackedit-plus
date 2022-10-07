@@ -4,7 +4,7 @@
         <div class="menu-entry menu-entry--info flex flex--row flex--align-center">
           <span v-if="currEditTheme==='custom'">
             下面的自定义主题样式可编辑，可参考其他主题样式填入自己喜欢的编辑样式。<br>
-            主题class为：edit-theme-custom
+            主题class为：edit-theme--custom
           </span>
           <span v-else>
             下面的主题样式不可编辑。
