@@ -23,6 +23,7 @@
       <div v-else-if="panel === 'help'" class="side-bar__panel side-bar__panel--help">
         <pre class="markdown-highlighting" v-html="markdownSample"></pre>
       </div>
+      <edit-theme-menu v-else-if="panel === 'editTheme'"></edit-theme-menu>
       <div class="side-bar__panel side-bar__panel--toc" :class="{'side-bar__panel--hidden': panel !== 'toc'}">
         <toc>
         </toc>
@@ -41,6 +42,7 @@ import PublishMenu from './menus/PublishMenu';
 import HistoryMenu from './menus/HistoryMenu';
 import ImportExportMenu from './menus/ImportExportMenu';
 import WorkspaceBackupMenu from './menus/WorkspaceBackupMenu';
+import EditThemeMenu from './menus/EditThemeMenu';
 import markdownSample from '../data/markdownSample.md';
 import markdownConversionSvc from '../services/markdownConversionSvc';
 import store from '../store';
@@ -55,6 +57,7 @@ const panelNames = {
   history: '文件历史',
   importExport: '导入/导出',
   workspaceBackups: '文档空间备份',
+  editTheme: '编辑区主题',
 };
 
 export default {
@@ -67,6 +70,7 @@ export default {
     HistoryMenu,
     ImportExportMenu,
     WorkspaceBackupMenu,
+    EditThemeMenu,
   },
   data: () => ({
     markdownSample: markdownConversionSvc.highlight(markdownSample),

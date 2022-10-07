@@ -81,6 +81,8 @@
     right: 0;
     float: left;
     min-width: 160px;
+    max-height: 450px;
+    overflow-y: scroll;
     padding: 5px 0;
     margin: 2px 0 0;
     list-style: none;
@@ -95,6 +97,7 @@
     li {
       width: 100%;
       display: list-item;
+      margin: 0;
       text-align: -webkit-match-parent;
 
       a {

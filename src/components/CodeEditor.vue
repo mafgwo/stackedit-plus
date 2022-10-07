@@ -7,11 +7,12 @@ import Prism from 'prismjs';
 import cledit from '../services/editor/cledit';
 
 export default {
-  props: ['value', 'lang', 'disabled'],
+  props: ['value', 'lang', 'disabled', 'scrollClass'],
   mounted() {
     const preElt = this.$el;
     let scrollElt = preElt;
-    while (scrollElt && !scrollElt.classList.contains('modal')) {
+    const scrollCls = this.scrollClass || 'modal';
+    while (scrollElt && !scrollElt.classList.contains(scrollCls)) {
       scrollElt = scrollElt.parentNode;
     }
     if (scrollElt) {

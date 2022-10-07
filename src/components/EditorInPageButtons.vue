@@ -64,6 +64,15 @@ export default {
       name: '日光白',
       value: 'solarized_light',
     }, {
+      name: '咖啡黑',
+      value: 'espresso_libre',
+    }, {
+      name: '薰衣草黑',
+      value: 'lavender',
+    }, {
+      name: '耀斑黑',
+      value: 'solarflare',
+    }, {
       name: 'Clouds白',
       value: 'clouds',
     }, {
@@ -72,11 +81,15 @@ export default {
     }, {
       name: 'GitHub白',
       value: 'github',
+    }, {
+      name: '自定义',
+      value: 'custom',
     }],
   }),
   computed: {
     ...mapGetters('theme', [
       'currEditTheme',
+      'customEditThemeStyle',
     ]),
     selectedTheme() {
       return {
@@ -103,7 +116,12 @@ export default {
       });
     },
     async changeTheme(item) {
-      store.dispatch('theme/setEditTheme', item.value);
+      await store.dispatch('theme/setEditTheme', item.value);
+      // 如果自定义主题没内容 则弹出编辑区域
+      if (item.value === 'custom' && !this.customEditThemeStyle) {
+        this.toggleSideBar(true);
+        store.dispatch('data/setSideBarPanel', 'editTheme');
+      }
     },
     showHelp() {
       this.toggleSideBar(true);

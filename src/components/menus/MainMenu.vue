@@ -105,6 +105,11 @@
       <div><div class="menu-entry__label menu-entry__label--count">{{templateCount}}</div> 模板</div>
       <span>为您的导出配置 Handlebars 模板。</span>
     </menu-entry>
+    <menu-entry @click.native="setPanel('editTheme')">
+      <icon-select-theme slot="icon"></icon-select-theme>
+      编辑区主题
+      <span>编辑区主题样式(自定义主题可编辑)。</span>
+    </menu-entry>
     <menu-entry @click.native="settings">
       <icon-settings slot="icon"></icon-settings>
       <div>配置</div>
