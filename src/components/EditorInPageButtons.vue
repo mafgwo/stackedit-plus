@@ -160,7 +160,7 @@ export default {
 
   .icon {
     color: #dea731;
-    opacity: 0.4;
+    opacity: 0.3;
 
     &:active,
     &:focus,

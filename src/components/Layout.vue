@@ -14,7 +14,7 @@
               <div class="gutter__background" v-if="styles.editorGutterWidth" :style="{width: styles.editorGutterWidth + 'px'}"></div>
             </div>
             <editor></editor>
-            <editor-in-page-buttons></editor-in-page-buttons>
+            <editor-in-page-buttons v-if="editorShowInPageButtons"></editor-in-page-buttons>
             <div class="gutter" :style="{left: styles.editorGutterLeft + 'px'}">
               <sticky-comment v-if="styles.editorGutterWidth && stickyComment === 'top'"></sticky-comment>
               <current-discussion v-if="styles.editorGutterWidth"></current-discussion>
@@ -107,6 +107,9 @@ export default {
     },
     showFindReplace() {
       return !!store.state.findReplace.type;
+    },
+    editorShowInPageButtons() {
+      return store.getters['data/computedSettings'].editor.showInPageButtons;
     },
   },
   methods: {
