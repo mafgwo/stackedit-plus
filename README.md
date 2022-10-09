@@ -1,10 +1,28 @@
-# StackEdit中文版
+<h1 align="center" style="text-align:center;">
+<img src="chrome-app/icon-512.png" width="128" />
+<br />
+StackEdit中文版
+</h1>
+<p align="center">
+	<strong>笔记利器，在线Markdown编辑器。</strong><br>
+  如果你喜欢该项目，请点一下Star，您的肯定是作者最大的动力！
+</p>
+<p align="center">
+	<a href="https://stackedit.cn/">https://stackedit.cn</a>
+</p>
+<p align="center">
+    <a target="_blank" href="https://www.apache.org/licenses/LICENSE-2.0.txt">
+		<img src="https://img.shields.io/:license-Apache2-blue.svg" alt="Apache 2" />
+	</a>
+    <a target="_blank" href="https://hub.docker.com/r/mafgwo/stackedit">
+		<img src="https://img.shields.io/docker/pulls/mafgwo/stackedit.svg" alt="Docker Pulls" />
+	</a>
+    <a target="_blank" href='https://gitee.com/mafgwo/stackedit/stargazers'>
+		<img src='https://gitee.com/mafgwo/stackedit/badge/star.svg' alt='gitee star'/>
+	</a>
+</p>
 
-**StackEdit中文版官方地址：https://stackedit.cn**
-
-如果你喜欢该项目，请点一下Star，您的肯定是作者最大的动力！
-
-StackEdit中文版的docker镜像地址：[mafgwo/stackedit](https://hub.docker.com/r/mafgwo/stackedit)
+## 示例截图
 
 **示例截图-暗色主题**
 ![](./images/dark.png)

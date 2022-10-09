@@ -10,10 +10,10 @@
         {{item.content}}
       </div>
       <button class="notification__button button" v-if="item.type === 'confirm'" @click="item.reject">
-        No
+        否
       </button>
       <button class="notification__button button" v-if="item.type === 'confirm'" @click="item.resolve">
-        Yes
+        是
       </button>
     </div>
   </div>
