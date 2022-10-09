@@ -23,7 +23,7 @@ StackEdit中文版
 </p>
 <br/>
 <p align="center">
-	<a href="https://jq.qq.com/?_wv=1027&k=kjB5JNiC">
+	<a href="https://jq.qq.com/?_wv=1027&k=wUSCNqmN">
 	<img src="https://img.shields.io/badge/QQ交流群-703187410-orange"/></a>
 </p>
 <hr />
