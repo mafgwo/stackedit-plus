@@ -18,6 +18,7 @@ export default {
    * https://developer.wordpress.com/docs/oauth2/
    */
   async startOauth2(sub = null, silent = false) {
+    await networkSvc.getServerConf();
     const clientId = store.getters['data/serverConf'].wordpressClientId;
 
     // Get an OAuth2 code

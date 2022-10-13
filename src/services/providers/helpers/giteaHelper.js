@@ -61,6 +61,7 @@ export default {
     let clientId = applicationId;
     let useServerConf = false;
     // 获取gitea配置的参数
+    await networkSvc.getServerConf();
     const confClientId = store.getters['data/serverConf'].giteaClientId;
     const confServerUrl = store.getters['data/serverConf'].giteaUrl;
     // 存在gitea配置则使用后端配置

@@ -63,6 +63,7 @@ export default {
    * https://developer.github.com/apps/building-oauth-apps/authorization-options-for-oauth-apps/
    */
   async startOauth2(scopes, sub = null, silent = false) {
+    await networkSvc.getServerConf();
     const clientId = store.getters['data/serverConf'].githubClientId;
 
     // Get an OAuth2 code
