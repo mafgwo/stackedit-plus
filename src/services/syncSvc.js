@@ -424,6 +424,10 @@ const syncFile = async (fileId, syncContext = new SyncContext()) => {
             lastMergedContent = syncedContent.historyData[syncHistoryItem[LAST_MERGED]];
           }
           mergedContent = diffUtils.mergeContent(serverContent, clientContent, lastMergedContent);
+          if (mergedContent.mergeFlag) {
+            const file = store.state.file.itemsById[syncLocation.fileId];
+            store.dispatch('notification/info', `${file.name} 存在冲突已自动合并，请注意合并结果！`);
+          }
         }
         if (!mergedContent) {
           return;

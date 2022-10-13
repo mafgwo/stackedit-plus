@@ -186,6 +186,8 @@ function mergeContent(serverContent, clientContent, lastMergedContent = {}) {
       clientContent.comments,
       lastMergedContent.comments,
     ),
+    // 服务端和本地都变更了
+    mergeFlag: isServerTextChanges && isClientTextChanges,
   };
   restoreDiscussionOffsets(result, markerKeys);
   return result;
