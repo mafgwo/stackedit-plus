@@ -14,6 +14,8 @@ import CommentList from './gutters/CommentList';
 import EditorNewDiscussionButton from './gutters/EditorNewDiscussionButton';
 import store from '../store';
 import editorSvc from '../services/editorSvc';
+import imageSvc from '../services/imageSvc';
+import utils from '../services/utils';
 
 export default {
   components: {
@@ -32,7 +34,7 @@ export default {
     ]),
   },
   methods: {
-    setImgAndDoClick(items) {
+    async setImgAndDoClick(items) {
       let file = null;
       if (!items || items.length === 0) {
         return;
@@ -46,8 +48,23 @@ export default {
       if (!file) {
         return;
       }
-      store.dispatch('img/setImg', file);
-      editorSvc.pagedownEditor.uiManager.doClick('image');
+      const imgId = utils.uid();
+      store.dispatch('img/setCurrImgId', imgId);
+      editorSvc.pagedownEditor.uiManager.doClick('imageUploading');
+      try {
+        const { url, error } = await imageSvc.updateImg(file);
+        // 存在错误
+        if (error) {
+          editorSvc.clEditor.replaceAll(`[图片上传中...(image-${imgId})]`, `[图片上传失败...(image-${imgId})]`);
+          store.dispatch('notification/error', error);
+          return;
+        }
+        editorSvc.clEditor.replaceAll(`[图片上传中...(image-${imgId})]`, `![输入图片说明](${url})`);
+      } catch (err) {
+        console.error(err); // eslint-disable-line no-console
+        editorSvc.clEditor.replaceAll(`[图片上传中...(image-${imgId})]`, `[图片上传失败...(image-${imgId})]`);
+        store.dispatch('notification/error', err);
+      }
     },
   },
   mounted() {

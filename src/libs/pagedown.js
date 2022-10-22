@@ -6,34 +6,34 @@ var util = {},
 
 var defaultsStrings = {
   bold: "Strong <strong> Ctrl/Cmd+B",
-  boldexample: "strong text",
+  boldexample: "加粗文本",
 
   italic: "Emphasis <em> Ctrl/Cmd+I",
-  italicexample: "emphasized text",
+  italicexample: "强调文本",
 
   strikethrough: "Strikethrough <s> Ctrl/Cmd+I",
-  strikethroughexample: "strikethrough text",
+  strikethroughexample: "删除线文本",
 
   link: "Hyperlink <a> Ctrl/Cmd+L",
-  linkdescription: "enter link description here",
+  linkdescription: "这里输入链接描述",
   linkdialog: "<p><b>Insert Hyperlink</b></p><p>http://example.com/ \"optional title\"</p>",
 
   quote: "Blockquote <blockquote> Ctrl/Cmd+Q",
-  quoteexample: "Blockquote",
+  quoteexample: "块引用",
 
   code: "Code Sample <pre><code> Ctrl/Cmd+K",
-  codeexample: "enter code here",
+  codeexample: "这里输入代码",
 
   image: "Image <img> Ctrl/Cmd+G",
-  imagedescription: "",
+  imagedescription: "输入图片说明",
   imagedialog: "<p><b>Insert Image</b></p><p>http://example.com/images/diagram.jpg \"optional title\"<br><br>Need <a href='http://www.google.com/search?q=free+image+hosting' target='_blank'>free image hosting?</a></p>",
 
   olist: "Numbered List <ol> Ctrl/Cmd+O",
   ulist: "Bulleted List <ul> Ctrl/Cmd+U",
-  litem: "List item",
+  litem: "这里是列表文本",
 
   heading: "Heading <h1>/<h2> Ctrl/Cmd+H",
-  headingexample: "Heading",
+  headingexample: "标题",
 
   hr: "Horizontal Rule <hr> Ctrl/Cmd+R",
 
@@ -125,6 +125,8 @@ function Pagedown(options) {
    * image url (or null if the user cancelled). If this hook returns false, the default dialog will be used.
    */
   hooks.addFalse("insertLinkDialog");
+  // 插入图片占位字符
+  hooks.addFalse("insertImageUploading");
 
   var that = this,
     input;
@@ -463,6 +465,7 @@ function UIManager(input, commandManager) {
     buttons.bold = bindCommand("doBold");
     buttons.italic = bindCommand("doItalic");
     buttons.strikethrough = bindCommand("doStrikethrough");
+    buttons.imageUploading = bindCommand("doImageUploading");
     buttons.link = bindCommand(function (chunk, postProcessing) {
       return this.doLinkOrImage(chunk, postProcessing, false);
     });
@@ -614,6 +617,17 @@ commandProto.doStrikethrough = function (chunk, postProcessing) {
 
   return;
 };
+
+commandProto.doImageUploading = function (chunk, postProcessing) {
+  var enteredCallback = function (imgId) {
+    if (imgId !== null) {
+      chunk.before = `${chunk.before}[图片上传中...(image-${imgId})]`;
+      chunk.selection = '';
+    }
+    postProcessing();
+  };
+  this.hooks.insertImageUploading(enteredCallback);
+}
 
 commandProto.stripLinkDefs = function (text, defsToAdd) {
 
@@ -983,37 +997,15 @@ commandProto.doCode = function (chunk) {
   // Use 'four space' markdown if the selection is on its own
   // line or is multiline.
   if ((!hasTextAfter && !hasTextBefore) || /\n/.test(chunk.selection)) {
-
-    chunk.before = chunk.before.replace(/[ ]{4}$/,
-      function (totalMatch) {
-        chunk.selection = totalMatch + chunk.selection;
-        return "";
-      });
-
-    var nLinesBack = 1;
-    var nLinesForward = 1;
-
-    if (/(\n|^)(\t|[ ]{4,}).*\n$/.test(chunk.before)) {
-      nLinesBack = 0;
-    }
-    if (/^\n(\t|[ ]{4,})/.test(chunk.after)) {
-      nLinesForward = 0;
-    }
-
-    chunk.skipLines(nLinesBack, nLinesForward);
-
-    if (!chunk.selection) {
-      chunk.startTag = "    ";
-      chunk.selection = this.getString("codeexample");
+    if (/[\n]+```\n$/.test(chunk.before) && /^\n```[ ]*\n/.test(chunk.after)) {
+      chunk.before = chunk.before.replace(/```\n$/, "");
+      chunk.after = chunk.after.replace(/^\n```/, "");
     } else {
-      if (/^[ ]{0,3}\S/m.test(chunk.selection)) {
-        if (/\n/.test(chunk.selection))
-          chunk.selection = chunk.selection.replace(/^/gm, "    ");
-        else // if it's not multiline, do not select the four added spaces; this is more consistent with the doList behavior
-          chunk.before += "    ";
-      } else {
-        chunk.selection = chunk.selection.replace(/^(?:[ ]{4}|[ ]{0,3}\t)/gm, "");
-      }
+      chunk.before += '```\n';
+      chunk.after = '\n```' + chunk.after;
+    }
+    if (!chunk.selection) {
+      chunk.selection = this.getString("codeexample");
     }
   } else {
     // Use backticks (`) to delimit the code block.
