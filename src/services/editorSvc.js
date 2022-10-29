@@ -2,6 +2,7 @@ import Vue from 'vue';
 import DiffMatchPatch from 'diff-match-patch';
 import Prism from 'prismjs';
 import markdownItPandocRenderer from 'markdown-it-pandoc-renderer';
+import md5 from 'js-md5';
 import cledit from './editor/cledit';
 import pagedown from '../libs/pagedown';
 import htmlSanitizer from '../libs/htmlSanitizer';
@@ -13,6 +14,9 @@ import editorSvcDiscussions from './editor/editorSvcDiscussions';
 import editorSvcUtils from './editor/editorSvcUtils';
 import utils from './utils';
 import store from '../store';
+import syncSvc from './syncSvc';
+import constants from '../data/constants';
+import localDbSvc from './localDbSvc';
 
 const allowDebounce = (action, wait) => {
   let timeoutId;
@@ -39,6 +43,39 @@ class SectionDesc {
     this.html = html;
   }
 }
+
+const pathUrlMap = Object.create(null);
+
+const getCurrAbsolutePath = () => {
+  const fileId = store.getters['file/current'].id;
+  const fileSyncData = store.getters['data/syncDataByItemId'][fileId] || { id: '' };
+  const fileAbsolutePath = `${store.getters['workspace/currentWorkspace'].path || ''}${fileSyncData.id}`;
+  return fileAbsolutePath.substring(0, fileAbsolutePath.lastIndexOf('/'));
+};
+
+const getImgUrl = async (uri) => {
+  if (uri.indexOf('http://') !== 0 && uri.indexOf('https://') !== 0) {
+    const absoluteImgPath = utils.getAbsoluteFilePath(getCurrAbsolutePath(), uri);
+    if (pathUrlMap[absoluteImgPath]) {
+      return pathUrlMap[absoluteImgPath];
+    }
+    const md5Id = md5(absoluteImgPath);
+    let imgItem = await localDbSvc.getImgItem(md5Id);
+    if (!imgItem) {
+      await syncSvc.syncImg(absoluteImgPath);
+      imgItem = await localDbSvc.getImgItem(md5Id);
+    }
+    if (imgItem) {
+      // imgItem 如果不存在 则加载 TODO
+      const imgFile = utils.base64ToBlob(imgItem.content, uri);
+      const url = URL.createObjectURL(imgFile);
+      pathUrlMap[absoluteImgPath] = url;
+      return url;
+    }
+    return '';
+  }
+  return uri;
+};
 
 // Use a vue instance as an event bus
 const editorSvc = Object.assign(new Vue(), editorSvcDiscussions, editorSvcUtils, {
@@ -212,9 +249,16 @@ const editorSvc = Object.assign(new Vue(), editorSvcDiscussions, editorSvcUtils,
     this.makeTextToPreviewDiffs();
 
     // Wait for images to load
-    const loadedPromises = loadingImages.map(imgElt => new Promise((resolve) => {
+    const loadedPromises = loadingImages.map(imgElt => new Promise((resolve, reject) => {
       if (!imgElt.src) {
         resolve();
+        return;
+      }
+      if (imgElt.src.indexOf(constants.origin) >= 0) {
+        getImgUrl(imgElt.src.replace(constants.origin, '')).then((newUrl) => {
+          imgElt.src = newUrl;
+          resolve();
+        }, () => reject(new Error('加载本地空间图片出错')));
         return;
       }
       const img = new window.Image();
@@ -471,6 +515,7 @@ const editorSvc = Object.assign(new Vue(), editorSvcDiscussions, editorSvcUtils,
     let imgEltsToCache = [];
     if (store.getters['data/computedSettings'].editor.inlineImages) {
       this.clEditor.highlighter.on('sectionHighlighted', (section) => {
+        const loadImgs = [];
         section.elt.getElementsByClassName('token img').cl_each((imgTokenElt) => {
           const srcElt = imgTokenElt.querySelector('.token.cl-src');
           if (srcElt) {
@@ -496,6 +541,9 @@ const editorSvc = Object.assign(new Vue(), editorSvcDiscussions, editorSvcUtils,
                 }
               }
               imgEltsToCache.push(imgElt);
+              if (imgElt.src.indexOf(origin) >= 0) {
+                loadImgs.push(imgElt);
+              }
             }
             const imgTokenWrapper = document.createElement('span');
             imgTokenWrapper.className = 'token img-wrapper';
@@ -504,9 +552,19 @@ const editorSvc = Object.assign(new Vue(), editorSvcDiscussions, editorSvcUtils,
             imgTokenWrapper.appendChild(imgTokenElt);
           }
         });
+        if (loadImgs.length) {
+          // Wait for images to load
+          const loadWorkspaceImg = loadImgs.map(imgElt => new Promise((resolve, reject) => {
+            const uri = imgElt.src.replace(origin, '');
+            getImgUrl(uri).then((newUrl) => {
+              imgElt.src = newUrl;
+              resolve();
+            }, () => reject(new Error(`加载本地空间图片出错,uri:${uri}`)));
+          }));
+          Promise.all(loadWorkspaceImg).then();
+        }
       });
     }
-
     this.clEditor.highlighter.on('highlighted', () => {
       imgEltsToCache.forEach((imgElt) => {
         const cachedImgElt = getFromImgCache(imgElt);

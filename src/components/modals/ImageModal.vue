@@ -15,6 +15,21 @@
     <div>
       <hr />
       <p>添加并选择图床后可在编辑区中粘贴/拖拽图片自动上传</p>
+
+      <menu-entry @click.native="checkedImgDest(path)" v-for="path in workspaceImgPath" :key="path">
+        <icon-check-circle v-if="checkedStorage.sub === path" slot="icon"></icon-check-circle>
+        <icon-check-circle-un v-if="checkedStorage.sub !== path" slot="icon"></icon-check-circle-un>
+        <menu-item>
+          <icon-provider slot="icon" :provider-id="currentWorkspace.providerId"></icon-provider>
+          <div>
+            本文档空间图片路径
+            <button class="menu-item__button button" @click.stop="removeByPath(path)" v-title="'删除'">
+              <icon-delete></icon-delete>
+            </button>
+          </div>
+          <span>路径：{{path}}</span>
+        </menu-item>
+      </menu-entry>
       <menu-entry @click.native="checkedImgDest(token.sub, token.providerId)" v-for="token in imageTokens" :key="token.sub">
         <icon-check-circle v-if="checkedStorage.sub === token.sub" slot="icon"></icon-check-circle>
         <icon-check-circle-un v-if="checkedStorage.sub !== token.sub" slot="icon"></icon-check-circle-un>
@@ -45,6 +60,10 @@
           <span> {{tokenStorage.uname}}, 仓库URL: {{tokenStorage.repoUrl}}, 路径: {{tokenStorage.path}}, 分支: {{tokenStorage.branch}}</span>
         </menu-item>
       </menu-entry>
+      <menu-entry @click.native="addWorkspaceImgPath">
+        <icon-provider slot="icon" :provider-id="currentWorkspace.providerId"></icon-provider>
+        <span>添加本文档空间图片路径</span>
+      </menu-entry>
       <menu-entry @click.native="addSmmsAccount">
         <icon-provider slot="icon" provider-id="smms"></icon-provider>
         <span>添加SM.MS图床账号</span>
@@ -66,6 +85,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import modalTemplate from './common/modalTemplate';
 import MenuEntry from '../menus/common/MenuEntry';
 import MenuItem from '../menus/common/MenuItem';
@@ -87,8 +107,15 @@ export default modalTemplate({
     url: '',
   }),
   computed: {
+    ...mapGetters('workspace', [
+      'currentWorkspace',
+    ]),
     checkedStorage() {
       return store.getters['img/getCheckedStorage'];
+    },
+    workspaceImgPath() {
+      const workspaceImgPath = store.getters['img/getWorkspaceImgPath'];
+      return Object.keys(workspaceImgPath || {});
     },
     imageTokens() {
       return [
@@ -195,6 +222,13 @@ export default modalTemplate({
         // Cancel
       }
     },
+    async removeByPath(path) {
+      store.dispatch('img/removeWorkspaceImgPath', path);
+    },
+    async addWorkspaceImgPath() {
+      const { path } = await store.dispatch('modal/open', { type: 'workspaceImgPath' });
+      store.dispatch('img/addWorkspaceImgPath', path);
+    },
     async addSmmsAccount() {
       const { proxyUrl, apiSecretToken } = await store.dispatch('modal/open', { type: 'smmsAccount' });
       await smmsHelper.addAccount(proxyUrl, apiSecretToken);
@@ -227,7 +261,10 @@ export default modalTemplate({
     },
     async checkedImgDest(sub, provider, sid) {
       let type = 'token';
-      if (provider === 'gitea' || provider === 'github') {
+      // 当前文档空间存储
+      if (!provider) {
+        type = 'workspace';
+      } else if (provider === 'gitea' || provider === 'github') {
         type = 'tokenRepo';
       }
       store.dispatch('img/changeCheckedStorage', {

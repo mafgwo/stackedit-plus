@@ -5,8 +5,10 @@ import workspaceSvc from './workspaceSvc';
 import constants from '../data/constants';
 
 const deleteMarkerMaxAge = 1000;
-const dbVersion = 1;
+const dbVersion = 3;
 const dbStoreName = 'objects';
+const imgDbStoreName = 'imgs';
+const imgWaitUploadIdsKey = 'waitUploadImgIds';
 const { silent } = utils.queryParams;
 const resetApp = localStorage.getItem('resetStackEdit');
 if (resetApp) {
@@ -24,7 +26,7 @@ class Connection {
     const request = indexedDB.open(this.dbName, dbVersion);
 
     request.onerror = () => {
-      throw new Error("Can't connect to IndexedDB.");
+      throw new Error('无法连接到IndexedDB.');
     };
 
     request.onsuccess = (event) => {
@@ -37,24 +39,21 @@ class Connection {
 
     request.onupgradeneeded = (event) => {
       const eventDb = event.target.result;
-      const oldVersion = event.oldVersion || 0;
-
-      // We don't use 'break' in this switch statement,
-      // the fall-through behavior is what we want.
-      /* eslint-disable no-fallthrough */
-      switch (oldVersion) {
-        case 0: {
-          // Create store
-          const dbStore = eventDb.createObjectStore(dbStoreName, {
-            keyPath: 'id',
-          });
-          dbStore.createIndex('tx', 'tx', {
-            unique: false,
-          });
-        }
-        default:
+      // const oldVersion = event.oldVersion || 0;
+      if (!eventDb.objectStoreNames.contains(dbStoreName)) {
+        // Create store
+        const dbStore = eventDb.createObjectStore(dbStoreName, {
+          keyPath: 'id',
+        });
+        dbStore.createIndex('tx', 'tx', {
+          unique: false,
+        });
       }
-      /* eslint-enable no-fallthrough */
+      if (!eventDb.objectStoreNames.contains(imgDbStoreName)) {
+        eventDb.createObjectStore(imgDbStoreName, {
+          keyPath: 'id',
+        });
+      }
     };
   }
 
@@ -192,6 +191,55 @@ const localDbSvc = {
       this.lastTx = lastTx;
       cb(storeItemMap);
     };
+  },
+  async saveImg(imgItem) {
+    await this.writeImgItem(imgItem);
+    const waitUploadIdsItem = (await this.getImgItem(imgWaitUploadIdsKey))
+       || { id: imgWaitUploadIdsKey, ids: [] };
+    const waitUplodIds = waitUploadIdsItem.ids || [];
+    // 如果已上传
+    if (imgItem.uploaded) {
+      waitUplodIds.splice(waitUplodIds.indexOf(imgItem.id), 1);
+    } else {
+      waitUplodIds.push(imgItem.id);
+    }
+    waitUploadIdsItem.ids = waitUplodIds;
+    await this.writeImgItem(waitUploadIdsItem);
+  },
+  // 获取待上传的图片id
+  async getWaitUploadImgIds() {
+    const waitUploadIdsItem = (await this.getImgItem(imgWaitUploadIdsKey))
+       || { id: imgWaitUploadIdsKey, ids: [] };
+    return waitUploadIdsItem.ids || [];
+  },
+  /**
+   * 写入图片
+   */
+  async writeImgItem(imgItem) {
+    return new Promise((resolve, reject) => {
+      // Create the DB transaction
+      this.connection.createTx((tx) => {
+        const dbStore = tx.objectStore(imgDbStoreName);
+        dbStore.put(imgItem);
+        resolve();
+      }, () => reject(new Error('保存图片异常')));
+    });
+  },
+  /**
+   * 读取图片
+   */
+  async getImgItem(id) {
+    return new Promise((resolve, reject) => {
+      // Get the item from DB
+      this.connection.createTx((tx) => {
+        const dbStore = tx.objectStore(imgDbStoreName);
+        const request = dbStore.get(id);
+        request.onsuccess = () => {
+          const dbItem = request.result;
+          resolve(dbItem);
+        };
+      }, () => reject(new Error('indexeddb获取图片异常')));
+    });
   },
 
   /**

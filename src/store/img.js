@@ -1,23 +1,26 @@
-const localKey = 'img/checkedStorage';
+import utils from '../services/utils';
+
+const checkStorageLocalKey = 'img/checkedStorage';
+const workspacePathLocalKey = 'img/workspaceImgPath';
 
 export default {
   namespaced: true,
   state: {
-    // 来自粘贴板 或者 拖拽的图片的文件对象
-    currImg: null,
-    // 当前图片ID
+    // 当前图片上传中的临时ID
     currImgId: null,
     // 选择的存储图床信息
     checkedStorage: {
-      type: null, // 目前存储类型分两种 token 与 tokenRepo
+      type: 'workspace', // 目前存储类型分三种 token 与 tokenRepo 、workspace
       provider: null, // 对应是何种账号
-      sub: null, // 对应 token 中的sub
+      sub: '/imgs/{YYYY}-{MM}-{DD}', // 对应 token 中的sub
+      sid: null,
+    },
+    // 当前仓库图片存储位置 key 为path value 为true
+    workspaceImagePath: {
+      '/imgs/{YYYY}-{MM}-{DD}': true,
     },
   },
   mutations: {
-    setNewImg: (state, value) => {
-      state.currImg = value;
-    },
     setCurrImgId: (state, value) => {
       state.currImgId = value;
     },
@@ -41,17 +44,28 @@ export default {
         };
       }
     },
+    setWorkspaceImgPath: (state, value) => {
+      state.workspaceImagePath = value;
+      localStorage.setItem(workspacePathLocalKey, JSON.stringify(state.workspaceImagePath));
+    },
+    addWorkspaceImgPath: (state, value) => {
+      state.workspaceImagePath[value] = true;
+      state.workspaceImagePath = utils.deepCopy(state.workspaceImagePath);
+      localStorage.setItem(workspacePathLocalKey, JSON.stringify(state.workspaceImagePath));
+    },
+    removeWorkspaceImgPath: (state, value) => {
+      delete state.workspaceImagePath[value];
+      state.workspaceImagePath = utils.deepCopy(state.workspaceImagePath);
+      localStorage.setItem(workspacePathLocalKey, JSON.stringify(state.workspaceImagePath));
+    },
   },
   getters: {
-    getImg: state => state.currImg,
     currImgId: state => state.currImgId,
     getCheckedStorage: state => state.checkedStorage,
     getCheckedStorageSub: state => state.checkedStorage.sub,
+    getWorkspaceImgPath: state => state.workspaceImagePath,
   },
   actions: {
-    setImg({ commit }, img) {
-      commit('setNewImg', img);
-    },
     setCurrImgId({ commit }, imgId) {
       commit('setCurrImgId', imgId);
     },
@@ -60,7 +74,16 @@ export default {
     },
     changeCheckedStorage({ commit }, checkedStorage) {
       commit('changeCheckedStorage', checkedStorage);
-      localStorage.setItem(localKey, JSON.stringify(checkedStorage));
+      localStorage.setItem(checkStorageLocalKey, JSON.stringify(checkedStorage));
+    },
+    setWorkspaceImgPath({ commit }, workspaceImgPath) {
+      commit('setWorkspaceImgPath', workspaceImgPath);
+    },
+    addWorkspaceImgPath({ commit }, workspaceImgPathValue) {
+      commit('addWorkspaceImgPath', workspaceImgPathValue);
+    },
+    removeWorkspaceImgPath({ commit }, workspaceImgPathValue) {
+      commit('removeWorkspaceImgPath', workspaceImgPathValue);
     },
   },
 };

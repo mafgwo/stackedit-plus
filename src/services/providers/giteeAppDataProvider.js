@@ -110,6 +110,20 @@ export default new Provider({
       },
     };
   },
+  async downloadFile({ token, path }) {
+    const { sha, data } = await giteeHelper.downloadFile({
+      owner: token.name,
+      repo: appDataRepo,
+      branch: appDataBranch,
+      token,
+      path,
+      isImg: true,
+    });
+    return {
+      content: data,
+      sha,
+    };
+  },
   async downloadWorkspaceData({ token, syncData }) {
     if (!syncData) {
       return {};
@@ -145,18 +159,25 @@ export default new Provider({
     file,
     commitMessage,
   }) {
-    const path = store.getters.gitPathsByItemId[file.id];
+    const isImg = file.type === 'img';
+    const path = !isImg ? store.getters.gitPathsByItemId[file.id] : file.path;
     const res = await giteeHelper.uploadFile({
       owner: token.name,
       repo: appDataRepo,
       branch: appDataBranch,
       token,
       path,
-      content: Provider.serializeContent(content),
-      sha: gitWorkspaceSvc.shaByPath[path],
+      content: !isImg ? Provider.serializeContent(content) : file.content,
+      sha: gitWorkspaceSvc.shaByPath[!isImg ? path : file.path],
+      isImg,
       commitMessage,
     });
 
+    if (isImg) {
+      return {
+        sha: res.content.sha,
+      };
+    }
     // Return new sync data
     return {
       contentSyncData: {

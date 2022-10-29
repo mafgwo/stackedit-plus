@@ -158,6 +158,18 @@ export default new Provider({
       },
     };
   },
+  async downloadFile({ token, path }) {
+    const { sha, data } = await githubHelper.downloadFile({
+      ...store.getters['workspace/currentWorkspace'],
+      token,
+      path,
+      isImg: true,
+    });
+    return {
+      content: data,
+      sha,
+    };
+  },
   async downloadWorkspaceData({ token, syncData }) {
     if (!syncData) {
       return {};
@@ -185,17 +197,23 @@ export default new Provider({
     file,
     commitMessage,
   }) {
-    const path = store.getters.gitPathsByItemId[file.id];
-    const absolutePath = `${store.getters['workspace/currentWorkspace'].path || ''}${path}`;
+    const isImg = file.type === 'img';
+    const path = store.getters.gitPathsByItemId[file.id] || '';
+    const absolutePath = !isImg ? `${store.getters['workspace/currentWorkspace'].path || ''}${path}` : file.path;
     const res = await githubHelper.uploadFile({
       ...store.getters['workspace/currentWorkspace'],
       token,
       path: absolutePath,
-      content: Provider.serializeContent(content),
-      sha: gitWorkspaceSvc.shaByPath[path],
+      content: !isImg ? Provider.serializeContent(content) : file.content,
+      sha: gitWorkspaceSvc.shaByPath[!isImg ? path : file.path],
+      isImg,
       commitMessage,
     });
-
+    if (isImg) {
+      return {
+        sha: res.content.sha,
+      };
+    }
     // Return new sync data
     return {
       contentSyncData: {

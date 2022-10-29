@@ -176,15 +176,19 @@ export default {
     path,
     content,
     sha,
-    isFile,
+    isImg,
     commitMessage,
   }) {
+    let uploadContent = content;
+    if (isImg && typeof content !== 'string') {
+      uploadContent = await utils.encodeFiletoBase64(content);
+    }
     return repoRequest(token, owner, repo, {
       method: 'PUT',
       url: `contents/${encodeURIComponent(path)}`,
       body: {
         message: commitMessage || getCommitMessage(sha ? 'updateFileMessage' : 'createFileMessage', path),
-        content: isFile ? await utils.encodeFiletoBase64(content) : utils.encodeBase64(content),
+        content: isImg ? uploadContent : utils.encodeBase64(content),
         sha,
         branch,
       },
@@ -222,6 +226,7 @@ export default {
     repo,
     branch,
     path,
+    isImg,
   }) {
     const { sha, content } = await repoRequest(token, owner, repo, {
       url: `contents/${encodeURIComponent(path)}`,
@@ -229,7 +234,7 @@ export default {
     });
     return {
       sha,
-      data: utils.decodeBase64(content),
+      data: !isImg ? utils.decodeBase64(content) : content,
     };
   },
   /**

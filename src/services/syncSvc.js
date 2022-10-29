@@ -1,3 +1,4 @@
+import md5 from 'js-md5';
 import localDbSvc from './localDbSvc';
 import store from '../store';
 import utils from './utils';
@@ -841,6 +842,61 @@ const syncWorkspace = async (skipContents = false) => {
   }
 };
 
+const syncImg = async (absolutePath) => {
+  const token = workspaceProvider.getToken();
+  const path = absolutePath.substring(1, absolutePath.length);
+  const { sha, content } = await workspaceProvider.downloadFile({
+    token,
+    path,
+  });
+  if (!sha || !content) {
+    return;
+  }
+  await localDbSvc.saveImg({
+    id: md5(absolutePath),
+    path: absolutePath,
+    content,
+    uploaded: 1,
+    sha,
+  });
+};
+
+const uploadImg = async (imgIds, index = 0) => {
+  if (imgIds.length - 1 < index) {
+    return;
+  }
+  const item = await localDbSvc.getImgItem(imgIds[index]);
+  // 不存在item 或已上传 则跳过
+  if (!item || item.uploaded) {
+    setTimeout(await uploadImg(imgIds, index + 1), 10);
+    return;
+  }
+  const token = workspaceProvider.getToken();
+  const { sha } = await workspaceProvider.uploadWorkspaceContent({
+    token,
+    file: {
+      ...utils.deepCopy(item),
+      type: 'img',
+      path: item.path.substring(1, item.path.length),
+    },
+    isImg: true,
+  });
+  await localDbSvc.saveImg({
+    ...item,
+    uploaded: 1,
+    sha,
+  });
+  setTimeout(await uploadImg(imgIds, index + 1), 500);
+};
+
+const uploadImgs = async () => {
+  // 新增的图片
+  const imgIds = await localDbSvc.getWaitUploadImgIds();
+  if (imgIds.length > 0) {
+    await uploadImg(imgIds);
+  }
+};
+
 /**
  * Enqueue a sync task, if possible.
  */
@@ -888,6 +944,8 @@ const requestSync = (addTriggerSyncBadge = false) => {
             // all the syncedContent objects.
             await syncFile(store.getters['file/current'].id);
           }
+          // 同步图片
+          await uploadImgs();
 
           // Clean files
           Object.entries(fileHashesToClean).forEach(([fileId, fileHash]) => {
@@ -983,6 +1041,7 @@ export default {
       }, 5000);
     }
   },
+  syncImg,
   isSyncPossible,
   requestSync,
   createSyncLocation,

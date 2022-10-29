@@ -190,6 +190,19 @@ export default {
       reader.onerror = error => reject(error);
     });
   },
+  base64ToBlob(dataurl, fileName) {
+    const potIdx = fileName.lastIndexOf('.');
+    const suffix = potIdx > -1 ? fileName.substring(potIdx + 1) : 'png';
+    const mime = `image/${suffix}`;
+    const bstr = atob(dataurl);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n >= 0) {
+      n -= 1;
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
+  },
   decodeBase64(str) {
     // In case of URL safe base64
     const sanitizedStr = str.replace(/_/g, '/').replace(/-/g, '+');
@@ -369,5 +382,19 @@ export default {
       }
       elt.parentNode.removeChild(elt);
     });
+  },
+  // 根据当前绝对路径 与 文件路径计算出文件绝对路径
+  getAbsoluteFilePath(currAbsolutePath, filePath) {
+    // "/"开头说明已经是绝对路径
+    if (filePath.indexOf('/') === 0) {
+      return filePath;
+    }
+    let path = filePath;
+    if (filePath.indexOf('./') === 0) {
+      path = `${currAbsolutePath}/${path.replace('./', '')}`;
+    } else {
+      path = `${currAbsolutePath}/${path}`;
+    }
+    return path.indexOf('/') === 0 ? path : `/${path}`;
   },
 };

@@ -34,7 +34,7 @@ export default {
     ]),
   },
   methods: {
-    async setImgAndDoClick(items) {
+    async processUpload(items) {
       let file = null;
       if (!items || items.length === 0) {
         return;
@@ -73,6 +73,11 @@ export default {
     if (currImgStorageStr) {
       store.commit('img/changeCheckedStorage', JSON.parse(currImgStorageStr));
     }
+    // 当前本地图片路径配置
+    const workspaceImgPath = localStorage.getItem('img/workspaceImgPath');
+    if (workspaceImgPath) {
+      store.commit('img/setWorkspaceImgPath', JSON.parse(workspaceImgPath));
+    }
     const editorElt = this.$el.querySelector('.editor__inner');
     const onDiscussionEvt = cb => (evt) => {
       let elt = evt.target;
@@ -100,11 +105,11 @@ export default {
 
     editorElt.addEventListener('drop', (event) => {
       const transItems = event.dataTransfer.items;
-      this.setImgAndDoClick(transItems);
+      this.processUpload(transItems);
     });
     editorElt.addEventListener('paste', (event) => {
       const pasteItems = (event.clipboardData || window.clipboardData).items;
-      this.setImgAndDoClick(pasteItems);
+      this.processUpload(pasteItems);
     });
 
     this.$watch(

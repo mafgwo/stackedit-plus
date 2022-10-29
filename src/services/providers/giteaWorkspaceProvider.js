@@ -173,6 +173,18 @@ export default new Provider({
       },
     };
   },
+  async downloadFile({ token, path }) {
+    const { sha, data } = await giteaHelper.downloadFile({
+      ...store.getters['workspace/currentWorkspace'],
+      token,
+      path,
+      isImg: true,
+    });
+    return {
+      content: data,
+      sha,
+    };
+  },
   async downloadWorkspaceData({ token, syncData }) {
     if (!syncData) {
       return {};
@@ -200,25 +212,32 @@ export default new Provider({
     file,
     commitMessage,
   }) {
-    const path = store.getters.gitPathsByItemId[file.id];
-    const absolutePath = `${store.getters['workspace/currentWorkspace'].path || ''}${path}`;
-    const sha = gitWorkspaceSvc.shaByPath[path];
-    await giteaHelper.uploadFile({
+    const isImg = file.type === 'img';
+    const path = store.getters.gitPathsByItemId[file.id] || '';
+    const absolutePath = !isImg ? `${store.getters['workspace/currentWorkspace'].path || ''}${store.getters.gitPathsByItemId[file.id]}` : file.path;
+    const sha = gitWorkspaceSvc.shaByPath[!isImg ? path : file.path];
+    const res = await giteaHelper.uploadFile({
       ...store.getters['workspace/currentWorkspace'],
       token,
       path: absolutePath,
-      content: Provider.serializeContent(content),
+      content: !isImg ? Provider.serializeContent(content) : file.content,
       sha,
+      isImg,
       commitMessage,
     });
 
+    if (isImg) {
+      return {
+        sha: res.content.sha,
+      };
+    }
     // Return new sync data
     return {
       contentSyncData: {
         id: store.getters.gitPathsByItemId[content.id],
         type: content.type,
         hash: content.hash,
-        sha,
+        sha: res.content.sha,
       },
       fileSyncData: {
         id: path,
