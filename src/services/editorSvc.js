@@ -255,7 +255,7 @@ const editorSvc = Object.assign(new Vue(), editorSvcDiscussions, editorSvcUtils,
         return;
       }
       if (imgElt.src.indexOf(constants.origin) >= 0) {
-        getImgUrl(imgElt.src.replace(constants.origin, '')).then((newUrl) => {
+        getImgUrl(imgElt.attributes.src.nodeValue).then((newUrl) => {
           imgElt.src = newUrl;
           resolve();
         }, () => reject(new Error('加载本地空间图片出错')));
@@ -555,11 +555,10 @@ const editorSvc = Object.assign(new Vue(), editorSvcDiscussions, editorSvcUtils,
         if (loadImgs.length) {
           // Wait for images to load
           const loadWorkspaceImg = loadImgs.map(imgElt => new Promise((resolve, reject) => {
-            const uri = imgElt.src.replace(origin, '');
-            getImgUrl(uri).then((newUrl) => {
+            getImgUrl(imgElt.attributes.src.nodeValue).then((newUrl) => {
               imgElt.src = newUrl;
               resolve();
-            }, () => reject(new Error(`加载本地空间图片出错,uri:${uri}`)));
+            }, () => reject(new Error(`加载本地空间图片出错,uri:${imgElt.attributes.src.nodeValue}`)));
           }));
           Promise.all(loadWorkspaceImg).then();
         }
