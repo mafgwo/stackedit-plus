@@ -22,7 +22,7 @@
         <menu-item>
           <icon-provider slot="icon" :provider-id="currentWorkspace.providerId"></icon-provider>
           <div>
-            本文档空间图片路径
+            当前文档空间图片路径
             <button class="menu-item__button button" @click.stop="removeByPath(path)" v-title="'删除'">
               <icon-delete></icon-delete>
             </button>
@@ -62,7 +62,7 @@
       </menu-entry>
       <menu-entry @click.native="addWorkspaceImgPath">
         <icon-provider slot="icon" :provider-id="currentWorkspace.providerId"></icon-provider>
-        <span>添加本文档空间图片路径</span>
+        <span>添加当前文档空间图片路径</span>
       </menu-entry>
       <menu-entry @click.native="addSmmsAccount">
         <icon-provider slot="icon" provider-id="smms"></icon-provider>
