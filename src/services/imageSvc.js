@@ -19,8 +19,8 @@ function getImagePath(confPath, imgType) {
   const date = time.getDate();
   const month = time.getMonth() + 1;
   const year = time.getFullYear();
-  const path = confPath.replace('{YYYY}', year)
-    .replace('{MM}', `0${month}`.slice(-2)).replace('{DD}', `0${date}`.slice(-2));
+  const path = confPath.replace('{YYYY}', year).replace('{MM}', `0${month}`.slice(-2))
+    .replace('{DD}', `0${date}`.slice(-2)).replace('{MDNAME}', store.getters['file/current'].name);
   return `${path}${path.endsWith('/') ? '' : '/'}${utils.uid()}.${imgType.split('/')[1]}`;
 }
 
@@ -44,7 +44,7 @@ export default {
         path: absolutePath,
         content: base64,
       });
-      return { url: path };
+      return { url: path.replace(' ', '%20') };
     }
     if (!currStorage.provider) {
       return { error: '暂无已选择的图床！' };

@@ -209,9 +209,17 @@ const editorSvc = Object.assign(new Vue(), editorSvcDiscussions, editorSvcUtils,
             this.previewElt.appendChild(sectionPreviewElt);
           }
           extensionSvc.sectionPreview(sectionPreviewElt, this.options, true);
+          const imgs = Array.prototype.slice.call(sectionPreviewElt.getElementsByTagName('img')).map((imgElt) => {
+            if (imgElt.src.indexOf(constants.origin) >= 0) {
+              const uri = decodeURIComponent(imgElt.attributes.src.nodeValue);
+              imgElt.removeAttribute('src');
+              return { imgElt, uri };
+            }
+            return { imgElt };
+          });
           loadingImages = [
             ...loadingImages,
-            ...Array.prototype.slice.call(sectionPreviewElt.getElementsByTagName('img')),
+            ...imgs,
           ];
 
           // Create TOC section element
@@ -249,22 +257,22 @@ const editorSvc = Object.assign(new Vue(), editorSvcDiscussions, editorSvcUtils,
     this.makeTextToPreviewDiffs();
 
     // Wait for images to load
-    const loadedPromises = loadingImages.map(imgElt => new Promise((resolve, reject) => {
-      if (!imgElt.src) {
-        resolve();
+    const loadedPromises = loadingImages.map(it => new Promise((resolve, reject) => {
+      if (!it.imgElt.src && it.uri) {
+        getImgUrl(it.uri).then((newUrl) => {
+          it.imgElt.src = newUrl;
+          resolve();
+        }, () => reject(new Error('加载当前空间图片出错')));
         return;
       }
-      if (imgElt.src.indexOf(constants.origin) >= 0) {
-        getImgUrl(imgElt.attributes.src.nodeValue).then((newUrl) => {
-          imgElt.src = newUrl;
-          resolve();
-        }, () => reject(new Error('加载本地空间图片出错')));
+      if (!it.imgElt.src) {
+        resolve();
         return;
       }
       const img = new window.Image();
       img.onload = resolve;
       img.onerror = resolve;
-      img.src = imgElt.src;
+      img.src = it.imgElt.src;
     }));
     await Promise.all(loadedPromises);
 
@@ -542,7 +550,8 @@ const editorSvc = Object.assign(new Vue(), editorSvcDiscussions, editorSvcUtils,
               }
               imgEltsToCache.push(imgElt);
               if (imgElt.src.indexOf(origin) >= 0) {
-                loadImgs.push(imgElt);
+                imgElt.removeAttribute('src');
+                loadImgs.push({ imgElt, uri: decodeURIComponent(uri) });
               }
             }
             const imgTokenWrapper = document.createElement('span');
@@ -554,11 +563,11 @@ const editorSvc = Object.assign(new Vue(), editorSvcDiscussions, editorSvcUtils,
         });
         if (loadImgs.length) {
           // Wait for images to load
-          const loadWorkspaceImg = loadImgs.map(imgElt => new Promise((resolve, reject) => {
-            getImgUrl(imgElt.attributes.src.nodeValue).then((newUrl) => {
-              imgElt.src = newUrl;
+          const loadWorkspaceImg = loadImgs.map(it => new Promise((resolve, reject) => {
+            getImgUrl(it.uri).then((newUrl) => {
+              it.imgElt.src = newUrl;
               resolve();
-            }, () => reject(new Error(`加载本地空间图片出错,uri:${imgElt.attributes.src.nodeValue}`)));
+            }, () => reject(new Error(`加载当前空间图片出错,uri:${it.uri}`)));
           }));
           Promise.all(loadWorkspaceImg).then();
         }

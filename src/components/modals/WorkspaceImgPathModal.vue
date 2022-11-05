@@ -8,8 +8,9 @@
       <form-entry label="图片上传路径" error="path">
         <input slot="field" class="textfield" type="text" placeholder="如：/imgs/{YYYY}-{MM}-{DD}" v-model.trim="path" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          如果不提供，默认为 /imgs/{YYYY}-{MM}-{DD} ，其中{YYYY}为年变量、{MM}为月变量、{DD}为日变量。<br/>
-          支持相对路径，如 ./imgs 或 imgs 都是相对当前编辑中文档的路径，不支持相对上级路径。
+          如果不提供，默认为 /imgs/{YYYY}-{MM}-{DD}。<br/>
+          支持相对路径，如 ./imgs、../imgs 或 imgs 都是相对当前编辑中文档的路径。<br/>
+          变量说明：{YYYY}为年变量、{MM}为月变量、{DD}为日变量、{MDNAME}为当前文档名称
         </div>
       </form-entry>
     </div>

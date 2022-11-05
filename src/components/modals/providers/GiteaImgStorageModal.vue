@@ -12,9 +12,10 @@
         </div>
       </form-entry>
       <form-entry label="文件夹路径" info="可选的">
-        <input slot="field" class="textfield" type="text" placeholder="如：imgs/{YYYY}/{MM}" v-model.trim="path" @keydown.enter="resolve()">
+        <input slot="field" class="textfield" type="text" placeholder="如：imgs/{YYYY}-{MM}-{DD}" v-model.trim="path" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          如果不提供，默认为 {YYYY}/{MM}/{DD} ，其中{YYYY}为年变量、{MM}为月变量、{DD}为日变量。
+          如果不提供，默认为 imgs/{YYYY}-{MM}-{DD} 。<br/>
+          变量说明：{YYYY}为年变量、{MM}为月变量、{DD}为日变量、{MDNAME}为当前文档名称。
         </div>
       </form-entry>
       <form-entry label="分支" info="可选的">
@@ -62,7 +63,7 @@ export default modalTemplate({
           const path = this.path && this.path.replace(/^\//, '');
           this.config.resolve({
             repoUri: projectPath,
-            path: path || '{YYYY}/{MM}/{DD}',
+            path: path || 'imgs/{YYYY}-{MM}-{DD}',
             branch: this.branch || 'master',
           });
         } catch (err) {

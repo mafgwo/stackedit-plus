@@ -387,14 +387,17 @@ export default {
   getAbsoluteFilePath(currAbsolutePath, filePath) {
     // "/"开头说明已经是绝对路径
     if (filePath.indexOf('/') === 0) {
-      return filePath;
+      return this.encodeUrlPath(filePath);
     }
     let path = filePath;
-    if (filePath.indexOf('./') === 0) {
+    // 相对上级路径
+    if (path.indexOf('../') === 0) {
+      return this.getAbsoluteFilePath(currAbsolutePath.substring(0, currAbsolutePath.lastIndexOf('/')), path.replace('../', ''));
+    } else if (path.indexOf('./') === 0) {
       path = `${currAbsolutePath}/${path.replace('./', '')}`;
     } else {
       path = `${currAbsolutePath}/${path}`;
     }
-    return path.indexOf('/') === 0 ? path : `/${path}`;
+    return (path.indexOf('/') === 0 ? path : `/${path}`).replace(' ', '%20');
   },
 };
