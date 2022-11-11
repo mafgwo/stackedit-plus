@@ -40,7 +40,9 @@ var defaultsStrings = {
   undo: "Undo - Ctrl/Cmd+Z",
   redo: "Redo - Ctrl/Cmd+Y",
 
-  help: "Markdown Editing Help"
+  help: "Markdown Editing Help",
+
+  formulaexample: "这里输入Latex表达式",
 };
 
 // options, if given, can have the following properties:
@@ -465,6 +467,7 @@ function UIManager(input, commandManager) {
     buttons.bold = bindCommand("doBold");
     buttons.italic = bindCommand("doItalic");
     buttons.strikethrough = bindCommand("doStrikethrough");
+    buttons.inlineformula = bindCommand("doInlinkeFormula");
     buttons.imageUploading = bindCommand("doImageUploading");
     buttons.link = bindCommand(function (chunk, postProcessing) {
       return this.doLinkOrImage(chunk, postProcessing, false);
@@ -611,6 +614,49 @@ commandProto.doStrikethrough = function (chunk, postProcessing) {
 
     // Add the true markup.
     var markup = "~~"; // shouldn't the test be = ?
+    chunk.before = chunk.before + markup;
+    chunk.after = markup + chunk.after;
+  }
+
+  return;
+};
+
+commandProto.doInlinkeFormula = function (chunk, postProcessing) {
+
+  // Get rid of whitespace and fixup newlines.
+  chunk.trimWhitespace();
+  chunk.selection = chunk.selection.replace(/\n{2,}/g, "\n");
+
+  // Look for stars before and after.  Is the chunk already marked up?
+  // note that these regex matches cannot fail
+  var starsBefore = /(\$*$)/.exec(chunk.before)[0];
+  var starsAfter = /(^\$*)/.exec(chunk.after)[0];
+
+  var prevStars = Math.min(starsBefore.length, starsAfter.length);
+
+  var nStars = 2;
+
+  // Remove stars if we have to since the button acts as a toggle.
+  if ((prevStars >= nStars) && (prevStars != 2 || nStars != 1)) {
+    chunk.before = chunk.before.replace(re("[\$]{" + nStars + "}$", ""), "");
+    chunk.after = chunk.after.replace(re("^[\$]{" + nStars + "}", ""), "");
+  } else if (!chunk.selection && starsAfter) {
+    // It's not really clear why this code is necessary.  It just moves
+    // some arbitrary stuff around.
+    chunk.after = chunk.after.replace(/^(\$*)/, "");
+    chunk.before = chunk.before.replace(/(\s?)$/, "");
+    var whitespace = re.$1;
+    chunk.before = chunk.before + starsAfter + whitespace;
+  } else {
+
+    // In most cases, if you don't have any selected text and click the button
+    // you'll get a selected, marked up region with the default text inserted.
+    if (!chunk.selection && !starsAfter) {
+      chunk.selection = this.getString("formulaexample");
+    }
+
+    // Add the true markup.
+    var markup = "$"; // shouldn't the test be = ?
     chunk.before = chunk.before + markup;
     chunk.after = markup + chunk.after;
   }

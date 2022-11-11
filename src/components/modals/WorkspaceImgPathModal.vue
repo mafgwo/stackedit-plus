@@ -36,9 +36,11 @@ export default modalTemplate({
   },
   methods: {
     resolve() {
-      const path = this.path && this.path.replace(/^\//, '');
+      if (!this.path) {
+        this.setError('path');
+      }
       this.config.resolve({
-        path: path || '/imgs/{YYYY}-{MM}-{DD}',
+        path: this.path || '/imgs/{YYYY}-{MM}-{DD}',
       });
     },
   },

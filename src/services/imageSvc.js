@@ -7,14 +7,7 @@ import giteaHelper from '../services/providers/helpers/giteaHelper';
 import githubHelper from '../services/providers/helpers/githubHelper';
 import customHelper from '../services/providers/helpers/customHelper';
 
-function getCurrAbsolutePath() {
-  const fileId = store.getters['file/current'].id;
-  const fileSyncData = store.getters['data/syncDataByItemId'][fileId] || { id: '' };
-  const fileAbsolutePath = `${store.getters['workspace/currentWorkspace'].path || ''}${fileSyncData.id}`;
-  return fileAbsolutePath.substring(0, fileAbsolutePath.lastIndexOf('/'));
-}
-
-function getImagePath(confPath, imgType) {
+const getImagePath = (confPath, imgType) => {
   const time = new Date();
   const date = time.getDate();
   const month = time.getMonth() + 1;
@@ -22,7 +15,7 @@ function getImagePath(confPath, imgType) {
   const path = confPath.replace('{YYYY}', year).replace('{MM}', `0${month}`.slice(-2))
     .replace('{DD}', `0${date}`.slice(-2)).replace('{MDNAME}', store.getters['file/current'].name);
   return `${path}${path.endsWith('/') ? '' : '/'}${utils.uid()}.${imgType.split('/')[1]}`;
-}
+};
 
 export default {
   // 上传图片 返回图片链接
@@ -38,13 +31,14 @@ export default {
       const path = getImagePath(currStorage.sub, imgFile.type);
       // 保存到indexeddb
       const base64 = await utils.encodeFiletoBase64(imgFile);
-      const absolutePath = utils.getAbsoluteFilePath(getCurrAbsolutePath(), path);
+      const currDirNode = store.getters['explorer/selectedNodeFolder'];
+      const absolutePath = utils.getAbsoluteFilePath(currDirNode, path);
       await localDbSvc.saveImg({
         id: md5(absolutePath),
         path: absolutePath,
         content: base64,
       });
-      return { url: path.replace(' ', '%20') };
+      return { url: path.replaceAll(' ', '%20') };
     }
     if (!currStorage.provider) {
       return { error: '暂无已选择的图床！' };

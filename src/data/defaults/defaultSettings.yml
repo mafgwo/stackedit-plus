@@ -38,6 +38,7 @@ shortcuts:
   mod+shift+s: strikethrough
   mod+shift+t: table
   mod+shift+u: ulist
+  mod+shift+f: inlineformula
   '= = > space':
     method: expand
     params:

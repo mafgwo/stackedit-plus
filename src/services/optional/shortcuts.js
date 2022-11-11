@@ -32,7 +32,9 @@ const methods = {
   ulist: pagedownHandler('ulist'),
   clist: pagedownHandler('clist'),
   heading: pagedownHandler('heading'),
+  inline: pagedownHandler('heading'),
   hr: pagedownHandler('hr'),
+  inlineformula: pagedownHandler('inlineformula'),
   sync() {
     if (syncSvc.isSyncPossible()) {
       syncSvc.requestSync();

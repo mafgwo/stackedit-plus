@@ -46,16 +46,10 @@ class SectionDesc {
 
 const pathUrlMap = Object.create(null);
 
-const getCurrAbsolutePath = () => {
-  const fileId = store.getters['file/current'].id;
-  const fileSyncData = store.getters['data/syncDataByItemId'][fileId] || { id: '' };
-  const fileAbsolutePath = `${store.getters['workspace/currentWorkspace'].path || ''}${fileSyncData.id}`;
-  return fileAbsolutePath.substring(0, fileAbsolutePath.lastIndexOf('/'));
-};
-
 const getImgUrl = async (uri) => {
   if (uri.indexOf('http://') !== 0 && uri.indexOf('https://') !== 0) {
-    const absoluteImgPath = utils.getAbsoluteFilePath(getCurrAbsolutePath(), uri);
+    const currDirNode = store.getters['explorer/selectedNodeFolder'];
+    const absoluteImgPath = utils.getAbsoluteFilePath(currDirNode, uri);
     if (pathUrlMap[absoluteImgPath]) {
       return pathUrlMap[absoluteImgPath];
     }

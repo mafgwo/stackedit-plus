@@ -383,21 +383,35 @@ export default {
       elt.parentNode.removeChild(elt);
     });
   },
+  getAbsoluteDir(currDirNode) {
+    if (!currDirNode) {
+      return '';
+    }
+    let path = currDirNode.item.name;
+    if (currDirNode.parentNode) {
+      const parentPath = this.getAbsoluteDir(currDirNode.parentNode);
+      if (parentPath) {
+        path = `${parentPath}/${path}`;
+      }
+    }
+    return path || '';
+  },
   // 根据当前绝对路径 与 文件路径计算出文件绝对路径
-  getAbsoluteFilePath(currAbsolutePath, filePath) {
+  getAbsoluteFilePath(currDirNode, filePath) {
+    const currAbsolutePath = this.getAbsoluteDir(currDirNode);
     // "/"开头说明已经是绝对路径
     if (filePath.indexOf('/') === 0) {
-      return this.encodeUrlPath(filePath);
+      return filePath.replaceAll(' ', '%20');
     }
     let path = filePath;
     // 相对上级路径
     if (path.indexOf('../') === 0) {
-      return this.getAbsoluteFilePath(currAbsolutePath.substring(0, currAbsolutePath.lastIndexOf('/')), path.replace('../', ''));
+      return this.getAbsoluteFilePath(currDirNode && currDirNode.parentNode, path.replace('../', ''));
     } else if (path.indexOf('./') === 0) {
       path = `${currAbsolutePath}/${path.replace('./', '')}`;
     } else {
       path = `${currAbsolutePath}/${path}`;
     }
-    return (path.indexOf('/') === 0 ? path : `/${path}`).replace(' ', '%20');
+    return (path.indexOf('/') === 0 ? path : `/${path}`).replaceAll(' ', '%20');
   },
 };

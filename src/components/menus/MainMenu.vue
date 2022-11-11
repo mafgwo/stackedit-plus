@@ -21,10 +21,10 @@
           <b>{{currentWorkspace.name}}</b> 与 <a :href="workspaceLocationUrl" target="_blank">CouchDB 数据库</a>同步。
         </span>
         <span v-else-if="currentWorkspace.providerId === 'githubWorkspace'">
-          <b>{{currentWorkspace.name}}</b> 与 <a :href="workspaceLocationUrl" target="_blank">GitHub repo</a> 同步。
+          <b>{{currentWorkspace.name}}</b> 与 <a :href="workspaceLocationUrl" target="_blank">GitHub 仓库</a> 同步。
         </span>
         <span v-else-if="currentWorkspace.providerId === 'giteeWorkspace'">
-          <b>{{currentWorkspace.name}}</b> 与 <a :href="workspaceLocationUrl" target="_blank">Gitee repo</a> 同步。
+          <b>{{currentWorkspace.name}}</b> 与 <a :href="workspaceLocationUrl" target="_blank">Gitee 仓库</a> 同步。
         </span>
         <span v-else-if="currentWorkspace.providerId === 'gitlabWorkspace'">
           <b>{{currentWorkspace.name}}</b> 与 <a :href="workspaceLocationUrl" target="_blank">GitLab 项目</a>同步。
