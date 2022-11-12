@@ -36,20 +36,17 @@ StackEdit中文版
 
 ## 截图
 
-**示例截图-暗色主题**
-![](./images/dark.png)
+**亮暗主题切换、编辑主题切换**
+![](./images/theme.gif)
 
-**示例截图-亮色主题**
-![](./images/light.png)
-
-**示例截图-支持的文档空间**
+**支持的文档空间**
 ![](./images/workspace.png)
 
-**示例截图-支持的图床**
-![](./images/imageBed.png)
+**拖拽粘贴上传图片**
+![](./images/uploadimg.gif)
 
-**示例截图-支持文件搜索**
-![](./images/fileSearch.png)
+**支持文档搜索**
+![](./images/search.gif)
 
 ## 相比国外开源版本的区别：
 - 修复了Github授权登录问题
