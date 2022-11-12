@@ -69,7 +69,7 @@ export default {
           await new Promise((resolve, reject) => {
             script.onload = resolve;
             script.onerror = reject;
-            script.src = `https://www.gstatic.cn/charts/loader.js?${Date.now()}`;
+            script.src = `https://g.alicdn.com/sd/baxia-entry/index.js?${Date.now()}`;
             try {
               document.head.appendChild(script); // This can fail with bad network
               timeout = setTimeout(reject, networkTimeout);
