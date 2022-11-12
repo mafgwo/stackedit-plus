@@ -844,7 +844,7 @@ const syncWorkspace = async (skipContents = false) => {
 
 const syncImg = async (absolutePath) => {
   const token = workspaceProvider.getToken();
-  const path = absolutePath.substring(1, absolutePath.length).replace('%20', ' ');
+  const path = absolutePath.substring(1, absolutePath.length).replaceAll('%20', ' ');
   const { sha, content } = await workspaceProvider.downloadFile({
     token,
     path,
@@ -877,7 +877,7 @@ const uploadImg = async (imgIds, index = 0) => {
     file: {
       ...utils.deepCopy(item),
       type: 'img',
-      path: item.path.substring(1, item.path.length).replace('%20', ' '),
+      path: item.path.substring(1, item.path.length).replaceAll('%20', ' '),
     },
     isImg: true,
   });
