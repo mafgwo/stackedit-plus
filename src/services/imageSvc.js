@@ -28,6 +28,10 @@ export default {
     }
     // 判断是否文档空间路径
     if (currStorage.type === 'workspace') {
+      // 如果不是git仓库 则提示不支持
+      if (!store.getters['workspace/currentWorkspaceIsGit']) {
+        return { error: '暂无已选择的图床！' };
+      }
       const path = getImagePath(currStorage.sub, imgFile.type);
       // 保存到indexeddb
       const base64 = await utils.encodeFiletoBase64(imgFile);

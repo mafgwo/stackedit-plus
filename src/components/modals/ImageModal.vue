@@ -109,11 +109,15 @@ export default modalTemplate({
   computed: {
     ...mapGetters('workspace', [
       'currentWorkspace',
+      'currentWorkspaceIsGit',
     ]),
     checkedStorage() {
       return store.getters['img/getCheckedStorage'];
     },
     workspaceImgPath() {
+      if (!this.currentWorkspaceIsGit) {
+        return [];
+      }
       const workspaceImgPath = store.getters['img/getWorkspaceImgPath'];
       return Object.keys(workspaceImgPath || {});
     },

@@ -111,6 +111,7 @@ export default {
    * https://developers.google.com/identity/protocols/OpenIDConnect
    */
   async startOauth2(scopes, sub = null, silent = false) {
+    await networkSvc.getServerConf();
     const clientId = store.getters['data/serverConf'].googleClientId;
 
     // Get an OAuth2 code

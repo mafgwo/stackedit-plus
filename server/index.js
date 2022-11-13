@@ -64,10 +64,12 @@ module.exports = (app) => {
   // Google Drive action receiver
   app.get('/googleDriveAction', (req, res) =>
     res.redirect(`./app#providerId=googleDrive&state=${encodeURIComponent(req.query.state)}`));
-  // Serve the static folder with 1 day max-age
+  // Serve the static folder with 30 day max-age
   app.use('/themes', serveStatic(resolvePath('static/themes'), {
-    maxAge: '1d',
+    maxAge: '30d',
   }));
+  // Serve empty.js
+  app.get('/empty.js', (req, res) => res.send(''));
 
   // Serve static resources
   if (process.env.NODE_ENV === 'production') {
