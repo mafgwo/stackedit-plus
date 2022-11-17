@@ -69,7 +69,7 @@ export default {
           await new Promise((resolve, reject) => {
             script.onload = resolve;
             script.onerror = reject;
-            script.src = `/empty.js?${Date.now()}`;
+            script.src = `https://res.wx.qq.com/open/js/jweixin-1.2.0.js?${Date.now()}`;
             try {
               document.head.appendChild(script); // This can fail with bad network
               timeout = setTimeout(reject, networkTimeout);
