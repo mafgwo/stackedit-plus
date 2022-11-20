@@ -78,6 +78,8 @@ StackEdit中文版
 ## 部署说明
 > 建议docker-compose方式部署，其他部署方式如遇到问题欢迎提issue。
 
+docker官方仓库下载太慢可以使用阿里云的镜像仓库，镜像仓库地址：registry.cn-hangzhou.aliyuncs.com/mafgwo/stackedit:【版本号】
+
 `docker-compose.yml`如下：
 
 ```yaml
