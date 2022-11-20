@@ -308,4 +308,8 @@ export default new Provider({
     });
     return Provider.parseContent(data, contentId);
   },
+  getFilePathUrl(path) {
+    const workspace = store.getters['workspace/currentWorkspace'];
+    return `https://gitee.com/${workspace.owner}/${workspace.repo}/blob/${workspace.branch}${path}`;
+  },
 });

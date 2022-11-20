@@ -216,6 +216,15 @@ const editorSvc = Object.assign(new Vue(), editorSvcDiscussions, editorSvcUtils,
             ...imgs,
           ];
 
+          Array.prototype.slice.call(sectionPreviewElt.getElementsByTagName('a')).forEach((aElt) => {
+            const url = aElt.attributes.href.nodeValue;
+            if (url.indexOf('http://') >= 0 || url.indexOf('https://') >= 0) {
+              return;
+            }
+            aElt.href = 'javascript:void(0);'; // eslint-disable-line no-script-url
+            aElt.setAttribute('onclick', `window.viewFileByPath('${utils.decodeUrlPath(url)}')`);
+          });
+
           // Create TOC section element
           sectionTocElt = document.createElement('div');
           sectionTocElt.className = 'cl-toc-section';

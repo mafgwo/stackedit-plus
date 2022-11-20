@@ -282,4 +282,11 @@ export default new Provider({
     });
     return Provider.parseContent(data, contentId);
   },
+  getFilePathUrl(path) {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+    return `https://gitee.com/${token.name}/${appDataRepo}/blob/${appDataBranch}${path}`;
+  },
 });

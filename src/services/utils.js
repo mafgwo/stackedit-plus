@@ -306,6 +306,9 @@ export default {
   encodeUrlPath(path) {
     return path ? path.split('/').map(encodeURIComponent).join('/') : '';
   },
+  decodeUrlPath(path) {
+    return path ? path.split('/').map(decodeURIComponent).join('/') : '';
+  },
   parseGithubRepoUrl(url) {
     const parsedRepo = url && url.match(/([^/:]+)\/([^/]+?)(?:\.git|\/)?$/);
     return parsedRepo && {
@@ -413,5 +416,23 @@ export default {
       path = `${currAbsolutePath}/${path}`;
     }
     return (path.indexOf('/') === 0 ? path : `/${path}`).replaceAll(' ', '%20');
+  },
+  findNodeByPath(rootNode, currDirNode, filePath) {
+    // 先获取绝对路径
+    const path = this.getAbsoluteFilePath(currDirNode, filePath).replaceAll('%20', ' ');
+    const pathArr = path.split('/');
+    let node = rootNode;
+    for (let i = 0; i < pathArr.length; i += 1) {
+      if (i > 0) {
+        if (i === pathArr.length - 1) {
+          return node.files.find(it => `${it.item.name}.md` === pathArr[i]);
+        }
+        node = node.folders.find(it => it.item.name === pathArr[i]);
+        if (!node) {
+          return null;
+        }
+      }
+    }
+    return null;
   },
 };

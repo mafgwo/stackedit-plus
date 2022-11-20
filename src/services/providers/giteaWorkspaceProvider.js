@@ -320,4 +320,12 @@ export default new Provider({
     });
     return Provider.parseContent(data, contentId);
   },
+  getFilePathUrl(path) {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+    const workspace = store.getters['workspace/currentWorkspace'];
+    return `${token.serverUrl}/${workspace.owner}/${workspace.repo}/src/branch/${workspace.branch}${path}`;
+  },
 });
