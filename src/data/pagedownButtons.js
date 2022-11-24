@@ -15,7 +15,7 @@ export default [{
   method: 'strikethrough',
   title: '删除线',
   icon: 'format-strikethrough',
-}, {
+// }, {
 }, {
   method: 'ulist',
   title: '无序列表',
@@ -28,7 +28,7 @@ export default [{
   method: 'clist',
   title: '可选列表',
   icon: 'format-list-checks',
-}, {
+// }, {
 }, {
   method: 'quote',
   title: '块引用',

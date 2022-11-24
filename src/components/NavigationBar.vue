@@ -114,7 +114,8 @@ export default {
       publishLocations: 'current',
     }),
     pagedownButtons() {
-      return pagedownButtons.map(button => ({
+      const buttonShowObj = store.getters['data/computedSettings'].editor.headButtons;
+      return pagedownButtons.filter(it => buttonShowObj[it.method]).map(button => ({
         ...button,
         titleWithShortcut: `${button.title}${getShortcut(button.method)}`,
         iconClass: `icon-${button.icon}`,

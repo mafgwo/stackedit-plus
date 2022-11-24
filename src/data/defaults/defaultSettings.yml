@@ -17,6 +17,32 @@ editor:
   monospacedFontOnly: false
   # 是否显示右上角图标
   showInPageButtons: true
+  # 头部的按钮是否显示独立设置
+  headButtons:
+    # 加粗
+    bold: true
+    # 斜体
+    italic: true
+    # 标题
+    heading: true
+    # 删除线
+    strikethrough: true
+    # 无序列表
+    ulist: true
+    # 有序列表
+    olist: true
+    # 可选列表
+    clist: true
+    # 块引用
+    quote: true
+    # 代码
+    code: true
+    # 表格
+    table: true
+    # 链接
+    link: true
+    # 图片
+    image: true
 
 # Keyboard shortcuts
 # See https://craig.is/killing/mice

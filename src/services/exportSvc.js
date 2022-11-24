@@ -1,3 +1,4 @@
+import md5 from 'js-md5';
 import FileSaver from 'file-saver';
 import TemplateWorker from 'worker-loader!./templateWorker.js'; // eslint-disable-line
 import localDbSvc from './localDbSvc';
@@ -34,6 +35,24 @@ function groupHeadings(headings, level = 1) {
   return result;
 }
 
+const getImgBase64 = async (uri) => {
+  if (uri.indexOf('http://') !== 0 && uri.indexOf('https://') !== 0) {
+    const currDirNode = store.getters['explorer/selectedNodeFolder'];
+    const absoluteImgPath = utils.getAbsoluteFilePath(currDirNode, uri);
+    const md5Id = md5(absoluteImgPath);
+    const imgItem = await localDbSvc.getImgItem(md5Id);
+    if (imgItem) {
+      const potIdx = uri.lastIndexOf('.');
+      const suffix = potIdx > -1 ? uri.substring(potIdx + 1) : 'png';
+      const mime = `image/${suffix}`;
+      return `data:${mime};base64,${imgItem.content}`;
+    }
+    return '';
+  }
+  return uri;
+};
+
+
 const containerElt = document.createElement('div');
 containerElt.className = 'hidden-rendering-container';
 document.body.appendChild(containerElt);
@@ -64,6 +83,28 @@ export default {
       }
       wrapperElt.parentNode.removeChild(wrapperElt);
     });
+
+    // 替换相对路径图片为blob图片
+    const imgs = Array.prototype.slice.call(containerElt.getElementsByTagName('img')).map((imgElt) => {
+      let uri = imgElt.attributes.src.nodeValue;
+      if (uri.indexOf('http://') !== 0 && uri.indexOf('https://') !== 0) {
+        uri = decodeURIComponent(uri);
+        imgElt.removeAttribute('src');
+        return { imgElt, uri };
+      }
+      return { imgElt };
+    });
+    const loadedPromises = imgs.map(it => new Promise((resolve, reject) => {
+      if (!it.imgElt.src && it.uri) {
+        getImgBase64(it.uri).then((newUrl) => {
+          it.imgElt.src = newUrl;
+          resolve();
+        }, () => reject(new Error('加载当前空间图片出错')));
+        return;
+      }
+      resolve();
+    }));
+    await Promise.all(loadedPromises);
 
     // Make TOC
     const headings = containerElt.querySelectorAll('h1,h2,h3,h4,h5,h6').cl_map(headingElt => ({
