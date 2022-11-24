@@ -302,11 +302,6 @@ img {
 }
 
 .stackedit--pdf {
-  blockquote {
-    // wkhtmltopdf doesn't like borders with transparency
-    border-left-color: #ececec;
-  }
-
   .stackedit__html {
     padding-left: 0;
     padding-right: 0;
