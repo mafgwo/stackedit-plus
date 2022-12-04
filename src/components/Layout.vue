@@ -9,7 +9,7 @@
           <navigation-bar></navigation-bar>
         </div>
         <div class="layout__panel flex flex--row" :style="{height: styles.innerHeight + 'px'}">
-          <div class="layout__panel layout__panel--editor" :class="currTheme" v-show="styles.showEditor" :style="{width: (styles.editorWidth + styles.editorGutterWidth) + 'px', fontSize: styles.fontSize + 'px'}">
+          <div class="layout__panel layout__panel--editor" :class="editTheme" v-show="styles.showEditor" :style="{width: (styles.editorWidth + styles.editorGutterWidth) + 'px', fontSize: styles.fontSize + 'px'}">
             <div class="gutter" :style="{left: styles.editorGutterLeft + 'px'}">
               <div class="gutter__background" v-if="styles.editorGutterWidth" :style="{width: styles.editorGutterWidth + 'px'}"></div>
             </div>
@@ -28,6 +28,7 @@
               <div class="gutter__background" v-if="styles.previewGutterWidth" :style="{width: styles.previewGutterWidth + 'px'}"></div>
             </div>
             <preview></preview>
+            <preview-in-page-buttons></preview-in-page-buttons>
             <div class="gutter" :style="{left: styles.previewGutterLeft + 'px'}">
               <sticky-comment v-if="styles.previewGutterWidth && stickyComment === 'top'"></sticky-comment>
               <current-discussion v-if="styles.previewGutterWidth"></current-discussion>
@@ -60,6 +61,7 @@ import Editor from './Editor';
 import Preview from './Preview';
 import Tour from './Tour';
 import EditorInPageButtons from './EditorInPageButtons';
+import PreviewInPageButtons from './PreviewInPageButtons';
 import StickyComment from './gutters/StickyComment';
 import CurrentDiscussion from './gutters/CurrentDiscussion';
 import FindReplace from './FindReplace';
@@ -78,6 +80,7 @@ export default {
     Preview,
     Tour,
     EditorInPageButtons,
+    PreviewInPageButtons,
     StickyComment,
     CurrentDiscussion,
     FindReplace,
@@ -102,7 +105,7 @@ export default {
     ...mapGetters('theme', [
       'currEditTheme',
     ]),
-    currTheme() {
+    editTheme() {
       return `edit-theme--${this.currEditTheme || 'default'}`;
     },
     showFindReplace() {

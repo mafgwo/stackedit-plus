@@ -1,7 +1,7 @@
 <template>
   <div class="preview">
     <div class="preview__inner-1" @click="onClick" @scroll="onScroll">
-      <div class="preview__inner-2" :style="{padding: styles.previewPadding}">
+      <div class="preview__inner-2" :class="previewTheme" :style="{padding: styles.previewPadding}">
       </div>
       <div class="gutter" :style="{left: styles.previewGutterLeft + 'px'}">
         <comment-list v-if="styles.previewGutterWidth"></comment-list>
@@ -37,9 +37,15 @@ export default {
     ...mapGetters('file', [
       'isCurrentTemp',
     ]),
+    ...mapGetters('theme', [
+      'currPreviewTheme',
+    ]),
     ...mapGetters('layout', [
       'styles',
     ]),
+    previewTheme() {
+      return `preview-theme--${this.currPreviewTheme || 'default'}`;
+    },
   },
   methods: {
     ...mapActions('data', [

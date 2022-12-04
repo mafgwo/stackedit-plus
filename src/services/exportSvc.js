@@ -107,7 +107,11 @@ export default {
     await Promise.all(loadedPromises);
 
     // Make TOC
-    const headings = containerElt.querySelectorAll('h1,h2,h3,h4,h5,h6').cl_map(headingElt => ({
+    const allHeaders = containerElt.querySelectorAll('h1,h2,h3,h4,h5,h6');
+    Array.prototype.slice.call(allHeaders).forEach((headingElt) => {
+      headingElt.innerHTML = `<span class="prefix"></span><span class="content">${headingElt.innerHTML}</span><span class="suffix"></span>`;
+    });
+    const headings = allHeaders.cl_map(headingElt => ({
       title: headingElt.textContent,
       anchor: headingElt.id,
       level: parseInt(headingElt.tagName.slice(1), 10),

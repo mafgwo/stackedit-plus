@@ -62,6 +62,8 @@ import SwitchTheme from './SwitchTheme';
 import Search from './Search';
 import FindReplace from './FindReplace';
 import SelectTheme from './SelectTheme';
+import Copy from './Copy';
+import Ellipsis from './Ellipsis';
 
 Vue.component('iconProvider', Provider);
 Vue.component('iconFormatBold', FormatBold);
@@ -126,3 +128,5 @@ Vue.component('iconSwitchTheme', SwitchTheme);
 Vue.component('iconSearch', Search);
 Vue.component('iconFindReplace', FindReplace);
 Vue.component('iconSelectTheme', SelectTheme);
+Vue.component('iconCopy', Copy);
+Vue.component('iconEllipsis', Ellipsis);

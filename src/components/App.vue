@@ -91,6 +91,9 @@ export default {
       // store 编辑主题
       const editTheme = localStorage.getItem('theme/currEditTheme');
       store.dispatch('theme/setEditTheme', editTheme || 'default');
+      // store 预览主题
+      const previewTheme = localStorage.getItem('theme/currPreviewTheme');
+      store.dispatch('theme/setPreviewTheme', previewTheme || 'default');
       this.ready = true;
       tempFileSvc.setReady();
     } catch (err) {

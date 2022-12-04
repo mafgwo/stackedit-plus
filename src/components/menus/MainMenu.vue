@@ -110,6 +110,11 @@
       编辑区主题
       <span>编辑区主题样式(自定义主题可编辑)。</span>
     </menu-entry>
+    <menu-entry @click.native="setPanel('previewTheme')">
+      <icon-select-theme slot="icon"></icon-select-theme>
+      预览区主题
+      <span>预览区主题样式(自定义主题可编辑)。</span>
+    </menu-entry>
     <menu-entry @click.native="settings">
       <icon-settings slot="icon"></icon-settings>
       <div>配置</div>

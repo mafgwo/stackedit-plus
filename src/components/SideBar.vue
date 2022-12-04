@@ -24,6 +24,7 @@
         <pre class="markdown-highlighting" v-html="markdownSample"></pre>
       </div>
       <edit-theme-menu v-else-if="panel === 'editTheme'"></edit-theme-menu>
+      <preview-theme-menu v-else-if="panel === 'previewTheme'"></preview-theme-menu>
       <div class="side-bar__panel side-bar__panel--toc" :class="{'side-bar__panel--hidden': panel !== 'toc'}">
         <toc>
         </toc>
@@ -43,6 +44,7 @@ import HistoryMenu from './menus/HistoryMenu';
 import ImportExportMenu from './menus/ImportExportMenu';
 import WorkspaceBackupMenu from './menus/WorkspaceBackupMenu';
 import EditThemeMenu from './menus/EditThemeMenu';
+import PreviewThemeMenu from './menus/PreviewThemeMenu';
 import markdownSample from '../data/markdownSample.md';
 import markdownConversionSvc from '../services/markdownConversionSvc';
 import store from '../store';
@@ -58,6 +60,7 @@ const panelNames = {
   importExport: '导入/导出',
   workspaceBackups: '文档空间备份',
   editTheme: '编辑区主题',
+  previewTheme: '预览区主题',
 };
 
 export default {
@@ -71,6 +74,7 @@ export default {
     ImportExportMenu,
     WorkspaceBackupMenu,
     EditThemeMenu,
+    PreviewThemeMenu,
   },
   data: () => ({
     markdownSample: markdownConversionSvc.highlight(markdownSample),

@@ -1,10 +1,9 @@
 <template>
     <span class="dropdown-menu">
-      <span @click="toggleMenu()" class="dropdown-toggle">
+      <span ref="slotInfo" @click="toggleMenu()" class="dropdown-toggle">
         <slot></slot>
       </span>
-  
-      <ul class="dropdown-menu-items" v-if="showMenu">
+      <ul class="dropdown-menu-items" :style="dropdownStyle" v-if="showMenu">
         <li v-for="(option, idx) in options" :key="idx">
           <a href="javascript:void(0)" :class="{selected: option.value === selectedOption.value}" @click="updateOption(option)">
             {{ option.name }}
@@ -15,6 +14,8 @@
   </template>
   
   <script>
+    import store from '../../store';
+
     export default {
       data: () => ({
         selectedOption: {
@@ -46,13 +47,19 @@
       beforeDestroy() {
         document.removeEventListener('click', this.clickHandler);
       },
+      computed: {
+        dropdownStyle() {
+          const height = store.state.layout.bodyHeight;
+          return `max-height: ${height * 0.7}px;`;
+        },
+      },
       methods: {
         updateOption(option) {
           this.selectedOption = option;
           if (this.closeOnItemClick) {
             this.showMenu = false;
           }
-          this.$emit('change', this.selectedOption);
+          this.$emit('change', option);
         },
         toggleMenu() {
           this.showMenu = !this.showMenu;
@@ -84,7 +91,7 @@
     max-height: 450px;
     overflow-y: scroll;
     padding: 5px 0;
-    margin: 2px 0 0;
+    margin: 0;
     list-style: none;
     font-size: 15px;
     background-color: #666;

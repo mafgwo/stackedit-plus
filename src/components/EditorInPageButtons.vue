@@ -12,8 +12,8 @@
           <icon-select-theme></icon-select-theme>
         </dropdown-menu>
       </li>
-      <li title="Markdown语法帮助">
-        <a @click="showHelp"><icon-help-circle></icon-help-circle></a>
+      <li class="after">
+        <icon-ellipsis></icon-ellipsis>
       </li>
     </ul>
   </div>
@@ -123,10 +123,6 @@ export default {
         store.dispatch('data/setSideBarPanel', 'editTheme');
       }
     },
-    showHelp() {
-      this.toggleSideBar(true);
-      store.dispatch('data/setSideBarPanel', 'help');
-    },
   },
 };
 </script>
@@ -137,20 +133,44 @@ export default {
 .editor-in-page-buttons {
   position: absolute;
   top: 0;
-  right: 10px;
+  left: -108px;
   height: 34px;
   padding: 5px;
-  background-color: rgba(187, 187, 187, 0.05);
+  background-color: rgba(84, 96, 114, 0.4);
   border-radius: $border-radius-base;
+  transition: 0.5s;
+  display: flex;
+
+  .dropdown-menu {
+    display: none;
+
+    .dropdown-menu-items {
+      right: unset;
+      left: 0;
+    }
+  }
+
+  &:active,
+  &:focus,
+  &:hover {
+    left: 0;
+    transition: 0.5s;
+    background-color: #546072;
+
+    .dropdown-menu {
+      display: block;
+    }
+  }
 
   ul {
     padding: 0;
     margin-left: 10px;
+    line-height: 20px;
 
     li {
-      line-height: 16px;
       width: 16px;
       display: inline-block;
+      vertical-align: middle;
       list-style: none;
       cursor: pointer;
       font-size: 14px;
@@ -160,13 +180,18 @@ export default {
 
   .icon {
     color: #dea731;
-    opacity: 0.3;
+    opacity: 0.7;
 
     &:active,
     &:focus,
     &:hover {
       opacity: 1;
     }
+  }
+
+  .after {
+    margin-left: 0;
+    margin-right: -6px;
   }
 }
 </style>
