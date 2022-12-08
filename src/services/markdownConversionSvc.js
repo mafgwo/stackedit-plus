@@ -44,7 +44,7 @@ const noSpellcheckTokens = Object.create(null);
 [
   'code',
   'pre',
-  'pre gfm',
+  'pre gfm cn-code',
   'math block',
   'math inline',
   'math expr block',
