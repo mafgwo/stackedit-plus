@@ -18,6 +18,8 @@ awsSecretAccessKey: ""
 giteaClientId: ""
 giteaClientSecret: ""
 giteaUrl: ""
+gitlabClientId: ""
+gitlabUrl: ""
 
 replicaCount: 1
 

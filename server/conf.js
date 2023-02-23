@@ -14,6 +14,8 @@ const wordpressClientId = process.env.WORDPRESS_CLIENT_ID;
 const giteaClientId = process.env.GITEA_CLIENT_ID;
 const giteaClientSecret = process.env.GITEA_CLIENT_SECRET;
 const giteaUrl = process.env.GITEA_URL;
+const gitlabClientId = process.env.GITLAB_CLIENT_ID;
+const gitlabUrl = process.env.GITLAB_URL;
 
 exports.values = {
   pandocPath,
@@ -43,4 +45,6 @@ exports.publicValues = {
   allowSponsorship: !!paypalReceiverEmail,
   giteaClientId,
   giteaUrl,
+  gitlabClientId,
+  gitlabUrl,
 };

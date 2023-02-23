@@ -51,11 +51,22 @@ export default {
    * https://docs.gitlab.com/ee/api/oauth2.html
    */
   async startOauth2(serverUrl, applicationId, sub = null, silent = false) {
+    let apiUrl = serverUrl;
+    let clientId = applicationId;
+    // 获取gitea配置的参数
+    await networkSvc.getServerConf();
+    const confClientId = store.getters['data/serverConf'].gitlabClientId;
+    const confServerUrl = store.getters['data/serverConf'].gitlabUrl;
+    // 存在gitea配置则使用后端配置
+    if (confClientId && confServerUrl) {
+      apiUrl = confServerUrl;
+      clientId = confClientId;
+    }
     // Get an OAuth2 code
     const { accessToken } = await networkSvc.startOauth2(
-      `${serverUrl}/oauth/authorize`,
+      `${apiUrl}/oauth/authorize`,
       {
-        client_id: applicationId,
+        client_id: clientId,
         response_type: 'token',
         scope: 'api',
       },
@@ -157,14 +168,20 @@ export default {
     path,
     content,
     sha,
+    isImg,
     commitMessage,
   }) {
+    let uploadContent = content;
+    if (isImg && typeof content !== 'string') {
+      uploadContent = await utils.encodeFiletoBase64(content);
+    }
     return request(token, {
       method: sha ? 'PUT' : 'POST',
       url: `projects/${encodeURIComponent(projectId)}/repository/files/${encodeURIComponent(path)}`,
       body: {
         commit_message: commitMessage || getCommitMessage(sha ? 'updateFileMessage' : 'createFileMessage', path),
-        content,
+        encoding: 'base64',
+        content: isImg ? uploadContent : utils.encodeBase64(content),
         last_commit_id: sha,
         branch,
       },
@@ -200,6 +217,7 @@ export default {
     projectId,
     branch,
     path,
+    isImg,
   }) {
     const res = await request(token, {
       url: `projects/${encodeURIComponent(projectId)}/repository/files/${encodeURIComponent(path)}`,
@@ -207,7 +225,7 @@ export default {
     });
     return {
       sha: res.last_commit_id,
-      data: utils.decodeBase64(res.content),
+      data: !isImg ? utils.decodeBase64(res.content) : res.content,
     };
   },
 };

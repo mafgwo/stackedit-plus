@@ -69,6 +69,7 @@ StackEdit中文版
 - 支持图片直接存储到当前文档空间（2022-10-29）
 - 支持MD文档之间链接跳转（2022-11-20）
 - 支持预览区域选择主题样式（2022-12-04）
+- Gitlab的支持优化（2023-02-23）
 
 ## 国外开源版本弊端：
 - 作者已经不维护了
@@ -151,6 +152,9 @@ docker run -itd --name stackedit \
 
 - Gitea可选择性配置环境变量（未配置则在关联时前端指定，有配置则仅允许配置的应用信息）：GITEA_CLIENT_ID、GITEA_CLIENT_SECRET、GITEA_URL，**[如何创建Gitea应用](./docs/部署之Gitea应用创建.md)**
 
+- Gitlab可选择性配置环境变量（未配置则在关联时前端指定，有配置则仅允许配置的应用信息）：GITLAB_CLIENT_ID、GITEA_URL **如何创建Gitlab应用(待补充文档)**
+
+（特别说明：自建的Gitea、Gitlab要能接入stackedit必须支持跨域）
 
 ## 编译与运行
 > 编译运行的nodejs版本选择11.15.0版本

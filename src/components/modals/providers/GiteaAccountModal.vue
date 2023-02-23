@@ -41,6 +41,7 @@
 import modalTemplate from '../common/modalTemplate';
 import constants from '../../../data/constants';
 import store from '../../../store';
+import networkSvc from '../../../services/networkSvc';
 
 export default modalTemplate({
   data: () => ({
@@ -64,6 +65,9 @@ export default modalTemplate({
       const confServerUrl = store.getters['data/serverConf'].giteaUrl;
       return !!confClientId && !!confServerUrl;
     },
+  },
+  mounted() {
+    networkSvc.getServerConf();
   },
   methods: {
     resolve() {
