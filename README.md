@@ -156,7 +156,7 @@ docker run -itd --name stackedit \
 
 - Gitea可选择性配置环境变量（未配置则在关联时前端指定，有配置则仅允许配置的应用信息）：GITEA_CLIENT_ID、GITEA_CLIENT_SECRET、GITEA_URL，**[如何创建Gitea应用](./docs/部署之Gitea应用创建.md)**
 
-- Gitlab可选择性配置环境变量（未配置则在关联时前端指定，有配置则仅允许配置的应用信息）：GITLAB_CLIENT_ID、GITEA_URL **如何创建Gitlab应用(待补充文档)**
+- Gitlab可选择性配置环境变量（未配置则在关联时前端指定，有配置则仅允许配置的应用信息）：GITLAB_CLIENT_ID、GITLAB_URL **如何创建Gitlab应用(待补充文档)**
 
 （特别说明：自建的Gitea、Gitlab要能接入stackedit必须支持跨域）
 
