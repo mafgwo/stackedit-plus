@@ -105,6 +105,8 @@ services:
       - GITEA_CLIENT_ID=【不需要支持则删掉】
       - GITEA_CLIENT_SECRET=【不需要支持则删掉】
       - GITEA_URL=【不需要支持则删掉】
+      - GITLAB_CLIENT_ID=【不需要支持则删掉】
+      - GITLAB_URL=【不需要支持则删掉】
     ports:
       - 8080:8080/tcp
     network_mode: bridge
@@ -139,6 +141,8 @@ docker run -itd --name stackedit \
   -e GITEA_CLIENT_ID=【不需要支持则删掉】 \
   -e GITEA_CLIENT_SECRET=【不需要支持则删掉】 \
   -e GITEA_URL=【不需要支持则删掉】 \
+  -e GITLAB_CLIENT_ID=【不需要支持则删掉】 \
+  -e GITLAB_URL=【不需要支持则删掉】 \
   mafgwo/stackedit:【docker中央仓库找到最新版本】
 
 ```
