@@ -8,6 +8,8 @@ import defaultLayoutSettings from '../data/defaults/defaultLayoutSettings';
 import plainHtmlTemplate from '../data/templates/plainHtmlTemplate.html';
 import styledHtmlTemplate from '../data/templates/styledHtmlTemplate.html';
 import styledHtmlWithTocTemplate from '../data/templates/styledHtmlWithTocTemplate.html';
+import styledHtmlWithThemeTemplate from '../data/templates/styledHtmlWithThemeTemplate.html';
+import styledHtmlWithThemeAndTocTemplate from '../data/templates/styledHtmlWithThemeAndTocTemplate.html';
 import jekyllSiteTemplate from '../data/templates/jekyllSiteTemplate.html';
 import constants from '../data/constants';
 import features from '../data/features';
@@ -97,6 +99,8 @@ const defaultTemplates = {
   plainHtml: makeAdditionalTemplate('Plain HTML', plainHtmlTemplate),
   styledHtml: makeAdditionalTemplate('Styled HTML', styledHtmlTemplate),
   styledHtmlWithToc: makeAdditionalTemplate('Styled HTML with TOC', styledHtmlWithTocTemplate),
+  styledHtmlWithTheme: makeAdditionalTemplate('Styled HTML with Theme', styledHtmlWithThemeTemplate),
+  styledHtmlWithThemeAndToc: makeAdditionalTemplate('Styled HTML with Theme And TOC', styledHtmlWithThemeAndTocTemplate),
   jekyllSite: makeAdditionalTemplate('Jekyll site', jekyllSiteTemplate),
 };
 

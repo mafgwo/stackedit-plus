@@ -73,6 +73,12 @@ export default {
     const parsingCtx = markdownConversionSvc.parseSections(converter, content.text);
     const conversionCtx = markdownConversionSvc.convert(parsingCtx);
     const html = conversionCtx.htmlSectionList.map(htmlSanitizer.sanitizeHtml).join('');
+    const themeClass = `preview-theme--${store.state.theme.currPreviewTheme}`;
+    let themeStyleContent = '';
+    const themeStyleEle = document.getElementById(`preview-theme-${store.state.theme.currPreviewTheme}`);
+    if (themeStyleEle) {
+      themeStyleContent = themeStyleEle.innerText;
+    }
     containerElt.innerHTML = html;
     extensionSvc.sectionPreview(containerElt, options);
 
@@ -128,6 +134,8 @@ export default {
           yamlProperties: content.properties,
           html: containerElt.innerHTML,
           toc,
+          themeClass,
+          themeStyleContent,
         },
       }],
     };
