@@ -1,0 +1,355 @@
+@import './variables';
+
+.markdown-highlighting {
+  color: $editor-color-light;
+  caret-color: $editor-color-light-low;
+
+  .app--dark & {
+    color: $editor-color-dark;
+    caret-color: $editor-color-dark-low;
+  }
+
+  font-family: inherit;
+  font-size: inherit;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  font-weight: $editor-font-weight-base;
+
+  .code {
+    font-family: $font-family-monospace;
+    font-size: $font-size-monospace;
+
+    * {
+      font-size: inherit !important;
+    }
+  }
+
+  .pre {
+    color: $editor-color-light;
+
+    .app--dark & {
+      color: $editor-color-dark;
+    }
+
+    font-family: $font-family-monospace;
+    font-size: $font-size-monospace;
+
+    [class*='language-'] {
+      color: $editor-color-light-low;
+
+      .app--dark & {
+        color: $editor-color-dark-low;
+      }
+    }
+
+    * {
+      font-size: inherit !important;
+    }
+
+    &,
+    * {
+      line-height: $line-height-title;
+    }
+  }
+
+  .tag {
+    color: $editor-color-light;
+
+    .app--dark & {
+      color: $editor-color-dark;
+    }
+
+    font-family: $font-family-monospace;
+    font-size: $font-size-monospace;
+    font-weight: $editor-font-weight-bold;
+
+    .punctuation,
+    .attr-value,
+    .attr-name {
+      font-weight: $editor-font-weight-base;
+    }
+
+    * {
+      font-size: inherit !important;
+    }
+  }
+
+  .latex,
+  .math {
+    font-family: $font-family-monospace;
+    color: $editor-color-light;
+
+    .app--dark & {
+      color: $editor-color-dark;
+    }
+  }
+
+  .entity {
+    color: $editor-color-light;
+
+    .app--dark & {
+      color: $editor-color-dark;
+    }
+
+    font-family: $font-family-monospace;
+    font-size: $font-size-monospace;
+    font-style: italic;
+
+    * {
+      font-size: inherit !important;
+    }
+  }
+
+  .table {
+    font-family: $font-family-monospace;
+    font-size: $font-size-monospace;
+
+    * {
+      font-size: inherit !important;
+    }
+  }
+
+  .comment {
+    color: $editor-color-light-high;
+
+    .app--dark & {
+      color: $editor-color-dark-high;
+    }
+  }
+
+  .keyword {
+    color: $editor-color-light-low;
+
+    .app--dark & {
+      color: $editor-color-dark-low;
+    }
+
+    font-weight: $editor-font-weight-bold;
+  }
+
+  .code,
+  .img,
+  .img-wrapper,
+  .imgref,
+  .cl-toc {
+    background-color: $code-bg;
+    border-radius: $code-border-radius;
+    padding: 0.15em 0;
+
+    .app--dark & {
+      background-color: $code-dark-bg;
+    }
+  }
+
+  .img-wrapper {
+    display: inline-block;
+
+    .img {
+      display: inline-block;
+      padding: 0;
+      background-color: transparent;
+    }
+
+    img {
+      max-width: 100%;
+      padding: 0 0.15em;
+      box-sizing: content-box;
+    }
+  }
+
+  .cl-toc {
+    font-size: 2.8em;
+    padding: 0.15em;
+  }
+
+  .blockquote {
+    color: $editor-color-light-blockquote;
+
+    .app--dark & {
+      color: $editor-color-dark-blockquote;
+    }
+  }
+
+  .h1,
+  .h11,
+  .h2,
+  .h22,
+  .h3,
+  .h4,
+  .h5,
+  .h6 {
+    font-weight: $editor-font-weight-bold;
+
+    &,
+    * {
+      line-height: $line-height-title;
+    }
+  }
+
+  .h1,
+  .h11 {
+    font-size: 1.7em;
+  }
+
+  .h2,
+  .h22 {
+    font-size: 1.4em;
+  }
+
+  .h3 {
+    font-size: 1.2em;
+  }
+
+  .h4 {
+    font-size: 1.1em;
+  }
+
+  .h5 {
+    font-size: 1em;
+  }
+
+  .h6 {
+    font-size: 0.9em;
+  }
+
+  .cl-hash {
+    color: $editor-color-light-high;
+
+    .app--dark & {
+      color: $editor-color-dark-high;
+    }
+  }
+
+  .cl,
+  .hr {
+    color: $editor-color-light-high;
+
+    .app--dark & {
+      color: $editor-color-dark-high;
+    }
+
+    font-style: normal;
+    font-weight: $editor-font-weight-base;
+  }
+
+  .em,
+  .em .cl {
+    font-style: italic;
+  }
+
+  .strong,
+  .strong .cl,
+  .term {
+    font-weight: $editor-font-weight-bold;
+  }
+
+  .cl-del-text {
+    text-decoration: line-through;
+  }
+
+  .cl-mark-text {
+    background-color: #f8f840;
+    color: $editor-color-light-low;
+  }
+
+  .url,
+  .email,
+  .cl-underlined-text {
+    text-decoration: underline;
+    color: #d7a55b;
+  }
+
+  .linkdef .url {
+    color: $editor-color-light-high;
+
+    .app--dark & {
+      color: $editor-color-dark-high;
+    }
+  }
+
+  .fn,
+  .inlinefn,
+  .sup {
+    font-size: smaller;
+    position: relative;
+    top: -0.5em;
+  }
+
+  .sub {
+    bottom: -0.25em;
+    font-size: smaller;
+    position: relative;
+  }
+
+  .img,
+  .imgref,
+  .link,
+  .linkref {
+    color: $editor-color-light-high;
+
+    .app--dark & {
+      color: $editor-color-dark-high;
+    }
+
+    .cl-underlined-text {
+      color: #d7a55b;
+    }
+  }
+
+  .cl-title {
+    color: $editor-color-light;
+
+    .app--dark & {
+      color: $editor-color-dark;
+    }
+  }
+
+  .cn-head {
+    color: #dea731;
+
+    .app--dark & {
+      color: #f8bb39;
+    }
+  }
+
+  .cn-strong {
+    color: #db784d;
+
+    .app--dark & {
+      color: #db784d;
+    }
+  }
+
+  .cn-code {
+    color: #59b003;
+
+    .app--dark & {
+      color: #95cc5e;
+    }
+  }
+
+  .cn-toc {
+    color: #d7a55b;
+    font-size: 2.5em;
+    padding: 0.2em;
+    background-color: rgba(0, 0, 0, 0.1);
+
+    .app--dark & {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+.markdown-highlighting--inline {
+  .h1,
+  .h11,
+  .h2,
+  .h22,
+  .h3,
+  .h4,
+  .h5,
+  .h6,
+  .cl-toc {
+    font-size: inherit;
+  }
+}

@@ -1,0 +1,71 @@
+# Default values for stackedit.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+dropboxAppKey: ""
+dropboxAppKeyFull: ""
+googleClientId: ""
+googleApiKey: ""
+githubClientId: ""
+githubClientSecret: ""
+giteeClientId: ""
+giteeClientSecret: ""
+wordpressClientId: ""
+wordpressSecret: ""
+paypalReceiverEmail: ""
+awsAccessKeyId: ""
+awsSecretAccessKey: ""
+giteaClientId: ""
+giteaClientSecret: ""
+giteaUrl: ""
+gitlabClientId: ""
+gitlabUrl: ""
+
+replicaCount: 1
+
+image:
+  repository: benweet/stackedit
+  tag: vSTACKEDIT_VERSION
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  annotations:
+   # kubernetes.io/ingress.class: nginx
+   # certmanager.k8s.io/issuer: letsencrypt-prod
+   # certmanager.k8s.io/acme-challenge-type: http01
+  hosts: []
+   # - host: stackedit.example.com
+   #   paths:
+   #     - /
+
+  tls: []
+   # - secretName: stackedit-tls
+   #   hosts:
+   #     - stackedit.example.com
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
