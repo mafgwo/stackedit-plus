@@ -21,7 +21,7 @@ export default {
       });
       // Check user result
       if (!body.success) {
-        throw new Error(`SM.MS个人信息获取失败，失败信息：${body.message}`);
+        throw new Error(`Failed to obtain SM.MS personal information. Failure information: ${body.message}`);
       }
       userSvc.addUserInfo({
         id: `${subPrefix}:${body.data.username}`,
@@ -41,7 +41,7 @@ export default {
     } catch (err) {
       console.error(err); // eslint-disable-line no-console
       store.dispatch('notification/error', err);
-      throw new Error(`SM.MS个人信息获取异常，异常信息：${err.message}`);
+      throw new Error(`Failed to obtain SM.MS personal information, Error: ${err.message}`);
     }
   },
   async addAccount(proxyUrl, apiSecretToken) {
@@ -67,8 +67,8 @@ export default {
       if (body.code === 'image_repeated') {
         return body.images;
       }
-      store.dispatch('notification/error', `SM.MS上传图片失败，失败信息：${body.message}`);
-      throw new Error(`SM.MS上传图片失败，失败信息：${body.message}`);
+      store.dispatch('notification/error', `SM.MS failed to upload the image, failure information: ${body.message}`);
+      throw new Error(`SM.MS failed to upload the image, failure information: ${body.message}`);
     }
     return body.data.url;
   },

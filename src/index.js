@@ -29,7 +29,7 @@ OfflinePluginRuntime.install({
 });
 
 if (localStorage.updated) {
-  store.dispatch('notification/info', 'StackEdit Plus has just updated itself!');
+  store.dispatch('notification/info', 'StackEdit+ has just updated itself!');
   setTimeout(() => localStorage.removeItem('updated'), 3000);
 }
 
@@ -39,7 +39,7 @@ if (!localStorage.installPrompted) {
     promptEvent.preventDefault();
 
     try {
-      await store.dispatch('notification/confirm', 'Add StackEdit Plus to your home screen?');
+      await store.dispatch('notification/confirm', 'Add StackEdit+ to your home screen?');
       promptEvent.prompt();
       await promptEvent.userChoice;
     } catch (err) {

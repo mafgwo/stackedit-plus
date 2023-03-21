@@ -1,14 +1,14 @@
 <template>
-  <modal-inner aria-label="链接Gitee账号">
+  <modal-inner aria-label="Link Gitee account">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="gitee"></icon-provider>
       </div>
-      <p>将您的<b>Gitee</b>账号链接到<b>StackEdit中文版</b>。</p>
+      <p>Link your <b>Gitee</b> account to <b>StackEdit+</b>.</p>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">取消</button>
-      <button class="button button--resolve" @click="config.resolve()">确认</button>
+      <button class="button" @click="config.reject()">Cancal</button>
+      <button class="button button--resolve" @click="config.resolve()">Ok</button>
     </div>
   </modal-inner>
 </template>

@@ -2,14 +2,14 @@
   <modal-inner class="modal__inner-1--about-modal" aria-label="About">
     <div class="modal__content">
       <div class="logo-background"></div>
-      StackEdit on <a target="_blank" href="https://github.com/mafgwo/stackedit-plus/">GitHub</a>
+      StackEdit+ on <a target="_blank" href="https://github.com/mafgwo/stackedit-plus/">GitHub</a>
       <br>
       <a target="_blank" href="https://github.com/mafgwo/stackedit-plus/issues">Issue tracker</a> — <a target="_blank" href="https://gitee.com/mafgwo/stackedit-plus/releases">Changelog</a>
       <br>
       <a target="_blank" href="#">Chrome app</a> — <a target="_blank" href="#">Chrome extension</a>
       <br>
       <hr>
-      <small>© 2022 StackEdit Plus<br>v{{version}}</small>
+      <small>© 2022 StackEdit+<br>v{{version}}</small>
       <h3>FAQ</h3>
       <div class="faq" v-html="faq"></div>
       <div class="modal__info">

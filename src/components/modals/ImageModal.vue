@@ -22,7 +22,7 @@
         <menu-item>
           <icon-provider slot="icon" :provider-id="currentWorkspace.providerId"></icon-provider>
           <div>
-            Current Workspace Iamge Upload Path
+            Current workspace image upload path
             <button class="menu-item__button button" @click.stop="removeByPath(path)" v-title="'Delete'">
               <icon-delete></icon-delete>
             </button>
@@ -57,7 +57,7 @@
               <icon-delete></icon-delete>
             </button>
           </div>
-          <span> {{tokenStorage.uname}}, Repo URL: {{tokenStorage.repoUrl}}, Path: {{tokenStorage.path}}, Branch: {{tokenStorage.branch}}</span>
+          <span> {{tokenStorage.uname}}, Repository URL: {{tokenStorage.repoUrl}}, Path: {{tokenStorage.path}}, Branch: {{tokenStorage.branch}}</span>
         </menu-item>
       </menu-entry>
       <menu-entry @click.native="addWorkspaceImgPath">

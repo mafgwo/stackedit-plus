@@ -31,7 +31,7 @@ export default {
       const params = {
         cmd: '_s-xclick',
         hosted_button_id: id,
-        custom: sponsorToken.sub,
+        custom: sponsorToken.name,
       };
       return {
         id,
@@ -44,10 +44,9 @@ export default {
 
     return {
       buttons: sponsorToken ? [
-        makeButton('QD7SFZS79D2AL', '$5', '3 months sponsorship'),
-        makeButton('WG64NCFL9TQZJ', '$15', '1 year sponsorship', '-25%'),
-        makeButton('G2E7MN873EQ3U', '$25', '2 years sponsorship', '-37%'),
-        makeButton('JQJT7ARKYC7FC', '$50', '5 years sponsorship', '-50%'),
+        makeButton('HKY9ZBH4FP3NQ', '$1.99', '3 months sponsorship'),
+        makeButton('PHJVD9NGDUK6E', '$5.99', '1 year sponsorship', '-25%'),
+        makeButton('365L9ZGYNEKZ2', '$9.99', '2 years sponsorship', '-37%'),
       ] : [],
     };
   },

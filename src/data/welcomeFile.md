@@ -1,11 +1,11 @@
-# Welcome to StackEdit Plus!
+# Welcome to StackEdit+!
 
-Hi! I'm your first Markdown file in **StackEdit Plus**. If you want to learn about StackEdit Plus, you can read me. If you want to play with Markdown, you can edit me. Once you have finished with me, you can create new files by opening the **file explorer** on the left corner of the navigation bar.
+Hi! I'm your first Markdown file in **StackEdit+**. If you want to learn about StackEdit+, you can read me. If you want to play with Markdown, you can edit me. Once you have finished with me, you can create new files by opening the **file explorer** on the left corner of the navigation bar.
 
 
 # Files
 
-StackEdit Plus stores your files in your browser, which means all your files are automatically saved locally and are accessible **offline!**
+StackEdit+ stores your files in your browser, which means all your files are automatically saved locally and are accessible **offline!**
 
 ## Create files and folders
 
@@ -19,9 +19,9 @@ All your files and folders are presented as a tree in the file explorer. You can
 
 You can rename the current file by clicking the file name in the navigation bar or by clicking the **Rename** button in the file explorer.
 
-## Search file
+## Search files
 
-You can search for files through the entire namespace using keywords by clicking the **Search Files** icon in File Explorer.
+You can search for files through the entire workspace using keywords by clicking the **Search files** icon in File Explorer.
 
 ## Delete a file
 
@@ -34,7 +34,7 @@ You can export the current file by clicking **Export to disk** in the menu. You 
 
 # Synchronization
 
-Synchronization is one of the biggest features of StackEdit Plus. It enables you to synchronize any file in your workspace with other files stored in your **Google Drive**, your **Dropbox** and your **GitHub** accounts. This allows you to keep writing on other devices, collaborate with people you share the file with, integrate easily into your workflow... The synchronization mechanism takes place every minute in the background, downloading, merging, and uploading file modifications.
+Synchronization is one of the biggest features of StackEdit+. It enables you to synchronize any file in your workspace with other files stored in your **Google Drive**, your **Dropbox** and your **GitHub** accounts. This allows you to keep writing on other devices, collaborate with people you share the file with, integrate easily into your workflow... The synchronization mechanism takes place every minute in the background, downloading, merging, and uploading file modifications.
 
 There are two types of synchronization and they can complement each other:
 
@@ -50,11 +50,11 @@ You can open a file from **Google Drive**, **Dropbox** or **GitHub** by opening 
 
 ## Save a file
 
-You can save any file of the workspace to **Google Drive**, **Dropbox** or **GitHub** by opening the **Synchronize** sub-menu and clicking **Save on**. Even if a file in the workspace is already synced, you can save it to another location. StackEdit Plus can sync one file with multiple locations and accounts.
+You can save any file of the workspace to **Google Drive**, **Dropbox** or **GitHub** by opening the **Synchronize** sub-menu and clicking **Save on**. Even if a file in the workspace is already synced, you can save it to another location. StackEdit+ can sync one file with multiple locations and accounts.
 
 ## Synchronize a file
 
-Once your file is linked to a synchronized location, StackEdit Plus will periodically synchronize it by downloading/uploading any modification. A merge will be performed if necessary and conflicts will be resolved.
+Once your file is linked to a synchronized location, StackEdit+ will periodically synchronize it by downloading/uploading any modification. A merge will be performed if necessary and conflicts will be resolved.
 
 If you just have modified your file and you want to force syncing, click the **Synchronize now** button in the navigation bar.
 
@@ -67,7 +67,7 @@ Since one file can be synced with multiple locations, you can list and manage sy
 
 # Publication
 
-Publishing in StackEdit Plus makes it simple for you to publish online your files. Once you're happy with a file, you can publish it to different hosting platforms like **Blogger**, **Dropbox**, **Gist**, **GitHub**, **Google Drive**, **WordPress** and **Zendesk**. With [Handlebars templates](http://handlebarsjs.com/), you have full control over what you export.
+Publishing in StackEdit+ makes it simple for you to publish online your files. Once you're happy with a file, you can publish it to different hosting platforms like **Blogger**, **Dropbox**, **Gist**, **GitHub**, **Google Drive**, **WordPress** and **Zendesk**. With [Handlebars templates](http://handlebarsjs.com/), you have full control over what you export.
 
 > Before starting to publish, you must link an account in the **Publish** sub-menu.
 
@@ -80,7 +80,7 @@ You can publish your file by opening the **Publish** sub-menu and by clicking **
 
 ## Update a publication
 
-After publishing, StackEdit Plus keeps your file linked to that publication which makes it easy for you to re-publish it. Once you have modified your file and you want to update your publication, click on the **Publish now** button in the navigation bar.
+After publishing, StackEdit+ keeps your file linked to that publication which makes it easy for you to re-publish it. Once you have modified your file and you want to update your publication, click on the **Publish now** button in the navigation bar.
 
 > **Note:** The **Publish now** button is disabled if your file has not been published yet.
 
@@ -91,7 +91,7 @@ Since one file can be published to multiple locations, you can list and manage p
 
 # Markdown extensions
 
-StackEdit Plus extends the standard Markdown syntax by adding extra **Markdown extensions**, providing you with some nice features.
+StackEdit+ extends the standard Markdown syntax by adding extra **Markdown extensions**, providing you with some nice features.
 
 > **ProTip:** You can disable any **Markdown extension** in the **File properties** dialog.
 

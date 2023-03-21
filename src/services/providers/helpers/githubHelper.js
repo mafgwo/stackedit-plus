@@ -6,6 +6,8 @@ import badgeSvc from '../../badgeSvc';
 
 const getScopes = token => [token.repoFullAccess ? 'repo' : 'public_repo', 'gist'];
 
+const appDataRepo = 'stackedit-app-data';
+
 const request = (token, options) => networkSvc.request({
   ...options,
   headers: {
@@ -62,7 +64,7 @@ export default {
   /**
    * https://developer.github.com/apps/building-oauth-apps/authorization-options-for-oauth-apps/
    */
-  async startOauth2(scopes, sub = null, silent = false) {
+  async startOauth2(scopes, sub = null, silent = false, isMain) {
     await networkSvc.getServerConf();
     const clientId = store.getters['data/serverConf'].githubClientId;
 
@@ -106,18 +108,52 @@ export default {
     }
 
     const oldToken = store.getters['data/githubTokensBySub'][user.id];
+
     // Build token object including scopes and sub
     const token = {
       scopes,
       accessToken,
+      // 主文档空间的登录 标识登录
+      isLogin: !!isMain || (oldToken && !!oldToken.isLogin),
       name: user.login,
       sub: `${user.id}`,
       imgStorages: oldToken && oldToken.imgStorages,
       repoFullAccess: scopes.includes('repo'),
     };
 
+    if (isMain) {
+      // check stackedit-app-data repo exist?
+      await this.checkAndCreateRepo(token);
+    }
+    // Refresh Sponsor flag
+    await this.refreshSponsorInfo(token);
+
     // Add token to github tokens
     store.dispatch('data/addGithubToken', token);
+    return token;
+  },
+  signin() {
+    return this.startOauth2(['repo', 'gist'], null, false, true);
+  },
+  // Refresh Sponsor flag
+  async refreshSponsorInfo(token) {
+    if (token.isLogin) {
+      try {
+        const res = await networkSvc.request({
+          method: 'GET',
+          url: 'userInfo',
+          params: {
+            idToken: token.accessToken,
+          },
+        });
+        token.isSponsor = res.body.sponsorUntil > Date.now();
+        if (token.isSponsor) {
+          badgeSvc.addBadge('sponsor');
+        }
+      } catch (err) {
+        // Ignore
+      }
+    }
     return token;
   },
   async addAccount(repoFullAccess = false) {
@@ -146,6 +182,30 @@ export default {
       throw new Error('Git tree too big. Please remove some files in the repository.');
     }
     return tree;
+  },
+
+  async checkAndCreateRepo(token) {
+    const url = `https://api.github.com/repos/${encodeURIComponent(token.name)}/${encodeURIComponent(appDataRepo)}`;
+    try {
+      await request(token, { url });
+    } catch (err) {
+      // create
+      if (err.status === 404) {
+        await request(token, {
+          method: 'POST',
+          url: 'https://api.github.com/repos/mafgwo/stackedit-app-data-template/generate',
+          body: {
+            owner: token.name,
+            name: appDataRepo,
+            description: 'This is stackedit+ app data repo.',
+            include_all_branches: false,
+            private: true,
+          },
+        });
+      } else {
+        throw err;
+      }
+    }
   },
 
   /**
@@ -228,14 +288,22 @@ export default {
     path,
     isImg,
   }) {
-    const { sha, content } = await repoRequest(token, owner, repo, {
-      url: `contents/${encodeURIComponent(path)}`,
-      params: { ref: branch },
-    });
-    return {
-      sha,
-      data: !isImg ? utils.decodeBase64(content) : content,
-    };
+    try {
+      const { sha, content } = await repoRequest(token, owner, repo, {
+        url: `contents/${encodeURIComponent(path)}`,
+        params: { ref: branch },
+      });
+      return {
+        sha,
+        data: !isImg ? utils.decodeBase64(content) : content,
+      };
+    } catch (err) {
+      // not .stackedit-data  throw err
+      if (err.status === 404 && path.indexOf('.stackedit-data') >= 0) {
+        return {};
+      }
+      throw err;
+    }
   },
   /**
    * 获取仓库信息

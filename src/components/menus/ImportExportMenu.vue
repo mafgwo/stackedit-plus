@@ -33,7 +33,7 @@
     </menu-entry>
     <menu-entry @click.native="exportPdf">
       <icon-download slot="icon"></icon-download>
-      <div>Export as PDF</div>
+      <div><div class="menu-entry__label" :class="{'menu-entry__label--warning': !isSponsor}">sponsor</div> Export as PDF</div>
       <span>Produce a PDF from an HTML template.</span>
     </menu-entry>
     <!-- <menu-entry @click.native="exportPandoc">

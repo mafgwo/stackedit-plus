@@ -105,7 +105,7 @@ export default {
     'Ok',
   ),
   workspaceGoogleRedirection: simpleModal(
-    '<p>StackEdit needs full Google Drive access to open this workspace.</p>',
+    '<p>StackEdit+ needs full Google Drive access to open this workspace.</p>',
     'Cancel',
     'Ok, grant',
   ),

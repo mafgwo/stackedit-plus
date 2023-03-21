@@ -111,7 +111,7 @@ export default new Provider({
     if (!folderId) {
       const folder = await googleHelper.uploadFile({
         token,
-        name: 'StackEdit workspace',
+        name: 'StackEdit+ workspace',
         parents: [],
         mediaType: googleHelper.folderMimeType,
       });
@@ -213,7 +213,7 @@ export default new Provider({
     const workspace = store.getters['workspace/currentWorkspace'];
     const result = [];
     changes.forEach((change) => {
-      // Ignore changes on StackEdit own folders
+      // Ignore changes on StackEdit+ own folders
       if (change.fileId === workspace.folderId
         || change.fileId === workspace.dataFolderId
         || change.fileId === workspace.trashFolderId

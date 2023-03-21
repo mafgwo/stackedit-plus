@@ -1,6 +1,6 @@
 const pandocPath = process.env.PANDOC_PATH || 'pandoc';
 const wkhtmltopdfPath = process.env.WKHTMLTOPDF_PATH || 'wkhtmltopdf';
-const userBucketName = process.env.USER_BUCKET_NAME || 'stackedit-users';
+const userBucketName = process.env.USER_BUCKET_NAME || 'stackeditplus';
 const paypalUri = process.env.PAYPAL_URI || 'https://www.paypal.com/cgi-bin/webscr';
 const paypalReceiverEmail = process.env.PAYPAL_RECEIVER_EMAIL;
 

@@ -148,17 +148,17 @@ export default [
   new Feature(
     'signIn',
     'Signed in',
-    'Sign in with Google, sync your main workspace and unlock functionalities.',
+    'Sign in with GitHub, sync your main workspace and unlock functionalities.',
     [
       new Feature(
         'syncMainWorkspace',
         'Main workspace synced',
-        'Sign in with Google to sync your main workspace with your Google Drive app data folder.',
+        'Sign in with GitHub to sync your main workspace with your GitHub stackedit-app-data repo.',
       ),
       new Feature(
         'sponsor',
         'Sponsor',
-        'Sign in with Google and sponsor StackEdit to unlock PDF and Pandoc exports.',
+        'Sign in with GitHub and sponsor StackEdit+ to unlock PDF and Pandoc exports.',
       ),
     ],
   ),

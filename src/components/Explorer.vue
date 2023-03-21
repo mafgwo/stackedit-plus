@@ -14,7 +14,7 @@
         <button class="side-title__button side-title__button--rename button" @click="editItem()" v-title="'Rename'">
           <icon-pen></icon-pen>
         </button>
-        <button class="side-title__button side-title__button--search button" @click="toSearch()" v-title="'Search File'">
+        <button class="side-title__button side-title__button--search button" @click="toSearch()" v-title="'Search files'">
           <icon-file-search></icon-file-search>
         </button>
       </div>
@@ -23,7 +23,7 @@
           <icon-dots-horizontal></icon-dots-horizontal>
         </button>
         <div class="side-title__title">
-          Search File
+          Search files
         </div>
       </div>
       <button class="side-title__button side-title__button--close button" @click="toggleExplorer(false)" v-title="'Close explorer'">
@@ -34,14 +34,14 @@
       <explorer-node :node="rootNode" :depth="0"></explorer-node>
     </div>
     <div class="explorer__search" tabindex="0" v-if="!light && showSearch">
-      <input type="text" v-model="searchText" class="text-input" placeholder="Please enter a keyword and press Enter" @keyup.enter="search" />
+      <input type="text" v-model="searchText" class="text-input" placeholder="Please input keyword and Enter" @keyup.enter="search" />
       <div class="explorer__search-list">
         <div class="search-tips" v-if="searching">Querying...</div>
         <a class="menu-entry button flex flex--row flex--align-center" :class="{'search-node--selected': currentFileId === fileItem.id}"
             v-for="fileItem in searchItems" :key="fileItem.id" @click="clickSearch(fileItem)" href="javascript:void(0)">
           {{ fileItem.name }}
         </a>
-        <div class="search-tips">Return up to 50 matching documents</div>
+        <div class="search-tips">Return up to 50 matching files.</div>
       </div>
     </div>
   </div>

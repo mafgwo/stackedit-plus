@@ -1,5 +1,5 @@
 import store from '../../store';
-import giteeHelper from './helpers/giteeHelper';
+import githubHelper from './helpers/githubHelper';
 import Provider from './common/Provider';
 import gitWorkspaceSvc from '../gitWorkspaceSvc';
 import userSvc from '../userSvc';
@@ -8,8 +8,8 @@ const appDataRepo = 'stackedit-app-data';
 const appDataBranch = 'master';
 
 export default new Provider({
-  id: 'giteeAppData',
-  name: 'Gitee application data',
+  id: 'githubAppData',
+  name: 'GitHub application data',
   getToken() {
     return store.getters['workspace/syncToken'];
   },
@@ -35,7 +35,7 @@ export default new Provider({
   },
   getChanges() {
     const token = this.getToken();
-    return giteeHelper.getTree({
+    return githubHelper.getTree({
       owner: token.name,
       repo: appDataRepo,
       branch: appDataBranch,
@@ -59,7 +59,7 @@ export default new Provider({
 
     // locations are stored as paths, so we upload an empty file
     const syncToken = store.getters['workspace/syncToken'];
-    await giteeHelper.uploadFile({
+    await githubHelper.uploadFile({
       owner: syncToken.name,
       repo: appDataRepo,
       branch: appDataBranch,
@@ -76,7 +76,7 @@ export default new Provider({
   async removeWorkspaceItem({ syncData }) {
     if (gitWorkspaceSvc.shaByPath[syncData.id]) {
       const syncToken = store.getters['workspace/syncToken'];
-      await giteeHelper.removeFile({
+      await githubHelper.removeFile({
         owner: syncToken.name,
         repo: appDataRepo,
         branch: appDataBranch,
@@ -92,7 +92,7 @@ export default new Provider({
     contentSyncData,
     fileSyncData,
   }) {
-    const { sha, data } = await giteeHelper.downloadFile({
+    const { sha, data } = await githubHelper.downloadFile({
       owner: token.name,
       repo: appDataRepo,
       branch: appDataBranch,
@@ -111,7 +111,7 @@ export default new Provider({
     };
   },
   async downloadFile({ token, path }) {
-    const { sha, data } = await giteeHelper.downloadFile({
+    const { sha, data } = await githubHelper.downloadFile({
       owner: token.name,
       repo: appDataRepo,
       branch: appDataBranch,
@@ -131,7 +131,7 @@ export default new Provider({
     const path = `.stackedit-data/${syncData.id}.json`;
     // const path = store.getters.gitPathsByItemId[syncData.id];
     // const path = syncData.id;
-    const { sha, data } = await giteeHelper.downloadFile({
+    const { sha, data } = await githubHelper.downloadFile({
       owner: token.name,
       repo: appDataRepo,
       branch: appDataBranch,
@@ -161,7 +161,7 @@ export default new Provider({
   }) {
     const isImg = file.type === 'img';
     const path = !isImg ? store.getters.gitPathsByItemId[file.id] : file.path;
-    const res = await giteeHelper.uploadFile({
+    const res = await githubHelper.uploadFile({
       owner: token.name,
       repo: appDataRepo,
       branch: appDataBranch,
@@ -201,7 +201,7 @@ export default new Provider({
     const path = `.stackedit-data/${item.id}.json`;
     // const path = store.getters.gitPathsByItemId[item.id];
     // const path = syncData.id;
-    const res = await giteeHelper.uploadFile({
+    const res = await githubHelper.uploadFile({
       token,
       owner: token.name,
       repo: appDataRepo,
@@ -227,7 +227,7 @@ export default new Provider({
       repo: appDataRepo,
       branch: appDataBranch,
     };
-    const entries = await giteeHelper.getCommits({
+    const entries = await githubHelper.getCommits({
       token,
       owner,
       repo,
@@ -247,7 +247,7 @@ export default new Provider({
       } else if (committer && committer.login) {
         user = committer;
       }
-      const sub = `${giteeHelper.subPrefix}:${user.login}`;
+      const sub = `${githubHelper.subPrefix}:${user.login}`;
       if (user.avatar_url && user.avatar_url.endsWith('.png') && !user.avatar_url.endsWith('no_portrait.png')) {
         user.avatar_url = `${user.avatar_url}!avatar60`;
       }
@@ -273,7 +273,7 @@ export default new Provider({
     fileSyncDataId,
     revisionId,
   }) {
-    const { data } = await giteeHelper.downloadFile({
+    const { data } = await githubHelper.downloadFile({
       owner: token.name,
       repo: appDataRepo,
       branch: revisionId,
@@ -287,6 +287,6 @@ export default new Provider({
     if (!token) {
       return null;
     }
-    return `https://gitee.com/${token.name}/${appDataRepo}/blob/${appDataBranch}${path}`;
+    return `https://github.com/${token.name}/${appDataRepo}/blob/${appDataBranch}${path}`;
   },
 });

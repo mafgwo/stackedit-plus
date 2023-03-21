@@ -2,16 +2,16 @@ function init_preview_theme_jikebrack() {
 const style = document.createElement('style');
 style.id = 'preview-theme-jikebrack';
 style.type = 'text/css';
-style.innerHTML = "/*极客黑样式，实时生效*/\n \
+style.innerHTML = "/*Geek black style, effective in real time*/\n \
 \n \
-/* 全局属性\n \
+/* Global Properties\n \
  */\n \
 .preview-theme--jikebrack {\n \
 color: #2b2b2b;\n \
 background-color: #fff;\n \
 }\n \
 \n \
-/* 段落\n \
+/* Paragraph\n \
  */\n \
 .preview-theme--jikebrack p {\n \
 box-sizing: border-box;\n \
@@ -24,7 +24,7 @@ text-size-adjust: auto;\n \
 line-height: 1.75em;\n \
 }\n \
 \n \
-/* 一级标题 */\n \
+/* First level header */\n \
 .preview-theme--jikebrack h1 {\n \
 margin-top: -0.46em;\n \
 margin-bottom: 0.1em;\n \
@@ -32,7 +32,7 @@ border-bottom: 2px solid rgb(198, 196, 196);\n \
 box-sizing: border-box;\n \
 }\n \
 \n \
-/* 一级标题内容 */\n \
+/* First level header content */\n \
 .preview-theme--jikebrack h1 .content {\n \
 padding-top: 5px;\n \
 padding-bottom: 5px;\n \
@@ -42,11 +42,11 @@ line-height: 2;\n \
 box-sizing: border-box;\n \
 }\n \
 \n \
-/* 一级标题修饰 请参考有实例的主题 */\n \
+/* First level header decoration */\n \
 .preview-theme--jikebrack h1:after {\n \
 }\n \
 \n \
-/* 二级标题 */\n \
+/* Secondary header */\n \
 .preview-theme--jikebrack h2 {\n \
 margin: 10px auto;\n \
 height: 40px;\n \
@@ -56,7 +56,7 @@ overflow: hidden;\n \
 box-sizing: border-box;\n \
 }\n \
 \n \
-/* 二级标题内容 */\n \
+/* Secondary header content */\n \
 .preview-theme--jikebrack h2 .content {\n \
 margin-left: -10px;\n \
 display: inline-block;\n \
@@ -71,18 +71,18 @@ line-height: 40px;\n \
 font-size: 16px;\n \
 }\n \
 \n \
-/* 二级标题修饰 请参考有实例的主题 */\n \
+/* Secondary header decoration */\n \
 .preview-theme--jikebrack h2:after {\n \
 }\n \
 \n \
-/* 三级标题 */\n \
+/* Third level header */\n \
 .preview-theme--jikebrack h3 {\n \
 margin: 20px auto 5px;\n \
 border-top: 1px solid rgb(221, 221, 221);\n \
 box-sizing: border-box;\n \
 }\n \
 \n \
-/* 三级标题内容 */\n \
+/* Third level header content */\n \
 .preview-theme--jikebrack h3 .content {\n \
 margin-top: -1px;\n \
 padding-top: 6px;\n \
@@ -94,7 +94,7 @@ display: inline-block;\n \
 line-height: 1.1;\n \
 }\n \
 \n \
-/* 三级标题修饰 请参考有实例的主题 */\n \
+/* Third level header decoration */\n \
 .preview-theme--jikebrack h3:after {\n \
 }\n \
 \n \
@@ -115,28 +115,28 @@ display: inline-block;\n \
 line-height: 1.1;\n \
 }\n \
 \n \
-/* 无序列表整体样式\n \
+/* Unordered List Overall Style\n \
  * list-style-type: square|circle|disc;\n \
  */\n \
 .preview-theme--jikebrack ul {\n \
 }\n \
 \n \
-/* 有序列表整体样式\n \
+/* Ordered List Overall Style\n \
  * list-style-type: upper-roman|lower-greek|lower-alpha;\n \
  */\n \
 .preview-theme--jikebrack ol {\n \
 }\n \
 \n \
-/* 列表内容，不要设置li\n \
+/* List content, do not set li\n \
  */\n \
 .preview-theme--jikebrack li section {\n \
 font-size: 15px;\n \
 font-family: \"Helvetica Neue\", Helvetica, \"Segoe UI\", Arial, freesans, sans-serif;\n \
 }\n \
 \n \
-/* 引用\n \
- * 左边缘颜色 border-left-color: black;\n \
- * 背景色 background: gray;\n \
+/* blockquote\n \
+ * Left Edge Color border-left-color: black;\n \
+ * background: gray;\n \
  */\n \
 .preview-theme--jikebrack blockquote {\n \
 border-left-color: rgb(221, 221, 221) !important;\n \
@@ -150,7 +150,7 @@ quotes: none;\n \
 background: rgba(0, 0, 0, 0.05) !important;\n \
 }\n \
 \n \
-/* 引用文字 */\n \
+/* blockquote words */\n \
 .preview-theme--jikebrack blockquote p {\n \
 font-size: 15px;\n \
 font-family: -apple-system-font, BlinkMacSystemFont, \"Helvetica Neue\", \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei UI\", \"Microsoft YaHei\", Arial, sans-serif;\n \
@@ -158,7 +158,7 @@ color: rgb(119, 119, 119);\n \
 line-height: 1.75em;\n \
 }\n \
 \n \
-/* 链接 \n \
+/* Link \n \
  * border-bottom: 1px solid #009688;\n \
  */\n \
 .preview-theme--jikebrack a {\n \
@@ -166,99 +166,94 @@ color: rgb(239, 112, 96);\n \
 border-bottom: 1px solid rgb(239, 112, 96);\n \
 }\n \
 \n \
-/* 加粗 */\n \
+/* Bold */\n \
 .preview-theme--jikebrack strong {\n \
 }\n \
 \n \
-/* 斜体 */\n \
+/* Italic */\n \
 .preview-theme--jikebrack em {\n \
 }\n \
 \n \
-/* 加粗斜体 */\n \
+/* Bold Italic */\n \
 .preview-theme--jikebrack em strong {\n \
 }\n \
 \n \
-/* 删除线 */\n \
+/* Strikethrough */\n \
 .preview-theme--jikebrack s {\n \
 }\n \
 \n \
-/* 分隔线\n \
- * 粗细、样式和颜色\n \
+/* Divider line\n \
+ * Thickness, style, and color\n \
  * border-top: 1px solid #3e3e3e;\n \
  */\n \
 .preview-theme--jikebrack hr {\n \
 }\n \
 \n \
-/* 图片\n \
- * 宽度 width: 80%;\n \
- * 居中 margin: 0 auto;\n \
- * 居左 margin: 0 0;\n \
- */\n \
 .preview-theme--jikebrack img {\n \
 }\n \
 \n \
-/* 图片描述文字 */\n \
+/* Picture description text */\n \
 .preview-theme--jikebrack figcaption {\n \
 }\n \
 \n \
-/* 行内代码 */\n \
+/* in-line code */\n \
 .preview-theme--jikebrack p code,.preview-theme--jikebrack li code {\n \
 color: rgb(239, 112, 96) !important;\n \
 background-color: rgba(27,31,35,.05) !important;\n \
 }\n \
 \n \
-/* 非微信代码块\n \
- * 代码块不换行 display: -webkit-box !important;\n \
- * 代码块换行 display: block;\n \
+/* Non WeChat code block\n \
+ * Code block does not wrap display: -webkit-box !important;\n \
+ * Code Block Wrap display: block;\n \
  */\n \
 .preview-theme--jikebrack pre code {\n \
 }\n \
 \n \
 /*\n \
- * 表格内的单元格\n \
- * 字体大小 font-size: 16px;\n \
- * 边框 border: 1px solid #ccc;\n \
- * 内边距 padding: 5px 10px;\n \
+ * Cells within a table\n \
+ * Font size  font-size: 16px;\n \
+ * Border  border: 1px solid #ccc;\n \
+ * Padding  padding: 5px 10px;\n \
  */\n \
 .preview-theme--jikebrack table tr th,\n \
 .preview-theme--jikebrack table tr td {\n \
 }\n \
 \n \
-/* 脚注文字 */\n \
+/* Footnote word */\n \
 .preview-theme--jikebrack .footnote-word {\n \
 color: #ff3502;\n \
 }\n \
 \n \
-/* 脚注上标 */\n \
+/* Footnote reference */\n \
 .preview-theme--jikebrack .footnote-ref {\n \
 color: rgb(239, 112, 96);\n \
 }\n \
 \n \
-/* \"参考资料\"四个字 \n \
- * 内容 content: \"参考资料\";\n \
+/* \"Reference material\" Four words \n \
+ * Content  content: \"Reference material\";\n \
  */\n \
 .preview-theme--jikebrack .footnotes-sep:before {\n \
 }\n \
 \n \
-/* 参考资料编号 */\n \
+/* Reference material number */\n \
 .preview-theme--jikebrack .footnote-num {\n \
 }\n \
 \n \
-/* 参考资料文字 */\n \
+/* Reference material words */\n \
 .preview-theme--jikebrack .footnote-item p { \n \
 }\n \
 \n \
-/* 参考资料解释 */\n \
+/* Reference material Interpretation */\n \
 .preview-theme--jikebrack .footnote-item p em {\n \
 }\n \
 \n \
-/* 行间公式\n \
- * 最大宽度 max-width: 300% !important;\n \
+/* Interline formula\n \
+ * Maximum width max-width: 300% !important;\n \
  */\n \
 .preview-theme--jikebrack .block-equation svg {\n \
 }\n \
 \n \
-/* 行内公式\n \
+/* Inline Formula\n \
  */\n \
 .preview-theme--jikebrack .inline-equation svg {\n \
 }\n \

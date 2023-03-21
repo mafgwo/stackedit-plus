@@ -11,8 +11,8 @@
         <div class="menu-entry__icon menu-entry__icon--image">
           <icon-provider :provider-id="currentWorkspace.providerId"></icon-provider>
         </div>
-        <span v-if="currentWorkspace.providerId === 'giteeAppData'">
-          <b>{{currentWorkspace.name}}</b> synced with your GitHub app data folder.
+        <span v-if="currentWorkspace.providerId === 'githubAppData'">
+          <b>{{currentWorkspace.name}}</b> synced with your GitHub <a :href="`https://github.com/${loginToken.name}/stackedit-app-data`" target="_blank">stackedit-app-data repo</a>.
         </span>
         <span v-else-if="currentWorkspace.providerId === 'googleDriveWorkspace'">
           <b>{{currentWorkspace.name}}</b> synced with a <a :href="workspaceLocationUrl" target="_blank">Google Drive folder</a>.
@@ -107,12 +107,12 @@
     </menu-entry>
     <menu-entry @click.native="setPanel('editTheme')">
       <icon-select-theme slot="icon"></icon-select-theme>
-      Edit Area Theme
+      Edit area theme
       <span>Edit area theme style (custom themes can be edited).</span>
     </menu-entry>
     <menu-entry @click.native="setPanel('previewTheme')">
       <icon-select-theme slot="icon"></icon-select-theme>
-      Preview Area Theme
+      Preview area theme
       <span>Preview area theme style (custom themes can be edited).</span>
     </menu-entry>
     <menu-entry @click.native="settings">
@@ -131,7 +131,7 @@
     </menu-entry>
     <menu-entry @click.native="about">
       <icon-help-circle slot="icon"></icon-help-circle>
-      About StackEdit Plus
+      About StackEdit+
     </menu-entry>
   </div>
 </template>
@@ -141,7 +141,7 @@ import { mapGetters, mapActions } from 'vuex';
 import MenuEntry from './common/MenuEntry';
 import providerRegistry from '../../services/providers/common/providerRegistry';
 import UserImage from '../UserImage';
-import giteeHelper from '../../services/providers/helpers/giteeHelper';
+import githubHelper from '../../services/providers/helpers/githubHelper';
 import syncSvc from '../../services/syncSvc';
 import userSvc from '../../services/userSvc';
 import store from '../../store';
@@ -193,7 +193,7 @@ export default {
     }),
     async signin() {
       try {
-        await giteeHelper.signin();
+        await githubHelper.signin();
         syncSvc.requestSync();
       } catch (e) {
         // Cancel

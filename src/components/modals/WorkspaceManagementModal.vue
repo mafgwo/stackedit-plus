@@ -17,7 +17,7 @@
               <button class="workspace-entry__button button" @click="edit(id)" v-title="'Edit name'">
                 <icon-pen></icon-pen>
               </button>
-              <template v-if="workspace.providerId === 'giteeAppData' || workspace.providerId === 'githubWorkspace'
+              <template v-if="workspace.providerId === 'githubAppData' || workspace.providerId === 'githubWorkspace'
                 || workspace.providerId === 'giteeWorkspace' || workspace.providerId === 'gitlabWorkspace' || workspace.providerId === 'giteaWorkspace'">
                 <button class="workspace-entry__button button" @click="stopAutoSync(id)" v-if="workspace.autoSync == undefined || workspace.autoSync" v-title="'Trun off auto sync'">
                   <icon-sync-auto></icon-sync-auto>

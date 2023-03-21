@@ -24,6 +24,7 @@
 import FileSaver from 'file-saver';
 import exportSvc from '../../services/exportSvc';
 import networkSvc from '../../services/networkSvc';
+import githubHelper from '../../services/providers/helpers/githubHelper';
 import modalTemplate from './common/modalTemplate';
 import store from '../../store';
 import badgeSvc from '../../services/badgeSvc';
@@ -37,17 +38,24 @@ export default modalTemplate({
       this.config.resolve();
       const currentFile = store.getters['file/current'];
       store.dispatch('queue/enqueue', async () => {
-        const html = await exportSvc.applyTemplate(
-          currentFile.id,
-          this.allTemplatesById[this.selectedTemplate],
-          true,
-        );
+        const [sponsorToken, html] = await Promise.all([
+          Promise.resolve().then(() => {
+            const tokenToRefresh = store.getters['workspace/sponsorToken'];
+            return tokenToRefresh && githubHelper.refreshSponsorInfo(tokenToRefresh);
+          }),
+          exportSvc.applyTemplate(
+            currentFile.id,
+            this.allTemplatesById[this.selectedTemplate],
+            true,
+          ),
+        ]);
 
         try {
           const { body } = await networkSvc.request({
             method: 'POST',
             url: 'pdfExport',
             params: {
+              idToken: sponsorToken && sponsorToken.accessToken,
               options: JSON.stringify(store.getters['data/computedSettings'].wkhtmltopdf),
             },
             body: html,
@@ -57,8 +65,12 @@ export default modalTemplate({
           FileSaver.saveAs(body, `${currentFile.name}.pdf`);
           badgeSvc.addBadge('exportPdf');
         } catch (err) {
-          console.error(err); // eslint-disable-line no-console
-          store.dispatch('notification/error', err);
+          if (err.status === 401) {
+            store.dispatch('modal/open', 'sponsorOnly');
+          } else {
+            console.error(err); // eslint-disable-line no-console
+            store.dispatch('notification/error', err);
+          }
         }
       });
     },

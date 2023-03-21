@@ -4,14 +4,14 @@
       <div class="modal__image">
         <icon-provider provider-id="dropbox"></icon-provider>
       </div>
-      <p>Link your <b>Dropbox</b> account to <b>StackEdit</b>.</p>
+      <p>Link your <b>Dropbox</b> account to <b>StackEdit+</b>.</p>
       <div class="form-entry">
         <div class="form-entry__checkbox">
           <label>
             <input type="checkbox" v-model="restrictedAccess"> Restrict access
           </label>
           <div class="form-entry__info">
-            If checked, access will be restricted to the <b>/Applications/StackEdit (restricted)</b> folder.
+            If checked, access will be restricted to the <b>/Applications/StackEdit+ (restricted)</b> folder.
           </div>
         </div>
       </div>

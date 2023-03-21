@@ -4,8 +4,8 @@
       <div class="modal__image">
         <icon-key></icon-key>
       </div>
-      <p v-if="entries.length">StackEdit has access to the following external accounts:</p>
-      <p v-else>StackEdit has no access to any external account yet.</p>
+      <p v-if="entries.length">StackEdit+ has access to the following external accounts:</p>
+      <p v-else>StackEdit+ has no access to any external account yet.</p>
       <div>
         <div class="account-entry flex flex--column" v-for="entry in entries" :key="entry.token.sub">
           <div class="account-entry__header flex flex--row flex--align-center">

@@ -1,33 +1,33 @@
 <template>
-  <modal-inner aria-label="Gitea 公开仓库图床">
+  <modal-inner aria-label="Gitea public repository image bed">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="gitea"></icon-provider>
       </div>
-      <p>创建一个用于存储图片的<b> Gitea </b>公开仓库文件夹图床。</p>
-      <form-entry label="仓库 URL" error="projectUrl">
+      <p>Create a <b>Gitea</b> public repository folder image bed for storing images.</p>
+      <form-entry label="Public Repository URL" error="projectUrl">
         <input slot="field" class="textfield" type="text" v-model.trim="projectUrl" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          <b>例如:</b> {{config.token.serverUrl}}/{owner}/{repo}
+          <b>Example:</b> {{config.token.serverUrl}}/{owner}/{repo}
         </div>
       </form-entry>
-      <form-entry label="文件夹路径" info="可选的">
-        <input slot="field" class="textfield" type="text" placeholder="如：imgs/{YYYY}-{MM}-{DD}" v-model.trim="path" @keydown.enter="resolve()">
+      <form-entry label="Folder path" info="Optional">
+        <input slot="field" class="textfield" type="text" placeholder="Such as: imgs/{YYYY}-{MM}-{DD}" v-model.trim="path" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          如果不提供，默认为 imgs/{YYYY}-{MM}-{DD} 。<br/>
-          变量说明：{YYYY}为年变量、{MM}为月变量、{DD}为日变量、{MDNAME}为当前文档名称。
+          If not provided, the default is imgs/{YYYY}-{MM}-{DD}.<br/>
+          Variable Description: {YYYY} is a year variable, {MM} is a month variable, {DD} is a day variable, and {MDNAME} is the current document name.
         </div>
       </form-entry>
-      <form-entry label="分支" info="可选的">
+      <form-entry label="Branch" info="Optional">
         <input slot="field" class="textfield" type="text" v-model.trim="branch" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          如果未提供，将使用<code> master </code>分支。
+          If not supplied, the <code>master</code> branch will be used.
         </div>
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">取消</button>
-      <button class="button button--resolve" @click="resolve()">确认</button>
+      <button class="button" @click="config.reject()">Cancel</button>
+      <button class="button button--resolve" @click="resolve()">Ok</button>
     </div>
   </modal-inner>
 </template>
@@ -56,7 +56,7 @@ export default modalTemplate({
         try {
           const repoInfo = await giteaHelper.getRepoInfo(this.config.token, projectPath);
           if (repoInfo.private) {
-            store.dispatch('notification/error', '作为图床的仓库URL必须是公开仓库！');
+            store.dispatch('notification/error', 'The repository URL used as a image bed must be a public repository!');
             this.setError('projectUrl');
             return;
           }

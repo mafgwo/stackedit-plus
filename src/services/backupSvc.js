@@ -20,7 +20,7 @@ export default {
       if (value) {
         const v4Match = id.match(/^file\.([^.]+)\.([^.]+)$/);
         if (v4Match) {
-          // StackEdit v4 format
+          // StackEdit+ v4 format
           const [, v4Id, type] = v4Match;
           if (type === 'title') {
             fileNameMap[v4Id] = value;
@@ -28,16 +28,16 @@ export default {
             textMap[v4Id] = value;
           }
         } else if (value.type === 'folder') {
-          // StackEdit v5 folder
+          // StackEdit+ v5 folder
           folderIdMap[id] = utils.uid();
           folderNameMap[id] = value.name;
           parentIdMap[id] = `${value.parentId || ''}`;
         } else if (value.type === 'file') {
-          // StackEdit v5 file
+          // StackEdit+ v5 file
           fileNameMap[id] = value.name;
           parentIdMap[id] = `${value.parentId || ''}`;
         } else if (value.type === 'content') {
-          // StackEdit v5 content
+          // StackEdit+ v5 content
           const [fileId] = id.split('/');
           if (fileId) {
             textMap[fileId] = value.text;

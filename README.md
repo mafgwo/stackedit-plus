@@ -1,7 +1,7 @@
 <h1 align="center" style="text-align:center;">
 <img src="chrome-app/icon-512.png" width="128" />
 <br />
-StackEdit Plus
+StackEdit+
 </h1>
 <p align="center">
 	<strong>Note taking tool, online Markdown editor.</strong><br>
@@ -27,7 +27,7 @@ StackEdit Plus
 	<img src="https://img.shields.io/badge/QQ交流群-703187410-orange"/></a>
 </p>
 <hr />
-1.Notes support Git warehouse workspace such as Gitee, GitHub, and Gitea.< br>
+1.Notes support Git warehouse workspace such as Gitee, GitHub, and Gitea.<br>
 2.It supports direct uploading of images, as well as pasting or dragging and uploading of various external image beds (GitHub, Gitea, SM.MS, and custom image beds).<br>
 3.The editing area supports selecting themes or customizing, and there are always themes that you like. <br>
 4.supports historical version management, without worrying about the inability to rollback after editing overrides.<br>

@@ -1,50 +1,50 @@
 <template>
-  <modal-inner aria-label="链接自定义图床账号">
+  <modal-inner aria-label="link to custom image bed account">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="custom"></icon-provider>
       </div>
-      <p>将您的<b>自定义图床</b>账号链接到<b>StackEdit中文版</b>。</p>
-      <form-entry label="自定义标识" error="name">
+      <p>Link your <b>Custom image bed</b> account to <b>StackEdit+</b>.</p>
+      <form-entry label="Custom ID" error="name">
         <input slot="field" class="textfield" type="text" v-model.trim="name" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          自定义标识如果一样会覆盖之前的自定义图床账号。
+          If the custom ID is the same, it will overwrite the previous custom image bed account.
         </div>
       </form-entry>
-      <form-entry label="上传图片接口地址" error="uploadUrl">
+      <form-entry label="Upload url" error="uploadUrl">
         <input slot="field" class="textfield" type="text" v-model.trim="uploadUrl" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          填入您个人的图床上传接口地址，上传接口仅支持POST提交。
+          Fill in your personal image bed upload url address. The upload api only supports POST submission.
         </div>
       </form-entry>
-      <form-entry label="文件参数名" error="fileParamName">
+      <form-entry label="File param name" error="fileParamName">
         <input slot="field" class="textfield" type="text" v-model.trim="fileParamName" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          文件参数名如：file
+          File param name such as file
         </div>
       </form-entry>
-      <form-entry label="自定义请求头配置" error="customHeaders">
+      <form-entry label="Custom request headers" error="customHeaders">
         <input slot="field" class="textfield" type="text" v-model.trim="customHeaders" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          非必填，自定义请求头是JSON字符串格式，如：{"token": "..."}
+          Not required. The custom request headers is in JSON string format, such as {"token": "..."}
         </div>
       </form-entry>
-      <form-entry label="自定义FORM参数设置" error="customParams">
+      <form-entry label="Custom request form params" error="customParams">
         <input slot="field" class="textfield" type="text" v-model.trim="customParams" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          非必填，自定义FORM参数是JSON字符串格式，如：{"param1": "..."}
+          Not required. The custom request form paramsin JSON string format, such as {"param1": "..."}
         </div>
       </form-entry>
-      <form-entry label="响应图片URL参数" error="resultUrlParam">
+      <form-entry label="Response image url params" error="resultUrlParam">
         <input slot="field" class="textfield" type="text" v-model.trim="resultUrlParam" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          响应JSON中图片URL的路径，如 data.url
+          The path to respond to the image URL in JSON, such as data.url
         </div>
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">取消</button>
-      <button class="button button--resolve" @click="resolve()">确认</button>
+      <button class="button" @click="config.reject()">Cancal</button>
+      <button class="button button--resolve" @click="resolve()">Ok</button>
     </div>
   </modal-inner>
 </template>

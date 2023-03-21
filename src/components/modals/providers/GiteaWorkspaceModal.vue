@@ -1,32 +1,32 @@
 <template>
-  <modal-inner aria-label="与 Gitea 同步">
+  <modal-inner aria-label="Synchronize with Gitea">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="gitea"></icon-provider>
       </div>
-      <p>创建一个与<b> Gitea </b>仓库文件夹同步的文档空间。</p>
-      <form-entry label="仓库 URL" error="projectUrl">
+      <p>Create a workspace synced with a <b>Gitea</b> repository folder.</p>
+      <form-entry label="Repository URL" error="projectUrl">
         <input slot="field" class="textfield" type="text" v-model.trim="projectUrl" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          <b>例如:</b> {{config.token.serverUrl}}/{owner}/{repo}
+          <b>Example:</b> {{config.token.serverUrl}}/{owner}/{repo}
         </div>
       </form-entry>
-      <form-entry label="文件夹路径" info="可选的">
+      <form-entry label="Folder path" info="optional">
         <input slot="field" class="textfield" type="text" v-model.trim="path" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          如果不提供，将使用根文件夹。
+          If not supplied, the root folder will be used.
         </div>
       </form-entry>
-      <form-entry label="分支" info="可选的">
+      <form-entry label="Branch" info="optional">
         <input slot="field" class="textfield" type="text" v-model.trim="branch" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          如果未提供，将使用<code> master </code>分支。
+          If not supplied, the <code>master</code> branch will be used.
         </div>
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">取消</button>
-      <button class="button button--resolve" @click="resolve()">确认</button>
+      <button class="button" @click="config.reject()">Cancal</button>
+      <button class="button button--resolve" @click="resolve()">Ok</button>
     </div>
   </modal-inner>
 </template>

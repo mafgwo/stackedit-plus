@@ -8,7 +8,7 @@
       <form-entry label="File path" error="path">
         <input slot="field" class="textfield" type="text" v-model.trim="path" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          <b>Example:</b> {{config.token.fullAccess ? '' : '/Applications/StackEdit (restricted)'}}/path/to/My Document.md<br>
+          <b>Example:</b> {{config.token.fullAccess ? '' : '/Applications/StackEdit+ (restricted)'}}/path/to/My Document.md<br>
           If the file exists, it will be overwritten.
         </div>
       </form-entry>

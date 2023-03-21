@@ -3,7 +3,7 @@
     <div class="tour-step" :class="'tour-step--' + step" :style="stepStyle">
       <div class="tour-step__inner" v-if="step === 'welcome'">
         <h2>Welcome back!</h2>
-        <p>The new <b>StackEdit Plus</b> is here!</p>
+        <p>The new <b>StackEdit+</b> is here!</p>
         <p>Please click <b>Next</b> to take a quick tour.</p>
         <div class="tour-step__button-bar">
           <button class="button" @click="finish">Skip</button>
@@ -12,7 +12,7 @@
       </div>
       <div class="tour-step__inner" v-else-if="step === 'editor'">
         <h2>Your Markdown editor</h2>
-        <p>StackEdit converts your Markdown to HTML in real-time.</p>
+        <p>StackEdit+ converts your Markdown to HTML in real-time.</p>
         <p>Click <icon-side-preview></icon-side-preview> to toggle the side preview.</p>
         <div class="tour-step__button-bar">
           <button class="button" @click="finish">Skip</button>
@@ -21,7 +21,7 @@
       </div>
       <div class="tour-step__inner" v-else-if="step === 'explorer'">
         <h2>File explorer</h2>
-        <p>StackEdit can manage multiple files and folders in a workspace.</p>
+        <p>StackEdit+ can manage multiple files and folders in a workspace.</p>
         <p>Click <icon-folder></icon-folder> to open the file explorer.</p>
         <div class="tour-step__button-bar">
           <button class="button" @click="finish">Skip</button>
@@ -30,7 +30,7 @@
       </div>
       <div class="tour-step__inner" v-else-if="step === 'menu'">
         <h2>Do a lot more!</h2>
-        <p>StackEdit can also synchronize and publish your files, manage collaborative workspaces...</p>
+        <p>StackEdit+ can also synchronize and publish your files, manage collaborative workspaces...</p>
         <p>Click <icon-provider provider-id="stackedit"></icon-provider> to explore the menu.</p>
         <div class="tour-step__button-bar">
           <button class="button" @click="finish">Skip</button>
@@ -39,7 +39,7 @@
       </div>
       <div class="tour-step__inner" v-else-if="step === 'theme'">
         <h2>Switch theme!</h2>
-        <p>StackEdit plus can switch light/dark theme.</p>
+        <p>StackEdit+ plus can switch light/dark theme.</p>
         <p>Click <icon-switch-theme></icon-switch-theme> switch theme.</p>
         <div class="tour-step__button-bar">
           <button class="button" @click="finish">Skip</button>
@@ -48,7 +48,7 @@
       </div>
       <div class="tour-step__inner" v-else-if="step === 'end'">
         <h2>Enjoy!</h2>
-        <p>If you like StackEdit Plus，please click star on the<a href="https://github.com/mafgwo/stackedit-plus">Github repo</a></p>
+        <p>If you like StackEdit+，please click star on the<a href="https://github.com/mafgwo/stackedit-plus">Github repo</a></p>
         <div class="tour-step__button-bar">
           <button class="button button--resolve" @click="finish">Ok</button>
         </div>

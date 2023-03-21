@@ -1,13 +1,13 @@
 <template>
   <div class="editor-in-page-buttons">
     <ul>
-      <li :title="`查找 ${mod}+F`">
+      <li :title="`Search ${mod}+F`">
         <a @click="showFind"><icon-search></icon-search></a>
       </li>
-      <li :title="`替换 ${mod}+Alt+F`">
+      <li :title="`Replace ${mod}+Alt+F`">
         <a @click="showFindReplace"><icon-find-replace></icon-find-replace></a>
       </li>
-      <li title="切换编辑主题">
+      <li title="Switch edit area theme">
         <dropdown-menu :selected="selectedTheme" :options="allThemes" :closeOnItemClick="false" @change="changeTheme">
           <icon-select-theme></icon-select-theme>
         </dropdown-menu>
@@ -34,55 +34,55 @@ export default {
   data: () => ({
     mod,
     allThemes: [{
-      name: '默认主题',
+      name: 'Default',
       value: 'default',
     }, {
-      name: '天蓝黑',
+      name: 'Azure black',
       value: 'azure',
     }, {
-      name: '冰山黑',
+      name: 'Iceberg black',
       value: 'iceberg_contrast',
     }, {
-      name: '黎明白',
+      name: 'Dawn white',
       value: 'dawn',
     }, {
-      name: '孔雀黑',
+      name: 'Peacock black',
       value: 'peacock',
     }, {
-      name: '薄荷黑',
+      name: 'Mintchoc black',
       value: 'mintchoc',
     }, {
-      name: '薄荷绿',
+      name: 'Spearmint green',
       value: 'spearmint',
     }, {
-      name: '暗蓝黑',
+      name: 'Slate black',
       value: 'slate',
     }, {
-      name: '文墨黑',
+      name: 'Carbonight black',
       value: 'carbonight',
     }, {
-      name: '日光白',
+      name: 'Solarized light white',
       value: 'solarized_light',
     }, {
-      name: '咖啡黑',
+      name: 'Espresso libre black',
       value: 'espresso_libre',
     }, {
-      name: '薰衣草黑',
+      name: 'Lavender black',
       value: 'lavender',
     }, {
-      name: '耀斑黑',
+      name: 'Solarflare black',
       value: 'solarflare',
     }, {
-      name: 'Clouds白',
+      name: 'Clouds white',
       value: 'clouds',
     }, {
-      name: 'Clouds黑',
+      name: 'Clouds midnight',
       value: 'clouds_midnight',
     }, {
-      name: 'GitHub白',
+      name: 'GitHub white',
       value: 'github',
     }, {
-      name: '自定义',
+      name: 'Custom',
       value: 'custom',
     }],
   }),

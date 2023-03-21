@@ -2,10 +2,10 @@ function init_preview_theme_simplebrack() {
 const style = document.createElement('style');
 style.id = 'preview-theme-simplebrack';
 style.type = 'text/css';
-style.innerHTML = "/* 全局属性\n \
- * 页边距 padding: 30px;\n \
- * 全文字体 font-family: ptima-Regular;\n \
- * 英文换行 word-break: break-all;\n \
+style.innerHTML = "/* Global Properties\n \
+ * padding: 30px;\n \
+ * font-family: ptima-Regular;\n \
+ * word-break: break-all;\n \
  */\n \
  .preview-theme--simplebrack {\n \
 font-size:14px;\n \
@@ -14,7 +14,7 @@ color: #2b2b2b;\n \
 background-color: #fff;\n \
 }\n \
 \n \
-/*图片下提示*/\n \
+/*Prompt under image*/\n \
 .preview-theme--simplebrack figcaption{\n \
 font-size:12px;\n \
 }\n \
@@ -22,38 +22,29 @@ font-size:12px;\n \
 font-size:12px;\n \
 }\n \
 \n \
-/* 段落，下方未标注标签参数均同此处\n \
- * 上边距 margin-top: 5px;\n \
- * 下边距 margin-bottom: 5px;\n \
- * 行高 line-height: 26px;\n \
- * 词间距 word-spacing: 3px;\n \
- * 字间距 letter-spacing: 3px;\n \
- * 对齐 text-align: left;\n \
- * 颜色 color: #3e3e3e;\n \
- * 字体大小 font-size: 16px;\n \
- * 首行缩进 text-indent: 2em;\n \
+/* Paragraph, the parameters not marked below are the same as here\n \
  */\n \
 .preview-theme--simplebrack p {\n \
 font-size:14px;\n \
 }\n \
 \n \
-/* 一级标题 */\n \
+/* First level header */\n \
 .preview-theme--simplebrack h1 {\n \
 }\n \
 \n \
-/* 一级标题内容 */\n \
+/* First level header content */\n \
 .preview-theme--simplebrack h1 .content {\n \
 }\n \
 \n \
-/* 一级标题前缀 */\n \
+/* First level header prefix */\n \
 .preview-theme--simplebrack h1 .prefix {\n \
 }\n \
 \n \
-/* 一级标题后缀 */\n \
+/* First level header suffix */\n \
 .preview-theme--simplebrack h1 .suffix{\n \
 }\n \
 \n \
-/* 二级标题 */\n \
+/* Secondary header */\n \
 .preview-theme--simplebrack h2 {\n \
 text-align:center;\n \
 position:relative;\n \
@@ -89,14 +80,14 @@ margin-right: -5px;\n \
 margin-top: 16px;\n \
 position: unset;\n \
 }\n \
-/* 二级标题内容 */\n \
+/* Secondary header content */\n \
 .preview-theme--simplebrack h2 .content {\n \
 display: block;\n \
 -webkit-box-reflect: below 0em -webkit-gradient(linear,left top,left bottom, from(rgba(0,0,0,0)),to(rgba(255,255,255,0.1)));\n \
 }\n \
 .preview-theme--simplebrack h2 strong {\n \
 }\n \
-/* 二级标题前缀 */\n \
+/* Secondary header prefix */\n \
 .preview-theme--simplebrack h2 .prefix {\n \
 display: block;\n \
 width: 3px;\n \
@@ -111,7 +102,7 @@ box-shadow:3px 0 #000,\n \
 0 -3px #000;\n \
 }\n \
 \n \
-/* 二级标题后缀 */\n \
+/* Secondary header suffix */\n \
 .preview-theme--simplebrack h2 .suffix {\n \
 display: block;\n \
 width: 3px;\n \
@@ -126,7 +117,7 @@ box-shadow:3px 0 #000,\n \
 0 -3px #000;\n \
 }\n \
 \n \
-/* 三级标题 */\n \
+/* Third level header */\n \
 .preview-theme--simplebrack h3 {\n \
 background-color:#000;\n \
 color:#fff;\n \
@@ -139,44 +130,44 @@ margin:60px auto 10px;\n \
 color:#fff;\n \
 }\n \
 \n \
-/* 三级标题内容 */\n \
+/* Third level header content */\n \
 .preview-theme--simplebrack h3 .content {\n \
 }\n \
 \n \
-/* 三级标题前缀 */\n \
+/* Third level header prefix */\n \
 .preview-theme--simplebrack h3 .prefix {\n \
 }\n \
 \n \
-/* 三级标题后缀 */\n \
+/* Third level header suffix */\n \
 .preview-theme--simplebrack h3 .suffix {\n \
 }\n \
 \n \
-/* 无序列表整体样式\n \
+/* Unordered List Overall Style\n \
  * list-style-type: square|circle|disc;\n \
  */\n \
 .preview-theme--simplebrack ul {\n \
 list-style-type: square;\n \
 }\n \
-/* 无序二级列表\n \
+/* Unordered secondary list\n \
  */\n \
 .preview-theme--simplebrack ul li ul li{\n \
 list-style-type: circle;\n \
 }\n \
 \n \
-/* 有序列表整体样式\n \
+/* Ordered List Overall Style\n \
  * list-style-type: upper-roman|lower-greek|lower-alpha;\n \
  */\n \
 .preview-theme--simplebrack ol {\n \
 }\n \
 \n \
-/* 列表内容，不要设置li\n \
+/* List content, do not set li\n \
  */\n \
 .preview-theme--simplebrack li section {\n \
 }\n \
 \n \
-/* 引用\n \
- * 左边缘颜色 border-left-color: black;\n \
- * 背景色 background: gray;\n \
+/* blockquote\n \
+ * Left Edge Color border-left-color: black;\n \
+ * background: gray;\n \
  */\n \
 .preview-theme--simplebrack blockquote {\n \
 border-left: 3px solid rgba(0, 0, 0, 0.65) !important;\n \
@@ -184,58 +175,53 @@ border-right: 1px solid rgba(0, 0, 0, 0.65) !important;\n \
 background: rgb(249, 249, 249) !important;\n \
 }\n \
 \n \
-/* 引用文字 */\n \
+/* blockquote words */\n \
 .preview-theme--simplebrack blockquote p {\n \
 }\n \
 \n \
-/* 链接 \n \
+/* Link \n \
  * border-bottom: 1px solid #009688;\n \
  */\n \
 .preview-theme--simplebrack a {\n \
 }\n \
 \n \
-/* 加粗 */\n \
+/* Bold */\n \
 .preview-theme--simplebrack strong {\n \
 }\n \
 \n \
-/* 斜体 */\n \
+/* Italic */\n \
 .preview-theme--simplebrack em {\n \
 }\n \
 \n \
-/* 加粗斜体 */\n \
+/* Bold Italic */\n \
 .preview-theme--simplebrack em strong {\n \
 }\n \
 \n \
-/* 删除线 */\n \
+/* Strikethrough */\n \
 .preview-theme--simplebrack del {\n \
 }\n \
 \n \
-/* 分隔线\n \
- * 粗细、样式和颜色\n \
+/* Divider line\n \
+ * Thickness, style, and color\n \
  * border-top: 1px solid #3e3e3e;\n \
  */\n \
 .preview-theme--simplebrack hr {\n \
 }\n \
 \n \
-/* 图片\n \
- * 宽度 width: 80%;\n \
- * 居中 margin: 0 auto;\n \
- * 居左 margin: 0 0;\n \
- */\n \
 .preview-theme--simplebrack img {\n \
 box-shadow: rgba(170, 170, 170, 0.48) 0px 0px 6px 0px;\n \
 border-radius:4px;\n \
 margin-top:10px;\n \
 }\n \
-/* 行内代码 */\n \
+/* in-line code */\n \
 .preview-theme--simplebrack p code, .preview-theme--simplebrack li code {\n \
 color:#ff6441;\n \
 background-color: rgba(27,31,35,.05) !important;\n \
 }\n \
 \n \
-/* 非微信代码块\n \
- * 代码块不换行 display: -webkit-box !important;\n \
- * 代码块换行 display: block;\n \
+/* Non WeChat code block\n \
+ * Code block does not wrap display: -webkit-box !important;\n \
+ * Code Block Wrap display: block;\n \
  */\n \
 .preview-theme--simplebrack pre.custom {\n \
 box-shadow: rgba(170, 170, 170, 0.48) 0px 0px 6px 0px;\n \
@@ -247,26 +233,26 @@ margin: 10px auto 0 auto;\n \
 }\n \
 \n \
 /*\n \
- * 表格内的单元格\n \
- * 字体大小 font-size: 16px;\n \
- * 边框 border: 1px solid #ccc;\n \
- * 内边距 padding: 5px 10px;\n \
+ * Cells within a table\n \
+ * Font size  font-size: 16px;\n \
+ * Border  border: 1px solid #ccc;\n \
+ * Padding  padding: 5px 10px;\n \
  */\n \
 .preview-theme--simplebrack table tr th,\n \
 .preview-theme--simplebrack table tr td {\n \
 font-size:14px;\n \
 }\n \
 \n \
-/* 脚注文字 */\n \
+/* Footnote word */\n \
 .preview-theme--simplebrack .footnote-word {\n \
 }\n \
 \n \
-/* 脚注上标 */\n \
+/* Footnote reference */\n \
 .preview-theme--simplebrack .footnote-ref {\n \
 }\n \
 \n \
-/* \"参考资料\"四个字 \n \
- * 内容 content: \"参考资料\";\n \
+/* \"Reference material\" Four words \n \
+ * Content  content: \"Reference material\";\n \
  */\n \
 .preview-theme--simplebrack .footnotes-sep {\n \
 font-size: 14px;\n \
@@ -278,38 +264,38 @@ margin-bottom: 20px;\n \
 width: 100%;\n \
 }\n \
 .preview-theme--simplebrack .footnotes-sep:before {\n \
-content:'参考资料';\n \
+content:'Reference material';\n \
 }\n \
 .preview-theme--simplebrack .footnotes{\n \
 border-left:5px solid #eee;\n \
 padding-left:10px;\n \
 }\n \
 \n \
-/* 参考资料编号 */\n \
+/* Reference material number */\n \
 .preview-theme--simplebrack .footnote-num {\n \
 font-size:14px;\n \
 color:#999;\n \
 }\n \
 \n \
-/* 参考资料文字 */\n \
+/* Reference material words */\n \
 .preview-theme--simplebrack .footnote-item p { \n \
 font-size:14px;\n \
 color:#999;\n \
 }\n \
 \n \
-/* 参考资料解释 */\n \
+/* Reference material Interpretation */\n \
 .preview-theme--simplebrack .footnote-item p em {\n \
 font-size:14px;\n \
 color:#999;\n \
 }\n \
 \n \
-/* 行间公式\n \
- * 最大宽度 max-width: 300% !important;\n \
+/* Interline formula\n \
+ * Maximum width max-width: 300% !important;\n \
  */\n \
 .preview-theme--simplebrack .block-equation svg {\n \
 }\n \
 \n \
-/* 行内公式\n \
+/* Inline Formula\n \
  */\n \
 .preview-theme--simplebrack .inline-equation svg {\n \
 }\n \
@@ -324,7 +310,7 @@ color:#999;\n \
 border-bottom:1px solid #eee;\n \
 }\n \
 \n \
-/*滑动幻灯片*/\n \
+/* Slice image */\n \
 .preview-theme--simplebrack .imageflow-layer1 img{\n \
 margin:0;\n \
 box-shadow: none;\n \

@@ -54,7 +54,7 @@ import UserName from '../UserName';
 import EditorClassApplier from '../common/EditorClassApplier';
 import PreviewClassApplier from '../common/PreviewClassApplier';
 import utils from '../../services/utils';
-import giteeHelper from '../../services/providers/helpers/giteeHelper';
+import githubHelper from '../../services/providers/helpers/githubHelper';
 import syncSvc from '../../services/syncSvc';
 import store from '../../store';
 import badgeSvc from '../../services/badgeSvc';
@@ -167,7 +167,7 @@ export default {
     ]),
     async signin() {
       try {
-        await giteeHelper.signin();
+        await githubHelper.signin();
         syncSvc.requestSync();
       } catch (e) {
         // Cancel

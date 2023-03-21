@@ -5,7 +5,7 @@ import utils from './utils';
 import diffUtils from './diffUtils';
 import networkSvc from './networkSvc';
 import providerRegistry from './providers/common/providerRegistry';
-import giteeAppDataProvider from './providers/giteeAppDataProvider';
+import githubAppDataProvider from './providers/githubAppDataProvider';
 import './providers/couchdbWorkspaceProvider';
 import './providers/githubWorkspaceProvider';
 import './providers/giteeWorkspaceProvider';
@@ -983,7 +983,7 @@ export default {
     // Try to find a suitable workspace sync provider
     workspaceProvider = providerRegistry.providersById[utils.queryParams.providerId];
     if (!workspaceProvider || !workspaceProvider.initWorkspace) {
-      workspaceProvider = giteeAppDataProvider;
+      workspaceProvider = githubAppDataProvider;
     }
     const workspace = await workspaceProvider.initWorkspace();
     // Fix the URL hash

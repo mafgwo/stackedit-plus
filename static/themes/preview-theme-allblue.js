@@ -2,9 +2,9 @@ function init_preview_theme_allblue() {
 const style = document.createElement('style');
 style.id = 'preview-theme-allblue';
 style.type = 'text/css';
-style.innerHTML = "/* 全栈蓝 */\n \
+style.innerHTML = "/* allblue */\n \
 \n \
-/* 全局属性\n \
+/* Global Properties\n \
 */\n \
 .preview-theme--allblue {\n \
 line-height: 1.25;\n \
@@ -17,7 +17,7 @@ background-size: 20px 20px;\n \
 background-position: center;\n \
 }\n \
 \n \
-/* 段落\n \
+/* Paragraph\n \
 */\n \
 .preview-theme--allblue p {\n \
 color: #2b2b2b;\n \
@@ -27,32 +27,32 @@ font-size: 14px;\n \
 word-spacing: 2px;\n \
 }\n \
 \n \
-/* 一级标题 */\n \
+/* First level header */\n \
 .preview-theme--allblue h1 {\n \
 font-size: 25px;\n \
 }\n \
 \n \
-/* 一级标题内容 */\n \
+/* First level header content */\n \
 .preview-theme--allblue h1 span {\n \
 display: inline-block;\n \
 font-weight: bold;\n \
 color: #40B8FA;\n \
 }\n \
 \n \
-/* 一级标题修饰 请参考有实例的主题 */\n \
+/* First level header decoration */\n \
 .preview-theme--allblue h1:after {\n \
 position: unset;\n \
 display: unset;\n \
 border-bottom: unset;\n \
 }\n \
 \n \
-/* 二级标题 */\n \
+/* Secondary header */\n \
 .preview-theme--allblue h2 {\n \
 display:block;\n \
 border-bottom: 4px solid #40B8FA;\n \
 }\n \
 \n \
-/* 二级标题内容 */\n \
+/* Secondary header content */\n \
 .preview-theme--allblue h2 .content {\n \
 display: flex;\n \
 color: #40B8FA;\n \
@@ -60,7 +60,7 @@ font-size: 20px;\n \
 margin-left: 25px;\n \
 }\n \
 \n \
-/* 二级标题前缀 */\n \
+/* Secondary header prefix */\n \
 .preview-theme--allblue h2 .prefix {\n \
 display: flex;\n \
 width: 20px;\n \
@@ -70,7 +70,7 @@ background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAA
 margin-bottom: -22px;\n \
 }\n \
 \n \
-/* 二级标题后缀 */\n \
+/* Secondary header suffix */\n \
 .preview-theme--allblue h2 .suffix {\n \
 display: flex;\n \
 box-sizing: border-box;\n \
@@ -94,7 +94,7 @@ display: unset;\n \
 border-bottom: unset;\n \
 }\n \
 \n \
-/* 三级标题 */\n \
+/* Third level header */\n \
 .preview-theme--allblue h3 {\n \
 font-size: 17px;\n \
 font-weight: bold;\n \
@@ -104,7 +104,7 @@ margin-top: 20px;\n \
 margin-bottom: 20px;\n \
 }\n \
 \n \
-/* 三级标题内容 */\n \
+/* Third level header content */\n \
 .preview-theme--allblue h3 .content {\n \
 border-bottom: 2px solid RGBA(79, 177, 249, .65);\n \
 color: #2b2b2b;\n \
@@ -124,7 +124,7 @@ background-repeat:no-repeat;\n \
 margin-bottom:-8px;\n \
 }\n \
 \n \
-/* 三级标题修饰 请参考有实例的主题 */\n \
+/* Third level header decoration */\n \
 .preview-theme--allblue h3:after {}\n \
 \n \
 .preview-theme--allblue h4 .content {\n \
@@ -149,17 +149,17 @@ margin-right:6px;\n \
 margin-bottom:-2px;\n \
 }\n \
 \n \
-/* 无序列表整体样式\n \
+/* Unordered List Overall Style\n \
 * list-style-type: square|circle|disc;\n \
 */\n \
 .preview-theme--allblue ul {\n \
-font-size: 15px; /*神奇逻辑，必须比li section的字体大才会在二级中生效*/\n \
+font-size: 15px;\n \
 color: #595959;\n \
 list-style-type: circle;\n \
 }\n \
 \n \
 \n \
-/* 有序列表整体样式\n \
+/* Ordered List Overall Style\n \
 * list-style-type: upper-roman|lower-greek|lower-alpha;\n \
 */\n \
 .preview-theme--allblue ol {\n \
@@ -167,7 +167,7 @@ font-size: 15px;\n \
 color: #595959;\n \
 }\n \
 \n \
-/* 列表内容，不要设置li\n \
+/* List content, do not set li\n \
 */\n \
 .preview-theme--allblue li section {\n \
 font-size: 14px;\n \
@@ -175,9 +175,9 @@ font-weight: normal;\n \
 color: #595959;\n \
 }\n \
 \n \
-/* 引用\n \
-* 左边缘颜色 border-left-color:black;\n \
-* 背景色 background:gray;\n \
+/* blockquote\n \
+* Left Edge Color border-left-color:black;\n \
+* background:gray;\n \
 */\n \
 .preview-theme--allblue blockquote::before {\n \
 content: \"❝\";\n \
@@ -214,7 +214,7 @@ line-height: 1;\n \
 color: RGBA(64, 184, 250, .5);\n \
 }\n \
 \n \
-/* 链接\n \
+/* Link\n \
 * border-bottom: 1px solid #009688;\n \
 */\n \
 .preview-theme--allblue a {\n \
@@ -227,7 +227,7 @@ border-bottom: 1px solid #3BAAFA;\n \
 content: '「';\n \
 }\n \
 \n \
-/* 加粗 */\n \
+/* Bold */\n \
 .preview-theme--allblue strong {\n \
 color: #3594F7;\n \
 font-weight: bold;\n \
@@ -237,25 +237,25 @@ font-weight: bold;\n \
 content: '」';\n \
 }\n \
 \n \
-/* 斜体 */\n \
+/* Italic */\n \
 .preview-theme--allblue em {\n \
 font-style: normal;\n \
 color: #3594F7;\n \
 font-weight:bold;\n \
 }\n \
 \n \
-/* 加粗斜体 */\n \
+/* Bold Italic */\n \
 .preview-theme--allblue em strong {\n \
 color: #3594F7;\n \
 }\n \
 \n \
-/* 删除线 */\n \
+/* Strikethrough */\n \
 .preview-theme--allblue s {\n \
 color: #3594F7;\n \
 }\n \
 \n \
-/* 分隔线\n \
-* 粗细、样式和颜色\n \
+/* Divider line\n \
+* Thickness, style, and color\n \
 * border-top:1px solid #3e3e3e;\n \
 */\n \
 .preview-theme--allblue hr {\n \
@@ -265,11 +265,6 @@ border: none;\n \
 border-top: 2px solid #3BAAFA;\n \
 }\n \
 \n \
-/* 图片\n \
-* 宽度 width:80%;\n \
-* 居中 margin:0 auto;\n \
-* 居左 margin:0 0;\n \
-*/\n \
 .preview-theme--allblue img {\n \
 border-radius: 6px;\n \
 display: block;\n \
@@ -278,7 +273,7 @@ object-fit: contain;\n \
 box-shadow:2px 4px 7px #999;\n \
 }\n \
 \n \
-/* 图片描述文字 */\n \
+/* Picture description text */\n \
 .preview-theme--allblue figcaption {\n \
 text-align: center;\n \
 display: block;\n \
@@ -299,7 +294,7 @@ margin-right:5px;\n \
 margin-bottom:-5px;\n \
 }\n \
 \n \
-/* 行内代码 */\n \
+/* in-line code */\n \
 .preview-theme--allblue p code,\n \
 .preview-theme--allblue li code {\n \
 color: #3594F7;\n \
@@ -310,9 +305,9 @@ height:21px;\n \
 line-height:22px;\n \
 }\n \
 \n \
-/* 非微信代码块\n \
-* 代码块不换行 display:-webkit-box !important;\n \
-* 代码块换行 display:block;\n \
+/* Non WeChat code block\n \
+* Code block does not wrap display:-webkit-box !important;\n \
+* Code Block Wrap display:block;\n \
 */\n \
 .preview-theme--allblue .code-snippet__fix {\n \
 background: #f7f7f7;\n \
@@ -324,10 +319,10 @@ letter-spacing: 0px;\n \
 }\n \
 \n \
 /*\n \
-* 表格内的单元格\n \
-* 字体大小 font-size: 16px;\n \
-* 边框 border: 1px solid #ccc;\n \
-* 内边距 padding: 5px 10px;\n \
+* Cells within a table\n \
+* Font size  font-size: 16px;\n \
+* Border  border: 1px solid #ccc;\n \
+* Padding  padding: 5px 10px;\n \
 */\n \
 .preview-theme--allblue table tr th,\n \
 .preview-theme--allblue table tr td {\n \
@@ -344,19 +339,19 @@ border-radius: 6px;\n \
 border: 1px solid #DEC6FB;\n \
 }\n \
 \n \
-/* 脚注文字 */\n \
+/* Footnote word */\n \
 .preview-theme--allblue .footnote-word {\n \
 font-weight: normal;\n \
 color: #595959;\n \
 }\n \
 \n \
-/* 脚注上标 */\n \
+/* Footnote reference */\n \
 .preview-theme--allblue .footnote-ref {\n \
 font-weight: normal;\n \
 color: #595959;\n \
 }\n \
 \n \
-/*脚注链接样式*/\n \
+/*Footnote Link Style*/\n \
 .preview-theme--allblue .footnote-item em {\n \
 font-size: 14px;\n \
 color: #595959;\n \
@@ -375,8 +370,8 @@ border: 1px solid RGBA(53, 148, 247, 1);\n \
 border-top: unset;\n \
 }\n \
 \n \
-/* \"参考资料\"四个字\n \
-* 内容 content: \"参考资料\";\n \
+/* \"Reference material\" Four words\n \
+* Content  content: \"Reference material\";\n \
 */\n \
 .preview-theme--allblue .footnotes-sep:before {\n \
 content: 'Reference';\n \
@@ -388,26 +383,26 @@ background: linear-gradient(white 60%, RGBA(64, 184, 250, .4) 40%);\n \
 font-size: 20px;\n \
 }\n \
 \n \
-/* 参考资料编号 */\n \
+/* Reference material number */\n \
 .preview-theme--allblue .footnote-num {}\n \
 \n \
-/* 参考资料文字 */\n \
+/* Reference material words */\n \
 .preview-theme--allblue .footnote-item p {\n \
 color: #595959;\n \
 font-weight: bold;\n \
 }\n \
 \n \
-/* 参考资料解释 */\n \
+/* Reference material Interpretation */\n \
 .preview-theme--allblue .footnote-item p em {\n \
 font-weight: normal;\n \
 }\n \
 \n \
-/* 行间公式\n \
-* 最大宽度 max-width: 300% !important;\n \
+/* Interline formula\n \
+* Maximum width max-width: 300% !important;\n \
 */\n \
 .preview-theme--allblue .katex--display svg {}\n \
 \n \
-/* 行内公式\n \
+/* Inline Formula\n \
 */\n \
 .preview-theme--allblue .katex--inline svg {}\n \
 \n \

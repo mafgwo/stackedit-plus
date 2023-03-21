@@ -2,7 +2,7 @@ function init_preview_theme_activeblue() {
 const style = document.createElement('style');
 style.id = 'preview-theme-activeblue';
 style.type = 'text/css';
-style.innerHTML = "/** activeblue 灵动蓝\n \
+style.innerHTML = "/** activeblue\n \
 */\n \
 .preview-theme--activeblue {\n \
  color: #333;\n \
@@ -10,7 +10,7 @@ style.innerHTML = "/** activeblue 灵动蓝\n \
  font-family: -apple-system,system-ui,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Arial,sans-serif;\n \
 }\n \
 \n \
-/* 标题的通用设置 */\n \
+/* General settings for headers */\n \
 .preview-theme--activeblue h1,\n \
 .preview-theme--activeblue h2,\n \
 .preview-theme--activeblue h3,\n \
@@ -22,7 +22,7 @@ style.innerHTML = "/** activeblue 灵动蓝\n \
  color: #135ce0;\n \
 }\n \
 \n \
-/* 一级标题 */\n \
+/* First level header */\n \
 .preview-theme--activeblue h1 {\n \
  position: relative;\n \
  margin-top: 30px;\n \
@@ -30,7 +30,7 @@ style.innerHTML = "/** activeblue 灵动蓝\n \
  text-align: center;\n \
 }\n \
 \n \
-/* 一级标题前缀，用来放背景图，支持透明度控制 */\n \
+/* First level header prefix */\n \
 .preview-theme--activeblue h1 .prefix {\n \
  display: inline-block;\n \
  top: 0;\n \
@@ -41,75 +41,75 @@ style.innerHTML = "/** activeblue 灵动蓝\n \
  opacity: .12;\n \
 }\n \
 \n \
-/* 一级标题内容 */\n \
+/* First level header content */\n \
 .preview-theme--activeblue h1 .content {\n \
  font-size: 22px;\n \
  display: block;\n \
  margin-top: -36px;\n \
 }\n \
 \n \
-/* 二级标题 */\n \
+/* Secondary header */\n \
 .preview-theme--activeblue h2 {\n \
  position: relative;\n \
    font-size: 20px;\n \
 }\n \
 \n \
-/* 二级标题前缀，有兴趣加内容的可以魔改 */\n \
+/* Secondary header prefix */\n \
 .preview-theme--activeblue h2 .prefix {\n \
 \n \
 }\n \
 \n \
-/* 二级标题内容 */\n \
+/* Secondary header content */\n \
 .preview-theme--activeblue h2 .content {\n \
    border-left: 4px solid;\n \
  padding-left: 10px;\n \
 }\n \
 \n \
-/* 一二级标题之间间距控制一下 */\n \
+/* Control the spacing between Secondary headers */\n \
 .preview-theme--activeblue h1 + h2 {\n \
  padding-top: 0;\n \
 }\n \
 \n \
-/* 三级标题 */\n \
+/* Third level header */\n \
 .preview-theme--activeblue h3 {\n \
  font-size: 16px;\n \
 }\n \
 \n \
-/* 段落 */\n \
+/* Paragraph */\n \
 .preview-theme--activeblue p {\n \
  font-size: 16px;\n \
  line-height: 2;\n \
  font-weight: 400;\n \
 }\n \
 \n \
-/* 段落间距控制 */\n \
+/* Control the spacing between Paragraph */\n \
 .preview-theme--activeblue p+p {\n \
  margin-top: 16px;\n \
 }\n \
 \n \
-/* 无序列表 */\n \
+/* Unordered list */\n \
 .preview-theme--activeblue ul>li ul>li {\n \
  list-style: circle;\n \
 }\n \
 \n \
-/* 无序列表内容行高 */\n \
+/* Unordered list content line height */\n \
 .preview-theme--activeblue li section {\n \
  line-height: 2;\n \
 }\n \
 \n \
-/* 引用 */\n \
+/* blockquote */\n \
 .preview-theme--activeblue blockquote {\n \
  border-left-color: #b2aec5 !important;\n \
  background: #fff9f9 !important;\n \
 }\n \
 \n \
-/* 引用文字 */\n \
+/* blockquote words */\n \
 .preview-theme--activeblue blockquote p {\n \
  color: #666;\n \
  line-height: 2;\n \
 }\n \
 \n \
-/* 链接 */\n \
+/* Link */\n \
 .preview-theme--activeblue a {\n \
  color: #036aca;\n \
  border-bottom: 0;\n \
@@ -117,7 +117,7 @@ style.innerHTML = "/** activeblue 灵动蓝\n \
  text-decoration: none;\n \
 }\n \
 \n \
-/* 加粗 */\n \
+/* Bold */\n \
 .preview-theme--activeblue strong {\n \
  background: linear-gradient(to right ,#3299d2,#efbdb5);\n \
  color: #fff;\n \
@@ -129,17 +129,17 @@ style.innerHTML = "/** activeblue 灵动蓝\n \
  letter-spacing: 1px;\n \
 }\n \
 \n \
-/* 加粗斜体 */\n \
+/* Bold Italic */\n \
 .preview-theme--activeblue em strong {\n \
  color: #fff;\n \
 }\n \
 \n \
-/* 分隔线 */\n \
+/* Divider line */\n \
 .preview-theme--activeblue hr {\n \
  border-top: 1px solid #135ce0;\n \
 }\n \
 \n \
-/* 图片描述文字，隐藏了，如果需要，请删除display */\n \
+/* Picture description text */\n \
 .preview-theme--activeblue figcaption {\n \
  display: none;\n \
  opacity: .6;\n \
@@ -147,7 +147,7 @@ style.innerHTML = "/** activeblue 灵动蓝\n \
  font-size: 12px;\n \
 }\n \
 \n \
-/* 行内代码 */\n \
+/* in-line code */\n \
 .preview-theme--activeblue p code,\n \
 .preview-theme--activeblue li code,\n \
 .preview-theme--activeblue table code {\n \
@@ -157,43 +157,43 @@ style.innerHTML = "/** activeblue 灵动蓝\n \
  word-break: normal;\n \
 }\n \
 \n \
-/* 表格 */\n \
+/* table */\n \
 .preview-theme--activeblue table {\n \
  border-spacing: 0;\n \
 }\n \
 \n \
 /*\n \
-* 表格内的单元格\n \
+* Cells within a table\n \
 */\n \
 .preview-theme--activeblue table tr th {\n \
  background-color: #d4f1ff;\n \
 }\n \
 \n \
-/* 脚注文字 */\n \
+/* Footnote word */\n \
 .preview-theme--activeblue .footnote-word {\n \
  color: #135ce0;\n \
  font-weight: 400;\n \
 }\n \
 \n \
-/* 脚注上标 */\n \
+/* erence */\n \
 .preview-theme--activeblue .footnote-ref {\n \
  color: #5ba1e2;\n \
  font-weight: 400;\n \
 }\n \
 \n \
-/* 参考资料 */\n \
+/* Reference */\n \
 .preview-theme--activeblue .footnotes-sep:before {\n \
  text-align: center;\n \
  color: #135ce0;\n \
- content: \"参考\";\n \
+ content: \"Reference\";\n \
 }\n \
 \n \
-/* 参考编号 */\n \
+/* Reference number */\n \
 .preview-theme--activeblue .footnote-num {\n \
  color: #666;\n \
 }\n \
 \n \
-/* 参考文字 */\n \
+/* Reference words */\n \
 .preview-theme--activeblue .footnote-item p { \n \
  color: #999;\n \
  font-weight: 700;\n \
@@ -201,7 +201,7 @@ style.innerHTML = "/** activeblue 灵动蓝\n \
  font-size: 13px;\n \
 }\n \
 \n \
-/* 参考解释 */\n \
+/* Reference explanation */\n \
 .preview-theme--activeblue .footnote-item p em {\n \
  color: #3375e2;\n \
  font-style: normal;\n \
