@@ -153,7 +153,7 @@ export default [
       new Feature(
         'syncMainWorkspace',
         'Main workspace synced',
-        'Sign in with GitHub to sync your main workspace with your GitHub stackedit-app-data repo.',
+        'Sign in with GitHub to sync your main workspace with your GitHub stackeditplus-appdata repo.',
       ),
       new Feature(
         'sponsor',

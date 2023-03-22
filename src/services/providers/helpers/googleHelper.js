@@ -156,8 +156,7 @@ export default {
       idToken,
       sub: body.sub,
       name: (existingToken || {}).name || 'Someone',
-      isLogin: !store.getters['workspace/mainWorkspaceToken'] &&
-        scopes.includes('https://www.googleapis.com/auth/drive.appdata'),
+      isLogin: false,
       isSponsor: false,
       isDrive: scopes.includes('https://www.googleapis.com/auth/drive') ||
         scopes.includes('https://www.googleapis.com/auth/drive.file'),

@@ -16,12 +16,12 @@ import tempFileSvc from './tempFileSvc';
 import workspaceSvc from './workspaceSvc';
 import constants from '../data/constants';
 import badgeSvc from './badgeSvc';
+import githubHelper from './providers/helpers/githubHelper';
 
 const minAutoSyncEvery = 60 * 1000; // 60 sec
 const inactivityThreshold = 3 * 1000; // 3 sec
 const restartSyncAfter = 30 * 1000; // 30 sec
 const restartContentSyncAfter = 1000; // Enough to detect an authorize pop up
-const checkSponsorshipAfter = (5 * 60 * 1000) + (30 * 1000); // tokenExpirationMargin + 30 sec
 const maxContentHistory = 20;
 
 const LAST_SEEN = 0;
@@ -999,13 +999,7 @@ export default {
         .catch(() => { /* Cancel */ });
       const sponsorToken = store.getters['workspace/sponsorToken'];
       // Force check sponsorship after a few seconds
-      const currentDate = Date.now();
-      if (sponsorToken && sponsorToken.expiresOn > currentDate - checkSponsorshipAfter) {
-        store.dispatch('data/addGoogleToken', {
-          ...sponsorToken,
-          expiresOn: currentDate - checkSponsorshipAfter,
-        });
-      }
+      await githubHelper.refreshSponsorInfo(sponsorToken);
     }
 
     // Try to find a suitable action provider

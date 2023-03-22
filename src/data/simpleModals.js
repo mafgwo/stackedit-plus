@@ -61,13 +61,13 @@ export default {
     'Yes, clean',
   ),
   signInForComment: simpleModal(
-    `<p>You have to sign in with Google to start commenting.</p>
+    `<p>You have to sign in with GitHub to start commenting.</p>
     <div class="modal__info"><b>Note:</b> This will sync your main workspace.</div>`,
     'Cancel',
     'Ok, sign in',
   ),
   signInForSponsorship: simpleModal(
-    `<p>You have to sign in with Google to sponsor.</p>
+    `<p>You have to sign in with GitHub to sponsor.</p>
     <div class="modal__info"><b>Note:</b> This will sync your main workspace.</div>`,
     'Cancel',
     'Ok, sign in',

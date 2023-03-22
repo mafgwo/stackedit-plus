@@ -7,7 +7,7 @@ import constants from '../../../data/constants';
 
 const tokenExpirationMargin = 5 * 60 * 1000;
 
-const appDataRepo = 'stackedit-app-data';
+const appDataRepo = 'stackeditplus-appdata';
 
 const request = (token, options) => networkSvc.request({
   ...options,
@@ -147,7 +147,7 @@ export default {
       sub: `${user.login}`,
     };
     if (isMain) {
-      // 检查 stackedit-app-data 仓库是否已经存在 如果不存在则创建该仓库
+      // 检查 stackeditplus-appdata 仓库是否已经存在 如果不存在则创建该仓库
       await this.checkAndCreateRepo(token);
     }
     // Add token to gitee tokens

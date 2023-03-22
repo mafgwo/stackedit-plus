@@ -6,7 +6,7 @@ import badgeSvc from '../../badgeSvc';
 
 const getScopes = token => [token.repoFullAccess ? 'repo' : 'public_repo', 'gist'];
 
-const appDataRepo = 'stackedit-app-data';
+const appDataRepo = 'stackeditplus-appdata';
 
 const request = (token, options) => networkSvc.request({
   ...options,
@@ -116,20 +116,18 @@ export default {
       // 主文档空间的登录 标识登录
       isLogin: !!isMain || (oldToken && !!oldToken.isLogin),
       name: user.login,
+      isSponsor: false,
       sub: `${user.id}`,
       imgStorages: oldToken && oldToken.imgStorages,
       repoFullAccess: scopes.includes('repo'),
     };
 
     if (isMain) {
-      // check stackedit-app-data repo exist?
+      // check stackeditplus-appdata repo exist?
       await this.checkAndCreateRepo(token);
     }
     // Refresh Sponsor flag
     await this.refreshSponsorInfo(token);
-
-    // Add token to github tokens
-    store.dispatch('data/addGithubToken', token);
     return token;
   },
   signin() {
@@ -154,6 +152,8 @@ export default {
         // Ignore
       }
     }
+    // Add token to github tokens
+    store.dispatch('data/addGithubToken', token);
     return token;
   },
   async addAccount(repoFullAccess = false) {
@@ -193,7 +193,7 @@ export default {
       if (err.status === 404) {
         await request(token, {
           method: 'POST',
-          url: 'https://api.github.com/repos/mafgwo/stackedit-app-data-template/generate',
+          url: 'https://api.github.com/repos/mafgwo/stackeditplus-appdata-template/generate',
           body: {
             owner: token.name,
             name: appDataRepo,

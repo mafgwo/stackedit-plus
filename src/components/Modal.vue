@@ -20,7 +20,7 @@ import { mapGetters } from 'vuex';
 import simpleModals from '../data/simpleModals';
 import editorSvc from '../services/editorSvc';
 import syncSvc from '../services/syncSvc';
-import giteeHelper from '../services/providers/helpers/giteeHelper';
+import githubHelper from '../services/providers/helpers/githubHelper';
 import store from '../store';
 
 import ModalInner from './modals/common/ModalInner';
@@ -177,14 +177,19 @@ export default {
   methods: {
     async sponsor() {
       try {
-        if (!store.getters['workspace/sponsorToken']) {
+        const sponsorToken = store.getters['workspace/sponsorToken'];
+        if (!sponsorToken) {
           // User has to sign in
           await store.dispatch('modal/open', 'signInForSponsorship');
-          await giteeHelper.signin();
+          await githubHelper.signin();
           syncSvc.requestSync();
+        } else {
+          await githubHelper.refreshSponsorInfo(sponsorToken);
         }
         if (!store.getters.isSponsor) {
           await store.dispatch('modal/open', 'sponsor');
+        } else {
+          store.dispatch('notification/info', 'You are already a sponsor!');
         }
       } catch (e) { /* cancel */ }
     },

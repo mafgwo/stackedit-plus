@@ -13,19 +13,23 @@ const cb = (resolve, reject) => (err, res) => {
   }
 };
 
-const getGitHubUser = (idToken) => {
+exports.getGitHubUser = (idToken) => {
   return new Promise((resolve, reject) => {
     request({
       method: 'GET',
       url: 'https://api.github.com/user',
       headers: {
+        'User-Agent': 'StackEditPlus',
         Authorization: `Bearer ${idToken}`,
       },
     }, (err, res, body) => {
       if (err) {
         reject(err);
       }
-      resolve(qs.parse(body));
+      if (res.statusCode == 200) {
+        resolve(JSON.parse(`${body}`));
+      }
+      reject(res.statusCode);
     });
   });
 }
@@ -60,7 +64,7 @@ exports.removeUser = id => new Promise((resolve, reject) => {
   }, cb(resolve, reject));
 });
 
-exports.getUserFromToken = idToken => getGitHubUser(idToken)
+exports.getUserFromToken = idToken => exports.getGitHubUser(idToken)
   .then(userInfo => exports.getUser(userInfo.login));
 
 exports.userInfo = (req, res) => exports.getUserFromToken(req.query.idToken)

@@ -12,7 +12,7 @@
           <icon-provider :provider-id="currentWorkspace.providerId"></icon-provider>
         </div>
         <span v-if="currentWorkspace.providerId === 'githubAppData'">
-          <b>{{currentWorkspace.name}}</b> synced with your GitHub <a :href="`https://github.com/${loginToken.name}/stackedit-app-data`" target="_blank">stackedit-app-data repo</a>.
+          <b>{{currentWorkspace.name}}</b> synced with your GitHub <a :href="`https://github.com/${loginToken.name}/stackeditplus-appdata`" target="_blank">stackeditplus-appdata repo</a>.
         </span>
         <span v-else-if="currentWorkspace.providerId === 'googleDriveWorkspace'">
           <b>{{currentWorkspace.name}}</b> synced with a <a :href="workspaceLocationUrl" target="_blank">Google Drive folder</a>.
