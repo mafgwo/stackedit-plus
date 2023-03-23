@@ -1,0 +1,22 @@
+language: node_js
+
+node_js:
+  - "12"
+
+services:
+  - docker
+
+before_deploy:
+  # Run docker build
+  - docker build -t benweet/stackedit .
+  # Install Helm
+  - curl -SL -o /tmp/get_helm.sh https://git.io/get_helm.sh
+  - chmod 700 /tmp/get_helm.sh
+  - /tmp/get_helm.sh
+  - helm init --client-only
+
+deploy:
+  provider: script
+  script: bash build/deploy.sh
+  on:
+    tags: true
