@@ -86,7 +86,7 @@ services:
     environment:
       - LISTENING_PORT=8080
       - ROOT_URL=/
-      - USER_BUCKET_NAME=root
+      - USER_BUCKET_NAME=[AWS-S3-bucket]
       - DROPBOX_APP_KEY=[Delete-if-no-support-is-required]
       - DROPBOX_APP_KEY_FULL=[Delete-if-no-support-is-required]
       - GITHUB_CLIENT_ID=[Delete-if-no-support-is-required]
@@ -121,7 +121,7 @@ docker run -itd --name stackedit-plus \
   -p 8080:8080 \
   -e LISTENING_PORT=8080 \
   -e ROOT_URL=/ \
-  -e USER_BUCKET_NAME=root \
+  -e USER_BUCKET_NAME=[AWS-S3-bucket] \
   -e DROPBOX_APP_KEY=[Delete-if-no-support-is-required] \
   -e DROPBOX_APP_KEY_FULL=[Delete-if-no-support-is-required] \
   -e GITHUB_CLIENT_ID=[Delete-if-no-support-is-required] \
