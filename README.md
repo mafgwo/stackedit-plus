@@ -1,5 +1,5 @@
 <h1 align="center" style="text-align:center;">
-<img src="src/assets/logo.svg" width="550" />
+<img src="images/logo.png" width="550" />
 </h1>
 <p align="center">
 	<strong>Note taking tool, online Markdown editor.</strong><br>
