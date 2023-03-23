@@ -42,9 +42,9 @@
             </button>
           </div>
           <span>{{token.name}}</span>
-          <span class="line-entry" v-if="token.uploadUrl">Upload Url：{{token.uploadUrl}}</span>
-          <span class="line-entry" v-if="token.headers">Custom Request Headers：{{token.headers}}</span>
-          <span class="line-entry" v-if="token.params">Custom Form Params：{{token.params}}</span>
+          <span class="line-entry" v-if="token.uploadUrl">Upload Url: {{token.uploadUrl}}</span>
+          <span class="line-entry" v-if="token.headers">Custom Request Headers: {{token.headers}}</span>
+          <span class="line-entry" v-if="token.params">Custom Form Params: {{token.params}}</span>
         </menu-item>
       </menu-entry>
       <menu-entry @click.native="checkedImgDest(tokenStorage.token.sub, tokenStorage.providerId, tokenStorage.sid)" v-for="tokenStorage in tokensImgStorages" :key="tokenStorage.sid">

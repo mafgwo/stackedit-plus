@@ -12,7 +12,7 @@
           <div class="form-entry__info">
             <b>Example:</b> https://gitea.example.com/
             <span v-if="httpAppUrl">
-              , if it is not an https URL, please go to <a :href="httpAppUrl" target="_blank">HTTP Link</a> to add Gitea。
+              , if it is not an https URL, please go to <a :href="httpAppUrl" target="_blank">HTTP Link</a> to add Gitea.
             </span>
           </div>
         </form-entry>

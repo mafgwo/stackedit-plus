@@ -7,9 +7,9 @@ const simpleModal = (contentHtml, rejectText, resolveText) => ({
 /* eslint sort-keys: "error" */
 export default {
   autoSyncWorkspace: simpleModal(
-    config => `<p>您将启动文档空间 <b>${config.name}</b >的自动同步。<br>启动后无法自定义提交信息。<br>你确定吗？</p>`,
-    '取消',
-    '确认启动',
+    config => `<p>You will enable automatic synchronization of the <b>${config.name}</b> workspace. <br>Unable to customize submission information after enable.<br>Are you sure?</p>`,
+    'No',
+    'Yes, enable',
   ),
   commentDeletion: simpleModal(
     '<p>You are about to delete a comment. Are you sure?</p>',

@@ -12,9 +12,9 @@
         </div>
       </form-entry>
       <form-entry label="Folder path" info="Optional">
-        <input slot="field" class="textfield" type="text" placeholder="Such as: imgs/{YYYY}-{MM}-{DD}" v-model.trim="path" @keydown.enter="resolve()">
+        <input slot="field" class="textfield" type="text" placeholder="Default: imgs/{YYYY}-{MM}-{DD}" v-model.trim="path" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          If not provided, the default is imgs/{YYYY}-{MM}-{DD}.<br/>
+          If not provided, the default value is <b>imgs/{YYYY}-{MM}-{DD}</b>.<br/>
           Variable Description: {YYYY} is a year variable, {MM} is a month variable, {DD} is a day variable, and {MDNAME} is the current document name.
         </div>
       </form-entry>

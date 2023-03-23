@@ -126,9 +126,9 @@ export default {
     },
     async remove(id) {
       if (id === this.mainWorkspace.id) {
-        this.info('您的主文档空间无法删除。');
+        this.info('Main workspace cannot be deleted.');
       } else if (id === this.currentWorkspace.id) {
-        this.info('请先关闭文档空间，然后再将其删除。');
+        this.info('Please close the workspace before deleting it.');
       } else {
         try {
           const workspace = this.workspacesById[id];

@@ -73,7 +73,7 @@
 ## Deployment Instructions
 > It is recommended to deploy using the docker compose method. If you encounter problems with other deployment methods, please submit an issue.
 
-`docker-compose.yml`如下：
+`docker-compose.yml` content:
 
 ```yaml
 version: "3.7"
@@ -140,11 +140,11 @@ docker run -itd --name stackedit-plus \
 ## How to create a third-party platform application
 > During deployment, if you need to support GitHub, Gitea, Gitlab, you need to create an application on the corresponding third-party platform, obtain the application ID and secret key, replace them with the above environment variables, and then start the application.
 
-- Environment variables for GitHub: GITHUB_CLIENT_ID、GITEE_CLIENT_SECRET，**[How to create a GitHub application](./docs/GitHub-Application-Creation.md)**
+- Environment variables for GitHub: `GITHUB_CLIENT_ID` `GITEE_CLIENT_SECRET`, **[How to create a GitHub application](./docs/GitHub-Application-Creation.md)**
 
-- Gitea can optionally configure environment variables (if not configured, it is specified at the front end during association, and if configured, only configured application information is allowed): GITEA_CLIENT_ID、GITEA_CLIENT_SECRET、GITEA_URL，**[How to create a Gitea application](./docs/Gitea-Application-Creation.md)**
+- Gitea can optionally configure environment variables (if not configured, it is specified at the front end during association, and if configured, only configured application information is allowed): `GITEA_CLIENT_ID` `GITEA_CLIENT_SECRET` `GITEA_URL`, **[How to create a Gitea application](./docs/Gitea-Application-Creation.md)**
 
-- Gitlab can optionally configure environment variables (if not configured, it is specified at the front end during association, and if configured, only configured application information is allowed): GITLAB_CLIENT_ID、GITLAB_URL **How to create a Gitlab application(Documents to be supplemented)**
+- Gitlab can optionally configure environment variables (if not configured, it is specified at the front end during association, and if configured, only configured application information is allowed): `GITLAB_CLIENT_ID` `GITLAB_URL` **How to create a Gitlab application(Documents to be supplemented)**
 
 (Special note: Self built Gitea and Gitlab must support cross domain access to stackdit.)
 
