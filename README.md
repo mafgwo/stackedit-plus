@@ -1,5 +1,5 @@
 <h1 align="center" style="text-align:center;">
-<img src="chrome-app/icon-512.png" width="128" />
+<img src="src/assets/logo.svg" width="650" />
 <br />
 StackEdit+
 </h1>
@@ -17,14 +17,11 @@ StackEdit+
     <a target="_blank" href="https://hub.docker.com/r/mafgwo/stackedit-plus">
 		<img src="https://img.shields.io/docker/pulls/mafgwo/stackedit-plus.svg" alt="Docker Pulls" />
 	</a>
-    <a target="_blank" href='https://gitee.com/mafgwo/stackedit/stargazers'>
-		<img src='https://gitee.com/mafgwo/stackedit/badge/star.svg' alt='gitee star'/>
-	</a>
 </p>
 <br/>
 <p align="center">
-	<a target="_blank" href="https://jq.qq.com/?_wv=1027&k=wUSCNqmN">
-	<img src="https://img.shields.io/badge/QQ交流群-703187410-orange"/></a>
+	<a target="_blank" href="https://twitter.com/StackEditPlus">
+	<img src="https://img.shields.io/badge/Twitter-StackEditPlus-orange"/></a>
 </p>
 <hr />
 1.Notes support Git warehouse workspace such as Gitee, GitHub, and Gitea.<br>
