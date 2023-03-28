@@ -8,18 +8,18 @@
           </option>
         </select>
       </p>
-      <p v-if="!historyContext">同步 <b>{{currentFileName}}</b> 以启用修订历史 或者 <a href="javascript:void(0)" @click="signin">登录 Gitee</a> 以同步您的主文档空间。</p>
-      <p v-else-if="loading">历史版本加载中…</p>
-      <p v-else-if="!revisionsWithSpacer.length"><b>{{currentFileName}}</b> 没有历史版本.</p>
+      <p v-if="!historyContext">Synchronize <b>{{currentFileName}}</b> to enable revision history or <a href="javascript:void(0)" @click="signin">sign in with GitHub</a> to synchronize your main workspace.</p>
+      <p v-else-if="loading">Loading history…</p>
+      <p v-else-if="!revisionsWithSpacer.length"><b>{{currentFileName}}</b> has no history.</p>
       <div class="menu-entry menu-entry--info flex flex--row flex--align-center" v-else>
         <div class="menu-entry__icon menu-entry__icon--image">
           <icon-provider :provider-id="syncLocation.providerId"></icon-provider>
         </div>
         <span v-if="syncLocation.url">
-          下面的历史版本存储在 <a :href="syncLocation.url" target="_blank">{{ syncLocationProviderName }}</a>.
+          The following revisions are stored in <a :href="syncLocation.url" target="_blank">{{ syncLocationProviderName }}</a>.
         </span>
         <span v-else>
-          下面的历史版本存储在 {{ syncLocationProviderName }}.
+          The following revisions are stored in {{ syncLocationProviderName }}.
         </span>
       </div>
     </div>
@@ -40,7 +40,7 @@
     </div>
     <div class="history__spacer history__spacer--last" v-if="revisions.length"></div>
     <div class="flex flex--row flex--end" v-if="showMoreButton">
-      <button class="history__button button" @click="showMore">更多</button>
+      <button class="history__button button" @click="showMore">More</button>
     </div>
   </div>
 </template>
@@ -54,7 +54,7 @@ import UserName from '../UserName';
 import EditorClassApplier from '../common/EditorClassApplier';
 import PreviewClassApplier from '../common/PreviewClassApplier';
 import utils from '../../services/utils';
-import giteeHelper from '../../services/providers/helpers/giteeHelper';
+import githubHelper from '../../services/providers/helpers/githubHelper';
 import syncSvc from '../../services/syncSvc';
 import store from '../../store';
 import badgeSvc from '../../services/badgeSvc';
@@ -167,7 +167,7 @@ export default {
     ]),
     async signin() {
       try {
-        await giteeHelper.signin();
+        await githubHelper.signin();
         syncSvc.requestSync();
       } catch (e) {
         // Cancel

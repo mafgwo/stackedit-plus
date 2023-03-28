@@ -4,12 +4,12 @@ import Provider from './common/Provider';
 import gitWorkspaceSvc from '../gitWorkspaceSvc';
 import userSvc from '../userSvc';
 
-const appDataRepo = 'stackedit-app-data';
+const appDataRepo = 'stackeditplus-appdata';
 const appDataBranch = 'master';
 
 export default new Provider({
   id: 'giteeAppData',
-  name: 'Gitee应用数据',
+  name: 'Gitee application data',
   getToken() {
     return store.getters['workspace/syncToken'];
   },

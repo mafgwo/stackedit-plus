@@ -1,36 +1,36 @@
 <template>
-  <modal-inner aria-label="发布到Blogger Page">
+  <modal-inner aria-label="Publish to Blogger Page">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="bloggerPage"></icon-provider>
       </div>
-      <p>发布<b> {{CurrentFileName}} </b>到您的<b> Blogger页面</b>。</p>
+      <p>Publish <b>{{currentFileName}}</b> to your <b>Blogger Page</b>.</p>
       <form-entry label="Blog URL" error="blogUrl">
         <input slot="field" class="textfield" type="text" v-model.trim="blogUrl" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          <b>例如:</b> http://example.blogger.com/
+          <b>Example:</b> http://example.blogger.com/
         </div>
       </form-entry>
-      <form-entry label="现有页面ID" info="可选的">
+      <form-entry label="Existing page ID" info="optional">
         <input slot="field" class="textfield" type="text" v-model.trim="pageId" @keydown.enter="resolve()">
       </form-entry>
-      <form-entry label="模板">
+      <form-entry label="Template">
         <select slot="field" class="textfield" v-model="selectedTemplate" @keydown.enter="resolve()">
           <option v-for="(template, id) in allTemplatesById" :key="id" :value="id">
             {{ template.name }}
           </option>
         </select>
         <div class="form-entry__actions">
-          <a href="javascript:void(0)" @click="configureTemplates">配置模板</a>
+          <a href="javascript:void(0)" @click="configureTemplates">Configure templates</a>
         </div>
       </form-entry>
       <div class="modal__info">
-        <b>提示:</b> 您可以在<a href="javascript:void(0)" @click="openFileProperties">文件属性</a>中提供<code>title</code>的值
+        <b>ProTip:</b> You can provide a value for <code>title</code> in the <a href="javascript:void(0)" @click="openFileProperties">file properties</a>.
       </div>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">取消</button>
-      <button class="button button--resolve" @click="resolve()">确认</button>
+      <button class="button" @click="config.reject()">Cancel</button>
+      <button class="button button--resolve" @click="resolve()">Ok</button>
     </div>
   </modal-inner>
 </template>

@@ -10,7 +10,7 @@ import store from './store';
 import localDbSvc from './services/localDbSvc';
 
 if (!indexedDB) {
-  throw new Error('不支持您的浏览器，请升级到最新版本。');
+  throw new Error('Your browser is not supported. Please upgrade to the latest version.');
 }
 
 OfflinePluginRuntime.install({
@@ -29,7 +29,7 @@ OfflinePluginRuntime.install({
 });
 
 if (localStorage.updated) {
-  store.dispatch('notification/info', 'StackEdit中文版刚刚更新了！');
+  store.dispatch('notification/info', 'StackEdit+ has just updated itself!');
   setTimeout(() => localStorage.removeItem('updated'), 3000);
 }
 
@@ -39,7 +39,7 @@ if (!localStorage.installPrompted) {
     promptEvent.preventDefault();
 
     try {
-      await store.dispatch('notification/confirm', '将StackEdit中文版添加到您的主屏幕上？');
+      await store.dispatch('notification/confirm', 'Add StackEdit+ to your home screen?');
       promptEvent.prompt();
       await promptEvent.userChoice;
     } catch (err) {

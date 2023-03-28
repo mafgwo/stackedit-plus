@@ -1,145 +1,147 @@
-# 欢迎来到 StackEdit 中文版！
+# Welcome to StackEdit+!
 
-你好！我是你在 **StackEdit中文版** 中的第一个 Markdown 文件。如果你想了解 StackEdit中文版，可以阅读此文章。如果你想玩 Markdown，你也可以编辑此文章。另外，您可以通过打开导航栏左边的**文件资源管理器**来创建新文件。
-
-# 文件
-
-StackEdit中文版 将您的文件存储在您的浏览器中，这意味着您的所有文件都会自动保存在本地并且可以**离线访问！**
-
-## 创建文件和文件夹
-
-使用导航栏左边的文件夹图标可以访问文件资源管理器。您可以通过单击文件资源管理器中的 **创建文件** 图标来创建新文件。您还可以通过单击 **创建文件夹** 图标来创建文件夹。
-
-## 切换到另一个文件
-
-您的所有文件和文件夹在文件资源管理器中都显示为树。您可以通过单击树中的文件从一个文件切换到另一个文件。
-
-## 重命名文件
-
-您可以通过单击导航栏中的文件名或单击文件资源管理器中的**重命名**图标来重命名当前文件。
-
-## 搜索文件
-
-您可以通过单击文件资源管理器中的**搜索文件**图标来通过关键字在整个文档空间中搜索文件。
-
-## 删除一个文件
-
-您可以通过单击文件资源管理器中的 **删除** 图标来删除当前文件。该文件将被移至 **回收站** 文件夹并在 7 天不活动后自动删除。
-
-## 导出文件
-
-您可以通过单击菜单中的 **导入/导出** 来导出当前文件。您可以选择将文件导出为纯 Markdown、使用 Handlebars 模板的 HTML 或 PDF。
+Hi! I'm your first Markdown file in **StackEdit+** . If you want to learn about StackEdit+, you can read me. If you want to play with Markdown, you can edit me. Once you have finished with me, you can create new files by opening the **file explorer** on the left corner of the navigation bar.
 
 
-# 同步
+# Files
 
-同步是 StackEdit中文版 的最大特点之一。它使您可以将文档空间中的任何文件与存储在**Gitee** 和 **GitHub** 账号中的其他文件同步。这使您可以继续在其他设备上写作，与您共享文件的人协作，轻松集成到您的工作流程中......同步机制在后台每分钟触发一次，下载、合并和上传文件修改。
+StackEdit+ stores your files in your browser, which means all your files are automatically saved locally and are accessible **offline!**
 
-有两种类型的同步，它们可以相互补充：
+## Create files and folders
 
-- 文档空间同步将自动同步您的所有文件、文件夹和设置。这将允许您在任何其他设备上获取您的文档空间。
-> 要开始同步您的文档空间，只需在菜单中使用 Gitee 登录。
+The file explorer is accessible using the button in left corner of the navigation bar. You can create a new file by clicking the **New file** button in the file explorer. You can also create folders by clicking the **New folder** button.
 
-- 文件同步将保持文档空间的一个文件与**Gitee**或**GitHub**中的一个或多个文件同步。
-> 在开始同步文件之前，您必须在**同步**子菜单中链接一个账号。
+## Switch to another file
 
-## 打开一个文件
+All your files and folders are presented as a tree in the file explorer. You can switch from one to another by clicking a file in the tree.
 
-您可以通过打开 **同步** 子菜单并单击 **从...打开** 从**Gitee** 或 **GitHub** 打开文件。在文档空间中打开后，文件中的任何修改都将自动同步。
+## Rename a file
 
-## 保存文件
+You can rename the current file by clicking the file name in the navigation bar or by clicking the **Rename** button in the file explorer.
 
-您可以通过打开 **同步** 子菜单并单击 **在...保存** 将文档空间的任何文件保存到**Gitee** 或 **GitHub**。即使文档空间中的文件已经同步，您也可以将其保存到另一个位置。 StackEdit中文版 可以将一个文件与多个位置和账号同步。
+## Search files
 
-## 同步文件
+You can search for files through the entire workspace using keywords by clicking the **Search files** icon in File Explorer.
 
-一旦您的文件链接到同步位置，StackEdit中文版 将通过下载/上传任何修改来定期同步它。如有必要，将执行合并并解决冲突。
+## Delete a file
 
-如果您刚刚修改了文件并且想要强制同步，请单击导航栏中的 **立即同步** 按钮。
+You can delete the current file by clicking the **Remove** button in the file explorer. The file will be moved into the **Trash** folder and automatically deleted after 7 days of inactivity.
 
-> **注意：** 如果您没有要同步的文件，**立即同步**按钮将被禁用。
+## Export a file
 
-## 管理文件同步
-
-由于一个文件可以与多个位置同步，您可以通过单击**同步**子菜单中的**文件同步**列出和管理同步位置。这允许您列出和删除链接到您的文件的同步位置。
+You can export the current file by clicking **Export to disk** in the menu. You can choose to export the file as plain Markdown, as HTML using a Handlebars template or as a PDF.
 
 
-# 发布
+# Synchronization
 
-在 StackEdit中文版 中发布使您可以轻松地在线发布文件。对文件感到满意后，您可以将其发布到不同的托管平台，例如 **Blogger**、**Gitee**、**Gist**、**GitHub**、**WordPress** 和 **Zendesk**。使用 [Handlebars 模板](http://handlebarsjs.com/)，您可以完全控制导出的内容。
+Synchronization is one of the biggest features of StackEdit+. It enables you to synchronize any file in your workspace with other files stored in your **Google Drive**, your **Dropbox** and your **GitHub** accounts. This allows you to keep writing on other devices, collaborate with people you share the file with, integrate easily into your workflow... The synchronization mechanism takes place every minute in the background, downloading, merging, and uploading file modifications.
 
-> 在开始发布之前，您必须在**发布**子菜单中链接一个账号。
+There are two types of synchronization and they can complement each other:
 
-## 发布文件
+- The workspace synchronization will sync all your files, folders and settings automatically. This will allow you to fetch your workspace on any other device.
+	> To start syncing your workspace, just sign in with GitHub in the menu.
 
-您可以通过打开 **发布** 子菜单并单击 **发布到** 来发布您的文件。对于某些位置，您可以选择以下格式：
+- The file synchronization will keep one file of the workspace synced with one or multiple files in **Google Drive**, **Dropbox** or **GitHub**.
+	> Before starting to sync files, you must link an account in the **Synchronize** sub-menu.
 
-- Markdown：在可以解释的网站上发布 Markdown 文本（例如**GitHub**），
-- HTML：通过 Handlebars 模板发布转换为 HTML 的文件（例如在博客上）。
+## Open a file
 
-## 更新发布
+You can open a file from **Google Drive**, **Dropbox** or **GitHub** by opening the **Synchronize** sub-menu and clicking **Open from**. Once opened in the workspace, any modification in the file will be automatically synced.
 
-发布后，StackEdit中文版 会将您的文件链接到该发布，这使您可以轻松地重新发布它。一旦您修改了文件并想要更新您的发布，请单击导航栏中的**立即发布**按钮。
+## Save a file
 
-> **注意：** 如果您没有要同步的文件，**立即同步**按钮将被禁用。
+You can save any file of the workspace to **Google Drive**, **Dropbox** or **GitHub** by opening the **Synchronize** sub-menu and clicking **Save on**. Even if a file in the workspace is already synced, you can save it to another location. StackEdit+ can sync one file with multiple locations and accounts.
 
-## 管理文件同步
+## Synchronize a file
 
-由于一个文件可以与多个位置同步，您可以通过单击**同步**子菜单中的**文件同步**列出和管理同步位置。这允许您列出和删除链接到您的文件的同步位置。
+Once your file is linked to a synchronized location, StackEdit+ will periodically synchronize it by downloading/uploading any modification. A merge will be performed if necessary and conflicts will be resolved.
 
-# Markdown扩展
+If you just have modified your file and you want to force syncing, click the **Synchronize now** button in the navigation bar.
 
-StackEdit中文版 通过添加额外的 **Markdown扩展** 扩展了标准 Markdown 语法，为您提供了一些不错的功能。
+> **Note:** The **Synchronize now** button is disabled if you have no file to synchronize.
 
-> **提示：** 您可以在 **文件属性** 对话框中禁用任何 **Markdown 扩展名**。
+## Manage file synchronization
+
+Since one file can be synced with multiple locations, you can list and manage synchronized locations by clicking **File synchronization** in the **Synchronize** sub-menu. This allows you to list and remove synchronized locations that are linked to your file.
+
+
+# Publication
+
+Publishing in StackEdit+ makes it simple for you to publish online your files. Once you're happy with a file, you can publish it to different hosting platforms like **Blogger**, **Dropbox**, **Gist**, **GitHub**, **Google Drive**, **WordPress** and **Zendesk**. With [Handlebars templates](http://handlebarsjs.com/), you have full control over what you export.
+
+> Before starting to publish, you must link an account in the **Publish** sub-menu.
+
+## Publish a File
+
+You can publish your file by opening the **Publish** sub-menu and by clicking **Publish to**. For some locations, you can choose between the following formats:
+
+- Markdown: publish the Markdown text on a website that can interpret it (**GitHub** for instance),
+- HTML: publish the file converted to HTML via a Handlebars template (on a blog for example).
+
+## Update a publication
+
+After publishing, StackEdit+ keeps your file linked to that publication which makes it easy for you to re-publish it. Once you have modified your file and you want to update your publication, click on the **Publish now** button in the navigation bar.
+
+> **Note:** The **Publish now** button is disabled if your file has not been published yet.
+
+## Manage file publication
+
+Since one file can be published to multiple locations, you can list and manage publish locations by clicking **File publication** in the **Publish** sub-menu. This allows you to list and remove publication locations that are linked to your file.
+
+
+# Markdown extensions
+
+StackEdit+ extends the standard Markdown syntax by adding extra **Markdown extensions**, providing you with some nice features.
+
+> **ProTip:** You can disable any **Markdown extension** in the **File properties** dialog.
 
 
 ## SmartyPants
 
-SmartyPants 将 ASCII 标点字符转换为“智能”印刷标点 HTML 实体。例如：
+SmartyPants converts ASCII punctuation characters into "smart" typographic punctuation HTML entities. For example:
 
-| |ASCII |HTML |
-|----------------|--------------------------------| ------------------------------|
-|单反引号|`'这不好玩吗？'` |'这不好玩吗？' |
-|引用|`“这不好玩吗？”` |“这不好玩吗？” |
-|破折号 |`-- 是破折号，--- 是破折号`|-- 是破折号，--- 是破折号|
+|                |ASCII                          |HTML                         |
+|----------------|-------------------------------|-----------------------------|
+|Single backticks|`'Isn't this fun?'`            |'Isn't this fun?'            |
+|Quotes          |`"Isn't this fun?"`            |"Isn't this fun?"            |
+|Dashes          |`-- is en-dash, --- is em-dash`|-- is en-dash, --- is em-dash|
 
 
 ## KaTeX
 
-您可以使用 [KaTeX](https://khan.github.io/KaTeX/) 渲染 LaTeX 数学表达式：
+You can render LaTeX mathematical expressions using [KaTeX](https://khan.github.io/KaTeX/):
 
-满足 $\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N$ 的 *Gamma 函数* 是通过欧拉积分
+The *Gamma function* satisfying $\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N$ is via the Euler integral
 
 $$
 \Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.
 $$
 
-> 您可以在 [这里](http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference) 找到有关 **LaTeX** 数学表达式的更多信息。
+> You can find more information about **LaTeX** mathematical expressions [here](http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference).
 
 
-## UML 图
+## UML diagrams
 
-您可以使用 [Mermaid](https://mermaidjs.github.io/) 渲染 UML 图。例如，这将产生一个序列图：
+You can render UML diagrams using [Mermaid](https://mermaidjs.github.io/). For example, this will produce a sequence diagram:
 
 ```mermaid
 sequenceDiagram
-爱丽丝 ->> 鲍勃: 你好鲍勃，你好吗？
-鲍勃-->>约翰: 约翰，你呢？
-鲍勃--x 爱丽丝: 我很好，谢谢！
-鲍勃-x 约翰: 我很好，谢谢！
-Note right of 约翰: 鲍勃想了很长<br/>很长的时间，太长了<br/>文本确实<br/>不能放在一行中。
+Alice ->> Bob: Hello Bob, how are you?
+Bob-->>John: How about you John?
+Bob--x Alice: I am good thanks!
+Bob-x John: I am good thanks!
+Note right of John: Bob thinks a long<br/>long time, so long<br/>that the text does<br/>not fit on a row.
 
-鲍勃-->爱丽丝: 正在和 John 核对...
-爱丽丝->约翰: 是的……约翰，你好吗？
+Bob-->Alice: Checking with John...
+Alice->John: Yes... John, how are you?
 ```
 
-这将产生一个流程图：
+And this will produce a flow chart:
 
 ```mermaid
 graph LR
-A[长方形] -- 链接文本 --> B((圆形))
-A --> C(圆角矩形)
-B --> D{菱形}
+A[Square Rect] -- Link text --> B((Circle))
+A --> C(Round Rect)
+B --> D{Rhombus}
 C --> D
 ```

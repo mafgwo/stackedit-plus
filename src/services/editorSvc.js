@@ -266,7 +266,7 @@ const editorSvc = Object.assign(new Vue(), editorSvcDiscussions, editorSvcUtils,
         getImgUrl(it.uri).then((newUrl) => {
           it.imgElt.src = newUrl;
           resolve();
-        }, () => reject(new Error('加载当前空间图片出错')));
+        }, () => reject(new Error('load current workspace image error')));
         return;
       }
       if (!it.imgElt.src) {
@@ -571,7 +571,7 @@ const editorSvc = Object.assign(new Vue(), editorSvcDiscussions, editorSvcUtils,
             getImgUrl(it.uri).then((newUrl) => {
               it.imgElt.src = newUrl;
               resolve();
-            }, () => reject(new Error(`加载当前空间图片出错,uri:${it.uri}`)));
+            }, () => reject(new Error(`load current workspace image fail,uri:${it.uri}`)));
           }));
           Promise.all(loadWorkspaceImg).then();
         }

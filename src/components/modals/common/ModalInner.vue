@@ -1,7 +1,7 @@
 <template>
   <div class="modal__inner-1" role="dialog">
     <div class="modal__inner-2">
-      <button class="modal__close-button button not-tabbable" @click="config.reject()" v-title="'关闭窗口'">
+      <button class="modal__close-button button not-tabbable" @click="config.reject()" v-title="'Close modal'">
         <icon-close></icon-close>
       </button>
       <slot></slot>

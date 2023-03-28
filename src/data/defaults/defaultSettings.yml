@@ -15,33 +15,25 @@ editor:
   inlineImages: true
   # Use monospaced font only
   monospacedFontOnly: false
-  # 是否显示右上角图标
+  # Whether to display the floating icon
   showInPageButtons: true
-  # 头部的按钮是否显示独立设置
+  # Whether the button on the head shows an independent setting
   headButtons:
-    # 加粗
     bold: true
-    # 斜体
     italic: true
-    # 标题
     heading: true
-    # 删除线
     strikethrough: true
-    # 无序列表
+    # unordered list
     ulist: true
-    # 有序列表
+    # ordered list
     olist: true
-    # 可选列表
+    # optional list
     clist: true
-    # 块引用
+    # blockquote
     quote: true
-    # 代码
     code: true
-    # 表格
     table: true
-    # 链接
     link: true
-    # 图片
     image: true
 
 # Keyboard shortcuts
@@ -108,16 +100,16 @@ turndown:
 
 # GitHub/GitLab/Gitee/Gitea commit messages
 git:
-  createFileMessage: '{{path}} created from https://stackedit.cn/'
-  updateFileMessage: '{{path}} updated from https://stackedit.cn/'
-  deleteFileMessage: '{{path}} deleted from https://stackedit.cn/'
+  createFileMessage: '{{path}} created from https://stackedit.net/'
+  updateFileMessage: '{{path}} updated from https://stackedit.net/'
+  deleteFileMessage: '{{path}} deleted from https://stackedit.net/'
 
 # Default content for new files
 newFileContent: |
 
 
 
-  > Written with [StackEdit中文版](https://stackedit.cn/).
+  > Written with [StackEdit+](https://stackedit.net/).
 
 # Default properties for new files
 newFileProperties: |

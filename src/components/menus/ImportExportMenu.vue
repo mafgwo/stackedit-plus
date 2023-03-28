@@ -6,8 +6,8 @@
         <icon-upload></icon-upload>
       </div>
       <div class="flex flex--column">
-        <div>导入 Markdown</div>
-        <span>导入纯文本文件。</span>
+        <div>Import Markdown</div>
+        <span>Import a plain text file.</span>
       </div>
     </label>
     <input class="hidden-file" id="import-html-file-input" type="file" @change="onImportHtml">
@@ -16,25 +16,25 @@
         <icon-upload></icon-upload>
       </div>
       <div class="flex flex--column">
-        <div>导入 HTML</div>
-        <span>将HTML文件转换为Markdown。</span>
+        <div>Import HTML</div>
+        <span>Convert an HTML file to Markdown.</span>
       </div>
     </label>
     <hr>
     <menu-entry @click.native="exportMarkdown">
       <icon-download slot="icon"></icon-download>
-      <div>导出为 Markdown</div>
-      <span>保存纯文本文件。</span>
+      <div>Export as Markdown</div>
+      <span>Save plain text file.</span>
     </menu-entry>
     <menu-entry @click.native="exportHtml">
       <icon-download slot="icon"></icon-download>
-      <div>导出为 HTML</div>
-      <span>从模板生成HTML页面。</span>
+      <div>Export as HTML</div>
+      <span>Generate an HTML page from a template.</span>
     </menu-entry>
     <menu-entry @click.native="exportPdf">
       <icon-download slot="icon"></icon-download>
-      <div>导出为 HTML PDF</div>
-      <span>从HTML模板生成PDF。</span>
+      <div><div class="menu-entry__label" :class="{'menu-entry__label--warning': !isSponsor}">sponsor</div> Export as PDF</div>
+      <span>Produce a PDF from an HTML template.</span>
     </menu-entry>
     <!-- <menu-entry @click.native="exportPandoc">
       <icon-download slot="icon"></icon-download>

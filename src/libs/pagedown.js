@@ -6,34 +6,34 @@ var util = {},
 
 var defaultsStrings = {
   bold: "Strong <strong> Ctrl/Cmd+B",
-  boldexample: "加粗文本",
+  boldexample: "strong text",
 
   italic: "Emphasis <em> Ctrl/Cmd+I",
-  italicexample: "强调文本",
+  italicexample: "emphasized text",
 
   strikethrough: "Strikethrough <s> Ctrl/Cmd+I",
-  strikethroughexample: "删除线文本",
+  strikethroughexample: "strikethrough text",
 
   link: "Hyperlink <a> Ctrl/Cmd+L",
-  linkdescription: "这里输入链接描述",
+  linkdescription: "enter link description here",
   linkdialog: "<p><b>Insert Hyperlink</b></p><p>http://example.com/ \"optional title\"</p>",
 
   quote: "Blockquote <blockquote> Ctrl/Cmd+Q",
-  quoteexample: "块引用",
+  quoteexample: "Blockquote",
 
   code: "Code Sample <pre><code> Ctrl/Cmd+K",
-  codeexample: "这里输入代码",
+  codeexample: "enter code here",
 
   image: "Image <img> Ctrl/Cmd+G",
-  imagedescription: "输入图片说明",
+  imagedescription: "enter image description here",
   imagedialog: "<p><b>Insert Image</b></p><p>http://example.com/images/diagram.jpg \"optional title\"<br><br>Need <a href='http://www.google.com/search?q=free+image+hosting' target='_blank'>free image hosting?</a></p>",
 
   olist: "Numbered List <ol> Ctrl/Cmd+O",
   ulist: "Bulleted List <ul> Ctrl/Cmd+U",
-  litem: "这里是列表文本",
+  litem: "List item",
 
   heading: "Heading <h1>/<h2> Ctrl/Cmd+H",
-  headingexample: "标题",
+  headingexample: "Heading",
 
   hr: "Horizontal Rule <hr> Ctrl/Cmd+R",
 
@@ -42,7 +42,7 @@ var defaultsStrings = {
 
   help: "Markdown Editing Help",
 
-  formulaexample: "这里输入Latex表达式",
+  formulaexample: "enter Latex here",
 };
 
 // options, if given, can have the following properties:
@@ -667,7 +667,7 @@ commandProto.doInlinkeFormula = function (chunk, postProcessing) {
 commandProto.doImageUploading = function (chunk, postProcessing) {
   var enteredCallback = function (imgId) {
     if (imgId !== null) {
-      chunk.before = `${chunk.before}[图片上传中...(image-${imgId})]`;
+      chunk.before = `${chunk.before}[Image-uploading...(image-${imgId})]`;
       chunk.selection = '';
     }
     postProcessing();

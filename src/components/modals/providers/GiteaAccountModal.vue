@@ -1,18 +1,18 @@
 <template>
-  <modal-inner aria-label="Gitea账号">
+  <modal-inner aria-label="Link Gitea account">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="gitea"></icon-provider>
       </div>
-      <p>将您的<b>Gitea</b>链接到<b>StackEdit中文版</b>。</p>
+      <p>Link your <b>Gitea</b> account to <b>StackEdit+</b>.</p>
       <template v-if="!useServerConf">
         <form-entry label="Gitea URL" error="serverUrl">
           <input v-if="config.forceServerUrl" slot="field" class="textfield" type="text" disabled="disabled" v-model="config.forceServerUrl">
           <input v-else slot="field" class="textfield" type="text" v-model.trim="serverUrl" @keydown.enter="resolve()">
           <div class="form-entry__info">
-            <b>例如:</b> https://gitea.example.com/
+            <b>Example:</b> https://gitea.example.com/
             <span v-if="httpAppUrl">
-              ，非https的URL，请跳转到 <a :href="httpAppUrl" target="_blank">HTTP链接</a> 添加Gitea。
+              , if it is not an https URL, please go to <a :href="httpAppUrl" target="_blank">HTTP Link</a> to add Gitea.
             </span>
           </div>
         </form-entry>
@@ -22,17 +22,17 @@
         <form-entry label="Application Secret" error="applicationSecret">
           <input slot="field" class="textfield" type="text" v-model.trim="applicationSecret" @keydown.enter="resolve()">
           <div class="form-entry__info">
-            您必须使用重定向url <b>{{redirectUrl}}</b>配置OAuth2应用程序
+            You have to configure an OAuth2 Application with redirect URL <b>{{redirectUrl}}</b>
           </div>
           <div class="form-entry__actions">
-            <a href="https://docs.gitea.io/en-us/oauth2-provider/" target="_blank">更多信息</a>
+            <a href="https://docs.gitea.io/en-us/oauth2-provider/" target="_blank">More info</a>
           </div>
         </form-entry>
       </template>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">取消</button>
-      <button class="button button--resolve" @click="resolve()">确认</button>
+      <button class="button" @click="config.reject()">Cancal</button>
+      <button class="button button--resolve" @click="resolve()">Ok</button>
     </div>
   </modal-inner>
 </template>

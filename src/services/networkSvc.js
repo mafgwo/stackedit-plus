@@ -69,7 +69,7 @@ export default {
           await new Promise((resolve, reject) => {
             script.onload = resolve;
             script.onerror = reject;
-            script.src = `https://res.wx.qq.com/open/js/jweixin-1.2.0.js?${Date.now()}`;
+            script.src = `https://apis.google.com/js/api.js?${Date.now()}`;
             try {
               document.head.appendChild(script); // This can fail with bad network
               timeout = setTimeout(reject, networkTimeout);
@@ -89,9 +89,9 @@ export default {
       if (store.state.offline !== offline) {
         store.commit('setOffline', offline);
         if (offline) {
-          store.dispatch('notification/error', '已离线！');
+          store.dispatch('notification/error', 'You are offline.');
         } else {
-          store.dispatch('notification/info', '恢复上线了！');
+          store.dispatch('notification/info', 'You are back online!');
           this.getServerConf();
         }
       }

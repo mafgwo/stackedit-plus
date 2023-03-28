@@ -1,78 +1,78 @@
-标题
+Headers
 ---------------------------
 
-# 标题1
+# Header 1
 
-## 标题2
+## Header 2
 
-### 标题3
+### Header 3
 
 
 
-样式
+Styling
 ---------------------------
 
-*强调* _强调_
+*Emphasize* _emphasize_
 
-**加粗** __加粗__
+**Strong** __strong__
 
-==标记文本==
+==Marked text.==
 
-~~删除线文本~~
+~~Mistaken text.~~
 
-> 块引用文本
+> Quoted text.
 
-H~2~O是一种液体
+H~2~O is a liquid.
 
-2^10^是1024
+2^10^ is 1024.
 
 
 
-列表
+Lists
 ---------------------------
 
-- 列表项
-  * 列表项
-    + 列表项
+- Item
+  * Item
+    + Item
 
-1. 列表项 1
-2. 列表项 2
-3. 列表项 3
+1. Item 1
+2. Item 2
+3. Item 3
 
-- [ ] 未完成项
-- [x] 已完成项
+- [ ] Incomplete item
+- [x] Complete item
 
 
 
-链接
+Links
 ---------------------------
 
-一个[链接](http://example.com).
+A [link](http://example.com).
 
-一张图片: ![图片描述](img.jpg)
+An image: ![Alt](img.jpg)
 
-一张调整大小的图片: ![图片描述](img.jpg =60x50)
+A sized image: ![Alt](img.jpg =60x50)
 
 
 
-代码
+Code
 ---------------------------
 
-一些`行内代码`.
+Some `inline code`.
 
 ```
-// 一个代码块
+// A code block
 var foo = 'bar';
 ```
 
 ```javascript
-// 一个高亮代码块
+// An highlighted block
 var foo = 'bar';
 ```
 
 
 
-表格
+Tables
 ---------------------------
 
 Item     | Value
@@ -88,41 +88,41 @@ Pipe     | $1
 
 
 
-定义列表
+Definition lists
 ---------------------------
 
 Markdown
-:  文本到HTML转换工具
+:  Text-to-HTML conversion tool
 
-作者
-:  张三
-:  李四
+Authors
+:  John
+:  Luke
 
 
 
-脚注
+Footnotes
 ---------------------------
 
-一些带有脚注的文本。[^1]
+Some text with a footnote.[^1]
 
-[^1]: 脚注内容。
+[^1]: The footnote.
 
 
 
-缩写
+Abbreviations
 ---------------------------
 
-Markdown将文本转换为 HTML。
+Markdown converts text to HTML.
 
-*[HTML]: 超文本标记语言
+*[HTML]: HyperText Markup Language
 
 
 
-LaTeX数学表达式
+LaTeX math
 ---------------------------
 
-满足 $\Gamma(n) = (n-1)!\quad\forall
-n\in\mathbb N$ 的Gamma函数是通过欧拉积分
+The Gamma function satisfying $\Gamma(n) = (n-1)!\quad\forall
+n\in\mathbb N$ is via the Euler integral
 
 $$
 \Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.

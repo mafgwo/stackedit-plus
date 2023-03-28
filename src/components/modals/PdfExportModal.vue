@@ -1,21 +1,21 @@
 <template>
-  <modal-inner aria-label="导出到PDF">
+  <modal-inner aria-label="Export to PDF">
     <div class="modal__content">
-      <p>请为您的<b> pdf导出</b>选择模板。(该导出很消耗服务器资源，文档太大或图片太多可能会导出超时失败！可参考 <a href="https://gitee.com/mafgwo/stackedit/blob/master/docs/大文档导出PDF方式.md" target="_blank">大文档导出PDF方式</a> 自行导出大文档！)</p>
-      <form-entry label="模板">
+      <p>Please choose a template for your <b>PDF export</b>.(This export consumes a lot of server resources. If the document is too large or there are too many images, the export may timeout and fail! You can export large documents by referring to <a href="https://github.com/mafgwo/stackedit-plus/blob/master/docs/instructions-for-exporting-large-documents-to-pdf.md" target="_blank">"PDF Method for Exporting Large Documents"</a></p>
+      <form-entry label="Template">
         <select class="textfield" slot="field" v-model="selectedTemplate" @keydown.enter="resolve()">
           <option v-for="(template, id) in allTemplatesById" :key="id" :value="id">
             {{ template.name }}
           </option>
         </select>
         <div class="form-entry__actions">
-          <a href="javascript:void(0)" @click="configureTemplates">配置模板</a>
+          <a href="javascript:void(0)" @click="configureTemplates">Configure templates</a>
         </div>
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">取消</button>
-      <button class="button button--resolve" @click="resolve()">确认</button>
+      <button class="button" @click="config.reject()">Cancel</button>
+      <button class="button button--resolve" @click="resolve()">Ok</button>
     </div>
   </modal-inner>
 </template>
@@ -24,6 +24,7 @@
 import FileSaver from 'file-saver';
 import exportSvc from '../../services/exportSvc';
 import networkSvc from '../../services/networkSvc';
+import githubHelper from '../../services/providers/helpers/githubHelper';
 import modalTemplate from './common/modalTemplate';
 import store from '../../store';
 import badgeSvc from '../../services/badgeSvc';
@@ -37,17 +38,24 @@ export default modalTemplate({
       this.config.resolve();
       const currentFile = store.getters['file/current'];
       store.dispatch('queue/enqueue', async () => {
-        const html = await exportSvc.applyTemplate(
-          currentFile.id,
-          this.allTemplatesById[this.selectedTemplate],
-          true,
-        );
+        const [sponsorToken, html] = await Promise.all([
+          Promise.resolve().then(() => {
+            const tokenToRefresh = store.getters['workspace/sponsorToken'];
+            return tokenToRefresh && githubHelper.refreshSponsorInfo(tokenToRefresh);
+          }),
+          exportSvc.applyTemplate(
+            currentFile.id,
+            this.allTemplatesById[this.selectedTemplate],
+            true,
+          ),
+        ]);
 
         try {
           const { body } = await networkSvc.request({
             method: 'POST',
             url: 'pdfExport',
             params: {
+              idToken: sponsorToken && sponsorToken.accessToken,
               options: JSON.stringify(store.getters['data/computedSettings'].wkhtmltopdf),
             },
             body: html,
@@ -57,8 +65,12 @@ export default modalTemplate({
           FileSaver.saveAs(body, `${currentFile.name}.pdf`);
           badgeSvc.addBadge('exportPdf');
         } catch (err) {
-          console.error(err); // eslint-disable-line no-console
-          store.dispatch('notification/error', err);
+          if (err.status === 401) {
+            store.dispatch('modal/open', 'sponsorOnly');
+          } else {
+            console.error(err); // eslint-disable-line no-console
+            store.dispatch('notification/error', err);
+          }
         }
       });
     },

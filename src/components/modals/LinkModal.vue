@@ -1,14 +1,14 @@
 <template>
-  <modal-inner aria-label="插入链接">
+  <modal-inner aria-label="Insert link">
     <div class="modal__content">
-      <p>请为您的链接提供<b> url </b>。</p>
+      <p>Please provide a <b>URL</b> for your link.</p>
       <form-entry label="URL" error="url">
         <input slot="field" class="textfield" type="text" v-model.trim="url" @keydown.enter="resolve">
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="reject()">取消</button>
-      <button class="button button--resolve" @click="resolve">确认</button>
+      <button class="button" @click="reject()">Cancel</button>
+      <button class="button button--resolve" @click="resolve">Ok</button>
     </div>
   </modal-inner>
 </template>
@@ -22,7 +22,7 @@ export default modalTemplate({
   }),
   methods: {
     resolve(evt) {
-      evt.preventDefault(); // Fixes https://github.com/mafgwo/stackedit/issues/1503
+      evt.preventDefault();
       if (!this.url) {
         this.setError('url');
       } else {

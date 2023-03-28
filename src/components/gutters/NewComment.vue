@@ -14,8 +14,8 @@
       </div>
     </div>
     <div class="comment__buttons flex flex--row flex--end">
-      <button class="comment__button button" @click="cancelNewComment">取消</button>
-      <button class="comment__button button" @click="addComment">确认</button>
+      <button class="comment__button button" @click="cancelNewComment">Cancel</button>
+      <button class="comment__button button" @click="addComment">Ok</button>
     </div>
   </div>
 </template>

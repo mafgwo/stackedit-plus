@@ -5,7 +5,7 @@
         <div class="comment__user-image">
           <user-image :user-id="comment.sub"></user-image>
         </div>
-        <button class="comment__remove-button button" v-title="'删除评论'" @click="removeComment">
+        <button class="comment__remove-button button" v-title="'Remove comment'" @click="removeComment">
           <icon-delete></icon-delete>
         </button>
         <user-name :user-id="comment.sub"></user-name>
@@ -16,7 +16,7 @@
       <div class="comment__text-inner" v-html="text"></div>
     </div>
     <div class="comment__buttons flex flex--row flex--end" v-if="showReply">
-      <button class="comment__button button" @click="setIsCommenting(true)">评论</button>
+      <button class="comment__button button" @click="setIsCommenting(true)">Reply</button>
     </div>
   </div>
 </template>

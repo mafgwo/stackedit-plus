@@ -59,8 +59,8 @@ export default {
     paramArray.forEach((paramName) => {
       result = result[paramName];
       if (!result) {
-        store.dispatch('notification/error', `自定义图床上传图片失败，响应Body为：${JSON.stringify(body)}`);
-        throw new Error(`自定义图床上传图片失败，响应Body为：${JSON.stringify(body)}`);
+        store.dispatch('notification/error', `Failed to upload a image to the custom image bed, the response Body is:${JSON.stringify(body)}`);
+        throw new Error(`Failed to upload a image to the custom image bed, the response Body is:${JSON.stringify(body)}`);
       }
     });
     return result;

@@ -1,22 +1,22 @@
 <template>
-  <modal-inner aria-label="导出到HTML">
+  <modal-inner aria-label="Export to HTML">
     <div class="modal__content">
-      <p>请为您的<b> HTML导出</b>选择模板。</p>
-      <form-entry label="模板">
+      <p>Please choose a template for your <b>HTML export</b>.</p>
+      <form-entry label="Template">
         <select class="textfield" slot="field" v-model="selectedTemplate" @keydown.enter="resolve()">
           <option v-for="(template, id) in allTemplatesById" :key="id" :value="id">
             {{ template.name }}
           </option>
         </select>
         <div class="form-entry__actions">
-          <a href="javascript:void(0)" @click="configureTemplates">配置模板</a>
+          <a href="javascript:void(0)" @click="configureTemplates">Configure templates</a>
         </div>
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button button--copy" v-clipboard="result" @click="info('HTML复制到剪贴板！')">复制</button>
-      <button class="button" @click="config.reject()">取消</button>
-      <button class="button button--resolve" @click="resolve()">确认</button>
+      <button class="button button--copy" v-clipboard="result" @click="info('HTML copied to clipboard!')">Copy</button>
+      <button class="button" @click="config.reject()">Cancel</button>
+      <button class="button button--resolve" @click="resolve()">Ok</button>
     </div>
   </modal-inner>
 </template>

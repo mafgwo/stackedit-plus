@@ -16,7 +16,7 @@
               {{location.description}}
             </div>
             <div class="publish-entry__buttons flex flex--row flex--center">
-              <button class="publish-entry__button button" @click="remove(location)" v-title="'删除位置'">
+              <button class="publish-entry__button button" @click="remove(location)" v-title="'Remove location'">
                 <icon-delete></icon-delete>
               </button>
             </div>
@@ -26,10 +26,10 @@
               {{location.url}}
             </div>
             <div class="publish-entry__buttons flex flex--row flex--center" v-if="location.url">
-              <button class="publish-entry__button button" v-clipboard="location.url" @click="info('Location URL copied to clipboard!')" v-title="'复制URL'">
+              <button class="publish-entry__button button" v-clipboard="location.url" @click="info('Location URL copied to clipboard!')" v-title="'Copy URL'">
                 <icon-content-copy></icon-content-copy>
               </button>
-              <a class="publish-entry__button button" v-if="location.url" :href="location.url" target="_blank" v-title="'打开位置'">
+              <a class="publish-entry__button button" v-if="location.url" :href="location.url" target="_blank" v-title="'Open location'">
                 <icon-open-in-new></icon-open-in-new>
               </a>
             </div>
@@ -37,11 +37,11 @@
         </div>
       </div>
       <div class="modal__info" v-if="publishLocations.length">
-        <b>提示:</b> 删除位置不会删除任何文件。
+        <b>Tip:</b> Removing a location won't delete any file.
       </div>
     </div>
     <div class="modal__button-bar">
-      <button class="button button--resolve" @click="config.resolve()">关闭</button>
+      <button class="button button--resolve" @click="config.resolve()">Close</button>
     </div>
   </modal-inner>
 </template>

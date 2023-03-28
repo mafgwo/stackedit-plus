@@ -1,20 +1,20 @@
 <template>
-  <modal-inner aria-label="插入图像">
+  <modal-inner aria-label="Insert image">
     <div class="modal__content">
-      <p>请为您的图像提供<b> url </b>。<span v-if="uploading">(图片上传中...)</span></p>
+      <p>Please provide a <b>URL</b> for your image.</p><span v-if="uploading">(Uploading...)</span></p>
       <form-entry label="URL" error="url">
         <input slot="field" class="textfield" type="text" v-model.trim="url" @keydown.enter="resolve">
       </form-entry>
     </div>
     <div class="modal__button-bar">
       <input class="hidden-file" id="upload-image-file-input" type="file" accept="image/*" :disabled="uploading" @change="uploadImage">
-      <label for="upload-image-file-input"><a class="button">上传图片</a></label>
-      <button class="button" @click="reject()">取消</button>
-      <button class="button button--resolve" @click="resolve" :disabled="uploading">确认</button>
+      <label for="upload-image-file-input"><a class="button">Upload Image</a></label>
+      <button class="button" @click="reject()">Cancal</button>
+      <button class="button button--resolve" @click="resolve" :disabled="uploading">OK</button>
     </div>
     <div>
       <hr />
-      <p>添加并选择图床后可在编辑区中粘贴/拖拽图片自动上传</p>
+      <p>After adding and selecting a drawing bed, you can paste/drag images in the editing area and automatically upload them.</p>
 
       <menu-entry @click.native="checkedImgDest(path)" v-for="path in workspaceImgPath" :key="path">
         <icon-check-circle v-if="checkedStorage.sub === path" slot="icon"></icon-check-circle>
@@ -22,12 +22,12 @@
         <menu-item>
           <icon-provider slot="icon" :provider-id="currentWorkspace.providerId"></icon-provider>
           <div>
-            当前文档空间图片路径
-            <button class="menu-item__button button" @click.stop="removeByPath(path)" v-title="'删除'">
+            Current workspace image upload path
+            <button class="menu-item__button button" @click.stop="removeByPath(path)" v-title="'Delete'">
               <icon-delete></icon-delete>
             </button>
           </div>
-          <span>路径：{{path}}</span>
+          <span>Path: {{path}}</span>
         </menu-item>
       </menu-entry>
       <menu-entry @click.native="checkedImgDest(token.sub, token.providerId)" v-for="token in imageTokens" :key="token.sub">
@@ -37,14 +37,14 @@
           <icon-provider slot="icon" :provider-id="token.providerId"></icon-provider>
           <div>
             {{ token.remark }}
-            <button class="menu-item__button button" @click.stop="remove(token.providerId, token)" v-title="'删除'">
+            <button class="menu-item__button button" @click.stop="remove(token.providerId, token)" v-title="'Delete'">
               <icon-delete></icon-delete>
             </button>
           </div>
           <span>{{token.name}}</span>
-          <span class="line-entry" v-if="token.uploadUrl">上传地址：{{token.uploadUrl}}</span>
-          <span class="line-entry" v-if="token.headers">自定义请求头：{{token.headers}}</span>
-          <span class="line-entry" v-if="token.params">自定义Form参数：{{token.params}}</span>
+          <span class="line-entry" v-if="token.uploadUrl">Upload Url: {{token.uploadUrl}}</span>
+          <span class="line-entry" v-if="token.headers">Custom Request Headers: {{token.headers}}</span>
+          <span class="line-entry" v-if="token.params">Custom Form Params: {{token.params}}</span>
         </menu-item>
       </menu-entry>
       <menu-entry @click.native="checkedImgDest(tokenStorage.token.sub, tokenStorage.providerId, tokenStorage.sid)" v-for="tokenStorage in tokensImgStorages" :key="tokenStorage.sid">
@@ -53,32 +53,32 @@
         <menu-item>
           <icon-provider slot="icon" :provider-id="tokenStorage.providerId"></icon-provider>
           <div>{{tokenStorage.providerName}}
-            <button class="menu-item__button button" @click.stop="remove(tokenStorage.providerId, tokenStorage)" v-title="'删除'">
+            <button class="menu-item__button button" @click.stop="remove(tokenStorage.providerId, tokenStorage)" v-title="'Delete'">
               <icon-delete></icon-delete>
             </button>
           </div>
-          <span> {{tokenStorage.uname}}, 仓库URL: {{tokenStorage.repoUrl}}, 路径: {{tokenStorage.path}}, 分支: {{tokenStorage.branch}}</span>
+          <span> {{tokenStorage.uname}}, Repository URL: {{tokenStorage.repoUrl}}, Path: {{tokenStorage.path}}, Branch: {{tokenStorage.branch}}</span>
         </menu-item>
       </menu-entry>
       <menu-entry @click.native="addWorkspaceImgPath">
         <icon-provider slot="icon" :provider-id="currentWorkspace.providerId"></icon-provider>
-        <span>添加当前文档空间图片路径</span>
+        <span>Add current workspace image path</span>
       </menu-entry>
       <menu-entry @click.native="addSmmsAccount">
         <icon-provider slot="icon" provider-id="smms"></icon-provider>
-        <span>添加SM.MS图床账号</span>
+        <span>Add SM.MS image bed account</span>
       </menu-entry>
       <menu-entry @click.native="addCustomAccount">
         <icon-provider slot="icon" provider-id="custom"></icon-provider>
-        <span>添加自定义图床账号</span>
+        <span>Add custom image bed account</span>
       </menu-entry>
       <menu-entry @click.native="addGiteaImgStorage">
         <icon-provider slot="icon" provider-id="gitea"></icon-provider>
-        <span>添加Gitea图床仓库</span>
+        <span>Add Gitea image bed repo</span>
       </menu-entry>
       <menu-entry @click.native="addGithubImgStorage">
         <icon-provider slot="icon" provider-id="github"></icon-provider>
-        <span>添加GitHub图床仓库</span>
+        <span>Add GitHub image bed repo</span>
       </menu-entry>
     </div>
   </modal-inner>

@@ -51,9 +51,9 @@ export default {
     close() {
       tempFileSvc.close();
     },
-    // 通过路径查看文件 支持相对路径
+    // Viewing files through paths supports relative paths
     viewFileByPath(path) {
-      // 如果是md结尾
+      // If it is the end of md
       if (!path) {
         return;
       }
@@ -88,10 +88,10 @@ export default {
     try {
       await syncSvc.init();
       await networkSvc.init();
-      // store 编辑主题
+      // store edit area theme
       const editTheme = localStorage.getItem('theme/currEditTheme');
       store.dispatch('theme/setEditTheme', editTheme || 'default');
-      // store 预览主题
+      // store preview area theme
       const previewTheme = localStorage.getItem('theme/currPreviewTheme');
       store.dispatch('theme/setPreviewTheme', previewTheme || 'default');
       this.ready = true;

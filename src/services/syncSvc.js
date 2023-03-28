@@ -5,7 +5,7 @@ import utils from './utils';
 import diffUtils from './diffUtils';
 import networkSvc from './networkSvc';
 import providerRegistry from './providers/common/providerRegistry';
-import giteeAppDataProvider from './providers/giteeAppDataProvider';
+import githubAppDataProvider from './providers/githubAppDataProvider';
 import './providers/couchdbWorkspaceProvider';
 import './providers/githubWorkspaceProvider';
 import './providers/giteeWorkspaceProvider';
@@ -16,12 +16,12 @@ import tempFileSvc from './tempFileSvc';
 import workspaceSvc from './workspaceSvc';
 import constants from '../data/constants';
 import badgeSvc from './badgeSvc';
+import githubHelper from './providers/helpers/githubHelper';
 
 const minAutoSyncEvery = 60 * 1000; // 60 sec
 const inactivityThreshold = 3 * 1000; // 3 sec
 const restartSyncAfter = 30 * 1000; // 30 sec
 const restartContentSyncAfter = 1000; // Enough to detect an authorize pop up
-const checkSponsorshipAfter = (5 * 60 * 1000) + (30 * 1000); // tokenExpirationMargin + 30 sec
 const maxContentHistory = 20;
 
 const LAST_SEEN = 0;
@@ -231,7 +231,7 @@ const createSyncLocation = (syncLocation) => {
 
       store.commit('syncedContent/patchItem', newSyncedContent);
       workspaceSvc.addSyncLocation(updatedSyncLocation);
-      store.dispatch('notification/info', `将新的同步位置添加到"${currentFile.name}"中。`);
+      store.dispatch('notification/info', `A new synchronized location was added to "${currentFile.name}".`);
     },
   );
 };
@@ -427,7 +427,7 @@ const syncFile = async (fileId, syncContext = new SyncContext()) => {
           mergedContent = diffUtils.mergeContent(serverContent, clientContent, lastMergedContent);
           if (mergedContent.mergeFlag) {
             const file = store.state.file.itemsById[syncLocation.fileId];
-            store.dispatch('notification/info', `${file.name} 存在冲突已自动合并，请注意合并结果！`);
+            store.dispatch('notification/info', `${file.name} have conflicts and have been automatically merged. Please pay attention to the merge results!`);
           }
         }
         if (!mergedContent) {
@@ -914,7 +914,7 @@ const requestSync = (addTriggerSyncBadge = false) => {
         clearInterval(intervalId);
         if (!isSyncPossible()) {
           // Cancel sync
-          throw new Error('无法同步。');
+          throw new Error('Sync not possible.');
         }
 
         // Determine if we have to clean files
@@ -983,7 +983,7 @@ export default {
     // Try to find a suitable workspace sync provider
     workspaceProvider = providerRegistry.providersById[utils.queryParams.providerId];
     if (!workspaceProvider || !workspaceProvider.initWorkspace) {
-      workspaceProvider = giteeAppDataProvider;
+      workspaceProvider = githubAppDataProvider;
     }
     const workspace = await workspaceProvider.initWorkspace();
     // Fix the URL hash
@@ -999,13 +999,7 @@ export default {
         .catch(() => { /* Cancel */ });
       const sponsorToken = store.getters['workspace/sponsorToken'];
       // Force check sponsorship after a few seconds
-      const currentDate = Date.now();
-      if (sponsorToken && sponsorToken.expiresOn > currentDate - checkSponsorshipAfter) {
-        store.dispatch('data/addGoogleToken', {
-          ...sponsorToken,
-          expiresOn: currentDate - checkSponsorshipAfter,
-        });
-      }
+      await githubHelper.refreshSponsorInfo(sponsorToken);
     }
 
     // Try to find a suitable action provider

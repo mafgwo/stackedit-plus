@@ -4,12 +4,12 @@
       <li class="before">
         <icon-ellipsis></icon-ellipsis>
       </li>
-      <li title="切换预览主题">
+      <li title="Switch Preview Area theme">
         <dropdown-menu :selected="selectedTheme" :options="allThemes" :closeOnItemClick="false" @change="changeTheme">
           <icon-select-theme></icon-select-theme>
         </dropdown-menu>
       </li>
-      <li title="Markdown语法帮助">
+      <li title="Markdown helper">
         <a href="javascript:void(0)" @click="showHelp"><icon-help-circle></icon-help-circle></a>
       </li>
     </ul>
@@ -28,31 +28,31 @@ export default {
   },
   data: () => ({
     allThemes: [{
-      name: '默认主题',
+      name: 'Default',
       value: 'default',
     }, {
-      name: '凝夜紫',
+      name: 'Curdled night violet',
       value: 'ningyezi',
     }, {
-      name: '草原绿',
+      name: 'Grassland green',
       value: 'caoyuangreen',
     }, {
-      name: '雁栖湖',
+      name: 'Yanqi Lake',
       value: 'yanqihu',
     }, {
-      name: '灵动蓝',
+      name: 'Smart Blue',
       value: 'activeblue',
     }, {
-      name: '极客黑',
+      name: 'Geek Black',
       value: 'jikebrack',
     }, {
-      name: '极简黑',
+      name: 'Minimalist black',
       value: 'simplebrack',
     }, {
-      name: '全栈蓝',
+      name: 'Full stack blue',
       value: 'allblue',
     }, {
-      name: '自定义',
+      name: 'Custom',
       value: 'custom',
     }],
     baseCss: '',

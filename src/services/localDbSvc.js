@@ -222,7 +222,7 @@ const localDbSvc = {
         const dbStore = tx.objectStore(imgDbStoreName);
         dbStore.put(imgItem);
         resolve();
-      }, () => reject(new Error('保存图片异常')));
+      }, () => reject(new Error('save image error!')));
     });
   },
   /**
@@ -238,7 +238,7 @@ const localDbSvc = {
           const dbItem = request.result;
           resolve(dbItem);
         };
-      }, () => reject(new Error('indexeddb获取图片异常')));
+      }, () => reject(new Error('indexeddb get image error!')));
     });
   },
 

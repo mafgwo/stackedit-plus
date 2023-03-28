@@ -15,6 +15,7 @@ export default {
           return 'google-drive';
         case 'googlePhotos':
           return 'google-photos';
+        case 'githubAppData':
         case 'githubWorkspace':
           return 'github';
         case 'gist':

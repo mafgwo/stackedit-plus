@@ -1,20 +1,20 @@
 <template>
-  <modal-inner aria-label="插入图片">
+  <modal-inner aria-label="Insert image">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="couchdb"></icon-provider>
       </div>
-      <p>请提供您的凭据，以登录<b>CouchDB</b>。</p>
-      <form-entry label="用户名" error="name">
+      <p>Please provide your credentials to login to <b>CouchDB</b>.</p>
+      <form-entry label="Name" error="name">
         <input slot="field" class="textfield" type="text" v-model.trim="name" @keydown.enter="resolve()">
       </form-entry>
-      <form-entry label="密码" error="password">
+      <form-entry label="Password" error="password">
         <input slot="field" class="textfield" type="password" v-model.trim="password" @keydown.enter="resolve()">
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">取消</button>
-      <button class="button button--resolve" @click="resolve()">确认</button>
+      <button class="button" @click="config.reject()">Cancel</button>
+      <button class="button button--resolve" @click="resolve()">Ok</button>
     </div>
   </modal-inner>
 </template>

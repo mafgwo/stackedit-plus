@@ -2,55 +2,55 @@
   <div class="tour" @keydown.esc.stop="skip">
     <div class="tour-step" :class="'tour-step--' + step" :style="stepStyle">
       <div class="tour-step__inner" v-if="step === 'welcome'">
-        <h2>欢迎回来！</h2>
-        <p>新的<b>StackEdit中文版</b>在这里！</p>
-        <p>请单击<b>下一步</b>快速浏览。</p>
+        <h2>Welcome back!</h2>
+        <p>The new <b>StackEdit+</b> is here!</p>
+        <p>Please click <b>Next</b> to take a quick tour.</p>
         <div class="tour-step__button-bar">
-          <button class="button" @click="finish">跳过</button>
-          <button class="button button--resolve" @click="next">下一步</button>
+          <button class="button" @click="finish">Skip</button>
+          <button class="button button--resolve" @click="next">Next</button>
         </div>
       </div>
       <div class="tour-step__inner" v-else-if="step === 'editor'">
-        <h2>您的Markdown编辑器</h2>
-        <p>StackEdit中文版实时将Markdown转换为HTML。</p>
-        <p>点击 <icon-side-preview></icon-side-preview> 切换侧边预览</p>
+        <h2>Your Markdown editor</h2>
+        <p>StackEdit+ converts your Markdown to HTML in real-time.</p>
+        <p>Click <icon-side-preview></icon-side-preview> to toggle the side preview.</p>
         <div class="tour-step__button-bar">
-          <button class="button" @click="finish">跳过</button>
-          <button class="button button--resolve" @click="next">下一步</button>
+          <button class="button" @click="finish">Skip</button>
+          <button class="button button--resolve" @click="next">Next</button>
         </div>
       </div>
       <div class="tour-step__inner" v-else-if="step === 'explorer'">
-        <h2>文件资源管理器</h2>
-        <p>StackEdit中文版可以管理文档空间中的多个文件和文件夹。</p>
-        <p>点击 <icon-folder></icon-folder> 打开文件资源管理器。</p>
+        <h2>File explorer</h2>
+        <p>StackEdit+ can manage multiple files and folders in a workspace.</p>
+        <p>Click <icon-folder></icon-folder> to open the file explorer.</p>
         <div class="tour-step__button-bar">
-          <button class="button" @click="finish">跳过</button>
-          <button class="button button--resolve" @click="next">下一步</button>
+          <button class="button" @click="finish">Skip</button>
+          <button class="button button--resolve" @click="next">Next</button>
         </div>
       </div>
       <div class="tour-step__inner" v-else-if="step === 'menu'">
-        <h2>切换侧边栏！</h2>
-        <p>StackEdit中文版还可以同步和发布文件，管理协作文档空间...</p>
-        <p>点击 <icon-provider provider-id="stackedit"></icon-provider> 浏览菜单。</p>
+        <h2>Do a lot more!</h2>
+        <p>StackEdit+ can also synchronize and publish your files, manage collaborative workspaces...</p>
+        <p>Click <icon-provider provider-id="stackedit"></icon-provider> to explore the menu.</p>
         <div class="tour-step__button-bar">
-          <button class="button" @click="finish">跳过</button>
-          <button class="button button--resolve" @click="next">下一步</button>
+          <button class="button" @click="finish">Skip</button>
+          <button class="button button--resolve" @click="next">Next</button>
         </div>
       </div>
       <div class="tour-step__inner" v-else-if="step === 'theme'">
-        <h2>切换主题！</h2>
-        <p>StackEdit中文版可以切换亮/暗主题。</p>
-        <p>点击 <icon-switch-theme></icon-switch-theme> 切换主题。</p>
+        <h2>Switch theme!</h2>
+        <p>StackEdit+ plus can switch light/dark theme.</p>
+        <p>Click <icon-switch-theme></icon-switch-theme> switch theme.</p>
         <div class="tour-step__button-bar">
-          <button class="button" @click="finish">跳过</button>
-          <button class="button button--resolve" @click="next">下一步</button>
+          <button class="button" @click="finish">Skip</button>
+          <button class="button button--resolve" @click="next">Next</button>
         </div>
       </div>
       <div class="tour-step__inner" v-else-if="step === 'end'">
         <h2>Enjoy!</h2>
-        <p>如果您喜欢StackEdit中文版，请在<a href="https://gitee.com/mafgwo/stackedit">Gitee仓库</a>上点一下Star，谢谢！</p>
+        <p>If you like StackEdit+，please click star on the<a href="https://github.com/mafgwo/stackedit-plus">Github repo</a></p>
         <div class="tour-step__button-bar">
-          <button class="button button--resolve" @click="finish">确认</button>
+          <button class="button button--resolve" @click="finish">Ok</button>
         </div>
       </div>
     </div>

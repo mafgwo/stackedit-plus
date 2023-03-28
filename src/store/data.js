@@ -95,12 +95,12 @@ const makeAdditionalTemplate = (name, value, helpers = '\n') => ({
   isAdditional: true,
 });
 const defaultTemplates = {
-  plainText: makeAdditionalTemplate('Markdown文本', '{{{files.0.content.text}}}'),
-  plainHtml: makeAdditionalTemplate('无样式HTML', plainHtmlTemplate),
-  styledHtml: makeAdditionalTemplate('标准样式HTML', styledHtmlTemplate),
-  styledHtmlWithToc: makeAdditionalTemplate('带目录标准样式HTML', styledHtmlWithTocTemplate),
-  styledHtmlWithTheme: makeAdditionalTemplate('带预览主题HTML', styledHtmlWithThemeTemplate),
-  styledHtmlWithThemeAndToc: makeAdditionalTemplate('带目录预览主题HTML', styledHtmlWithThemeAndTocTemplate),
+  plainText: makeAdditionalTemplate('Plain text', '{{{files.0.content.text}}}'),
+  plainHtml: makeAdditionalTemplate('Plain HTML', plainHtmlTemplate),
+  styledHtml: makeAdditionalTemplate('Styled HTML', styledHtmlTemplate),
+  styledHtmlWithToc: makeAdditionalTemplate('Styled HTML with TOC', styledHtmlWithTocTemplate),
+  styledHtmlWithTheme: makeAdditionalTemplate('Styled HTML with Theme', styledHtmlWithThemeTemplate),
+  styledHtmlWithThemeAndToc: makeAdditionalTemplate('Styled HTML with TOC And Theme', styledHtmlWithThemeAndTocTemplate),
   jekyllSite: makeAdditionalTemplate('Jekyll site', jekyllSiteTemplate),
 };
 
@@ -249,7 +249,7 @@ export default {
         colorTheme = 'light';
       }
       const themeStr = `colorTheme: ${colorTheme}`;
-      let settingsStr = (customSettingStr && customSettingStr.trim()) || '# 增加您的自定义配置覆盖默认配置';
+      let settingsStr = (customSettingStr && customSettingStr.trim()) || '# Add your custom settings to override the default settings.';
       settingsStr = settingsStr.indexOf('colorTheme:') > -1 ?
         settingsStr.replace(/.*colorTheme:.*/, themeStr) : `${settingsStr}\n${themeStr}`;
       commit('setItem', itemTemplate('settings', settingsStr));

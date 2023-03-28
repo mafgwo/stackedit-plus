@@ -6,12 +6,12 @@
         <icon-content-save></icon-content-save>
       </div>
       <div class="flex flex--column">
-        导入文档空间备份
+        Import workspace backup
       </div>
     </label>
     <menu-entry @click.native="exportWorkspace">
       <icon-content-save slot="icon"></icon-content-save>
-      导出文档空间备份
+      Export workspace backup
     </menu-entry>
   </div>
 </template>
@@ -56,7 +56,7 @@ export default {
         const blob = new Blob([backup], {
           type: 'text/plain;charset=utf-8',
         });
-        FileSaver.saveAs(blob, 'StackEdit workspace.json');
+        FileSaver.saveAs(blob, 'StackEdit+ workspace.json');
       });
     },
   },

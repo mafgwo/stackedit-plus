@@ -2,31 +2,31 @@
   <div class="explorer flex flex--column">
     <div class="side-title flex flex--row flex--space-between">
       <div class="flex flex--row" v-if="!showSearch">
-        <button class="side-title__button side-title__button--new-file button" @click="newItem()" v-title="'创建文件'">
+        <button class="side-title__button side-title__button--new-file button" @click="newItem()" v-title="'New file'">
           <icon-file-plus></icon-file-plus>
         </button>
-        <button class="side-title__button side-title__button--new-folder button" @click="newItem(true)" v-title="'创建文件夹'">
+        <button class="side-title__button side-title__button--new-folder button" @click="newItem(true)" v-title="'New folder'">
           <icon-folder-plus></icon-folder-plus>
         </button>
-        <button class="side-title__button side-title__button--delete button" @click="deleteItem()" v-title="'删除'">
+        <button class="side-title__button side-title__button--delete button" @click="deleteItem()" v-title="'Delete'">
           <icon-delete></icon-delete>
         </button>
-        <button class="side-title__button side-title__button--rename button" @click="editItem()" v-title="'重命名'">
+        <button class="side-title__button side-title__button--rename button" @click="editItem()" v-title="'Rename'">
           <icon-pen></icon-pen>
         </button>
-        <button class="side-title__button side-title__button--search button" @click="toSearch()" v-title="'搜索文件'">
+        <button class="side-title__button side-title__button--search button" @click="toSearch()" v-title="'Search files'">
           <icon-file-search></icon-file-search>
         </button>
       </div>
       <div class="flex flex--row" v-else>
-        <button class="side-title__button button" @click="back()" v-title="'返回资源管理器'">
+        <button class="side-title__button button" @click="back()" v-title="'Back to explorer'">
           <icon-dots-horizontal></icon-dots-horizontal>
         </button>
         <div class="side-title__title">
-          搜索文件
+          Search files
         </div>
       </div>
-      <button class="side-title__button side-title__button--close button" @click="toggleExplorer(false)" v-title="'关闭资源管理器'">
+      <button class="side-title__button side-title__button--close button" @click="toggleExplorer(false)" v-title="'Close explorer'">
         <icon-close></icon-close>
       </button>
     </div>
@@ -34,14 +34,14 @@
       <explorer-node :node="rootNode" :depth="0"></explorer-node>
     </div>
     <div class="explorer__search" tabindex="0" v-if="!light && showSearch">
-      <input type="text" v-model="searchText" class="text-input" placeholder="请输入关键字回车" @keyup.enter="search" />
+      <input type="text" v-model="searchText" class="text-input" placeholder="Please input keyword and Enter" @keyup.enter="search" />
       <div class="explorer__search-list">
-        <div class="search-tips" v-if="searching">正在查询中...</div>
+        <div class="search-tips" v-if="searching">Querying...</div>
         <a class="menu-entry button flex flex--row flex--align-center" :class="{'search-node--selected': currentFileId === fileItem.id}"
             v-for="fileItem in searchItems" :key="fileItem.id" @click="clickSearch(fileItem)" href="javascript:void(0)">
           {{ fileItem.name }}
         </a>
-        <div class="search-tips">最多返回匹配的50个文档</div>
+        <div class="search-tips">Return up to 50 matching files.</div>
       </div>
     </div>
   </div>

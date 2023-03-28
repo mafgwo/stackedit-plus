@@ -53,27 +53,26 @@ export default {
       editorSvc.pagedownEditor.uiManager.doClick('imageUploading');
       try {
         const { url, error } = await imageSvc.updateImg(file);
-        // 存在错误
         if (error) {
-          editorSvc.clEditor.replaceAll(`[图片上传中...(image-${imgId})]`, `[图片上传失败...(image-${imgId})]`);
+          editorSvc.clEditor.replaceAll(`[Image-uploading...(image-${imgId})]`, `[Image-upload-failed...(image-${imgId})]`);
           store.dispatch('notification/error', error);
           return;
         }
-        editorSvc.clEditor.replaceAll(`[图片上传中...(image-${imgId})]`, `![输入图片说明](${url})`);
+        editorSvc.clEditor.replaceAll(`[Image-uploading...(image-${imgId})]`, `![Enter-image-description](${url})`);
       } catch (err) {
         console.error(err); // eslint-disable-line no-console
-        editorSvc.clEditor.replaceAll(`[图片上传中...(image-${imgId})]`, `[图片上传失败...(image-${imgId})]`);
+        editorSvc.clEditor.replaceAll(`[Image-uploading...(image-${imgId})]`, `[Image-upload-failed...(image-${imgId})]`);
         store.dispatch('notification/error', err);
       }
     },
   },
   mounted() {
-    // 当前选择的图片存储图床
+    // The currently selected image storage bed
     const currImgStorageStr = localStorage.getItem('img/checkedStorage');
     if (currImgStorageStr) {
       store.commit('img/changeCheckedStorage', JSON.parse(currImgStorageStr));
     }
-    // 当前本地图片路径配置
+    // Current local image path configuration
     const workspaceImgPath = localStorage.getItem('img/workspaceImgPath');
     if (workspaceImgPath) {
       store.commit('img/setWorkspaceImgPath', JSON.parse(workspaceImgPath));

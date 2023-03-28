@@ -1,13 +1,13 @@
 <template>
   <div class="side-bar flex flex--column">
     <div class="side-title flex flex--row">
-      <button v-if="panel !== 'menu'" class="side-title__button button" @click="setPanel('menu')" v-title="'主菜单'">
+      <button v-if="panel !== 'menu'" class="side-title__button button" @click="setPanel('menu')" v-title="'Main menu'">
         <icon-dots-horizontal></icon-dots-horizontal>
       </button>
       <div class="side-title__title">
         {{panelName}}
       </div>
-      <button class="side-title__button button" @click="toggleSideBar(false)" v-title="'关闭侧边栏'">
+      <button class="side-title__button button" @click="toggleSideBar(false)" v-title="'Close side bar'">
         <icon-close></icon-close>
       </button>
     </div>
@@ -50,17 +50,17 @@ import markdownConversionSvc from '../services/markdownConversionSvc';
 import store from '../store';
 
 const panelNames = {
-  menu: '菜单',
-  workspaces: '文档空间',
-  help: 'Markdown 帮助',
-  toc: '目录',
-  sync: '同步',
-  publish: '发布',
-  history: '文件历史',
-  importExport: '导入/导出',
-  workspaceBackups: '文档空间备份',
-  editTheme: '编辑区主题',
-  previewTheme: '预览区主题',
+  menu: 'Menu',
+  workspaces: 'Workspaces',
+  help: 'Markdown cheat sheet',
+  toc: 'Table of contents',
+  sync: 'Synchronize',
+  publish: 'Publish',
+  history: 'File history',
+  importExport: 'Import/export',
+  workspaceBackups: 'Workspace backups',
+  editTheme: 'Edit area theme',
+  previewTheme: 'Preview area theme',
 };
 
 export default {

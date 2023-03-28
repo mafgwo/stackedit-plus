@@ -174,7 +174,7 @@ export default new Provider({
           ...syncLocation,
           fileId: item.id,
         });
-        store.dispatch('notification/info', `${store.getters['file/current'].name}已从Google Drive导入。`);
+        store.dispatch('notification/info', `${store.getters['file/current'].name} was imported from Google Drive.`);
       }
     });
   },

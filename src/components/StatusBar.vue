@@ -8,7 +8,7 @@
       <span v-for="stat in textStats" :key="stat.id">
         <span class="stat-panel__value">{{stat.value}}</span> {{stat.name}}
       </span>
-      <span class="stat-panel__value">第 {{line}} 行, 第 {{column}} 列</span>
+      <span class="stat-panel__value">Ln {{line}}, Col {{column}}</span>
     </div>
     <div class="stat-panel__block stat-panel__block--right">
       <span class="stat-panel__block-name">
@@ -43,13 +43,14 @@ export default {
     line: 0,
     column: 0,
     textStats: [
-      new Stat('字符', '[\\s\\S]'),
-      new Stat('字数', '\\S'),
-      new Stat('行数', '\n'),
+      new Stat('bytes', '[\\s\\S]'),
+      new Stat('words', '\\S+'),
+      new Stat('lines', '\n'),
     ],
     htmlStats: [
-      new Stat('字数', '\\S'),
-      new Stat('段落', '\\S.*'),
+      new Stat('characters', '\\S'),
+      new Stat('words', '\\S+'),
+      new Stat('paragraphs', '\\S.*'),
     ],
   }),
   computed: mapGetters('layout', [

@@ -1,24 +1,23 @@
 <template>
-  <modal-inner aria-label="增加CouchDB文档空间">
+  <modal-inner aria-label="Add CouchDB workspace">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="couchdb"></icon-provider>
       </div>
-      <p>创建一个与<b>CouchDB</b>数据库同步的文档空间。</p>
+      <p>Create a workspace synced with a <b>CouchDB</b> database.</p>
       <form-entry label="Database URL" error="dbUrl">
         <input slot="field" class="textfield" type="text" v-model.trim="dbUrl" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          <b>例如:</b> https://instance.smileupps.com/stackedit-workspace
+          <b>Example:</b> https://instance.smileupps.com/stackedit-workspace
         </div>
         <div class="form-entry__actions">
-          <!-- https://community.stackedit.io/t/couchdb-workspace-setup/ -->
-          <a href="#" target="_blank">如何设置？</a>
+          <a href="https://community.stackedit.io/t/couchdb-workspace-setup/" target="_blank">How to setup?</a>
         </div>
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">取消</button>
-      <button class="button button--resolve" @click="resolve()">确认</button>
+      <button class="button" @click="config.reject()">Cancel</button>
+      <button class="button button--resolve" @click="resolve()">Ok</button>
     </div>
   </modal-inner>
 </template>

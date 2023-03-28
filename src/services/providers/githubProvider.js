@@ -104,7 +104,7 @@ export default new Provider({
         ...syncLocation,
         fileId: item.id,
       });
-      store.dispatch('notification/info', `${store.getters['file/current'].name}已从GitHub导入。`);
+      store.dispatch('notification/info', `${store.getters['file/current'].name} was imported from GitHub.`);
     }
   },
   makeLocation(token, owner, repo, branch, path) {

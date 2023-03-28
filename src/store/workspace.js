@@ -22,7 +22,7 @@ export default {
       Object.entries(rootGetters['data/workspaces']).forEach(([id, workspace]) => {
         const sanitizedWorkspace = {
           id,
-          providerId: 'giteeAppData',
+          providerId: 'githubAppData',
           sub: mainWorkspaceToken && mainWorkspaceToken.sub,
           ...workspace,
         };
@@ -44,12 +44,14 @@ export default {
       workspacesById[currentWorkspaceId] || mainWorkspace,
     currentWorkspaceIsGit: (state, { currentWorkspace }) =>
       currentWorkspace.providerId === 'githubWorkspace'
+      || currentWorkspace.providerId === 'githubAppData'
       || currentWorkspace.providerId === 'giteeWorkspace'
       || currentWorkspace.providerId === 'gitlabWorkspace'
       || currentWorkspace.providerId === 'giteaWorkspace'
       || currentWorkspace.providerId === 'giteeAppData',
     currentWorkspaceHasUniquePaths: (state, { currentWorkspace }) =>
       currentWorkspace.providerId === 'githubWorkspace'
+      || currentWorkspace.providerId === 'githubAppData'
       || currentWorkspace.providerId === 'giteeWorkspace'
       || currentWorkspace.providerId === 'gitlabWorkspace'
       || currentWorkspace.providerId === 'giteaWorkspace'
@@ -57,7 +59,7 @@ export default {
     lastSyncActivityKey: (state, { currentWorkspace }) => `${currentWorkspace.id}/lastSyncActivity`,
     lastFocusKey: (state, { currentWorkspace }) => `${currentWorkspace.id}/lastWindowFocus`,
     mainWorkspaceToken: (state, getters, rootState, rootGetters) =>
-      utils.someResult(Object.values(rootGetters['data/giteeTokensBySub']), (token) => {
+      utils.someResult(Object.values(rootGetters['data/githubTokensBySub']), (token) => {
         if (token.isLogin) {
           return token;
         }
@@ -86,9 +88,9 @@ export default {
         case 'googleDriveWorkspace':
           return 'google';
         case 'githubWorkspace':
+        default:
           return 'github';
         case 'giteeWorkspace':
-        default:
           return 'gitee';
         case 'gitlabWorkspace':
           return 'gitlab';

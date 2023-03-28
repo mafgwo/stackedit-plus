@@ -52,7 +52,6 @@ const zero = {
   },
   /*
   Toc extension
-  把 [TOC] 转换为目录
   */
   toc: {
     enabled: false,

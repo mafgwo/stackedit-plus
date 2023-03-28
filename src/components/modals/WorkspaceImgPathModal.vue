@@ -1,22 +1,22 @@
 <template>
-  <modal-inner aria-label="文档空间图片路径">
+  <modal-inner aria-label="Workspace image path">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider :provider-id="currentWorkspace.providerId"></icon-provider>
       </div>
-      <p>在当前文档空间增加图片上传路径。</p>
-      <form-entry label="图片上传路径" error="path">
-        <input slot="field" class="textfield" type="text" placeholder="如：/imgs/{YYYY}-{MM}-{DD}" v-model.trim="path" @keydown.enter="resolve()">
+      <p>Add an image upload path to the current workspace.</p>
+      <form-entry label="Image upload path" error="path">
+        <input slot="field" class="textfield" type="text" placeholder="Default: /imgs/{YYYY}-{MM}-{DD}" v-model.trim="path" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          如果不提供，默认为 /imgs/{YYYY}-{MM}-{DD}。<br/>
-          支持相对路径，如 ./imgs、../imgs 或 imgs 都是相对当前编辑中文档的路径。<br/>
-          变量说明：{YYYY}为年变量、{MM}为月变量、{DD}为日变量、{MDNAME}为当前文档名称
+          If not provided, the default value is <b>/imgs/{YYYY}-{MM}-{DD}</b>.<br/>
+          Supports relative paths, such as: ./imgs、../imgs or imgs.<br/>
+          Variable description: {YYYY} is a year variable, {MM} is a month variable, {DD} is a day variable, and {MDNAME} is the current document name.
         </div>
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">取消</button>
-      <button class="button button--resolve" @click="resolve()">确认</button>
+      <button class="button" @click="config.reject()">Cancal</button>
+      <button class="button button--resolve" @click="resolve()">Ok</button>
     </div>
   </modal-inner>
 </template>

@@ -80,7 +80,7 @@ export default {
         type: 'unauthorizedName',
         item,
       });
-      throw new Error('未经授权的名称。');
+      throw new Error('Unauthorized name.');
     }
 
     // Show warning dialogs

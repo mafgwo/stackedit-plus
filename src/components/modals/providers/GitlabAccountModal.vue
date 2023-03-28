@@ -1,35 +1,35 @@
 <template>
-  <modal-inner aria-label="GitLab账号">
+  <modal-inner aria-label="GitLab account">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="gitlab"></icon-provider>
       </div>
-      <p>将您的<b>GitLab</b>链接到<b>StackEdit中文版</b>。</p>
+      <p>Link your <b>GitLab</b> account to <b>StackEdit+</b>.</p>
       <template v-if="!useServerConf">
         <form-entry label="GitLab URL" error="serverUrl">
           <input v-if="config.forceServerUrl" slot="field" class="textfield" type="text" disabled="disabled" v-model="config.forceServerUrl">
           <input v-else slot="field" class="textfield" type="text" v-model.trim="serverUrl" @keydown.enter="resolve()">
           <div class="form-entry__info">
-            <b>例如:</b> https://gitlab.example.com/
+            <b>Example:</b> https://gitlab.example.com/
             <span v-if="httpAppUrl">
-              ，非https的URL，请跳转到 <a :href="httpAppUrl" target="_blank">HTTP链接</a> 添加Gitlab。
+              , if it is not an https URL, please go to <a :href="httpAppUrl" target="_blank">HTTP Link</a> to add Gitlab。
             </span>
           </div>
         </form-entry>
         <form-entry label="Application ID" error="applicationId">
           <input slot="field" class="textfield" type="text" v-model.trim="applicationId" @keydown.enter="resolve()">
           <div class="form-entry__info">
-            您必须使用重定向url <b>{{redirectUrl}}</b>配置OAuth2应用程序
+            You have to configure an OAuth2 Application with redirect URL <b>{{redirectUrl}}</b>
           </div>
           <div class="form-entry__actions">
-            <a href="https://docs.gitlab.com/ee/integration/oauth_provider.html" target="_blank">更多信息</a>
+            <a href="https://docs.gitlab.com/ee/integration/oauth_provider.html" target="_blank">More info</a>
           </div>
         </form-entry>
       </template>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">取消</button>
-      <button class="button button--resolve" @click="resolve()">确认</button>
+      <button class="button" @click="config.reject()">Cancel</button>
+      <button class="button button--resolve" @click="resolve()">Ok</button>
     </div>
   </modal-inner>
 </template>
@@ -55,7 +55,7 @@ export default modalTemplate({
       }
       return null;
     },
-    // 是否使用服务端配置
+    // use server conf
     useServerConf() {
       const confClientId = store.getters['data/serverConf'].gitlabClientId;
       const confServerUrl = store.getters['data/serverConf'].gitlabUrl;

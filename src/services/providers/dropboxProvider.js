@@ -6,13 +6,13 @@ import workspaceSvc from '../workspaceSvc';
 
 const makePathAbsolute = (token, path) => {
   if (!token.fullAccess) {
-    return `/Applications/StackEdit (restricted)${path}`;
+    return `/Applications/StackEdit+ (restricted)${path}`;
   }
   return path;
 };
 const makePathRelative = (token, path) => {
   if (!token.fullAccess) {
-    return path.replace(/^\/Applications\/StackEdit \(restricted\)/, '');
+    return path.replace(/^\/Applications\/StackEdit+ \(restricted\)/, '');
   }
   return path;
 };
@@ -112,7 +112,7 @@ export default new Provider({
           ...syncLocation,
           fileId: item.id,
         });
-        store.dispatch('notification/info', `${store.getters['file/current'].name}已从Dropbox导入。`);
+        store.dispatch('notification/info', `${store.getters['file/current'].name} was imported from Dropbox.`);
       }
     });
   },

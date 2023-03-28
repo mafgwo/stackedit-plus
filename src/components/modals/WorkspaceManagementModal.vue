@@ -1,10 +1,10 @@
 <template>
-  <modal-inner class="modal__inner-1--workspace-management" aria-label="管理文档空间">
+  <modal-inner class="modal__inner-1--workspace-management" aria-label="Manage workspaces">
     <div class="modal__content">
       <div class="modal__image">
         <icon-database></icon-database>
       </div>
-      <p><br>可以访问以下文档空间：</p>
+      <p>The following workspaces are accessible:</p>
       <div class="workspace-entry flex flex--column" v-for="(workspace, id) in workspacesById" :key="id">
         <div class="flex flex--column">
           <div class="workspace-entry__header flex flex--row flex--align-center">
@@ -14,19 +14,19 @@
             <input class="text-input" type="text" v-if="editedId === id" v-focus @blur="submitEdit()" @keydown.enter="submitEdit()" @keydown.esc.stop="submitEdit(true)" v-model="editingName">
             <div class="workspace-entry__name" v-else>{{workspace.name}}</div>
             <div class="workspace-entry__buttons flex flex--row">
-              <button class="workspace-entry__button button" @click="edit(id)" v-title="'编辑名称'">
+              <button class="workspace-entry__button button" @click="edit(id)" v-title="'Edit name'">
                 <icon-pen></icon-pen>
               </button>
-              <template v-if="workspace.providerId === 'giteeAppData' || workspace.providerId === 'githubWorkspace'
+              <template v-if="workspace.providerId === 'githubAppData' || workspace.providerId === 'githubWorkspace'
                 || workspace.providerId === 'giteeWorkspace' || workspace.providerId === 'gitlabWorkspace' || workspace.providerId === 'giteaWorkspace'">
-                <button class="workspace-entry__button button" @click="stopAutoSync(id)" v-if="workspace.autoSync == undefined || workspace.autoSync" v-title="'关闭自动同步'">
+                <button class="workspace-entry__button button" @click="stopAutoSync(id)" v-if="workspace.autoSync == undefined || workspace.autoSync" v-title="'Trun off auto sync'">
                   <icon-sync-auto></icon-sync-auto>
                 </button>
-                <button class="workspace-entry__button button" @click="startAutoSync(id)" v-if="workspace.autoSync != undefined && !workspace.autoSync" v-title="'启动自动同步'">
+                <button class="workspace-entry__button button" @click="startAutoSync(id)" v-if="workspace.autoSync != undefined && !workspace.autoSync" v-title="'Turn on auto sync'">
                   <icon-sync-stop></icon-sync-stop>
                 </button>
               </template>
-              <button class="workspace-entry__button button" @click="remove(id)" v-title="'删除'">
+              <button class="workspace-entry__button button" @click="remove(id)" v-title="'Remove'">
                 <icon-delete></icon-delete>
               </button>
             </div>
@@ -36,10 +36,10 @@
               {{workspace.url}}
             </div>
             <div class="workspace-entry__buttons flex flex--row">
-              <button class="workspace-entry__button button" v-clipboard="workspace.url" @click="info('文档空间URL已复制到剪贴板!')" v-title="'复制URL'">
+              <button class="workspace-entry__button button" v-clipboard="workspace.url" @click="info('Workspace URL copied to clipboard!')" v-title="'Copy URL'">
                 <icon-content-copy></icon-content-copy>
               </button>
-              <a class="workspace-entry__button button" :href="workspace.url" target="_blank" v-title="'打开文档空间'">
+              <a class="workspace-entry__button button" :href="workspace.url" target="_blank" v-title="'Open workspace'">
                 <icon-open-in-new></icon-open-in-new>
               </a>
             </div>
@@ -49,24 +49,24 @@
               {{workspace.locationUrl}}
             </div>
             <div class="workspace-entry__buttons flex flex--row">
-              <button class="workspace-entry__button button" v-clipboard="workspace.locationUrl" @click="info('文档空间URL已复制到剪贴板!')" v-title="'复制URL'">
+              <button class="workspace-entry__button button" v-clipboard="workspace.locationUrl" @click="info('Workspace URL copied to clipboard!')" v-title="'Copy URL'">
                 <icon-content-copy></icon-content-copy>
               </button>
-              <a class="workspace-entry__button button" :href="workspace.locationUrl" target="_blank" v-title="'打开文档空间位置'">
+              <a class="workspace-entry__button button" :href="workspace.locationUrl" target="_blank" v-title="'Open workspace location'">
                 <icon-open-in-new></icon-open-in-new>
               </a>
             </div>
           </div>
           <div>
             <span class="workspace-entry__offline" v-if="availableOffline[id]">
-              离线可用
+              available offline
             </span>
           </div>
         </div>
       </div>
     </div>
     <div class="modal__button-bar">
-      <button class="button button--resolve" @click="config.resolve()">关闭</button>
+      <button class="button button--resolve" @click="config.resolve()">Close</button>
     </div>
   </modal-inner>
 </template>
@@ -126,9 +126,9 @@ export default {
     },
     async remove(id) {
       if (id === this.mainWorkspace.id) {
-        this.info('您的主文档空间无法删除。');
+        this.info('Main workspace cannot be deleted.');
       } else if (id === this.currentWorkspace.id) {
-        this.info('请先关闭文档空间，然后再将其删除。');
+        this.info('Please close the workspace before deleting it.');
       } else {
         try {
           const workspace = this.workspacesById[id];

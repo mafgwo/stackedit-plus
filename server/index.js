@@ -2,6 +2,7 @@ const compression = require('compression');
 const serveStatic = require('serve-static');
 const bodyParser = require('body-parser');
 const path = require('path');
+const user = require('./user');
 const github = require('./github');
 const gitee = require('./gitee');
 const gitea = require('./gitea');
@@ -29,8 +30,14 @@ module.exports = (app) => {
   app.get('/oauth2/giteeToken', gitee.giteeToken);
   app.get('/oauth2/giteaToken', gitea.giteaToken);
   app.get('/conf', (req, res) => res.send(conf.publicValues));
+  app.get('/userInfo', user.userInfo);
+  app.get('/githubUser', (req, res) => user.getGitHubUser(req.query.idToken).then(body => res.send(JSON.stringify(body))));
   app.post('/pdfExport', pdf.generate);
   app.post('/pandocExport', pandoc.generate);
+  app.post('/paypalIpn', bodyParser.urlencoded({
+    extended: false,
+  }), user.paypalIpn);
+
   app.get('/giteeClientId', (req, res) => {
     const giteeClientIds = conf.values.giteeClientId.split(',');
     // 仅一个 则直接返回

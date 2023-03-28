@@ -1,9 +1,9 @@
 <template>
   <div class="modal" v-if="config" @keydown.esc.stop="onEscape" @keydown.tab="onTab" @focusin="onFocusInOut" @focusout="onFocusInOut">
-    <!-- <div class="modal__sponsor-banner" v-if="!isSponsor">
-      StackEdit is <a class="not-tabbable" target="_blank" href="https://github.com/mafgwo/stackedit/">open source</a>, please consider
-      <a class="not-tabbable" href="javascript:void(0)" @click="sponsor">sponsoring</a> for just $5.
-    </div> -->
+    <div class="modal__sponsor-banner" v-if="!isSponsor">
+      StackEdit+ is <a class="not-tabbable" target="_blank" href="https://github.com/mafgwo/stackedit-plus/">open source</a>, please consider
+      <a class="not-tabbable" href="javascript:void(0)" @click="sponsor">sponsoring</a> for just $1.99.
+    </div>
     <component v-if="currentModalComponent" :is="currentModalComponent"></component>
     <modal-inner v-else aria-label="Dialog">
       <div class="modal__content" v-html="simpleModal.contentHtml(config)"></div>
@@ -20,7 +20,7 @@ import { mapGetters } from 'vuex';
 import simpleModals from '../data/simpleModals';
 import editorSvc from '../services/editorSvc';
 import syncSvc from '../services/syncSvc';
-import giteeHelper from '../services/providers/helpers/giteeHelper';
+import githubHelper from '../services/providers/helpers/githubHelper';
 import store from '../store';
 
 import ModalInner from './modals/common/ModalInner';
@@ -177,14 +177,19 @@ export default {
   methods: {
     async sponsor() {
       try {
-        if (!store.getters['workspace/sponsorToken']) {
+        const sponsorToken = store.getters['workspace/sponsorToken'];
+        if (!sponsorToken) {
           // User has to sign in
           await store.dispatch('modal/open', 'signInForSponsorship');
-          await giteeHelper.signin();
+          await githubHelper.signin();
           syncSvc.requestSync();
+        } else {
+          await githubHelper.refreshSponsorInfo(sponsorToken);
         }
         if (!store.getters.isSponsor) {
           await store.dispatch('modal/open', 'sponsor');
+        } else {
+          store.dispatch('notification/info', 'You are already a sponsor!');
         }
       } catch (e) { /* cancel */ }
     },

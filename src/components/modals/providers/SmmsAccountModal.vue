@@ -1,27 +1,27 @@
 <template>
-  <modal-inner aria-label="链接SM.MS账号">
+  <modal-inner aria-label="Link SM.MS account">
     <div class="modal__content">
       <div class="modal__image">
         <icon-provider provider-id="smms"></icon-provider>
       </div>
-      <p>将您的<b>SM.MS</b>账号链接到<b>StackEdit中文版</b>。</p>
-      <form-entry label="跨域代理URL" error="proxyUrl">
+      <p>Link your <b>SM.MS</b> account to <b>StackEdit+</b>.</p>
+      <form-entry label="Cross domain proxy URL" error="proxyUrl">
         <input slot="field" class="textfield" type="text" v-model.trim="proxyUrl" @keydown.enter="resolve()">
         <div class="form-entry__info">
-          跨域代理URL用于图片上传跨域支持(因SM.MS图床已限制了跨域)，跨域代理如：https://cors.zme.ink/ 或 https://cors.eu.org/
+          The cross domain proxy URL is used for cross domain support of image uploading (because the SM.MS map bed has limited cross domain support), such as: https://cors.zme.ink/ Or https://cors.eu.org/
         </div>
       </form-entry>
       <form-entry label="Api Secret Token" error="apiSecretToken">
         <input slot="field" class="textfield" type="text" v-model.trim="apiSecretToken" @keydown.enter="resolve()">
 
         <div class="form-entry__info">
-          从 <a href="https://sm.ms/home/apitoken" target="_blank">SM.MS</a> 获取Api Secret Token.
+          From <a href="https://sm.ms/home/apitoken" target="_blank">SM.MS</a> get Api Secret Token.
         </div>
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">取消</button>
-      <button class="button button--resolve" @click="resolve()">确认</button>
+      <button class="button" @click="config.reject()">Cancal</button>
+      <button class="button button--resolve" @click="resolve()">Ok</button>
     </div>
   </modal-inner>
 </template>

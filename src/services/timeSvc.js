@@ -72,7 +72,7 @@ class RelativeTime {
 
   toString() {
     const ago = this.timeElapsed();
-    return ago || `${this.formatDate()}`;
+    return ago || `on ${this.formatDate()}`;
   }
 
   timeElapsed() {
@@ -82,21 +82,21 @@ class RelativeTime {
     const hr = Math.round(min / 60);
     const day = Math.round(hr / 24);
     if (ms < 0) {
-      return '刚刚';
+      return 'just now';
     } else if (sec < 45) {
-      return '刚刚';
+      return 'just now';
     } else if (sec < 90) {
-      return '1分钟前';
+      return 'a minute ago';
     } else if (min < 45) {
-      return `${min}分钟前`;
+      return `${min} minutes ago`;
     } else if (min < 90) {
-      return '1小时前';
+      return 'an hour ago';
     } else if (hr < 24) {
-      return `${hr}小时前`;
+      return `${hr} hours ago`;
     } else if (hr < 36) {
-      return '1天前';
+      return 'a day ago';
     } else if (day < 30) {
-      return `${day}天前`;
+      return `${day} days ago`;
     }
     return null;
   }

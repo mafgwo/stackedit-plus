@@ -1,14 +1,14 @@
 <template>
-  <modal-inner aria-label="提交信息">
-    <p>自定义 <b>{{ config.name }}</b> 提交信息。</p>
+  <modal-inner aria-label="commit message">
+    <p>Custom <b>{{ config.name }}</b> commit message.</p>
     <div class="modal__content">
-      <form-entry label="提交信息">
-        <input slot="field" class="textfield" placeholder="提交信息非必填" type="text" v-model.trim="commitMessage" @keydown.enter="resolve()">
+      <form-entry label="Commit message">
+        <input slot="field" class="textfield" placeholder="not required" type="text" v-model.trim="commitMessage" @keydown.enter="resolve()">
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">取消</button>
-      <button class="button button--resolve" @click="resolve()">确认</button>
+      <button class="button" @click="config.reject()">Cancal</button>
+      <button class="button button--resolve" @click="resolve()">Ok</button>
     </div>
   </modal-inner>
 </template>

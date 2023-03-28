@@ -118,7 +118,7 @@ export default new Provider({
         ...updatedSyncLocation,
         fileId: item.id,
       });
-      store.dispatch('notification/info', `${store.getters['file/current'].name}已从GitLab导入。`);
+      store.dispatch('notification/info', `${store.getters['file/current'].name} was imported from GitLab.`);
     }
   },
   makeLocation(token, projectPath, branch, path) {

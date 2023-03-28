@@ -18,19 +18,19 @@ const getImagePath = (confPath, imgType) => {
 };
 
 export default {
-  // 上传图片 返回图片链接
+  // 上传图片 返回图片Link
   // { url: 'http://xxxx', error: 'xxxxxx'}
   async updateImg(imgFile) {
     // 操作图片上传
     const currStorage = store.getters['img/getCheckedStorage'];
     if (!currStorage) {
-      return { error: '暂无已选择的图床！' };
+      return { error: 'There is currently no selected image bed!' };
     }
     // 判断是否文档空间路径
     if (currStorage.type === 'workspace') {
       // 如果不是git仓库 则提示不支持
       if (!store.getters['workspace/currentWorkspaceIsGit']) {
-        return { error: '暂无已选择的图床！' };
+        return { error: 'There is currently no selected image bed!' };
       }
       const path = getImagePath(currStorage.sub, imgFile.type);
       // 保存到indexeddb
@@ -45,11 +45,11 @@ export default {
       return { url: path.replaceAll(' ', '%20') };
     }
     if (!currStorage.provider) {
-      return { error: '暂无已选择的图床！' };
+      return { error: 'There is currently no selected image bed!' };
     }
     const token = store.getters[`data/${currStorage.provider}TokensBySub`][currStorage.sub];
     if (!token) {
-      return { error: '暂无已选择的图床！' };
+      return { error: 'There is currently no selected image bed!' };
     }
     let url = '';
     // token图床类型
@@ -62,7 +62,7 @@ export default {
     } else if (currStorage.type === 'tokenRepo') { // git repo图床类型
       const checkStorages = token.imgStorages.filter(it => it.sid === currStorage.sid);
       if (!checkStorages || checkStorages.length === 0) {
-        return { error: '暂无已选择的图床！' };
+        return { error: 'There is currently no selected image bed!' };
       }
       const checkStorage = checkStorages[0];
       const path = getImagePath(checkStorage.path, imgFile.type);

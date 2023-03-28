@@ -1,5 +1,5 @@
 <template>
-  <a class="new-discussion-button" href="javascript:void(0)" v-if="coordinates" :style="{top: coordinates.top + 'px'}" v-title="'开始批注'" @mousedown.stop.prevent @click="createNewDiscussion(selection)">
+  <a class="new-discussion-button" href="javascript:void(0)" v-if="coordinates" :style="{top: coordinates.top + 'px'}" v-title="'Start a discussion'" @mousedown.stop.prevent @click="createNewDiscussion(selection)">
     <icon-message></icon-message>
   </a>
 </template>

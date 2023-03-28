@@ -1,7 +1,7 @@
 <template>
-  <modal-inner aria-label="使用Pandoc导出">
+  <modal-inner aria-label="Export with Pandoc">
     <div class="modal__content">
-      <p>请为您的<b> pandoc导出</b>选择格式。</p>
+      <p>Please choose a format for your <b>Pandoc export</b>.</p>
       <form-entry label="Template">
         <select class="textfield" slot="field" v-model="selectedFormat" @keydown.enter="resolve()">
           <option value="asciidoc">AsciiDoc</option>
@@ -19,8 +19,8 @@
       </form-entry>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">取消</button>
-      <button class="button button--resolve" @click="resolve()">确认</button>
+      <button class="button" @click="config.reject()">Cancel</button>
+      <button class="button button--resolve" @click="resolve()">Ok</button>
     </div>
   </modal-inner>
 </template>
@@ -29,6 +29,7 @@
 import FileSaver from 'file-saver';
 import networkSvc from '../../services/networkSvc';
 import editorSvc from '../../services/editorSvc';
+import googleHelper from '../../services/providers/helpers/googleHelper';
 import modalTemplate from './common/modalTemplate';
 import store from '../../store';
 import badgeSvc from '../../services/badgeSvc';
@@ -44,11 +45,15 @@ export default modalTemplate({
       const currentContent = store.getters['content/current'];
       const { selectedFormat } = this;
       store.dispatch('queue/enqueue', async () => {
+        const tokenToRefresh = store.getters['workspace/sponsorToken'];
+        const sponsorToken = tokenToRefresh && await googleHelper.refreshToken(tokenToRefresh);
+
         try {
           const { body } = await networkSvc.request({
             method: 'POST',
             url: 'pandocExport',
             params: {
+              idToken: sponsorToken && sponsorToken.idToken,
               format: selectedFormat,
               options: JSON.stringify(store.getters['data/computedSettings'].pandoc),
               metadata: JSON.stringify(currentContent.properties),
@@ -60,8 +65,12 @@ export default modalTemplate({
           FileSaver.saveAs(body, `${currentFile.name}.${selectedFormat}`);
           badgeSvc.addBadge('exportPandoc');
         } catch (err) {
-          console.error(err); // eslint-disable-line no-console
-          store.dispatch('notification/error', err);
+          if (err.status === 401) {
+            store.dispatch('modal/open', 'sponsorOnly');
+          } else {
+            console.error(err); // eslint-disable-line no-console
+            store.dispatch('notification/error', err);
+          }
         }
       });
     },

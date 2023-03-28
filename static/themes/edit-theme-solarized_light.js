@@ -2,7 +2,7 @@ function init_edit_theme_solarized_light() {
   const style = document.createElement('style');
   style.id = 'edit-theme-solarized_light';
   style.type = 'text/css';
-  style.innerHTML = "/* 默认字体颜色、光标颜色、背景颜色*/\n\
+  style.innerHTML = "/* Default font color, cursor color, background color*/\n\
 .edit-theme--solarized_light .editor__inner {\n\
   color: #586E75;\n\
   caret-color: #586E75;\n\
@@ -10,20 +10,20 @@ function init_edit_theme_solarized_light() {
 .edit-theme--solarized_light .editor {\n\
   background-color: #FDF6E3;\n\
 }\n\
-/* 标题颜色 */\n\
+/* Header Color */\n\
 .edit-theme--solarized_light .editor__inner .cn-head,\n\
 .edit-theme--solarized_light .editor-in-page-buttons .icon {\n\
   color: #D33682;\n\
 }\n\
-/* 加粗颜色 */\n\
+/* Bold Color */\n\
 .edit-theme--solarized_light .editor__inner .cn-strong {\n\
   color: #859900;\n\
 }\n\
-/* 信息块颜色 */\n\
+/* Blockquote Color */\n\
 .edit-theme--solarized_light .editor__inner .blockquote {\n\
   color: #CB4B16;\n\
 }\n\
-/* 源信息、md标记符号等非关键信息的颜色 */\n\
+/* Color of non critical information such as source information and md marker symbols */\n\
 .edit-theme--solarized_light .editor__inner .cl,\n\
 .edit-theme--solarized_light .editor__inner .hr,\n\
 .edit-theme--solarized_light .editor__inner .link,\n\
@@ -40,18 +40,18 @@ function init_edit_theme_solarized_light() {
   color: rgba(102,128,153,0.6);\n\
   background-color: rgba(102,128,153,0.075);\n\
 }\n\
-/* 代码块颜色 */\n\
+/* Code Color */\n\
 .edit-theme--solarized_light .editor__inner .cn-code {\n\
   color: #268BD2;\n\
 }\n\
-/* 链接颜色 */\n\
+/* Link Color */\n\
 .edit-theme--solarized_light .editor__inner .img .cl-underlined-text,\n\
 .edit-theme--solarized_light .editor__inner .imgref .cl-underlined-text,\n\
 .edit-theme--solarized_light .editor__inner .link .cl-underlined-text,\n\
 .edit-theme--solarized_light .editor__inner .linkref .cl-underlined-text {\n\
   color: #2AA198;\n\
 }\n\
-/* 图片原始链接背景颜色 */\n\
+/* Picture Original Link Background Color */\n\
 .edit-theme--solarized_light .editor__inner .img-wrapper .img {\n\
   background-color: transparent;\n\
 }\n\
