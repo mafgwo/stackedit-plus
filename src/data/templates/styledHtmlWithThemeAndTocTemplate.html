@@ -5,8 +5,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{files.0.name}}</title>
-  <link rel="stylesheet" href="https://stackedit.net/style.css" />
+  <link rel="stylesheet" href="https://stackedit.cn/style.css" />
   <style type="text/css">
+    .app--dark {
+      background-color: #444;
+    }
+    .app--dark .stackedit__html {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .app--dark .stackedit__content {
+      padding: 1px 20px 20px;
+    }
     {{{files.0.content.themeStyleContent}}}
   </style>
 </head>
@@ -14,7 +24,7 @@
 {{#if pdf}}
 <body class="stackedit stackedit--pdf">
 {{else}}
-<body class="stackedit">
+<body class="stackedit {{{files.0.content.colorThemeClass}}}">
 {{/if}}
   <div class="stackedit__left">
     <div class="stackedit__toc">
@@ -23,7 +33,7 @@
   </div>
   <div class="stackedit__right">
     <div class="stackedit__html">
-      <div class="{{{files.0.content.themeClass}}}">
+      <div class="stackedit__content {{{files.0.content.themeClass}}}">
         {{{files.0.content.html}}}
       </div>
     </div>

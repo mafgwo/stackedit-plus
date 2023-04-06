@@ -60,6 +60,15 @@ export default {
     'No',
     'Yes, clean',
   ),
+  shareHtml: simpleModal(
+    config => `<p>A sharing link has been created for the file "${config.name}" as follows:<br/><a href="${config.url}" target="_blank">${config.url}</a><br/>After closing this window, you can view the sharing link in the publication.</p>`,
+    'Close',
+  ),
+  shareHtmlPre: simpleModal(
+    config => `<p>A sharing link will be created for the file "${config.name}" and after creation, the document will be publicly published in Gist. Are you sure?</p>`,
+    'No',
+    'Yes, Share',
+  ),
   signInForComment: simpleModal(
     `<p>You have to sign in with GitHub to start commenting.</p>
     <div class="modal__info"><b>Note:</b> This will sync your main workspace.</div>`,

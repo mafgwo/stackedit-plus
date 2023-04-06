@@ -73,6 +73,7 @@ export default {
     const parsingCtx = markdownConversionSvc.parseSections(converter, content.text);
     const conversionCtx = markdownConversionSvc.convert(parsingCtx);
     const html = conversionCtx.htmlSectionList.map(htmlSanitizer.sanitizeHtml).join('');
+    const colorThemeClass = `app--${store.getters['data/computedSettings'].colorTheme}`;
     const themeClass = `preview-theme--${store.state.theme.currPreviewTheme}`;
     let themeStyleContent = '';
     const themeStyleEle = document.getElementById(`preview-theme-${store.state.theme.currPreviewTheme}`);
@@ -134,6 +135,7 @@ export default {
           yamlProperties: content.properties,
           html: containerElt.innerHTML,
           toc,
+          colorThemeClass,
           themeClass,
           themeStyleContent,
         },

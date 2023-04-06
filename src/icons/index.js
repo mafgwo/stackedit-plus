@@ -64,6 +64,7 @@ import FindReplace from './FindReplace';
 import SelectTheme from './SelectTheme';
 import Copy from './Copy';
 import Ellipsis from './Ellipsis';
+import Share from './Share';
 
 Vue.component('iconProvider', Provider);
 Vue.component('iconFormatBold', FormatBold);
@@ -130,3 +131,4 @@ Vue.component('iconFindReplace', FindReplace);
 Vue.component('iconSelectTheme', SelectTheme);
 Vue.component('iconCopy', Copy);
 Vue.component('iconEllipsis', Ellipsis);
+Vue.component('iconShare', Share);

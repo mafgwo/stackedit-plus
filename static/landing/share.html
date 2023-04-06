@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Article share - StackEdit+</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://stackedit.net/">
+    <link rel="icon" href="static/landing/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="static/landing/favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="keywords" content="Markdown editor based on PageDown,StackEdit+,StackEdit,Online Markdown,Sharp Note Taking Tool,Markdown Notes">
+    <meta name="description"
+          content="Supports the direct use of warehouses such as GitHub, Gitee, and Gitea as note storage warehouses, supports drag and drop/paste upload of images, and can directly edit a Markdown editor for synchronization and management on the page.">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="google-site-verification" content="omTUM1XLiTYM-dH3n8SNnN-uYPVzZKW5z9be_TpkMl4" />
+    <meta name="msvalidate.01" content="90A9558158543277BD284CFA054E7F5B" />
+    <link rel="stylesheet" href="style.css">
+	<style>
+		.share-header {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			background-color: #383c4a;
+			color: #fff;
+			padding: 10px;
+			box-sizing: border-box;
+            z-index: 99999;
+		}
+
+		.share-header .logo {
+			margin: 0 0 -8px 0;
+		}
+
+		.share-header nav {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.share-header nav ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			flex-direction: row;
+		}
+
+		.share-header nav li {
+			margin: 0 10px;
+		}
+
+		.share-header nav a {
+			color: #fff;
+			text-decoration: none;
+		}
+
+		.share-header nav a:hover {
+			text-decoration: underline;
+		}
+
+		.share-content {
+			padding-top: 50px;
+		}
+	</style>
+    <script type="text/javascript">
+    function getQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+     }
+
+    function appendTagHtml(newdoc, tagName, targetParentEle) {
+        const tags = newdoc.getElementsByTagName(tagName);
+        if (!tags) {
+            return;
+        }
+        for (let i = 0; i < tags.length; i++) {
+            targetParentEle.append(tags[i]);
+        }
+    }
+
+    window.onload = function() {
+        const xhr = new XMLHttpRequest();
+        const gistId = getQueryString('id');
+        let accessToken = null;
+        const tokens = window.localStorage.getItem('data/tokens');
+        if (tokens) {
+            const tokensObj = JSON.parse(tokens);
+            if (tokensObj.data && tokensObj.data.github) {
+                const tokenArr = Object.keys(tokensObj.data.github).map(it => tokensObj.data.github[it]).filter(it => it && it.isLogin);
+                if (tokenArr.length > 0) {
+                    accessToken = tokenArr[0].accessToken;
+                }
+            }
+        }
+        const url = `https://api.github.com/gists/${gistId}`;
+        xhr.open('GET', url);
+        if (accessToken) {
+            xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
+        }
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const newdoc = document.implementation.createHTMLDocument("");
+                const body = JSON.parse(xhr.responseText);
+                for (let key in body.files) {
+                    newdoc.documentElement.innerHTML = body.files[key].content;
+                }
+                const currHead = document.head;
+                // head
+                appendTagHtml(newdoc, 'style', currHead);
+                // title
+                document.title = newdoc.title + ' - StackEdit+';
+                // content
+                const shareContent = document.getElementsByClassName('share-content')[0];
+                shareContent.innerHTML = newdoc.body.innerHTML;
+                document.body.className = newdoc.body.className;
+            } else if (xhr.status === 403) {
+                const rateLimit = xhr.responseText && xhr.responseText.indexOf('Rate Limit') >= 0;
+                const appUri = `${window.location.protocol}//${window.location.host}/app`;
+                document.getElementById('div_info').innerHTML = `${rateLimit ? "Request too frequently" : "No permission to access"}, Please login to the <a href="${appUri}" target="_brank">Main workspace</a> before refreshing this page!`;
+            } else {
+                console.error('An error occurred: ' + xhr.status);
+                document.getElementById('div_info').innerHTML = 'The sharing content failed to load or has expired!';
+            }
+        };
+        xhr.send();
+     }
+     </script>
+</head>
+<body>
+	<div class="share-header">
+		<nav>
+			<a class="logo" href="https://stackedit.net" target="_blank">
+				<img src="static/landing/logo.svg" height="30px"/>
+			</a>
+			<ul>
+				<li><a href="https://stackedit.net" target="_blank">Home</a></li>
+				<li><a href="https://stackedit.net/app" target="_blank">Writing</a></li>
+			</ul>
+		</nav>
+	</div>
+	<div class="share-content stackedit">
+		<div id="div_info" style="text-align: center; height: 600px;">loading......</div>
+	</div>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PDQHZXCY30"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-PDQHZXCY30');
+    </script>
+</body>
+</html>

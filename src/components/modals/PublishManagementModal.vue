@@ -34,6 +34,19 @@
               </a>
             </div>
           </div>
+          <div class="publish-entry__row flex flex--row flex--align-center" v-if="shareUrl(location)">
+            <div class="publish-entry__url">
+              Share link: {{shareUrl(location)}}
+            </div>
+            <div class="publish-entry__buttons flex flex--row flex--center">
+              <button class="publish-entry__button button" v-clipboard="shareUrl(location)" @click="info('Share URL copied to clipboard!')" v-title="'Copy Share URL'">
+                <icon-content-copy></icon-content-copy>
+              </button>
+              <a class="publish-entry__button button" :href="shareUrl(location)" target="_blank" v-title="'Open Share'">
+                <icon-open-in-new></icon-open-in-new>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
       <div class="modal__info" v-if="publishLocations.length">
@@ -74,6 +87,15 @@ export default {
     remove(location) {
       store.commit('publishLocation/deleteItem', location.id);
       badgeSvc.addBadge('removePublishLocation');
+    },
+    shareUrl(location) {
+      if (location.providerId !== 'gist') {
+        return null;
+      }
+      if (!location.url || !location.gistId) {
+        return null;
+      }
+      return `${window.location.protocol}//${window.location.host}/share.html?id=${location.gistId}`;
     },
   },
 };

@@ -4,6 +4,9 @@
       <li class="before">
         <icon-ellipsis></icon-ellipsis>
       </li>
+      <li title="Share">
+        <a href="javascript:void(0)" @click="share"><icon-share></icon-share></a>
+      </li>
       <li title="Switch Preview Area theme">
         <dropdown-menu :selected="selectedTheme" :options="allThemes" :closeOnItemClick="false" @change="changeTheme">
           <icon-select-theme></icon-select-theme>
@@ -21,6 +24,8 @@ import { mapGetters, mapActions } from 'vuex';
 // import juice from 'juice';
 import store from '../store';
 import DropdownMenu from './common/DropdownMenu';
+import publishSvc from '../services/publishSvc';
+import gistProvider from '../services/providers/gistProvider';
 
 export default {
   components: {
@@ -62,6 +67,9 @@ export default {
       'currPreviewTheme',
       'customPreviewThemeStyle',
     ]),
+    ...mapGetters('publishLocation', {
+      publishLocations: 'current',
+    }),
     selectedTheme() {
       return {
         value: this.currPreviewTheme || 'default',
@@ -84,6 +92,45 @@ export default {
       this.toggleSideBar(true);
       store.dispatch('data/setSideBarPanel', 'help');
     },
+    async share() {
+      if (this.sharing) {
+        store.dispatch('notification/info', 'Sharing link creating... Please try again later!');
+        return;
+      }
+      try {
+        const currentFile = store.getters['file/current'];
+        await store.dispatch('modal/open', { type: 'shareHtmlPre', name: currentFile.name });
+        this.sharing = true;
+        const mainToken = store.getters['workspace/mainWorkspaceToken'];
+        if (!mainToken) {
+          store.dispatch('notification/info', 'You can only use the sharing function after logging into the main workspace!');
+          return;
+        }
+        let githubGistId = null;
+        const filterLocations = this.publishLocations.filter(it => it.providerId === 'gist' && it.url && it.gistId);
+        if (filterLocations.length > 0) {
+          githubGistId = filterLocations[0].gistId;
+        }
+        const location = gistProvider.makeLocation(
+          mainToken,
+          `share-${currentFile.name}`,
+          true,
+          null,
+        );
+        location.templateId = 'styledHtmlWithTheme';
+        location.fileId = currentFile.id;
+        location.gistId = githubGistId;
+        const { gistId } = await publishSvc.publishLocationAndStore(location);
+        const url = `${window.location.protocol}//${window.location.host}/share.html?id=${gistId}`;
+        await store.dispatch('modal/open', { type: 'shareHtml', name: currentFile.name, url });
+      } catch (err) {
+        if (err) {
+          store.dispatch('notification/error', err);
+        }
+      } finally {
+        this.sharing = false;
+      }
+    },
   },
 };
 </script>
@@ -94,7 +141,7 @@ export default {
 .preview-in-page-buttons {
   position: absolute;
   bottom: 10px;
-  right: -68px;
+  right: -98px;
   height: 34px;
   padding: 5px;
   background-color: rgba(84, 96, 114, 0.4);

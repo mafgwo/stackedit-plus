@@ -139,6 +139,12 @@ const requestPublish = () => {
   });
 };
 
+const publishLocationAndStore = async (publishLocation, commitMsg) => {
+  const publishLocationToStore = await publish(publishLocation, commitMsg);
+  workspaceSvc.addPublishLocation(publishLocationToStore);
+  return publishLocationToStore;
+};
+
 const createPublishLocation = (publishLocation, featureId) => {
   const currentFile = store.getters['file/current'];
   publishLocation.fileId = currentFile.id;
@@ -157,8 +163,7 @@ const createPublishLocation = (publishLocation, featureId) => {
           return;
         }
       }
-      const publishLocationToStore = await publish(publishLocation, commitMsg);
-      workspaceSvc.addPublishLocation(publishLocationToStore);
+      await publishLocationAndStore(publishLocation, commitMsg);
       store.dispatch('notification/info', `A new publication location was added to "${currentFile.name}".`);
       if (featureId) {
         badgeSvc.addBadge(featureId);
@@ -169,5 +174,6 @@ const createPublishLocation = (publishLocation, featureId) => {
 
 export default {
   requestPublish,
+  publishLocationAndStore,
   createPublishLocation,
 };

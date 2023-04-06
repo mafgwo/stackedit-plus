@@ -152,6 +152,7 @@ background: rgba(0, 0, 0, 0.05) !important;\n \
 \n \
 /* blockquote words */\n \
 .preview-theme--jikebrack blockquote p {\n \
+margin: 0px;\n \
 font-size: 15px;\n \
 font-family: -apple-system-font, BlinkMacSystemFont, \"Helvetica Neue\", \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei UI\", \"Microsoft YaHei\", Arial, sans-serif;\n \
 color: rgb(119, 119, 119);\n \

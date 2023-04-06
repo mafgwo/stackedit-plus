@@ -172,7 +172,7 @@ style.innerHTML = "/* caoyuangreen\n \
   padding-bottom: 25px;\n \
   border-left: none !important;\n \
   border: 1px solid #1b900d !important;\n \
-  background: #fff;\n \
+  background: #fff !important;\n \
 \n \
 }\n \
 \n \

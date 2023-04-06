@@ -75,6 +75,8 @@ module.exports = (app) => {
   app.get('/style.css', (req, res) => res.sendFile(resolvePath('dist/style.css'), {
     maxAge: '1d',
   }));
+  // Serve share.html
+  app.get('/share.html', (req, res) => res.sendFile(resolvePath('static/landing/share.html')));
 
   // Serve static resources
   if (process.env.NODE_ENV === 'production') {

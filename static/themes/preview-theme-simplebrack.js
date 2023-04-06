@@ -173,6 +173,7 @@ list-style-type: circle;\n \
 border-left: 3px solid rgba(0, 0, 0, 0.65) !important;\n \
 border-right: 1px solid rgba(0, 0, 0, 0.65) !important;\n \
 background: rgb(249, 249, 249) !important;\n \
+color: rgba(0,0,0,0.5) !important;\n \
 }\n \
 \n \
 /* blockquote words */\n \
