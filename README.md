@@ -65,6 +65,7 @@
 - Support for selecting theme styles in the preview area (2022-12-04)
 - Gitlab support optimization (2023-02-23)
 - Exporting HTML and PDF supports export with theme (2023-02-26)
+- Support for sharing files (2023-04-06)
 
 ## Disadvantages of the original open source version of stackdit:
 - Author no longer maintains
