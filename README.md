@@ -25,8 +25,9 @@
 1.Notes support Git warehouse workspace such as Gitee, GitHub, and Gitea.<br>
 2.It supports direct uploading of images, as well as pasting or dragging and uploading of various external image beds (GitHub, Gitea, SM.MS, and custom image beds).<br>
 3.The editing area supports selecting themes or customizing, and there are always themes that you like. <br>
-4.supports historical version management, without worrying about the inability to rollback after editing overrides.<br>
-5.Support for extensions such as KaTeX mathematical expressions, Mermaid UML diagrams, and music scores.
+4.Supports historical version management, without worrying about the inability to rollback after editing overrides.<br>
+5.Support ChatGPT assisted writing.<br>
+6.Support for extensions such as KaTeX mathematical expressions, Mermaid UML diagrams, and music scores.
 <hr />
 
 ## Screenshot
@@ -66,6 +67,7 @@
 - Gitlab support optimization (2023-02-23)
 - Exporting HTML and PDF supports export with theme (2023-02-26)
 - Support for sharing files (2023-04-06)
+- Support ChatGPT assisted writing (2023-04-11)
 
 ## Disadvantages of the original open source version of stackdit:
 - Author no longer maintains

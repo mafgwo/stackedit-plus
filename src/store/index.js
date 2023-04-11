@@ -20,6 +20,7 @@ import userInfo from './userInfo';
 import workspace from './workspace';
 import img from './img';
 import theme from './theme';
+import chatgpt from './chatgpt';
 import locationTemplate from './locationTemplate';
 import emptyPublishLocation from '../data/empties/emptyPublishLocation';
 import emptySyncLocation from '../data/empties/emptySyncLocation';
@@ -51,6 +52,7 @@ const store = new Vuex.Store({
     workspace,
     img,
     theme,
+    chatgpt,
   },
   state: {
     light: false,

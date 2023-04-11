@@ -65,6 +65,7 @@ import SelectTheme from './SelectTheme';
 import Copy from './Copy';
 import Ellipsis from './Ellipsis';
 import Share from './Share';
+import ChatGpt from './ChatGpt';
 
 Vue.component('iconProvider', Provider);
 Vue.component('iconFormatBold', FormatBold);
@@ -132,3 +133,4 @@ Vue.component('iconSelectTheme', SelectTheme);
 Vue.component('iconCopy', Copy);
 Vue.component('iconEllipsis', Ellipsis);
 Vue.component('iconShare', Share);
+Vue.component('iconChatGpt', ChatGpt);

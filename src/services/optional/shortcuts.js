@@ -28,6 +28,7 @@ const methods = {
   quote: pagedownHandler('quote'),
   code: pagedownHandler('code'),
   image: pagedownHandler('image'),
+  chatgpt: pagedownHandler('chatgpt'),
   olist: pagedownHandler('olist'),
   ulist: pagedownHandler('ulist'),
   clist: pagedownHandler('clist'),

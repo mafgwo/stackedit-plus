@@ -49,4 +49,8 @@ export default [{
   method: 'image',
   title: 'Image',
   icon: 'file-image',
+}, {
+  method: 'chatgpt',
+  title: 'ChatGPT',
+  icon: 'chat-gpt',
 }];

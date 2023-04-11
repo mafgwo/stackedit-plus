@@ -439,6 +439,13 @@ const editorSvc = Object.assign(new Vue(), editorSvcDiscussions, editorSvcUtils,
       });
       return true;
     });
+    this.pagedownEditor.hooks.set('insertChatGptDialog', (callback) => {
+      store.dispatch('modal/open', {
+        type: 'chatGpt',
+        callback,
+      });
+      return true;
+    });
     this.pagedownEditor.hooks.set('insertImageUploading', (callback) => {
       callback(store.getters['img/currImgId']);
       return true;

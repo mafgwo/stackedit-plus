@@ -122,6 +122,7 @@ function Pagedown(options) {
   hooks.addNoop("onPreviewRefresh"); // called with no arguments after the preview has been refreshed
   hooks.addNoop("postBlockquoteCreation"); // called with the user's selection *after* the blockquote was created; should return the actual to-be-inserted text
   hooks.addFalse("insertImageDialog");
+  hooks.addFalse("insertChatGptDialog");
   /* called with one parameter: a callback to be called with the URL of the image. If the application creates
    * its own image insertion dialog, this hook should return true, and the callback should be called with the chosen
    * image url (or null if the user cancelled). If this hook returns false, the default dialog will be used.
@@ -477,6 +478,7 @@ function UIManager(input, commandManager) {
     buttons.image = bindCommand(function (chunk, postProcessing) {
       return this.doLinkOrImage(chunk, postProcessing, true);
     });
+    buttons.chatgpt = bindCommand("doChatGpt");
     buttons.olist = bindCommand(function (chunk, postProcessing) {
       this.doList(chunk, postProcessing, true);
     });
@@ -844,6 +846,17 @@ commandProto.doLinkOrImage = function (chunk, postProcessing, isImage) {
     }
     return true;
   }
+};
+
+commandProto.doChatGpt = function (chunk, postProcessing) {
+  var enteredCallback = function (content) {
+    if (content !== null) {
+      chunk.before = `${chunk.before}${content}`;
+      chunk.selection = '';
+    }
+    postProcessing();
+  };
+  this.hooks.insertChatGptDialog(enteredCallback);
 };
 
 // When making a list, hitting shift-enter will put your cursor on the next line
