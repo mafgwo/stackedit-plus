@@ -23,11 +23,21 @@ function texMath(state, silent) {
   ) {
     return false;
   }
-  const endMarkerPos = state.src.indexOf(endMarker, startMathPos);
-  if (endMarkerPos === -1) {
-    return false;
+  function getIndex(tempStartMathPos) {
+    const tempEndMarkerPos = state.src.indexOf(endMarker, tempStartMathPos);
+    if (tempEndMarkerPos === -1) {
+      return tempEndMarkerPos;
+    }
+    if (state.src.charCodeAt(tempEndMarkerPos - 1) === 0x5C /* \ */) {
+      if (state.src.length - 1 > tempEndMarkerPos) {
+        return getIndex(tempEndMarkerPos + 1);
+      }
+      return -1;
+    }
+    return tempEndMarkerPos;
   }
-  if (state.src.charCodeAt(endMarkerPos - 1) === 0x5C /* \ */) {
+  const endMarkerPos = getIndex(startMathPos);
+  if (endMarkerPos === -1) {
     return false;
   }
   const nextPos = endMarkerPos + endMarker.length;
