@@ -7,7 +7,7 @@
       <p>Link your <b>Gitee</b> account to <b>StackEdit+</b>.</p>
     </div>
     <div class="modal__button-bar">
-      <button class="button" @click="config.reject()">Cancal</button>
+      <button class="button" @click="config.reject()">Cancel</button>
       <button class="button button--resolve" @click="config.resolve()">Ok</button>
     </div>
   </modal-inner>

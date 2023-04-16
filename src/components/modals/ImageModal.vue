@@ -9,7 +9,7 @@
     <div class="modal__button-bar">
       <input class="hidden-file" id="upload-image-file-input" type="file" accept="image/*" :disabled="uploading" @change="uploadImage">
       <label for="upload-image-file-input"><a class="button">Upload Image</a></label>
-      <button class="button" @click="reject()">Cancal</button>
+      <button class="button" @click="reject()">Cancel</button>
       <button class="button button--resolve" @click="resolve" :disabled="uploading">OK</button>
     </div>
     <div>
