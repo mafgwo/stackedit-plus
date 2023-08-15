@@ -24,7 +24,7 @@
 <hr />
 1. Supports Git repository storage such as Gitee, GitHub, Gitea, etc.<br>
 2. Supports pasting or dragging and dropping to upload images, supports direct uploads or using various external image hosting services (GitHub, Gitea, SM.MS, custom image host).<br>
-3. The editing area supports theme preset selection or customization, so there is always a theme that you will like.<br>
+3. The editing area supports theme preset selection or customization, there is always a theme that you will like.<br>
 4. Supports version history management, so you don't have to worry about being unable to roll back after overwriting edits.<br>
 5. Supports ChatGPT-assisted writing.<br>
 6. Supports KaTeX mathematical expressions, Mermaid UML diagrams, music score, and other extensions.<br>
