@@ -3,7 +3,7 @@
 </h1>
 <p align="center">
 	<strong>Note taking tool, online Markdown editor.</strong><br>
-  If you like this project, please click Star, your motivation is definitely the greatest motivation for the author!
+  If you like this project, please give it a Star. Your appreciation is the biggest motivation for the author!
 </p>
 <p align="center">
 	<a href="https://stackedit.net/">https://stackedit.net</a>
@@ -22,26 +22,26 @@
 	<img src="https://img.shields.io/badge/Twitter-StackEditPlus-orange"/></a>
 </p>
 <hr />
-1.Notes support Git warehouse workspace such as Gitee, GitHub, and Gitea.<br>
-2.It supports direct uploading of images, as well as pasting or dragging and uploading of various external image beds (GitHub, Gitea, SM.MS, and custom image beds).<br>
-3.The editing area supports selecting themes or customizing, and there are always themes that you like. <br>
-4.Supports historical version management, without worrying about the inability to rollback after editing overrides.<br>
-5.Support ChatGPT assisted writing.<br>
-6.Support for extensions such as KaTeX mathematical expressions, Mermaid UML diagrams, and music scores.
+1. Supports Git repository storage such as Gitee, GitHub, Gitea, etc.<br>
+2. Supports pasting or dragging and dropping to upload images, supports direct uploads or using various external image hosting services (GitHub, Gitea, SM.MS, custom image host).<br>
+3. The editing area supports theme preset selection or customization, there is always a theme that you will like.<br>
+4. Supports version history management, so you don't have to worry about being unable to roll back after overwriting edits.<br>
+5. Supports ChatGPT-assisted writing.<br>
+6. Supports KaTeX mathematical expressions, Mermaid UML diagrams, music score, and other extensions.<br>
 <hr />
 
 ## Screenshot
 
-**Light and dark theme switching, editing theme switching**
+**Light and dark theme switching, editing area theme switching**
 ![](./images/theme.gif)
 
 **Supported workspaces**
 ![](./images/workspace.png)
 
-**Drag and paste to upload images**
+**Drag and drop or paste to upload images**
 ![](./images/uploadimg.gif)
 
-**Support file search**
+**Supports file title and content search**
 ![](./images/search.gif)
 
 ## Differences compared to the original open source version of stackdit:
@@ -70,7 +70,7 @@
 - Support ChatGPT assisted writing (2023-04-11)
 
 ## Disadvantages of the original open source version of stackdit:
-- Author no longer maintains
+- Author no longer maintains;
 - There is a problem with Github authorization login
 
 ## Deployment Instructions
