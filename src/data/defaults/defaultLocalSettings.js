@@ -24,6 +24,7 @@ export default () => ({
   giteePublishTemplate: 'jekyllSite',
   gitlabServerUrl: '',
   gitlabApplicationId: '',
+  gitlabApplicationSecret: '',
   gitlabProjectUrl: '',
   gitlabWorkspaceProjectUrl: '',
   gitlabPublishTemplate: 'plainText',

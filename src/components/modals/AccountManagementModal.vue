@@ -248,8 +248,8 @@ export default {
     },
     async addGitlabAccount() {
       try {
-        const { serverUrl, applicationId } = await store.dispatch('modal/open', { type: 'gitlabAccount' });
-        await gitlabHelper.addAccount(serverUrl, applicationId);
+        const { serverUrl, applicationId, applicationSecret } = await store.dispatch('modal/open', { type: 'gitlabAccount' });
+        await gitlabHelper.addAccount(serverUrl, applicationId, applicationSecret);
       } catch (e) { /* cancel */ }
     },
     async addGiteaAccount() {

@@ -3,7 +3,7 @@ var prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  PAYPAL_RECEIVER_EMAIL: '"mafgwo@163.com"',
+  // PAYPAL_RECEIVER_EMAIL: '"mafgwo@163.com"',
   // temp
   GITHUB_CLIENT_ID: '"845b8f75df48f2ee0563"',
   GITHUB_CLIENT_SECRET: '"80df676597abded1450926861965cc3f9bead6a0"',

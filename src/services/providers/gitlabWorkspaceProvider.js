@@ -75,11 +75,11 @@ export default new Provider({
     const sub = workspace ? workspace.sub : utils.queryParams.sub;
     let token = store.getters['data/gitlabTokensBySub'][sub];
     if (!token) {
-      const { applicationId } = await store.dispatch('modal/open', {
+      const { applicationId, applicationSecret } = await store.dispatch('modal/open', {
         type: 'gitlabAccount',
         forceServerUrl: serverUrl,
       });
-      token = await gitlabHelper.addAccount(serverUrl, applicationId, sub);
+      token = await gitlabHelper.addAccount(serverUrl, applicationId, applicationSecret, sub);
     }
 
     if (!workspace) {

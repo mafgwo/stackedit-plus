@@ -36,11 +36,11 @@
       <div><div class="menu-entry__label" :class="{'menu-entry__label--warning': !isSponsor}">sponsor</div> Export as PDF</div>
       <span>Produce a PDF from an HTML template.</span>
     </menu-entry>
-    <!-- <menu-entry @click.native="exportPandoc">
+    <menu-entry @click.native="exportPandoc">
       <icon-download slot="icon"></icon-download>
-      <div>导出为 HTML Pandoc</div>
-      <span>转换为PDF、Word、EPUB...</span>
-    </menu-entry> -->
+      <div><div class="menu-entry__label" :class="{'menu-entry__label--warning': !isSponsor}">sponsor</div> Export with Pandoc</div>
+      <span>Convert to PDF, Word, EPUB...</span>
+    </menu-entry>
   </div>
 </template>
 

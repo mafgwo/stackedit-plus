@@ -18,6 +18,9 @@
         </form-entry>
         <form-entry label="Application ID" error="applicationId">
           <input slot="field" class="textfield" type="text" v-model.trim="applicationId" @keydown.enter="resolve()">
+        </form-entry>
+        <form-entry label="Application Secret" error="applicationSecret">
+          <input slot="field" class="textfield" type="text" v-model.trim="applicationSecret" @keydown.enter="resolve()">
           <div class="form-entry__info">
             You have to configure an OAuth2 Application with redirect URL <b>{{redirectUrl}}</b>
           </div>
@@ -47,6 +50,7 @@ export default modalTemplate({
   computedLocalSettings: {
     serverUrl: 'gitlabServerUrl',
     applicationId: 'gitlabApplicationId',
+    applicationSecret: 'gitlabApplicationSecret',
   },
   computed: {
     httpAppUrl() {
@@ -78,7 +82,10 @@ export default modalTemplate({
       if (!this.applicationId) {
         this.setError('applicationId');
       }
-      if (serverUrl && this.applicationId) {
+      if (!this.applicationSecret) {
+        this.setError('applicationSecret');
+      }
+      if (serverUrl && this.applicationId && this.applicationSecret) {
         const parsedUrl = serverUrl.match(/^(http[s]?:\/\/[^/]+)/);
         if (!parsedUrl) {
           this.setError('serverUrl');
@@ -86,6 +93,7 @@ export default modalTemplate({
           this.config.resolve({
             serverUrl: parsedUrl[1],
             applicationId: this.applicationId,
+            applicationSecret: this.applicationSecret,
           });
         }
       }

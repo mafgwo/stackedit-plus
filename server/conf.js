@@ -17,6 +17,7 @@ const giteaClientId = process.env.GITEA_CLIENT_ID;
 const giteaClientSecret = process.env.GITEA_CLIENT_SECRET;
 const giteaUrl = process.env.GITEA_URL;
 const gitlabClientId = process.env.GITLAB_CLIENT_ID;
+const gitlabClientSecret = process.env.GITLAB_CLIENT_SECRET;
 const gitlabUrl = process.env.GITLAB_URL;
 
 exports.values = {
@@ -37,6 +38,9 @@ exports.values = {
   giteaClientId,
   giteaClientSecret,
   giteaUrl,
+  gitlabClientId,
+  gitlabClientSecret,
+  gitlabUrl,
 };
 
 exports.publicValues = {

@@ -3,6 +3,9 @@ import networkSvc from '../../networkSvc';
 import store from '../../../store';
 import userSvc from '../../userSvc';
 import badgeSvc from '../../badgeSvc';
+import constants from '../../../data/constants';
+
+const tokenExpirationMargin = 5 * 60 * 1000;
 
 const request = ({ accessToken, serverUrl }, options) => networkSvc.request({
   ...options,
@@ -50,34 +53,90 @@ export default {
   /**
    * https://docs.gitlab.com/ee/api/oauth2.html
    */
-  async startOauth2(serverUrl, applicationId, sub = null, silent = false) {
+  async startOauth2(
+    serverUrl, applicationId, applicationSecret,
+    sub = null, silent = false, refreshToken,
+  ) {
     let apiUrl = serverUrl;
     let clientId = applicationId;
-    // 获取gitea配置的参数
+    let useServerConf = false;
+    // 获取gitlab配置的参数
     await networkSvc.getServerConf();
     const confClientId = store.getters['data/serverConf'].gitlabClientId;
     const confServerUrl = store.getters['data/serverConf'].gitlabUrl;
-    // 存在gitea配置则使用后端配置
+    // 存在gitlab配置则使用后端配置
     if (confClientId && confServerUrl) {
       apiUrl = confServerUrl;
       clientId = confClientId;
+      useServerConf = true;
     }
-    // Get an OAuth2 code
-    const { accessToken } = await networkSvc.startOauth2(
-      `${apiUrl}/oauth/authorize`,
-      {
-        client_id: clientId,
-        response_type: 'token',
-        scope: 'api',
-      },
-      silent,
-    );
+    let tokenBody;
+    if (!silent) {
+      // Get an OAuth2 code
+      const { code } = await networkSvc.startOauth2(
+        `${apiUrl}/oauth/authorize`,
+        {
+          client_id: clientId,
+          response_type: 'code',
+          redirect_uri: constants.oauth2RedirectUri,
+        },
+        silent,
+      );
+      if (useServerConf) {
+        tokenBody = (await networkSvc.request({
+          method: 'GET',
+          url: 'oauth2/gitlabToken',
+          params: {
+            code,
+            grant_type: 'authorization_code',
+            redirect_uri: constants.oauth2RedirectUri,
+          },
+        })).body;
+      } else {
+        // Exchange code with token
+        tokenBody = (await networkSvc.request({
+          method: 'POST',
+          url: `${apiUrl}/oauth/token`,
+          params: {
+            client_id: clientId,
+            client_secret: applicationSecret,
+            code,
+            grant_type: 'authorization_code',
+            redirect_uri: constants.oauth2RedirectUri,
+          },
+        })).body;
+      }
+    } else if (useServerConf) {
+      tokenBody = (await networkSvc.request({
+        method: 'GET',
+        url: 'oauth2/gitlabToken',
+        params: {
+          refresh_token: refreshToken,
+          grant_type: 'refresh_token',
+          redirect_uri: constants.oauth2RedirectUri,
+        },
+      })).body;
+    } else {
+      // Exchange refreshToken with token
+      tokenBody = (await networkSvc.request({
+        method: 'POST',
+        url: `${apiUrl}/oauth/token`,
+        body: {
+          client_id: clientId,
+          client_secret: applicationSecret,
+          refresh_token: refreshToken,
+          grant_type: 'refresh_token',
+          redirect_uri: constants.oauth2RedirectUri,
+        },
+      })).body;
+    }
 
+    const accessToken = tokenBody.access_token;
     // Call the user info endpoint
-    const user = await request({ accessToken, serverUrl }, {
+    const user = await request({ accessToken, serverUrl: apiUrl }, {
       url: 'user',
     });
-    const uniqueSub = `${serverUrl}/${user.id}`;
+    const uniqueSub = `${apiUrl}/${user.id}`;
     userSvc.addUserInfo({
       id: `${subPrefix}:${uniqueSub}`,
       name: user.username,
@@ -89,11 +148,17 @@ export default {
       throw new Error('GitLab account ID not expected.');
     }
 
+    const oldToken = store.getters['data/gitlabTokensBySub'][uniqueSub];
     // Build token object including scopes and sub
     const token = {
       accessToken,
       name: user.username,
-      serverUrl,
+      applicationId: clientId,
+      applicationSecret,
+      imgStorages: oldToken && oldToken.imgStorages,
+      refreshToken: tokenBody.refresh_token,
+      expiresOn: Date.now() + ((tokenBody.expires_in || 7200) * 1000),
+      serverUrl: apiUrl,
       sub: uniqueSub,
     };
 
@@ -101,12 +166,58 @@ export default {
     store.dispatch('data/addGitlabToken', token);
     return token;
   },
-  async addAccount(serverUrl, applicationId, sub = null) {
-    const token = await this.startOauth2(serverUrl, applicationId, sub);
+  async addAccount(serverUrl, applicationId, applicationSecret, sub = null) {
+    const token = await this.startOauth2(serverUrl, applicationId, applicationSecret, sub);
     badgeSvc.addBadge('addGitLabAccount');
     return token;
   },
+  // refresh token
+  async refreshToken(token) {
+    const {
+      serverUrl,
+      applicationId,
+      applicationSecret,
+      sub,
+    } = token;
+    const lastToken = store.getters['data/gitlabTokensBySub'][sub];
+    // 兼容旧的没有过期时间
+    if (!lastToken.expiresOn || !lastToken.refreshToken) {
+      await store.dispatch('modal/open', {
+        type: 'providerRedirection',
+        name: 'Gitlab',
+      });
+      return this.startOauth2(serverUrl, applicationId, applicationSecret, sub);
+    }
+    // lastToken is not expired
+    if (lastToken.expiresOn > Date.now() + tokenExpirationMargin) {
+      return lastToken;
+    }
 
+    // existing token is about to expire.
+    // Try to get a new token in background
+    try {
+      return await this.startOauth2(
+        serverUrl, applicationId, applicationSecret,
+        sub, true, lastToken.refreshToken,
+      );
+    } catch (err) {
+      // If it fails try to popup a window
+      if (store.state.offline) {
+        throw err;
+      }
+      await store.dispatch('modal/open', {
+        type: 'providerRedirection',
+        name: 'Gitlab',
+      });
+      return this.startOauth2(serverUrl, applicationId, applicationSecret, sub);
+    }
+  },
+  // 带刷新token
+  async requestWithRefreshToken(token, options) {
+    const refreshedToken = await this.refreshToken(token);
+    const result = await request(refreshedToken, options);
+    return result;
+  },
   /**
    * https://docs.gitlab.com/ee/api/projects.html#get-single-project
    */
@@ -114,8 +225,7 @@ export default {
     if (projectId) {
       return projectId;
     }
-
-    const project = await request(token, {
+    const project = await this.requestWithRefreshToken(token, {
       url: `projects/${encodeURIComponent(projectPath)}`,
     });
     return project.id;
@@ -129,7 +239,7 @@ export default {
     projectId,
     branch,
   }) {
-    return request(token, {
+    return this.requestWithRefreshToken(token, {
       url: `projects/${encodeURIComponent(projectId)}/repository/tree`,
       params: {
         ref: branch,
@@ -148,7 +258,7 @@ export default {
     branch,
     path,
   }) {
-    return request(token, {
+    return this.requestWithRefreshToken(token, {
       url: `projects/${encodeURIComponent(projectId)}/repository/commits`,
       params: {
         ref_name: branch,
@@ -175,7 +285,7 @@ export default {
     if (isImg && typeof content !== 'string') {
       uploadContent = await utils.encodeFiletoBase64(content);
     }
-    return request(token, {
+    return this.requestWithRefreshToken(token, {
       method: sha ? 'PUT' : 'POST',
       url: `projects/${encodeURIComponent(projectId)}/repository/files/${encodeURIComponent(path)}`,
       body: {
@@ -198,7 +308,7 @@ export default {
     path,
     sha,
   }) {
-    return request(token, {
+    return this.requestWithRefreshToken(token, {
       method: 'DELETE',
       url: `projects/${encodeURIComponent(projectId)}/repository/files/${encodeURIComponent(path)}`,
       body: {
@@ -219,7 +329,7 @@ export default {
     path,
     isImg,
   }) {
-    const res = await request(token, {
+    const res = await this.requestWithRefreshToken(token, {
       url: `projects/${encodeURIComponent(projectId)}/repository/files/${encodeURIComponent(path)}`,
       params: { ref: branch },
     });

@@ -85,8 +85,8 @@ export default {
     },
     async addGitlabWorkspace() {
       try {
-        const { serverUrl, applicationId } = await store.dispatch('modal/open', { type: 'gitlabAccount' });
-        const token = await gitlabHelper.addAccount(serverUrl, applicationId);
+        const { serverUrl, applicationId, applicationSecret } = await store.dispatch('modal/open', { type: 'gitlabAccount' });
+        const token = await gitlabHelper.addAccount(serverUrl, applicationId, applicationSecret);
         store.dispatch('modal/open', {
           type: 'gitlabWorkspace',
           token,

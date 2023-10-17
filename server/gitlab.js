@@ -1,19 +1,19 @@
 const request = require('request');
 const conf = require('./conf');
 
-function giteaToken(queryParam) {
+function gitlabToken(queryParam) {
   return new Promise((resolve, reject) => {
     request({
       method: 'POST',
-      url: `${conf.values.giteaUrl}/login/oauth/access_token`,
+      url: `${conf.values.gitlabUrl}/oauth/token`,
       headers: {
         'content-type': 'application/json',
       },
       json: true,
-      body: {
+      qs: {
         ...queryParam,
-        client_id: conf.values.giteaClientId,
-        client_secret: conf.values.giteaClientSecret,
+        client_id: conf.values.gitlabClientId,
+        client_secret: conf.values.gitlabClientSecret,
       },
     }, (err, res, body) => {
       if (err) {
@@ -29,8 +29,8 @@ function giteaToken(queryParam) {
   });
 }
 
-exports.giteaToken = (req, res) => {
-  giteaToken(req.query)
+exports.gitlabToken = (req, res) => {
+  gitlabToken(req.query)
     .then(
       tokenBody => res.send(tokenBody),
       err => res
