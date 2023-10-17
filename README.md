@@ -68,6 +68,7 @@
 - Exporting HTML and PDF supports export with theme (2023-02-26)
 - Support for sharing files (2023-04-06)
 - Support ChatGPT assisted writing (2023-04-11)
+- Support for GitLab new version authorization (2023-09-21)
 
 ## Disadvantages of the original open source version of stackdit:
 - Author no longer maintains;
@@ -100,6 +101,7 @@ services:
       - GITEA_CLIENT_SECRET=[Delete-if-no-support-is-required]
       - GITEA_URL=[Delete-if-no-support-is-required]
       - GITLAB_CLIENT_ID=[Delete-if-no-support-is-required]
+      - GITLAB_CLIENT_SECRET=[Delete-if-no-support-is-required]
       - GITLAB_URL=[Delete-if-no-support-is-required]
     ports:
       - 8080:8080/tcp
@@ -135,6 +137,7 @@ docker run -itd --name stackedit-plus \
   -e GITEA_CLIENT_SECRET=[Delete-if-no-support-is-required] \
   -e GITEA_URL=[Delete-if-no-support-is-required] \
   -e GITLAB_CLIENT_ID=[Delete-if-no-support-is-required] \
+  -e GITLAB_CLIENT_SECRET=[Delete-if-no-support-is-required] \
   -e GITLAB_URL=[Delete-if-no-support-is-required] \
   mafgwo/stackedit-plus:[Docker Hub found the latest version]
 
@@ -147,7 +150,7 @@ docker run -itd --name stackedit-plus \
 
 - Gitea can optionally configure environment variables (if not configured, it is specified at the front end during association, and if configured, only configured application information is allowed): `GITEA_CLIENT_ID` `GITEA_CLIENT_SECRET` `GITEA_URL`, **[How to create a Gitea application](./docs/Gitea-Application-Creation.md)**
 
-- Gitlab can optionally configure environment variables (if not configured, it is specified at the front end during association, and if configured, only configured application information is allowed): `GITLAB_CLIENT_ID` `GITLAB_URL` **How to create a Gitlab application(Documents to be supplemented)**
+- Gitlab can optionally configure environment variables (if not configured, it is specified at the front end during association, and if configured, only configured application information is allowed): `GITLAB_CLIENT_ID` `GITLAB_CLIENT_SECRET` `GITLAB_URL` **How to create a Gitlab application(Documents to be supplemented)**
 
 (Special note: Self built Gitea and Gitlab must support cross domain access to stackdit.)
 
