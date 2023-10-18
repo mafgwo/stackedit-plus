@@ -233,7 +233,21 @@ const editorSvc = Object.assign(new Vue(), editorSvcDiscussions, editorSvcUtils,
             const clonedElt = headingElt.cloneNode(true);
             clonedElt.removeAttribute('id');
             sectionTocElt.appendChild(clonedElt);
-            headingElt.innerHTML = `<span class="prefix"></span><span class="content">${headingElt.innerHTML}</span><span class="suffix"></span>`;
+            // create <span> element
+            const contentElt = document.createElement('span');
+            contentElt.className = 'content';
+            // Move the original content to the new <span> element
+            while (headingElt.firstChild) {
+              contentElt.appendChild(headingElt.firstChild);
+            }
+            const prefixElt = document.createElement('span');
+            prefixElt.className = 'prefix';
+            headingElt.insertBefore(prefixElt, headingElt.firstChild);
+            // Replace the original element with the new <span> element
+            headingElt.appendChild(contentElt);
+            const suffixElt = document.createElement('span');
+            suffixElt.className = 'suffix';
+            headingElt.appendChild(suffixElt);
           }
           if (insertBeforeTocElt) {
             this.tocElt.insertBefore(sectionTocElt, insertBeforeTocElt);
