@@ -6,7 +6,8 @@
   If you like this project, please give it a Star. Your appreciation is the biggest motivation for the author!
 </p>
 <p align="center">
-	<a href="https://stackedit.net/">https://stackedit.net</a>
+	<a href="https://stackedit.cn/">https://stackedit.cn</a>
+  <div>Stackedit.net has been taken offline due to insufficient subscription usage to support website operation. The basic functions can refer to the Chinese version of stackdit.cn. If you need an English version, you can deploy this English version of Docker image yourself.</div>
 </p>
 <p align="center">
     <a target="_blank" href="https://www.apache.org/licenses/LICENSE-2.0.txt">
